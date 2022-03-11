@@ -336,12 +336,10 @@ export const generateAppOnboardingExamples = async (
   for (let targetLanguage of ChatGPTLanguages) {
     console.log({ targetLanguage });
     const welcomeCardResult = await buildDirectResult({
-      payload: {
-        // @ts-ignore
-        source: languages[sourceLanguage].welcomeScreenCard,
-        sourceLanguage,
-        targetLanguage,
-      },
+      // @ts-ignore
+      source: languages[sourceLanguage].welcomeScreenCard,
+      sourceLanguage,
+      targetLanguage,
     });
 
     if (welcomeCardResult.success === false) {
@@ -350,12 +348,10 @@ export const generateAppOnboardingExamples = async (
     }
 
     const directTranslationResult = await buildDirectResult({
-      payload: {
-        // @ts-ignore
-        source: languages[sourceLanguage].directTranslationExample,
-        sourceLanguage,
-        targetLanguage,
-      },
+      // @ts-ignore
+      source: languages[sourceLanguage].directTranslationExample,
+      sourceLanguage,
+      targetLanguage,
     });
 
     if (directTranslationResult.success === false) {

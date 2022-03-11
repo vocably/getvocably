@@ -594,11 +594,9 @@ export const generateAppPredefinedCards = async () => {
       const directTranslationResults = await Promise.all(
         words.map((word) =>
           buildDirectResult({
-            payload: {
-              source: word,
-              sourceLanguage: sourceLanguage as GoogleLanguage,
-              targetLanguage: targetLanguage as GoogleLanguage,
-            },
+            source: word,
+            sourceLanguage: sourceLanguage as GoogleLanguage,
+            targetLanguage: targetLanguage as GoogleLanguage,
           })
         )
       );
