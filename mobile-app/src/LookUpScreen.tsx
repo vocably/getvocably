@@ -1,6 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
 import { analyze } from '@vocably/api';
 import { AnalyzePayload, GoogleLanguage, languageList } from '@vocably/model';
+import { usePostHog } from 'posthog-react-native';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
   Alert,
@@ -89,6 +90,8 @@ export const LookUpScreen: FC<Props> = ({
   const insets = useSafeAreaInsets();
 
   const cardsLimit = useCardsLimit();
+
+  const posthog = usePostHog();
 
   const cancelThePreviousLookUp = () => {
     if (abortControllerRef.current) {

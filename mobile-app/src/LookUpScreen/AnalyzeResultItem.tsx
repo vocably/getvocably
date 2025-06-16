@@ -1,12 +1,14 @@
 import { CardItem, Result, TagItem } from '@vocably/model';
+import { getLastAdded } from '@vocably/model-operations';
+import { isToday } from '@vocably/sulna';
 import React, { FC, useState } from 'react';
 import { PixelRatio, View } from 'react-native';
-import { Button, IconButton, Text, useTheme } from 'react-native-paper';
+import { IconButton, useTheme } from 'react-native-paper';
 import { CardListItem } from '../CardListItem';
 import { Deck } from '../languageDeck/useLanguageDeck';
-import { presentPaywall } from '../presentPaywall';
 import { mainPadding } from '../styles';
 import { TagsSelector } from '../TagsSelector';
+import { AddLimitationMessage } from './AddLimitationMessage';
 import { AssociatedCard } from './associateCards';
 
 type AnalyzeResultItem = FC<{
@@ -36,7 +38,9 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   const [isProcessing, setIsProcessing] = useState(false);
 
   const canAdd =
-    cardsLimit === 'unlimited' || cardsLimit > deck.deck.cards.length;
+    cardsLimit === 'unlimited' ||
+    cardsLimit > deck.deck.cards.length ||
+    !isToday(getLastAdded(deck.deck.cards));
 
   const [isBannerVisible, setIsBannerVisible] = useState(false);
 
@@ -72,24 +76,12 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   return (
     <View>
       {!canAdd && isBannerVisible && (
-        <View
-          style={{
-            paddingLeft: leftInset + mainPadding,
-            // Align ⊕ button with the 🔎
-            paddingRight: rightInset + 16,
-            paddingTop: 24,
-            flexDirection: 'column',
-            gap: 8,
-          }}
-        >
-          <Text>
-            The size of your collection has reached the limited of {cardsLimit}{' '}
-            cards. Update your subscription to keep adding cards.
-          </Text>
-          <Button mode="contained" onPress={() => presentPaywall()}>
-            Upgrade
-          </Button>
-        </View>
+        <AddLimitationMessage
+          leftInset={leftInset}
+          rightInset={rightInset}
+          cards={deck.deck.cards}
+          maxCards={cardsLimit}
+        />
       )}
       <View
         style={{
