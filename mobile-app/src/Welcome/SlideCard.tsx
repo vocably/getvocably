@@ -65,6 +65,7 @@ export const SlideCard: FC<Props> = ({ sourceLanguage, targetLanguage }) => {
         }}
       >
         <AnalyzeResultItem
+          style={{ width: '100%' }}
           hideOperations={!!onboardingData.isFallback}
           onAdd={(card) => {
             posthog.capture('onboardingCardAdded', {

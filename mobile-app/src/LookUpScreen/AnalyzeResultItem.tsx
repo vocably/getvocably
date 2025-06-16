@@ -2,7 +2,7 @@ import { CardItem, Result, TagItem } from '@vocably/model';
 import { getLastAdded } from '@vocably/model-operations';
 import { isToday } from '@vocably/sulna';
 import React, { FC, useState } from 'react';
-import { PixelRatio, View } from 'react-native';
+import { PixelRatio, StyleProp, View, ViewStyle } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
 import { CardListItem } from '../CardListItem';
 import { Deck } from '../languageDeck/useLanguageDeck';
@@ -21,6 +21,7 @@ type AnalyzeResultItem = FC<{
   leftInset?: number;
   rightInset?: number;
   cardsLimit?: number | 'unlimited';
+  style?: StyleProp<ViewStyle>;
 }>;
 
 export const AnalyzeResultItem: AnalyzeResultItem = ({
@@ -33,6 +34,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   leftInset = 0,
   rightInset = 0,
   cardsLimit = 'unlimited',
+  style,
 }) => {
   const theme = useTheme();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -74,7 +76,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   const fontScale = PixelRatio.getFontScale();
 
   return (
-    <View>
+    <View style={style}>
       {!canAdd && isBannerVisible && (
         <AddLimitationMessage
           leftInset={leftInset}
