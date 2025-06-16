@@ -21,7 +21,7 @@ export const getUserStaticMetadata = async (): Promise<
   let responseJson = response.value;
   if (isString(responseJson)) {
     if (responseJson.length > 0) {
-      const parseJsonResult = parseJson(responseJson);
+      const parseJsonResult = parseJson(responseJson || '{}');
       if (parseJsonResult.success === false) {
         return parseJsonResult;
       }

@@ -21,7 +21,7 @@ try {
   const userCardCollections = JSON.parse(
     (
       await execute(
-        `aws s3api list-objects --bucket vocably-prod-cards --prefix "${sub}/"`
+        `aws s3api list-objects --bucket ${process.env.DECKS_BUCKET} --prefix "${sub}/"`
       )
     ).stdout
   );
@@ -37,7 +37,7 @@ try {
 const userMetadata = JSON.parse(
   (
     await execute(
-      `aws s3 cp s3://vocably-prod-user-files/${sub}/files/metadata.json -`
+      `aws s3 cp s3://${process.env.USER_FILES_BUCKET}/${sub}/files/metadata.json -`
     )
   ).stdout || '""'
 );

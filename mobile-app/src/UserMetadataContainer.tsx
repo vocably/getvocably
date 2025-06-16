@@ -19,6 +19,7 @@ import {
   useState,
 } from 'react';
 import { AppState } from 'react-native';
+import { Sentry } from './BetterSentry';
 import { Loader } from './loaders/Loader';
 import { retry } from './retry';
 
@@ -51,6 +52,7 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
         setUserMetadata(userMetadataResult.value);
       } else {
         console.error('Unable to load user metadata', userMetadataResult);
+        Sentry.captureMessage('metadataFetchError', { ...userMetadataResult });
       }
 
       if (userStaticMetadataResult.success === true) {
@@ -60,6 +62,10 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
           'Unable to load user static metadata',
           userStaticMetadataResult
         );
+
+        Sentry.captureMessage('staticMetadataFetchError', {
+          ...userStaticMetadataResult,
+        });
       }
     });
   }, []);

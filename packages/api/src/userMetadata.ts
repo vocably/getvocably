@@ -20,7 +20,7 @@ export const getUserMetadata = async (): Promise<Result<UserMetadata>> => {
 
   let responseJson = response.value;
   if (isString(responseJson)) {
-    const parseJsonResult = parseJson(responseJson);
+    const parseJsonResult = parseJson(responseJson || '{}');
     if (parseJsonResult.success === false) {
       return parseJsonResult;
     }
