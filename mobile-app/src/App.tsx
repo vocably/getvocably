@@ -12,7 +12,7 @@ import { LanguagesContainer } from './languages/LanguagesContainer';
 import { NavigationContainer } from './NavigationContainer';
 import { NotificationsContainer } from './NotificationsContainer';
 import { PostHogProvider } from './PostHogProvider';
-import { presentPaywall } from './presentPaywall';
+import { presentPaywallSingleton } from './presentPaywallSingleton';
 import { RootModalStack } from './RootModalStack';
 import { ThemeProvider } from './ThemeProvider';
 import { TranslationPresetContainer } from './TranslationPreset/TranslationPresetContainer';
@@ -34,14 +34,18 @@ const App = () => {
   useEffect(() => {
     const presentPaywallIfNeeded = async (url: string | null) => {
       if (url && url.endsWith('://upgrade')) {
-        await presentPaywall();
+        await presentPaywallSingleton();
       }
     };
 
     Linking.getInitialURL().then(presentPaywallIfNeeded);
-    Linking.addEventListener('url', async ({ url }) => {
+    const subscription = Linking.addEventListener('url', async ({ url }) => {
       await presentPaywallIfNeeded(url);
     });
+
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   return (
