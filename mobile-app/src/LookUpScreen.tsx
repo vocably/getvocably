@@ -453,6 +453,7 @@ export const LookUpScreen: FC<Props> = ({
               onRemove={onRemove}
               onTagsChange={onTagsChange}
               deck={deck}
+              isSharedLookup={isSharedLookUp}
             />
           )}
         </ScrollView>

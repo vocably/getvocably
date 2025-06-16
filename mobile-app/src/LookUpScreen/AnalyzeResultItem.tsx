@@ -22,6 +22,7 @@ type AnalyzeResultItem = FC<{
   rightInset?: number;
   cardsLimit?: number | 'unlimited';
   style?: StyleProp<ViewStyle>;
+  isSharedLookup?: boolean;
 }>;
 
 export const AnalyzeResultItem: AnalyzeResultItem = ({
@@ -35,6 +36,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   rightInset = 0,
   cardsLimit = 'unlimited',
   style,
+  isSharedLookup = false,
 }) => {
   const theme = useTheme();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -83,6 +85,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
           rightInset={rightInset}
           cards={deck.deck.cards}
           maxCards={cardsLimit}
+          isSharedLookup={isSharedLookup}
         />
       )}
       <View

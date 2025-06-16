@@ -25,6 +25,7 @@ type Props = {
   leftInset?: number;
   rightInset?: number;
   cardsLimit: number | 'unlimited';
+  isSharedLookup: boolean;
 };
 
 export const AnalyzeResult: FC<Props> = ({
@@ -37,6 +38,7 @@ export const AnalyzeResult: FC<Props> = ({
   deck,
   leftInset = 0,
   rightInset = 0,
+  isSharedLookup = false,
 }) => {
   const associatedCards = associateCards(makeCards(analysis), cards);
   const theme = useTheme();
@@ -125,6 +127,7 @@ export const AnalyzeResult: FC<Props> = ({
             item={item}
             deck={deck}
             cardsLimit={cardsLimit}
+            isSharedLookup={isSharedLookup}
           />
         </View>
       ))}

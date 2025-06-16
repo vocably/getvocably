@@ -1,7 +1,7 @@
 import { CardItem } from '@vocably/model';
-import { FC, useEffect, useRef } from 'react';
-import { Animated, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { FC, useState } from 'react';
+import { Linking, View } from 'react-native';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
 import { presentPaywall } from '../presentPaywall';
 import { mainPadding } from '../styles';
 
@@ -10,6 +10,7 @@ type Props = {
   rightInset: number;
   cards: CardItem[];
   maxCards: number | 'unlimited';
+  isSharedLookup: boolean;
 };
 
 export const AddLimitationMessage: FC<Props> = ({
@@ -17,27 +18,44 @@ export const AddLimitationMessage: FC<Props> = ({
   maxCards,
   leftInset,
   rightInset,
+  isSharedLookup,
 }) => {
-  const maxHeight = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    Animated.timing(maxHeight, {
-      toValue: 300,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  }, []);
+  const [upgradeDialogVisible, setUpgradeDialogVisibility] = useState(false);
 
   if (maxCards === 'unlimited') {
     return <></>;
   }
 
+  const upgradeClick = async () => {
+    if (!isSharedLookup) {
+      await presentPaywall();
+      return;
+    }
+
+    if (await Linking.canOpenURL('vocably-pro://upgrade')) {
+      await Linking.openURL('vocably-pro://upgrade');
+      return;
+    }
+
+    setUpgradeDialogVisibility(true);
+  };
+
   return (
-    <Animated.View
-      style={{
-        overflow: 'hidden',
-        maxHeight,
-      }}
-    >
+    <>
+      <Portal>
+        <Dialog visible={upgradeDialogVisible}>
+          <Dialog.Content>
+            <Text variant="bodyMedium">
+              Open Vocably {'->'} Settings to upgrade.
+            </Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setUpgradeDialogVisibility(false)}>
+              Okay
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       <View
         style={{
           paddingLeft: leftInset + mainPadding,
@@ -53,10 +71,10 @@ export const AddLimitationMessage: FC<Props> = ({
           {cards.length > maxCards ? ' more  than' : ''} {maxCards} cards. You
           can save one card per day.
         </Text>
-        <Button mode="contained" onPress={() => presentPaywall()}>
+        <Button mode="contained" onPress={upgradeClick}>
           Upgrade for unlimited cards
         </Button>
       </View>
-    </Animated.View>
+    </>
   );
 };
