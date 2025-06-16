@@ -61,6 +61,7 @@ import {
   isEligibleForTrial,
   LanguageDeck,
   mapUserAttributes,
+  Platform,
   Result,
   TranslationCard,
   TranslationCards,
@@ -248,7 +249,8 @@ export const registerServiceWorker = (
     ];
   };
 
-  let updateMetadataTimeout: ReturnType<typeof setTimeout> | null = null;
+  let updateMetadataTimeout: ReturnType<typeof setTimeout> | undefined =
+    undefined;
 
   onAnalyzeRequest(async (sendResponse, payload) => {
     if (payload.sourceLanguage) {
@@ -469,6 +471,11 @@ export const registerServiceWorker = (
 
   onListTargetLanguagesRequest(async (sendResponse) => {
     const sourceLanguage = await getSourceLanguage();
+
+    if (!sourceLanguage) {
+      return sendResponse([]);
+    }
+
     const languagePair = getLanguagePair(sourceLanguage);
     return sendResponse(
       languagePair ? languagePair.possibleTargetLanguages : []
@@ -484,6 +491,7 @@ export const registerServiceWorker = (
   });
 
   onGetInternalProxyLanuage(async (sendResponse) => {
+    // @ts-ignore
     return sendResponse(await getProxyLanguage());
   });
 
@@ -493,6 +501,7 @@ export const registerServiceWorker = (
   });
 
   onGetInternalSourceLanguage(async (sendResponse) => {
+    // @ts-ignore
     return sendResponse(await getSourceLanguage());
   });
 
@@ -502,6 +511,7 @@ export const registerServiceWorker = (
   });
 
   onGetProxyLanguage(async (sendResponse) => {
+    // @ts-ignore
     return sendResponse(await getProxyLanguage());
   });
 
@@ -511,6 +521,7 @@ export const registerServiceWorker = (
   });
 
   onGetSourceLanguage(async (sendResponse) => {
+    // @ts-ignore
     return sendResponse(await getSourceLanguage());
   });
 
@@ -550,10 +561,16 @@ export const registerServiceWorker = (
 
     const userMetadata = userMetadataResult.value;
 
+    const platform: Platform =
+      payload.extensionPlatform === 'iosSafariExtension'
+        ? 'safariExtension'
+        : payload.extensionPlatform;
+
+    const rateResponse = userMetadata.rate[platform];
+
     if (
-      userMetadata.rate[payload.extensionPlatform] &&
-      (userMetadata.rate[payload.extensionPlatform].response === 'never' ||
-        userMetadata.rate[payload.extensionPlatform].response === 'review')
+      rateResponse !== undefined &&
+      (rateResponse.response === 'never' || rateResponse.response === 'review')
     ) {
       return sendResponse(false);
     }
@@ -569,8 +586,7 @@ export const registerServiceWorker = (
     }
 
     const shouldAskForRating =
-      userMetadata.rate[payload.extensionPlatform] &&
-      userMetadata.rate[payload.extensionPlatform].response === 'feedback'
+      rateResponse && rateResponse.response === 'feedback'
         ? counter % 30 === 0
         : counter % 10 === 0;
 
@@ -597,7 +613,12 @@ export const registerServiceWorker = (
 
     const userMetadata = userMetadataResult.value;
 
-    userMetadata.rate[payload.extensionPlatform] = {
+    const platform: Platform =
+      payload.extensionPlatform === 'iosSafariExtension'
+        ? 'safariExtension'
+        : payload.extensionPlatform;
+
+    userMetadata.rate[platform] = {
       response: payload.rateInteraction,
       isoDate: new Date().toISOString(),
     };
@@ -608,6 +629,7 @@ export const registerServiceWorker = (
   });
 
   onGetLocationLanguageRequest(async (sendResponse, url) => {
+    // @ts-ignore
     return sendResponse(getLocationLanguage(url));
   });
 

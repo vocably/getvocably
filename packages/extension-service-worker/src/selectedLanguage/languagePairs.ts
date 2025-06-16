@@ -21,7 +21,8 @@ export const addLanguagePair = async (
   sourceLanguage: GoogleLanguage,
   targetLanguage: GoogleLanguage
 ) => {
-  if (!languagePairs[sourceLanguage]) {
+  const languagePair = languagePairs[sourceLanguage];
+  if (!languagePair) {
     languagePairs[sourceLanguage] = {
       currentTargetLanguage: targetLanguage,
       possibleTargetLanguages: [targetLanguage],
@@ -32,7 +33,7 @@ export const addLanguagePair = async (
     return;
   }
 
-  if (languagePairs[sourceLanguage].currentTargetLanguage === targetLanguage) {
+  if (languagePair.currentTargetLanguage === targetLanguage) {
     return;
   }
 
@@ -40,7 +41,7 @@ export const addLanguagePair = async (
     currentTargetLanguage: targetLanguage,
     possibleTargetLanguages: [
       targetLanguage,
-      ...languagePairs[sourceLanguage].possibleTargetLanguages.filter(
+      ...languagePair.possibleTargetLanguages.filter(
         (possibleTargetLanguage) => possibleTargetLanguage !== targetLanguage
       ),
     ].slice(0, 3),
