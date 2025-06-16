@@ -5,7 +5,7 @@ import { combineCards, getCardCandidates } from './createTranslationCards';
 describe('createCards', () => {
   describe('addCardCandidates', () => {
     it('properly adds candidates when no such words exist in dictionary', () => {
-      const collection = [];
+      const collection: CardItem[] = [];
       const cardItems = getCardCandidates(collection, [
         {
           language: 'en',
