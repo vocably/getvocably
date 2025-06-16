@@ -49,10 +49,17 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
     ).then(([userMetadataResult, userStaticMetadataResult]) => {
       if (userMetadataResult.success === true) {
         setUserMetadata(userMetadataResult.value);
+      } else {
+        console.error('Unable to load user metadata', userMetadataResult);
       }
 
       if (userStaticMetadataResult.success === true) {
         setUserStaticMetadata(userStaticMetadataResult.value);
+      } else {
+        console.error(
+          'Unable to load user static metadata',
+          userStaticMetadataResult
+        );
       }
     });
   }, []);
