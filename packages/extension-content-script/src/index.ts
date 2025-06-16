@@ -79,7 +79,7 @@ const isInSelection = (element: HTMLElement, selection: Selection) => {
   return false;
 };
 
-const isClickableElement = (element: HTMLElement) => {
+const isClickableElement = (element: HTMLElement): boolean => {
   if (
     ['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'VOCABLY-POPUP'].includes(
       element.tagName
@@ -99,6 +99,10 @@ const doubleClick$ = new Subject<void>();
 
 const onMouseUp = async (event: MouseEvent) => {
   const selection = getSelection();
+
+  if (!selection) {
+    return;
+  }
 
   if (
     isClickableElement(event.target as HTMLElement) &&

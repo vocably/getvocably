@@ -133,6 +133,9 @@ export const getContextFromSelection = (selection: Selection): string => {
 export const getContextFromHTMLElement = (htmlElement: HTMLElement) => {
   return parseForward(
     getNextSibling(htmlElement),
-    parseBackward(getPreviousSibling(htmlElement), htmlElement.textContent)
+    parseBackward(
+      getPreviousSibling(htmlElement),
+      htmlElement.textContent ?? ''
+    )
   );
 };

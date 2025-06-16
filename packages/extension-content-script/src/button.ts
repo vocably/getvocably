@@ -35,7 +35,7 @@ const getPosition = (
   selection: Selection,
   event: MouseEvent
 ): Promise<Position | null> => {
-  return new Promise<Position>((resolve) => {
+  return new Promise<Position | null>((resolve) => {
     setTimeout(() => {
       if (selection.rangeCount === 0) {
         resolve(null);
@@ -114,7 +114,7 @@ export const createButton = async (
     event.stopPropagation();
   });
 
-  const position: Position = event
+  const position: Position | null = event
     ? await getPosition(selection, event)
     : {
         left: window.scrollX + window.innerWidth / 2,

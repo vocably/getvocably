@@ -20,7 +20,9 @@ export const getSelection = (): Selection | null => {
       return null;
     }
 
+    // @ts-ignore
     if (translation.shadowRoot && translation.shadowRoot['getSelection']) {
+      // @ts-ignore
       return translation.shadowRoot['getSelection']();
     }
 

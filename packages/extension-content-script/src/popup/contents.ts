@@ -35,15 +35,16 @@ export const setContents = async ({
   context,
   autoPlay,
 }: Options): Promise<TearDown> => {
-  let intervalId: ReturnType<typeof setInterval> | null = null;
-  let waitForPaymentIntervalId: ReturnType<typeof setInterval> | null = null;
+  let intervalId: ReturnType<typeof setInterval> | undefined = undefined;
+  let waitForPaymentIntervalId: ReturnType<typeof setInterval> | undefined =
+    undefined;
   let explicitlySetLanguage: GoogleLanguage | null = null;
 
   const tearDown = () => {
     clearInterval(intervalId);
-    intervalId = null;
+    intervalId = undefined;
     clearInterval(waitForPaymentIntervalId);
-    waitForPaymentIntervalId = null;
+    waitForPaymentIntervalId = undefined;
   };
 
   const setTranslation = async () => {
@@ -72,6 +73,7 @@ export const setContents = async ({
       const [translationResult, maxCards] = await Promise.all([
         api.analyze({
           source,
+          // @ts-ignore
           sourceLanguage,
           targetLanguage,
           context,
@@ -135,6 +137,7 @@ export const setContents = async ({
     translation.deleteTag = api.deleteTag;
     translation.updateTag = api.updateTag;
 
+    // @ts-ignore
     translation.addEventListener(
       'changeSourceLanguage',
       ({ detail: sourceLanguage }: CustomEvent) => {
@@ -155,11 +158,12 @@ export const setContents = async ({
         translation.maxCards = maxCards;
         if (maxCards === 'unlimited') {
           clearInterval(waitForPaymentIntervalId);
-          waitForPaymentIntervalId = null;
+          waitForPaymentIntervalId = undefined;
         }
       }, 10_000);
     });
 
+    // @ts-ignore
     translation.addEventListener(
       'changeTargetLanguage',
       ({ detail: targetLanguage }: CustomEvent) => {
@@ -173,6 +177,7 @@ export const setContents = async ({
       }
     );
 
+    // @ts-ignore
     translation.addEventListener(
       'removeCard',
       async ({ detail: payload }: CustomEvent<RemoveCardPayload>) => {
@@ -183,6 +188,7 @@ export const setContents = async ({
       }
     );
 
+    // @ts-ignore
     translation.addEventListener(
       'addCard',
       async ({ detail: payload }: CustomEvent<AddCardPayload>) => {
@@ -193,6 +199,7 @@ export const setContents = async ({
       }
     );
 
+    // @ts-ignore
     translation.addEventListener(
       'ratingInteraction',
       async ({ detail: payload }: CustomEvent<RateInteractionPayload>) => {
@@ -258,7 +265,7 @@ export const setContents = async ({
         signInElement.addEventListener('confirm', () => {
           closeWindow();
           windowProxy = window.open(`${api.appBaseUrl}/hands-free`, '_blank');
-          windowProxy.focus();
+          windowProxy && windowProxy.focus();
         });
 
         alert.appendChild(signInElement);
@@ -289,10 +296,11 @@ export const setContents = async ({
         alert.innerHTML = '';
         const languageForm = document.createElement('vocably-language');
         languageForm.sourceLanguage =
-          internalSourceLanguage ?? detectedLanguage;
+          internalSourceLanguage ?? detectedLanguage ?? 'en';
         languageForm.targetLanguage =
           internalTargetLanguage ?? getLocaleLanguage();
 
+        // @ts-ignore
         languageForm.addEventListener('confirm', async (event: CustomEvent) => {
           languageForm.waiting = true;
           const { sourceLanguage, targetLanguage } = event.detail;
@@ -338,7 +346,7 @@ export const setContents = async ({
       internalTargetLanguage
     ) {
       clearInterval(intervalId);
-      intervalId = null;
+      intervalId = undefined;
       await setTranslation();
       setTimeout(closeWindow, 3000);
     } else {

@@ -30,7 +30,7 @@ const handlePlayerElement = (player: HTMLElement): (() => void) => {
       mutation.addedNodes.forEach((node) => {
         if (isHtmlElement(node) && node.classList.contains('replaced')) return;
 
-        const tokens = extractTokens(node.textContent);
+        const tokens = extractTokens(node.textContent ?? '');
 
         if (tokens === false) {
           return;
@@ -65,7 +65,7 @@ const handlePlayerElement = (player: HTMLElement): (() => void) => {
             const detectedLanguage = await detectLanguage(anchor);
             await createPopup({
               detectedLanguage,
-              text: anchor.textContent,
+              text: anchor.textContent ?? '',
               globalRect: getGlobalRect(anchor.getBoundingClientRect()),
               isTouchscreen: false,
               context:
