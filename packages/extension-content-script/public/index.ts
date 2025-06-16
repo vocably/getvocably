@@ -81,6 +81,7 @@ registerContentScript({
           }
 
           result.value.tags = tags;
+          result.value.lastAdded = new Date().getTime();
 
           resolve(result);
         }, parseInt((document.getElementById('delay') as HTMLInputElement).value));
@@ -178,9 +179,9 @@ registerContentScript({
         setTimeout(() => resolve(true), 1000);
       });
     },
-    saveAskForRatingResponse: () => Promise.resolve(null),
-    getLocationLanguage: () => Promise.resolve(undefined),
-    saveLocationLanguage: () => Promise.resolve(null),
+    saveAskForRatingResponse: () => Promise.resolve(undefined),
+    getLocationLanguage: () => Promise.resolve(null),
+    saveLocationLanguage: () => Promise.resolve(undefined),
     getSettings: () =>
       new Promise((resolve) => {
         resolve({
@@ -359,8 +360,11 @@ registerContentScript({
   },
 }).then();
 
+// @ts-ignore
 document
+  // @ts-ignore
   .getElementById('showMobileButton')
+  // @ts-ignore
   .addEventListener('change', (event) => {
     configureContentScript({
       // @ts-ignore
@@ -369,7 +373,9 @@ document
   });
 
 (window as any).putCaptions = () => {
-  document.querySelector(
-    '.ytp-caption-segment'
-  ).innerHTML = `These orbits, these arcs\n...something`;
+  const captionSegment = document.querySelector('.ytp-caption-segment');
+
+  if (captionSegment) {
+    captionSegment.innerHTML = `These orbits, these arcs\n...something`;
+  }
 };

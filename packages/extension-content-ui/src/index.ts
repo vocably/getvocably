@@ -29,6 +29,7 @@ const simpletonTranslationResult: Result<TranslationCards> = {
     ],
     tags: [],
     collectionLength: 50,
+    lastAdded: new Date().getTime(),
   },
 };
 
@@ -36,6 +37,7 @@ const successfulTranslationResult: Result<TranslationCards> = {
   success: true,
   value: {
     collectionLength: 50,
+    lastAdded: 0,
     explanation: '',
     source: 'gemaakt',
     translation: {
@@ -88,6 +90,7 @@ const englishTranslationResult: Result<TranslationCards> = {
   success: true,
   value: {
     collectionLength: 50,
+    lastAdded: 0,
     explanation: '',
     cards: [
       {
@@ -131,6 +134,7 @@ translationFirstTime.result = {
   success: true,
   value: {
     collectionLength: 50,
+    lastAdded: 0,
     source: 'Alice was beginning to get very tired of sitting',
     translation: {
       source: 'Alice was beginning to get very tired of sitting',

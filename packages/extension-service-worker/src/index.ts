@@ -66,7 +66,7 @@ import {
   TranslationCard,
   TranslationCards,
 } from '@vocably/model';
-import { buildTagMap } from '@vocably/model-operations';
+import { buildTagMap, getLastAdded } from '@vocably/model-operations';
 import { createSrsItem } from '@vocably/srs';
 import { get, isEqual, uniq } from 'lodash-es';
 import posthog from 'posthog-js';
@@ -304,6 +304,7 @@ export const registerServiceWorker = (
         translation: analysisResult.value.translation,
         tags: loadLanguageDeckResult.value.tags,
         collectionLength: loadLanguageDeckResult.value.cards.length,
+        lastAdded: getLastAdded(loadLanguageDeckResult.value.cards),
       };
 
       addLanguage(value.translation.sourceLanguage);
@@ -372,6 +373,7 @@ export const registerServiceWorker = (
             : item
         ),
         collectionLength: getLanguageDeckResult.value.cards.length,
+        lastAdded: getLastAdded(getLanguageDeckResult.value.cards),
       },
     });
   });
@@ -420,6 +422,7 @@ export const registerServiceWorker = (
           isEqual(item, payload.card) ? addedCard : item
         ),
         collectionLength: getLanguageDeckResult.value.cards.length,
+        lastAdded: getLastAdded(getLanguageDeckResult.value.cards),
       },
     });
   });
@@ -491,7 +494,6 @@ export const registerServiceWorker = (
   });
 
   onGetInternalProxyLanuage(async (sendResponse) => {
-    // @ts-ignore
     return sendResponse(await getProxyLanguage());
   });
 
@@ -501,7 +503,6 @@ export const registerServiceWorker = (
   });
 
   onGetInternalSourceLanguage(async (sendResponse) => {
-    // @ts-ignore
     return sendResponse(await getSourceLanguage());
   });
 
@@ -511,7 +512,6 @@ export const registerServiceWorker = (
   });
 
   onGetProxyLanguage(async (sendResponse) => {
-    // @ts-ignore
     return sendResponse(await getProxyLanguage());
   });
 
@@ -521,7 +521,6 @@ export const registerServiceWorker = (
   });
 
   onGetSourceLanguage(async (sendResponse) => {
-    // @ts-ignore
     return sendResponse(await getSourceLanguage());
   });
 
@@ -629,7 +628,6 @@ export const registerServiceWorker = (
   });
 
   onGetLocationLanguageRequest(async (sendResponse, url) => {
-    // @ts-ignore
     return sendResponse(getLocationLanguage(url));
   });
 

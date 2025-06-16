@@ -11,7 +11,7 @@ export const defaultUserStaticMetadata: UserStaticMetadata = {
   premium_status: 'NONE',
   premium_expiration_at_ms: null,
   premium_last_event_ms: 0,
-  max_cards: 50,
+  max_cards: 30,
 };
 
 export const mergeUserStaticMetadata = (

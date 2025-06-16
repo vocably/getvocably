@@ -34,7 +34,7 @@ import {
   UpdateCardPayload,
   UpdateTagPayload,
 } from '@vocably/model';
-// @ts-ignore
+import { isToday } from '@vocably/sulna';
 import showdown from 'showdown';
 import { getSelectedTagIds } from './getSelectedTagIds';
 import { isDirectNecessary } from './isDirectNecessary';
@@ -49,7 +49,7 @@ const mdConverter = new showdown.Converter();
 })
 export class VocablyTranslation {
   @Prop() phrase: string;
-  @Prop() result: Result<TranslationCards>;
+  @Prop() result: Result<TranslationCards> | null = null;
   @Prop() loading: boolean = false;
   @Prop() existingSourceLanguages: GoogleLanguage[] = [];
   @Prop() existingTargetLanguages: GoogleLanguage[] = [];
@@ -124,7 +124,16 @@ export class VocablyTranslation {
   private tagsMenu: HTMLElement | null = null;
 
   private makeUpdateCard =
-    (card: TranslationCard) => async (data: Partial<Card>) => {
+    (card: TranslationCard) =>
+    async (data: Partial<Card>): Promise<Result<TranslationCards>> => {
+      if (!this.result) {
+        return {
+          success: false,
+          errorCode: 'FUCKING_ERROR',
+          reason: 'Result is not set',
+        };
+      }
+
       if (this.result.success === false) {
         return this.result;
       }
@@ -374,15 +383,24 @@ export class VocablyTranslation {
     const canAdd =
       this.maxCards === 'unlimited' ||
       !this.paymentLink ||
-      (this.result.success === true &&
-        this.result.value.collectionLength < this.maxCards);
+      (this.result &&
+        this.result.success &&
+        this.result.value.collectionLength < this.maxCards) ||
+      (this.result &&
+        this.result.success &&
+        !isToday(this.result.value.lastAdded));
 
     const isOkayToAskForRating = this.askForRating && canAdd;
+    const totalCards =
+      (this.result &&
+        this.result.success &&
+        this.result.value.collectionLength) ||
+      0;
 
     return (
       <Host data-test="translation-container">
         <div class="vocably-loading-container">
-          {this.result === null && (
+          {!this.result && (
             <div
               style={{
                 display: 'flex',
@@ -497,8 +515,12 @@ export class VocablyTranslation {
                               <div class="max-limit-2">
                                 <div class="max-limit-3">
                                   <div>
-                                    You have reached the limit of{' '}
-                                    {this.maxCards} cards.
+                                    Your collection has
+                                    {totalCards > this.maxCards
+                                      ? ' more  than'
+                                      : ''}{' '}
+                                    {this.maxCards} cards. You can save one card
+                                    per day.
                                   </div>
                                   <a
                                     href={this.paymentLink}
@@ -508,7 +530,7 @@ export class VocablyTranslation {
                                       this.watchMePaying.emit();
                                     }}
                                   >
-                                    Make it unlimited
+                                    Upgrade to remove this limitation
                                   </a>
                                 </div>
                               </div>
@@ -538,7 +560,8 @@ export class VocablyTranslation {
                                       if (this.addedItemIndex === itemIndex) {
                                         this.addedItemIndex = -1;
                                       }
-                                      this.result.success === true &&
+                                      this.result &&
+                                        this.result.success === true &&
                                         this.removeCard.emit({
                                           translationCards: this.result.value,
                                           card,
@@ -600,7 +623,8 @@ export class VocablyTranslation {
                                     if (this.addedItemIndex === -1) {
                                       this.addedItemIndex = itemIndex;
                                     }
-                                    this.result.success === true &&
+                                    this.result &&
+                                      this.result.success === true &&
                                       this.addCard.emit({
                                         translationCards: this.result.value,
                                         card,
