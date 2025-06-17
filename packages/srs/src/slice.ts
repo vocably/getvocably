@@ -40,22 +40,22 @@ export const slice = (
     return shuffle(plan[planSection]).slice(0, maxCards);
   }
 
-  const result = plan.today;
+  const result = shuffle(plan.today);
 
   if (result.length >= maxCards) {
-    return shuffle(result);
+    return result;
   }
 
-  result.push(...plan.expired.slice(0, maxCards - result.length));
+  result.push(...shuffle(plan.expired.slice(0, maxCards - result.length)));
 
   if (result.length >= maxCards) {
-    return shuffle(result);
+    return result;
   }
 
   result.push(...plan.notStarted.slice(0, maxCards - result.length));
 
   if (result.length > 0) {
-    return shuffle(result);
+    return result;
   }
 
   const tomorrowCandidates = shuffle(plan.tomorrow.filter(hasStudied(now)));
