@@ -1081,6 +1081,8 @@ PODS:
     - RevenueCat (= 5.24.0)
   - RNCAsyncStorage (1.21.0):
     - React-Core
+  - RNCClipboard (1.16.2):
+    - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
   - RNDateTimePicker (8.3.0):
@@ -1195,6 +1197,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -1338,6 +1341,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNDateTimePicker:
@@ -1435,6 +1440,7 @@ SPEC CHECKSUMS:
   RevenueCat: 2d3639d30b8a71cbfe3d99cef8243c602793e0ec
   RevenueCatUI: 80bec9099c200c254c0ec0025b4fb83a85fbacce
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
+  RNCClipboard: 4411a880506f11fbcbdc03b5093eb8ffb246d900
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNDateTimePicker: a793ed8822283f576dd0a205a0916c5098c2611f
   RNDeviceInfo: 29e01d5ae94bdb5a0f6c11a4c438132545b4df80
@@ -1446,7 +1452,7 @@ SPEC CHECKSUMS:
   RNReactNativeSharedGroupPreferences: 29092869fc2e40d5baca5e15d82fa5c24a668977
   RNReanimated: e4276a6afc57c02056daa5ea1afb41a5ec497d9b
   RNScreens: 134a7511b12b8eb440b87aac21e36a71295d6024
-  RNSentry: 22b7ac5d8a179a1781e97311ef7ecb45812c6db1
+  RNSentry: c5f873ff713a98d91c551f792bff61df522645e0
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNVectorIcons: 73ab573085f65a572d3b6233e68996d4707fd505
@@ -1454,6 +1460,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: c716aea2ee01df6258550c7505fa61b248145ced
 
-PODFILE CHECKSUM: 03c08af5b33e59cb79080317e0fafe4efe3543ae
+PODFILE CHECKSUM: b6296b216b11fe19a4080646d3982770f46abe2c
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.16.2

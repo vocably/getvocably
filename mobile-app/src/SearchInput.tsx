@@ -1,15 +1,12 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import React, {
   forwardRef,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import { Platform, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, TextInput, View } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 type Props = {
   value: string;
@@ -18,6 +15,7 @@ type Props = {
   onSubmit: (value: string) => void;
   disabled?: boolean;
   multiline?: boolean;
+  pasteFromClipboard?: boolean;
 };
 
 export type SearchInputRef = {
@@ -33,10 +31,12 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
       onSubmit,
       disabled = false,
       multiline = false,
+      pasteFromClipboard = false,
     },
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
+    const [clipboardText, setClipboardText] = useState<string>('');
     const theme = useTheme();
     const inputRef = useRef<TextInput>(null);
 
@@ -47,6 +47,8 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
         }
       },
     }));
+
+    Clipboard.getString().then((text) => setClipboardText(text));
 
     const isSearchDisabled = value === '';
     return (
@@ -89,6 +91,14 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
           returnKeyType={'search'}
           onSubmitEditing={() => onSubmit(value)}
         />
+        {pasteFromClipboard && !value && clipboardText && (
+          <IconButton
+            icon={'content-paste'}
+            iconColor={theme.colors.outlineVariant}
+            onPress={() => onChange(clipboardText)}
+            style={{ backgroundColor: 'transparent' }}
+          />
+        )}
         {value && (
           <IconButton
             icon={'close-circle'}

@@ -287,6 +287,7 @@ export const LookUpScreen: FC<Props> = ({
               }
               onChange={setLookUpText}
               onSubmit={lookUp}
+              pasteFromClipboard={true}
               disabled={
                 !translationPresetState.preset.sourceLanguage ||
                 !translationPresetState.preset.translationLanguage

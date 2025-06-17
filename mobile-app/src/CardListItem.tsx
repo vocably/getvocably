@@ -1,7 +1,7 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import { Card, isGoogleTTSLanguage, TagItem } from '@vocably/model';
 import React, { FC, useState } from 'react';
 import {
-  Clipboard,
   PixelRatio,
   Platform,
   Pressable,
