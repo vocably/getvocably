@@ -20,8 +20,11 @@ export type CustomerInfoStatus =
       customerInformation: CustomerInfo;
     };
 
-export const CustomerInfoContext = createContext<CustomerInfoStatus>({
+export const CustomerInfoContext = createContext<
+  CustomerInfoStatus & { refresh: () => Promise<unknown> }
+>({
   status: 'undefined',
+  refresh: async () => null,
 });
 
 export const CustomerInfoContainer: FC<PropsWithChildren<Props>> = ({
@@ -59,8 +62,25 @@ export const CustomerInfoContainer: FC<PropsWithChildren<Props>> = ({
     };
   }, [authStatus]);
 
+  const refresh = async () => {
+    try {
+      const customerInformation = await Purchases.getCustomerInfo();
+      setCustomerInfoStatus({
+        status: 'loaded',
+        customerInformation,
+      });
+    } catch (e) {
+      console.error(`Can't refresh customer info`, e);
+    }
+  };
+
   return (
-    <CustomerInfoContext.Provider value={customerInfoStatus}>
+    <CustomerInfoContext.Provider
+      value={{
+        ...customerInfoStatus,
+        refresh,
+      }}
+    >
       {children}
     </CustomerInfoContext.Provider>
   );

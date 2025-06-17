@@ -1,6 +1,6 @@
 import { NavigationProp } from '@react-navigation/native';
-import React, { FC, useContext } from 'react';
-import { View } from 'react-native';
+import React, { FC, useContext, useState } from 'react';
+import { RefreshControl, View } from 'react-native';
 import { Button, Divider, Text, useTheme } from 'react-native-paper';
 import VersionNumber from 'react-native-version-number';
 // @ts-ignore
@@ -10,10 +10,12 @@ import { trimLanguage } from '@vocably/sulna';
 import { get } from 'lodash-es';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { clearAll } from '../asyncAppStorage';
+import { CustomerInfoContext } from '../CustomerInfoContainer';
 import { LanguagesContext } from '../languages/LanguagesContainer';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
+import { UserMetadataContext } from '../UserMetadataContainer';
 import { Subscription } from './Subscription';
 
 type Props = {
@@ -23,14 +25,27 @@ type Props = {
 export const SettingsScreen: FC<Props> = ({ navigation }) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const { refresh: refreshCustomerInfo } = useContext(CustomerInfoContext);
+  const { refresh: refreshUserMetadata } = useContext(UserMetadataContext);
 
   const { selectedLanguage, languages } = useContext(LanguagesContext);
 
   const languageName = trimLanguage(get(languageList, selectedLanguage, ''));
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([refreshCustomerInfo(), refreshUserMetadata()]);
+    setRefreshing(false);
+  };
+
   // @ts-ignore
   return (
     <CustomScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       contentContainerStyle={{
         paddingTop: insets.top + 32,
       }}

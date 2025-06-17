@@ -27,12 +27,14 @@ type UserMetadataContextValues = {
   userMetadata: UserMetadata;
   userStaticMetadata: UserStaticMetadata;
   updateUserMetadata: (metadata: PartialUserMetadata) => Promise<void>;
+  refresh: () => Promise<unknown>;
 };
 
 export const UserMetadataContext = createContext<UserMetadataContextValues>({
   userMetadata: defaultUserMetadata,
   userStaticMetadata: defaultUserStaticMetadata,
   updateUserMetadata: () => Promise.resolve(),
+  refresh: () => Promise.resolve(),
 });
 
 type UserMetadataContainer = FC<{
@@ -44,15 +46,18 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
   const [userStaticMetadata, setUserStaticMetadata] =
     useState<UserStaticMetadata | null>(null);
 
-  useEffect(() => {
-    retry(() =>
-      Promise.all([apiGetUserMetadata(), apiGetUserStaticMetadata()])
-    ).then(([userMetadataResult, userStaticMetadataResult]) => {
+  const refresh = async () => {
+    Promise.all([
+      retry(() => apiGetUserMetadata()),
+      retry(() => apiGetUserStaticMetadata()),
+    ]).then(([userMetadataResult, userStaticMetadataResult]) => {
       if (userMetadataResult.success === true) {
         setUserMetadata(userMetadataResult.value);
       } else {
         console.error('Unable to load user metadata', userMetadataResult);
-        Sentry.captureMessage('metadataFetchError', { ...userMetadataResult });
+        Sentry.captureMessage('metadataFetchError', {
+          ...userMetadataResult,
+        });
       }
 
       if (userStaticMetadataResult.success === true) {
@@ -68,6 +73,10 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
         });
       }
     });
+  };
+
+  useEffect(() => {
+    refresh();
   }, []);
 
   useEffect(() => {
@@ -108,7 +117,7 @@ export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
 
   return (
     <UserMetadataContext.Provider
-      value={{ userMetadata, userStaticMetadata, updateUserMetadata }}
+      value={{ userMetadata, userStaticMetadata, updateUserMetadata, refresh }}
     >
       {children}
     </UserMetadataContext.Provider>
