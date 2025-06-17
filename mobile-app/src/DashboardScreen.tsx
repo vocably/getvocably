@@ -256,10 +256,17 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
 
   const now = new Date();
   const [nowTs, setNowTs] = useState(now.getTime());
+  const [todayTs, setTodayTs] = useState(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNowTs(new Date().getTime());
+      const now = new Date();
+      setNowTs(now.getTime());
+      setTodayTs(
+        Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+      );
     }, 60_000);
 
     return () => {
@@ -278,13 +285,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
   const isEmpty = deck.cards.length === 0;
 
   const fontScale = Math.max(1, PixelRatio.getFontScale());
-
-  const today = new Date();
-  const todayTS = Date.UTC(
-    today.getUTCFullYear(),
-    today.getUTCMonth(),
-    today.getUTCDate()
-  );
 
   const toggleSection = (sectionId: string) => {
     setCollapsedSections((collapsedSections) => {
@@ -614,7 +614,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                   onTagsChange={onTagsChange(item)}
                 />
                 {isRandomEnabledResult.value === false &&
-                  todayTS < item.data.dueDate && (
+                  todayTs < item.data.dueDate && (
                     <View
                       style={{
                         marginTop: 8,
@@ -625,7 +625,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                     >
                       <Icon name="school" color={theme.colors.secondary} />
                       <Text style={{ color: theme.colors.secondary }}>
-                        {daysString(todayTS, item.data.dueDate)}
+                        {daysString(todayTs, item.data.dueDate)}
                       </Text>
 
                       {nowTs - (item.data.lastStudied ?? 0) <

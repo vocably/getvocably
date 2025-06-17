@@ -175,7 +175,6 @@ export const LanguagesContainer: FC<Props> = ({
 
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active' && refreshLanguagesOnActive) {
-        posthog.capture('languagesContainerAutoRefresh');
         refreshLanguages().then();
       }
     });
