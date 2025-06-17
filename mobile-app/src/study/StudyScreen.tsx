@@ -71,7 +71,9 @@ export const StudyScreen: Props = ({ route, navigation }) => {
 
   const [cards, setCards] = useState<CardItem[]>();
   const [cardsInTheCurrentSession, setCardsInTheCurrentSession] = useState(0);
-  const [cardsStudied, setCardsStudied] = useState(0);
+  // Set cards studied to -1 as the initial state
+  // this will be changed to 0 when filtered cards are loaded
+  const [cardsStudied, setCardsStudied] = useState(-1);
   const [numberOfStudySessions, increaseNumberOfStudySessions] =
     useNumberOfStudySessions();
   const [cardsAnsweredToday, increaseCardsAnsweredToday] =
@@ -114,7 +116,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
 
   useEffect(() => {
     if (
-      cardsStudied === 0 &&
+      cardsStudied === -1 &&
       isRandomizerEnabledResult.status === 'loaded' &&
       maximumCardsPerSessionResult.status === 'loaded'
     ) {
@@ -135,6 +137,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
 
       setCardsInTheCurrentSession(sessionCards.length);
       setCards(sessionCards);
+      setCardsStudied(0);
     }
   }, [
     filteredCards,
@@ -408,7 +411,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
                   ? numberOfStudySessions.value
                   : 0
               }
-              onStudyAgain={() => setCardsStudied(0)}
+              onStudyAgain={() => setCardsStudied(-1)}
               streakHasBeenShown={streakHasShownToday.value}
               streakDays={studyStatsResult.value.streak.days}
               onShow={() => setStreakHasShown()}
