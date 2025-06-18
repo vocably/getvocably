@@ -244,7 +244,18 @@ export const EditCardScreen: FC<Props> = ({ route, navigation }) => {
             >
               <Text>Raw Card Data (Visible in Dev Mode only)</Text>
 
-              <Text>{JSON.stringify(card.data, null, 4)}</Text>
+              <Text>
+                {JSON.stringify(
+                  {
+                    ...card,
+                    createdIso: new Date(card.created).toISOString(),
+                    updatedIso:
+                      card.updated && new Date(card.updated).toISOString(),
+                  },
+                  null,
+                  4
+                )}
+              </Text>
             </CustomSurface>
           )}
         </View>
