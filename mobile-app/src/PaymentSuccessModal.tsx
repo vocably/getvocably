@@ -65,15 +65,11 @@ export const PaymentSuccessModal: FC<Props> = () => {
           </Text>
         </View>
         <View>
-          <Text style={{ textAlign: 'center' }}>
-            I'll do my best to make your experience with Vocably as positive as
-            possible. Could I also ask you to rate the app? It would greatly
-            help this project.
-          </Text>
+          <Text style={{ textAlign: 'center' }}>Do you like Vocably?</Text>
         </View>
         <View style={{ alignSelf: 'stretch' }}>
           <Button mode={'contained'} onPress={rateClick}>
-            Rate Vocably on {mobileStoreName}
+            Rate it on {mobileStoreName}
           </Button>
         </View>
         <View>

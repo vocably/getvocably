@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RateInteractionPayload } from '@vocably/model';
 import React, { FC } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { Button, Divider, Text, useTheme } from 'react-native-paper';
 import { mobileStoreName } from '../mobilePlatform';
 
 export type Props = {
@@ -28,26 +28,21 @@ export const RequestFeedbackForm: FC<Props> = ({
         style,
       ]}
     >
+      <Divider style={{ width: '100%' }} />
       <View>
-        <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>
-          It's okay to skip the following text.{'\n'}I understand that people
-          can be busy{'\n'}or not in the mood.
-        </Text>
-      </View>
-      <View>
-        <Text style={{ textAlign: 'center' }}>
-          Do you love Vocably? Your rating on {mobileStoreName} will take less
+        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+          Do you like Vocably? Your rating on {mobileStoreName} will take less
           than a minute and help this project.
         </Text>
       </View>
       <View style={{ alignSelf: 'stretch' }}>
         <Button mode={'outlined'} onPress={() => onAction('review')}>
-          Yes, I'll rate Vocably on {mobileStoreName}
+          Rate Vocably on {mobileStoreName}
         </Button>
       </View>
       <View style={{ alignSelf: 'stretch' }}>
         <Button mode={'text'} onPress={() => onAction('later')}>
-          No, ask me later
+          Ask me later
         </Button>
       </View>
       <View>
