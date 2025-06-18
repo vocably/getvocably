@@ -15,6 +15,7 @@ import React, {
 } from 'react';
 import {
   Alert,
+  AppState,
   Linking,
   PixelRatio,
   Pressable,
@@ -298,8 +299,24 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
       );
     }, 60_000);
 
+    const onAppChangeListener = AppState.addEventListener(
+      'change',
+      (nextAppState) => {
+        if (nextAppState !== 'active') {
+          return;
+        }
+
+        const now = new Date();
+        setNowTs(now.getTime());
+        setTodayTs(
+          Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+        );
+      }
+    );
+
     return () => {
       clearInterval(interval);
+      onAppChangeListener.remove();
     };
   }, []);
 
