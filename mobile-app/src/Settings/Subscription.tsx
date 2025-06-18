@@ -5,9 +5,9 @@ import { CustomerInfo } from 'react-native-purchases';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CustomerInfoContext } from '../CustomerInfoContainer';
 import { InlineLoader } from '../loaders/InlineLoader';
-import { presentPaywall } from '../presentPaywall';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
+import { usePresentPaywall } from '../usePresentPaywall';
 import { Premium } from './Premium';
 
 type Props = {
@@ -20,6 +20,7 @@ const isPremium = (customerInfo: CustomerInfo): boolean => {
 
 export const Subscription: FC<Props> = ({ style }) => {
   const theme = useTheme();
+  const presentPaywall = usePresentPaywall();
 
   const customerInfoStatus = useContext(CustomerInfoContext);
   return (
@@ -56,7 +57,7 @@ export const Subscription: FC<Props> = ({ style }) => {
               leftIcon="crown-outline"
               rightIcon=""
               title="Subscribe"
-              onPress={() => presentPaywall()}
+              onPress={presentPaywall}
             />
           )}
         </>

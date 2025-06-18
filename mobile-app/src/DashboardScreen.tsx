@@ -13,7 +13,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, PixelRatio, Pressable, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  Linking,
+  PixelRatio,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {
   ActivityIndicator,
   Appbar,
@@ -49,6 +56,7 @@ import { ListItem } from './ui/ListItem';
 import { ScreenLayout } from './ui/ScreenLayout';
 import { useAsync } from './useAsync';
 import { useCurrentLanguageName } from './useCurrentLanguageName';
+import { usePresentPaywall } from './usePresentPaywall';
 
 const SWIPE_MENU_BUTTON_SIZE = 80;
 
@@ -145,6 +153,27 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
     getStatsViewEnabled,
     storeStatsViewEnabled
   );
+
+  const presentPaywall = usePresentPaywall();
+
+  useEffect(() => {
+    const presentPaywallIfNeeded = async (url: string | null) => {
+      if (url && url.endsWith('://upgrade')) {
+        setTimeout(async () => {
+          await presentPaywall();
+        }, 500);
+      }
+    };
+
+    Linking.getInitialURL().then(presentPaywallIfNeeded);
+    const subscription = Linking.addEventListener('url', async ({ url }) => {
+      await presentPaywallIfNeeded(url);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);

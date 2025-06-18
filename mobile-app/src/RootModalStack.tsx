@@ -4,6 +4,7 @@ import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
 import { MnemonicModal } from './MnemonicModal';
+import { PaymentSuccessModal } from './PaymentSuccessModal';
 import { StudyScreen } from './study/StudyScreen';
 import { TabsNavigator } from './TabsNavigator';
 import { WelcomeScreen } from './Welcome/WelcomeScreen';
@@ -38,6 +39,10 @@ export const RootModalStack = () => {
         <Stack.Screen name="Study" component={StudyScreen} />
         <Stack.Screen name="EditCardModal" component={EditCardScreen} />
         <Stack.Screen name="MnemonicModal" component={MnemonicModal} />
+        <Stack.Screen
+          name="PaymentSuccessModal"
+          component={PaymentSuccessModal}
+        />
         <Stack.Screen
           name="LanguageSelector"
           component={LanguageSelectorModal}

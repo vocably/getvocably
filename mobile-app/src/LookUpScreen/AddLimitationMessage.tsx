@@ -2,8 +2,8 @@ import { CardItem } from '@vocably/model';
 import { FC, useState } from 'react';
 import { Linking, View } from 'react-native';
 import { Button, Dialog, Portal, Text } from 'react-native-paper';
-import { presentPaywall } from '../presentPaywall';
 import { mainPadding } from '../styles';
+import { usePresentPaywall } from '../usePresentPaywall';
 
 type Props = {
   leftInset: number;
@@ -21,6 +21,8 @@ export const AddLimitationMessage: FC<Props> = ({
   isSharedLookup,
 }) => {
   const [upgradeDialogVisible, setUpgradeDialogVisibility] = useState(false);
+
+  const presentPaywall = usePresentPaywall();
 
   if (maxCards === 'unlimited') {
     return <></>;
