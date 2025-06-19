@@ -1,0 +1,116 @@
+{{#> layout
+  title='Pricing'
+  url='/pricing.html'
+  navbarAlwaysMurky=true
+}}
+  {{#> text-container }}
+    <h1 class="mb-5 text-center">Pricing</h1>
+
+    <style>
+      .features-table {
+        th:not(:first-child), td:not(:first-child) {
+          text-align: center;
+        }
+
+        td {
+          vertical-align: middle;
+        }
+
+        tr:last-child td {
+          border-bottom: none;
+        }
+      }
+
+      .smaller-on-tiny-screens {
+        font-size: 1.2rem;
+      }
+
+      @media (width < 450px) {
+        .smaller-on-tiny-screens {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+
+    <div style="overflow-x: auto;">
+      <table class="table features-table">
+        <tr style="vertical-align: bottom;">
+          <th>Feature</th>
+          <th>Free plan</th>
+          <th>Premium</th>
+        </tr>
+        <tr>
+          <td>Translate with Chrome/Safari extension</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Translate in iOS/Android app</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Translate with iOS Safari extension</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Share any selected word with iOS/Android app</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Save translations as flashcards</td>
+          <td class="smaller-on-tiny-screens">
+            <div><strong>First 30 cards</strong></div>
+            <div>Unlimited</div>
+            <div class="mt-3"><strong>Over 30 cards</strong></div>
+            <div>1 card per day</div>
+          </td>
+          <td class="smaller-on-tiny-screens">Unlimited</td>
+        </tr>
+        <tr>
+          <td>Study all the saved flashcards in iOS/Android app</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Study multiple languages</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Mnemonics for better recall</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Import and Export (as CSV file)</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Price<br /><small style="font-size: 0.9rem">Taxes in your country may apply.</small></td>
+          <td>&nbsp;</td>
+          <td>
+            <table style="margin: 0 auto; white-space: nowrap;" class="smaller-on-tiny-screens">
+              <tr>
+                <td class="text-end">$4.99</td>
+                <td class="text-start" style="white-space: nowrap">/month</td>
+              </tr>
+              <tr>
+                <td class="text-end">or $29.99</td>
+                <td class="text-start" style="">/year</td>
+              </tr>
+              <tr>
+                <td class="text-end">or $69.99</td>
+                <td class="text-start">&nbsp;lifetime</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  {{/text-container}}
+{{/layout}}
+
