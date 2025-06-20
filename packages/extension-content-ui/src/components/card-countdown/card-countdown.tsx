@@ -70,6 +70,8 @@ export class VocablyCardCountdown {
           <span class="vocably-card-countdown-current">{this.number}</span>
         </button>
         <vocably-card-countdown-explanation
+          paymentLink={this.paymentLink}
+          maxCards={this.maxCards}
           onCloseExplanation={() => this.hideExplanation()}
           style={explanationHiddenStyles}
           ref={(el) =>
