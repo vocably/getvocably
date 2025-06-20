@@ -99,6 +99,7 @@ export class VocablyTranslation {
 
   @State() saveCardClicked = false;
   @State() addedItemIndex = -1;
+  @State() congratulateItemIndex = -1;
   @State() addAttemptIndex = -1;
   @State() removing: {
     card: CardItem;
@@ -397,6 +398,12 @@ export class VocablyTranslation {
         this.result.value.collectionLength) ||
       0;
 
+    let cardsLeft = -1;
+
+    if (this.result && this.result.success && this.maxCards !== 'unlimited') {
+      cardsLeft = this.maxCards - this.result.value.collectionLength;
+    }
+
     return (
       <Host data-test="translation-container">
         <div class="vocably-loading-container">
@@ -490,7 +497,7 @@ export class VocablyTranslation {
                             <div
                               class={
                                 'vocably-added-congratulation' +
-                                (this.addedItemIndex === itemIndex
+                                (this.congratulateItemIndex === itemIndex
                                   ? ' vocably-added-congratulation-visible'
                                   : '')
                               }
@@ -519,8 +526,8 @@ export class VocablyTranslation {
                                     {totalCards > this.maxCards
                                       ? ' more  than'
                                       : ''}{' '}
-                                    {this.maxCards} cards. You can save one card
-                                    per day.
+                                    {this.maxCards} cards. You can now save one
+                                    card per day.
                                   </div>
                                   <a
                                     href={this.paymentLink}
@@ -530,7 +537,7 @@ export class VocablyTranslation {
                                       this.watchMePaying.emit();
                                     }}
                                   >
-                                    Upgrade to remove this limitation
+                                    Upgrade to Premium Plan
                                   </a>
                                 </div>
                               </div>
@@ -544,37 +551,60 @@ export class VocablyTranslation {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     gap: '8px',
+                                    alignItems: 'flex-end',
+                                    justifyContent: 'flex-end',
                                   }}
                                 >
-                                  <button
-                                    class="vocably-card-action-button"
-                                    title="Remove card"
-                                    disabled={this.isUpdating !== null}
-                                    style={{ marginTop: '6px' }}
-                                    onClick={() => {
-                                      if (this.disabled) {
-                                        return false;
-                                      }
-
-                                      this.saveCardClicked = true;
-                                      if (this.addedItemIndex === itemIndex) {
-                                        this.addedItemIndex = -1;
-                                      }
-                                      this.result &&
-                                        this.result.success === true &&
-                                        this.removeCard.emit({
-                                          translationCards: this.result.value,
-                                          card,
-                                        });
+                                  <div
+                                    style={{
+                                      display: 'flex',
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      marginTop: '4px',
                                     }}
                                   >
-                                    {this.isUpdating === card && (
-                                      <vocably-icon-spin></vocably-icon-spin>
-                                    )}
-                                    {this.isUpdating !== card && (
-                                      <vocably-icon-bookmark-check></vocably-icon-bookmark-check>
-                                    )}
-                                  </button>
+                                    {this.addedItemIndex === itemIndex &&
+                                      this.maxCards !== 'unlimited' && (
+                                        <vocably-card-countdown
+                                          number={cardsLeft}
+                                          maxCards={this.maxCards}
+                                          paymentLink={this.paymentLink}
+                                        ></vocably-card-countdown>
+                                      )}
+                                    <button
+                                      class="vocably-card-action-button"
+                                      title="Remove card"
+                                      disabled={this.isUpdating !== null}
+                                      onClick={() => {
+                                        if (this.disabled) {
+                                          return false;
+                                        }
+
+                                        this.saveCardClicked = true;
+                                        if (
+                                          this.congratulateItemIndex ===
+                                          itemIndex
+                                        ) {
+                                          this.congratulateItemIndex = -1;
+                                        }
+                                        this.addedItemIndex = -1;
+                                        this.result &&
+                                          this.result.success === true &&
+                                          this.removeCard.emit({
+                                            translationCards: this.result.value,
+                                            card,
+                                          });
+                                      }}
+                                    >
+                                      {this.isUpdating === card && (
+                                        <vocably-icon-spin></vocably-icon-spin>
+                                      )}
+                                      {this.isUpdating !== card && (
+                                        <vocably-icon-bookmark-check></vocably-icon-bookmark-check>
+                                      )}
+                                    </button>
+                                  </div>
 
                                   <button
                                     class="vocably-card-action-button"
@@ -620,9 +650,12 @@ export class VocablyTranslation {
                                     }
 
                                     this.saveCardClicked = true;
-                                    if (this.addedItemIndex === -1) {
-                                      this.addedItemIndex = itemIndex;
+                                    if (this.congratulateItemIndex === -1) {
+                                      this.congratulateItemIndex = itemIndex;
                                     }
+
+                                    this.addedItemIndex = itemIndex;
+
                                     this.result &&
                                       this.result.success === true &&
                                       this.addCard.emit({

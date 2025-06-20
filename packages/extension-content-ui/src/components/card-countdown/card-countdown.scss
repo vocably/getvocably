@@ -1,0 +1,96 @@
+@import '../../styles/component';
+@import '../../styles/variables';
+
+vocably-card-countdown {
+  --size: 24px;
+
+  @include base-font();
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+
+  // Reddit sets visibility: hidden for custom elements
+  visibility: visible !important;
+
+  .vocably-card-countdown-button {
+    padding: 0;
+    border: 2px solid #{$v-light-color-primary};
+    box-sizing: border-box;
+    width: var(--size);
+    height: var(--size);
+    line-height: 21px;
+    background-color: #{$v-light-color-body-bg-transparent};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #{$v-light-color-primary};
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vocably-card-countdown-previous,
+  .vocably-card-countdown-current {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .vocably-card-countdown-current {
+    animation-duration: 1s;
+    animation-name: currentShowUp;
+    animation-fill-mode: forwards;
+  }
+
+  .vocably-card-countdown-previous {
+    animation-duration: 1s;
+    animation-name: previousHideDown;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes currentShowUp {
+    from {
+      transform: translateY(-12px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 100%;
+    }
+  }
+
+  @keyframes previousHideDown {
+    from {
+      transform: translateY(0);
+      opacity: 100%;
+    }
+
+    to {
+      transform: translateY(12px);
+      opacity: 0;
+    }
+  }
+}
+
+.vocably-card-countdown-explanation {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.2s;
+  pointer-events: none;
+
+  position: absolute;
+
+  &.vocably-card-countdown-explanation-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
