@@ -36,7 +36,7 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
     ref
   ) => {
     const [isFocused, setIsFocused] = useState(false);
-    const [clipboardText, setClipboardText] = useState<string>('');
+    const [clipboardHasText, setClipboardHasText] = useState(false);
     const theme = useTheme();
     const inputRef = useRef<TextInput>(null);
 
@@ -48,7 +48,12 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
       },
     }));
 
-    Clipboard.getString().then((text) => setClipboardText(text));
+    Clipboard.hasString().then((hasText) => setClipboardHasText(hasText));
+
+    const setTextFromClipboard = async () => {
+      const clipboardText = await Clipboard.getString();
+      onChange(clipboardText);
+    };
 
     const isSearchDisabled = value === '';
     return (
@@ -91,11 +96,11 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
           returnKeyType={'search'}
           onSubmitEditing={() => onSubmit(value)}
         />
-        {pasteFromClipboard && !value && clipboardText && (
+        {pasteFromClipboard && !value && clipboardHasText && (
           <IconButton
             icon={'content-paste'}
             iconColor={theme.colors.outlineVariant}
-            onPress={() => onChange(clipboardText)}
+            onPress={setTextFromClipboard}
             style={{ backgroundColor: 'transparent' }}
           />
         )}
