@@ -20,17 +20,21 @@ export const Premium: FC<Props> = ({
 
   const [showRefresh, setShowRefresh] = useState(false);
 
-  const expirationDate = new Date(
-    premium.expirationDate ?? ''
-  ).toLocaleDateString();
+  const expirationDate = premium.expirationDate
+    ? new Date(premium.expirationDate ?? '').toLocaleDateString()
+    : false;
 
   return (
     <View style={{ gap: 4 }}>
       <Text style={{ fontSize: 16, color: theme.colors.secondary }}>
         Premium
       </Text>
-      {premium.willRenew && <Text>Next payment: {expirationDate}</Text>}
-      {!premium.willRenew && <Text>Valid until: {expirationDate}</Text>}
+      {premium.willRenew && expirationDate && (
+        <Text>Next payment: {expirationDate}</Text>
+      )}
+      {!premium.willRenew && expirationDate && (
+        <Text>Valid until: {expirationDate}</Text>
+      )}
       {premium.willRenew && customerInfo.managementURL && (
         <Text
           style={{ color: theme.colors.primary }}
