@@ -48,7 +48,7 @@ export const studyPlan = (today: Date, list: CardItem[]) => {
 
   result.today.sort(byDate);
   result.expired.sort((a, b) => b.data.dueDate - a.data.dueDate);
-  result.notStarted.sort((a, b) => a.created - b.created);
+  result.notStarted.sort((a, b) => b.created - a.created);
   result.future.sort((a, b) => a.data.dueDate - b.data.dueDate);
 
   return result;
