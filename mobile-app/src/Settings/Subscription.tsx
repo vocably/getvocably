@@ -12,13 +12,19 @@ import { Premium } from './Premium';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
+  isRefreshing?: boolean;
+  onRefresh?: () => void;
 };
 
 const isPremium = (customerInfo: CustomerInfo): boolean => {
   return customerInfo.entitlements.active['premium'] !== undefined;
 };
 
-export const Subscription: FC<Props> = ({ style }) => {
+export const Subscription: FC<Props> = ({
+  style,
+  isRefreshing = false,
+  onRefresh = () => null,
+}) => {
   const theme = useTheme();
   const presentPaywall = usePresentPaywall();
 
@@ -48,6 +54,8 @@ export const Subscription: FC<Props> = ({ style }) => {
                 />
                 <Premium
                   customerInfo={customerInfoStatus.customerInformation}
+                  isRefreshing={isRefreshing}
+                  onRefresh={onRefresh}
                 />
               </View>
             </View>

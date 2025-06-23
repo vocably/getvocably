@@ -64,6 +64,7 @@ export const CustomerInfoContainer: FC<PropsWithChildren<Props>> = ({
 
   const refresh = async () => {
     try {
+      await Purchases.invalidateCustomerInfoCache();
       const customerInformation = await Purchases.getCustomerInfo();
       setCustomerInfoStatus({
         status: 'loaded',

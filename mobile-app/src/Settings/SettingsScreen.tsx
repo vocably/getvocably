@@ -40,6 +40,14 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
     setRefreshing(false);
   };
 
+  const [customerInfoRefreshing, setCustomerInfoRefreshing] = useState(false);
+
+  const customerInfoRefresh = async () => {
+    setCustomerInfoRefreshing(true);
+    await refreshCustomerInfo();
+    setCustomerInfoRefreshing(false);
+  };
+
   // @ts-ignore
   return (
     <CustomScrollView
@@ -66,7 +74,11 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
         />
       </CustomSurface>
 
-      <Subscription style={{ marginBottom: 16 }} />
+      <Subscription
+        style={{ marginBottom: 16 }}
+        isRefreshing={customerInfoRefreshing}
+        onRefresh={customerInfoRefresh}
+      />
 
       {selectedLanguage && (
         <>
