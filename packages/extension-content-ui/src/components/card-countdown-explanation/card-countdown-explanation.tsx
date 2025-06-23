@@ -12,14 +12,29 @@ export class VocablyCardCountdownExplanation {
   @Event() closeExplanation: EventEmitter<void>;
   @Event() paymentClicked: EventEmitter<void>;
 
+  private becameVisible: number = 0;
+
+  connectedCallback() {
+    this.becameVisible = new Date().getTime();
+  }
+
+  onClose = () => {
+    if (new Date().getTime() - this.becameVisible < 100) {
+      return;
+    }
+
+    this.closeExplanation.emit();
+  };
+
   render() {
     return (
       <Host>
         <div class="explanation">
           <button
-            onClick={() => this.closeExplanation.emit()}
+            onClick={() => this.onClose()}
             class="close-button"
             style={{ right: '8px', top: '8px' }}
+            title="Close"
           >
             <vocably-icon-close></vocably-icon-close>
           </button>

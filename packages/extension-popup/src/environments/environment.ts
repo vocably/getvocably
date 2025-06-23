@@ -109,13 +109,14 @@ const mockAnalyze: typeof analyze = async () => {
       },
       tags: [],
       explanation: 'Explanation example',
-      collectionLength: 50,
+      collectionLength: 49,
+      lastAdded: new Date().getTime(),
     },
   };
 };
 
 const mockAddCard: typeof addCard = async (payload) => {
-  await timeout(2000);
+  await timeout(500);
 
   return {
     success: true,

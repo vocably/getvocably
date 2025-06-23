@@ -2,7 +2,7 @@
 @import '../../styles/variables';
 
 vocably-card-countdown {
-  --size: 24px;
+  --size: 21px;
 
   @include base-font();
   display: inline-block;
@@ -15,17 +15,17 @@ vocably-card-countdown {
 
   .vocably-card-countdown-button {
     padding: 0;
-    border: 2px solid #{$v-light-color-primary};
     box-sizing: border-box;
+    border: none;
     width: var(--size);
     height: var(--size);
-    line-height: 21px;
-    background-color: #{$v-light-color-body-bg-transparent};
+    line-height: var(--size);
+    background-color: #{$v-light-color-primary};
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: #{$v-light-color-primary};
+    color: #{$v-light-color-body-bg};
     font-size: 12px;
     font-weight: bold;
     text-align: center;

@@ -404,6 +404,9 @@ export class VocablyTranslation {
       cardsLeft = this.maxCards - this.result.value.collectionLength;
     }
 
+    const canShowCardsCountdown =
+      this.maxCards !== 'unlimited' && cardsLeft >= 0;
+
     return (
       <Host data-test="translation-container">
         <div class="vocably-loading-container">
@@ -565,6 +568,7 @@ export class VocablyTranslation {
                                     }}
                                   >
                                     {this.addedItemIndex === itemIndex &&
+                                      canShowCardsCountdown &&
                                       this.maxCards !== 'unlimited' && (
                                         <vocably-card-countdown
                                           number={cardsLeft}

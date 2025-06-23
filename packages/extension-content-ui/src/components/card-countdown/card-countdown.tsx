@@ -29,12 +29,27 @@ export class VocablyCardCountdown {
 
   private explanation!: HTMLVocablyCardCountdownExplanationElement;
 
+  private buttonBecameVisible: number = 0;
+  private showedOnClick = false;
+
+  connectedCallback() {
+    this.buttonBecameVisible = new Date().getTime();
+  }
+
   showExplanation() {
-    const { right, top } = this.element.getBoundingClientRect();
-    this.explanation.style.right = `${
-      window.innerWidth + window.scrollX - right
-    }px`;
-    this.explanation.style.top = `${top + window.scrollY}px`;
+    const { right: buttonRight, top: buttonTop } =
+      this.element.getBoundingClientRect();
+
+    if (window.innerWidth > 600) {
+      this.explanation.style.right = `${
+        window.innerWidth + window.scrollX - buttonRight
+      }px`;
+    } else {
+      this.explanation.style.left = `${window.scrollX + 20}px`;
+      this.explanation.style.right = `${window.scrollX + 20}px`;
+    }
+
+    this.explanation.style.top = `${buttonTop + window.scrollY}px`;
 
     const container =
       document.querySelector('vocably-overlay:last-child') || document.body;
@@ -54,9 +69,33 @@ export class VocablyCardCountdown {
       this.explanation.style[style] = value;
     }
 
+    this.buttonBecameVisible = new Date().getTime();
+    this.showedOnClick = false;
+
     setTimeout(() => {
       this.element.appendChild(this.explanation);
     }, 200);
+  }
+
+  onClick() {
+    this.showedOnClick = true;
+    this.showExplanation();
+  }
+
+  onMouseEnter() {
+    if (new Date().getTime() - this.buttonBecameVisible < 200) {
+      return;
+    }
+
+    this.showExplanation();
+  }
+
+  onMouseLeave() {
+    if (this.showedOnClick) {
+      return;
+    }
+
+    this.hideExplanation();
   }
 
   render() {
@@ -64,7 +103,9 @@ export class VocablyCardCountdown {
       <Fragment>
         <button
           class="vocably-card-countdown-button"
-          onClick={() => this.showExplanation()}
+          onClick={() => this.onClick()}
+          onTouchStart={() => (this.showedOnClick = true)}
+          onMouseEnter={() => this.onMouseEnter()}
         >
           <span class="vocably-card-countdown-previous">{this.number + 1}</span>
           <span class="vocably-card-countdown-current">{this.number}</span>
@@ -78,6 +119,7 @@ export class VocablyCardCountdown {
             (this.explanation =
               el as HTMLVocablyCardCountdownExplanationElement)
           }
+          onMouseLeave={() => this.onMouseLeave()}
         ></vocably-card-countdown-explanation>
       </Fragment>
     );
