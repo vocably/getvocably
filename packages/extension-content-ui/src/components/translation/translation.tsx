@@ -398,14 +398,13 @@ export class VocablyTranslation {
         this.result.value.collectionLength) ||
       0;
 
-    let cardsLeft = -1;
-
-    if (this.result && this.result.success && this.maxCards !== 'unlimited') {
-      cardsLeft = this.maxCards - this.result.value.collectionLength;
-    }
-
-    const canShowCardsCountdown =
-      this.maxCards !== 'unlimited' && cardsLeft >= 0;
+    const collectionLength =
+      (this.result &&
+        this.result.success &&
+        this.result.value.collectionLength) ||
+      0;
+    const canShowCardsCounter =
+      collectionLength && this.maxCards !== 'unlimited';
 
     return (
       <Host data-test="translation-container">
@@ -568,13 +567,13 @@ export class VocablyTranslation {
                                     }}
                                   >
                                     {this.addedItemIndex === itemIndex &&
-                                      canShowCardsCountdown &&
+                                      canShowCardsCounter &&
                                       this.maxCards !== 'unlimited' && (
-                                        <vocably-card-countdown
-                                          number={cardsLeft}
+                                        <vocably-card-counter
+                                          collectionLength={collectionLength}
                                           maxCards={this.maxCards}
                                           paymentLink={this.paymentLink}
-                                        ></vocably-card-countdown>
+                                        ></vocably-card-counter>
                                       )}
                                     <button
                                       class="vocably-card-action-button"

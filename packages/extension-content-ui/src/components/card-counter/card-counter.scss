@@ -1,55 +1,54 @@
 @import '../../styles/component';
 @import '../../styles/variables';
 
-vocably-card-countdown {
+vocably-card-counter {
   --size: 21px;
 
   @include base-font();
   display: inline-block;
-  width: var(--size);
+  min-width: var(--size);
   height: var(--size);
-  position: relative;
+  line-height: 0 !important;
 
   // Reddit sets visibility: hidden for custom elements
   visibility: visible !important;
 
-  .vocably-card-countdown-button {
+  .vocably-card-counter-button {
     padding: 0;
     box-sizing: border-box;
     border: none;
-    width: var(--size);
+    min-width: var(--size);
     height: var(--size);
     line-height: var(--size);
     background-color: #{$v-light-color-primary};
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: var(--size);
     color: #{$v-light-color-body-bg};
     font-size: 10px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-    position: relative;
     overflow: hidden;
   }
 
-  .vocably-card-countdown-previous,
-  .vocably-card-countdown-current {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+  .vocably-card-counter-previous,
+  .vocably-card-counter-current {
+    display: block;
+    padding: 0 4px;
   }
 
-  .vocably-card-countdown-current {
+  .vocably-card-counter-current {
+    margin-top: calc(var(--size) * -1);
+
     animation-duration: 1s;
     animation-name: currentShowUp;
     animation-fill-mode: forwards;
   }
 
-  .vocably-card-countdown-previous {
+  .vocably-card-counter-previous {
     animation-duration: 1s;
     animation-name: previousHideDown;
     animation-fill-mode: forwards;
@@ -57,7 +56,7 @@ vocably-card-countdown {
 
   @keyframes currentShowUp {
     from {
-      transform: translateY(-12px);
+      transform: translateY(12px);
       opacity: 0;
     }
 
@@ -74,13 +73,13 @@ vocably-card-countdown {
     }
 
     to {
-      transform: translateY(12px);
+      transform: translateY(-12px);
       opacity: 0;
     }
   }
 }
 
-.vocably-card-countdown-explanation {
+.vocably-card-counter-explanation {
   opacity: 0;
   transform: translateY(-8px);
   transition: all 0.2s;
@@ -88,7 +87,7 @@ vocably-card-countdown {
 
   position: absolute;
 
-  &.vocably-card-countdown-explanation-visible {
+  &.vocably-card-counter-explanation-visible {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;

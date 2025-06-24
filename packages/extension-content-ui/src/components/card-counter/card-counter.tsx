@@ -16,18 +16,18 @@ const explanationVisileStyles = {
 };
 
 @Component({
-  tag: 'vocably-card-countdown',
-  styleUrl: 'card-countdown.scss',
+  tag: 'vocably-card-counter',
+  styleUrl: 'card-counter.scss',
   shadow: false,
 })
-export class VocablyCardCountdown {
-  @Element() element!: HTMLVocablyCardCountdownElement;
+export class VocablyCardCounter {
+  @Element() element!: HTMLVocablyCardCounterElement;
 
-  @Prop() number: number;
+  @Prop() collectionLength: number;
   @Prop() maxCards: number = 30;
   @Prop() paymentLink: string = '';
 
-  private explanation!: HTMLVocablyCardCountdownExplanationElement;
+  private explanation!: HTMLVocablyCardCounterExplanationElement;
 
   private buttonBecameVisible: number = 0;
   private showedOnClick = false;
@@ -102,25 +102,28 @@ export class VocablyCardCountdown {
     return (
       <Fragment>
         <button
-          class="vocably-card-countdown-button"
+          class="vocably-card-counter-button"
           onClick={() => this.onClick()}
           onTouchStart={() => (this.showedOnClick = true)}
           onMouseEnter={() => this.onMouseEnter()}
         >
-          <span class="vocably-card-countdown-previous">{this.number + 1}</span>
-          <span class="vocably-card-countdown-current">{this.number}</span>
+          <span class="vocably-card-counter-previous">
+            {Number(this.collectionLength) - 1}
+          </span>
+          <span class="vocably-card-counter-current">
+            {this.collectionLength}
+          </span>
         </button>
-        <vocably-card-countdown-explanation
+        <vocably-card-counter-explanation
           paymentLink={this.paymentLink}
           maxCards={this.maxCards}
           onCloseExplanation={() => this.hideExplanation()}
           style={explanationHiddenStyles}
           ref={(el) =>
-            (this.explanation =
-              el as HTMLVocablyCardCountdownExplanationElement)
+            (this.explanation = el as HTMLVocablyCardCounterExplanationElement)
           }
           onMouseLeave={() => this.onMouseLeave()}
-        ></vocably-card-countdown-explanation>
+        ></vocably-card-counter-explanation>
       </Fragment>
     );
   }

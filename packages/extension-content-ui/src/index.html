@@ -22,13 +22,33 @@
   </head>
   <body>
     <div class="container">
-      <h1>Card countdown</h1>
+      <h1>Card counter</h1>
+      <div style="position: relative; width: 300px; text-align: right">
+        <vocably-card-counter
+          collection-length="1"
+          max-cards="5"
+        ></vocably-card-counter>
+      </div>
 
       <div style="position: relative; width: 300px; text-align: right">
-        <vocably-card-countdown
-          number="29"
+        <vocably-card-counter
+          collection-length="32"
           max-cards="5"
-        ></vocably-card-countdown>
+        ></vocably-card-counter>
+      </div>
+
+      <div style="position: relative; width: 300px; text-align: right">
+        <vocably-card-counter
+          collection-length="512"
+          max-cards="5"
+        ></vocably-card-counter>
+      </div>
+
+      <div style="position: relative; width: 300px; text-align: right">
+        <vocably-card-counter
+          collection-length="2350"
+          max-cards="5"
+        ></vocably-card-counter>
       </div>
 
       <h2>Explanation</h2>

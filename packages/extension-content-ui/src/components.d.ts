@@ -11,12 +11,12 @@ export namespace Components {
     }
     interface VocablyButton {
     }
-    interface VocablyCardCountdown {
+    interface VocablyCardCounter {
+        "collectionLength": number;
         "maxCards": number;
-        "number": number;
         "paymentLink": string;
     }
-    interface VocablyCardCountdownExplanation {
+    interface VocablyCardCounterExplanation {
         "maxCards": number;
         "paymentLink": string;
     }
@@ -181,9 +181,9 @@ export interface VocablyAddCardHintCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyAddCardHintElement;
 }
-export interface VocablyCardCountdownExplanationCustomEvent<T> extends CustomEvent<T> {
+export interface VocablyCardCounterExplanationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLVocablyCardCountdownExplanationElement;
+    target: HTMLVocablyCardCounterExplanationElement;
 }
 export interface VocablyCloseButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -234,17 +234,17 @@ declare global {
         prototype: HTMLVocablyButtonElement;
         new (): HTMLVocablyButtonElement;
     };
-    interface HTMLVocablyCardCountdownElement extends Components.VocablyCardCountdown, HTMLStencilElement {
+    interface HTMLVocablyCardCounterElement extends Components.VocablyCardCounter, HTMLStencilElement {
     }
-    var HTMLVocablyCardCountdownElement: {
-        prototype: HTMLVocablyCardCountdownElement;
-        new (): HTMLVocablyCardCountdownElement;
+    var HTMLVocablyCardCounterElement: {
+        prototype: HTMLVocablyCardCounterElement;
+        new (): HTMLVocablyCardCounterElement;
     };
-    interface HTMLVocablyCardCountdownExplanationElement extends Components.VocablyCardCountdownExplanation, HTMLStencilElement {
+    interface HTMLVocablyCardCounterExplanationElement extends Components.VocablyCardCounterExplanation, HTMLStencilElement {
     }
-    var HTMLVocablyCardCountdownExplanationElement: {
-        prototype: HTMLVocablyCardCountdownExplanationElement;
-        new (): HTMLVocablyCardCountdownExplanationElement;
+    var HTMLVocablyCardCounterExplanationElement: {
+        prototype: HTMLVocablyCardCounterExplanationElement;
+        new (): HTMLVocablyCardCounterExplanationElement;
     };
     interface HTMLVocablyCardDefinitionsElement extends Components.VocablyCardDefinitions, HTMLStencilElement {
     }
@@ -471,8 +471,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "vocably-add-card-hint": HTMLVocablyAddCardHintElement;
         "vocably-button": HTMLVocablyButtonElement;
-        "vocably-card-countdown": HTMLVocablyCardCountdownElement;
-        "vocably-card-countdown-explanation": HTMLVocablyCardCountdownExplanationElement;
+        "vocably-card-counter": HTMLVocablyCardCounterElement;
+        "vocably-card-counter-explanation": HTMLVocablyCardCounterExplanationElement;
         "vocably-card-definitions": HTMLVocablyCardDefinitionsElement;
         "vocably-card-examples": HTMLVocablyCardExamplesElement;
         "vocably-card-source": HTMLVocablyCardSourceElement;
@@ -518,15 +518,15 @@ declare namespace LocalJSX {
     }
     interface VocablyButton {
     }
-    interface VocablyCardCountdown {
+    interface VocablyCardCounter {
+        "collectionLength"?: number;
         "maxCards"?: number;
-        "number"?: number;
         "paymentLink"?: string;
     }
-    interface VocablyCardCountdownExplanation {
+    interface VocablyCardCounterExplanation {
         "maxCards"?: number;
-        "onCloseExplanation"?: (event: VocablyCardCountdownExplanationCustomEvent<void>) => void;
-        "onPaymentClicked"?: (event: VocablyCardCountdownExplanationCustomEvent<void>) => void;
+        "onCloseExplanation"?: (event: VocablyCardCounterExplanationCustomEvent<void>) => void;
+        "onPaymentClicked"?: (event: VocablyCardCounterExplanationCustomEvent<void>) => void;
         "paymentLink"?: string;
     }
     interface VocablyCardDefinitions {
@@ -702,8 +702,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "vocably-add-card-hint": VocablyAddCardHint;
         "vocably-button": VocablyButton;
-        "vocably-card-countdown": VocablyCardCountdown;
-        "vocably-card-countdown-explanation": VocablyCardCountdownExplanation;
+        "vocably-card-counter": VocablyCardCounter;
+        "vocably-card-counter-explanation": VocablyCardCounterExplanation;
         "vocably-card-definitions": VocablyCardDefinitions;
         "vocably-card-examples": VocablyCardExamples;
         "vocably-card-source": VocablyCardSource;
@@ -749,8 +749,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "vocably-add-card-hint": LocalJSX.VocablyAddCardHint & JSXBase.HTMLAttributes<HTMLVocablyAddCardHintElement>;
             "vocably-button": LocalJSX.VocablyButton & JSXBase.HTMLAttributes<HTMLVocablyButtonElement>;
-            "vocably-card-countdown": LocalJSX.VocablyCardCountdown & JSXBase.HTMLAttributes<HTMLVocablyCardCountdownElement>;
-            "vocably-card-countdown-explanation": LocalJSX.VocablyCardCountdownExplanation & JSXBase.HTMLAttributes<HTMLVocablyCardCountdownExplanationElement>;
+            "vocably-card-counter": LocalJSX.VocablyCardCounter & JSXBase.HTMLAttributes<HTMLVocablyCardCounterElement>;
+            "vocably-card-counter-explanation": LocalJSX.VocablyCardCounterExplanation & JSXBase.HTMLAttributes<HTMLVocablyCardCounterExplanationElement>;
             "vocably-card-definitions": LocalJSX.VocablyCardDefinitions & JSXBase.HTMLAttributes<HTMLVocablyCardDefinitionsElement>;
             "vocably-card-examples": LocalJSX.VocablyCardExamples & JSXBase.HTMLAttributes<HTMLVocablyCardExamplesElement>;
             "vocably-card-source": LocalJSX.VocablyCardSource & JSXBase.HTMLAttributes<HTMLVocablyCardSourceElement>;

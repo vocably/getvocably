@@ -1,11 +1,11 @@
 import { Component, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'vocably-card-countdown-explanation',
-  styleUrl: 'card-countdown-explanation.scss',
+  tag: 'vocably-card-counter-explanation',
+  styleUrl: 'card-counter-explanation.scss',
   shadow: true,
 })
-export class VocablyCardCountdownExplanation {
+export class VocablyCardCounterExplanation {
   @Prop() maxCards: number = 30;
   @Prop() paymentLink: string = '';
 
