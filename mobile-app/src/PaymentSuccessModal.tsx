@@ -60,7 +60,10 @@ export const PaymentSuccessModal: FC<Props> = () => {
         }}
       >
         <View>
-          <Text variant="headlineMedium" style={{ textAlign: 'center' }}>
+          <Text
+            variant="headlineMedium"
+            style={{ textAlign: 'center', color: theme.colors.secondary }}
+          >
             Thank you for purchasing Vocably Premium.
           </Text>
         </View>
