@@ -11,6 +11,11 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "deploy-android": "npm run deploy-android --prefix=./mobile-app",
+    "deploy-ios-dev": "npm run deploy-ios-dev --prefix=./mobile-app",
+    "deploy-ios-prod": "npm run deploy-ios-prod --prefix=./mobile-app"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.13",
     "@angular/animations": "14.0.5",
