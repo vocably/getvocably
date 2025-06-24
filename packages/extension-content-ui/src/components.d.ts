@@ -119,9 +119,6 @@ export namespace Components {
     interface VocablySubscribe {
         "trial": boolean;
     }
-    interface VocablySubscriptionTimer {
-        "seconds": number;
-    }
     interface VocablyTagForm {
         "deleteTag"?: (tag: TagItem) => Promise<Result<unknown>>;
         "saveTag"?: (tag: TagCandidate) => Promise<Result<unknown>>;
@@ -215,10 +212,6 @@ export interface VocablySignInCustomEvent<T> extends CustomEvent<T> {
 export interface VocablySubscribeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablySubscribeElement;
-}
-export interface VocablySubscriptionTimerCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLVocablySubscriptionTimerElement;
 }
 export interface VocablyTagFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -457,12 +450,6 @@ declare global {
         prototype: HTMLVocablySubscribeElement;
         new (): HTMLVocablySubscribeElement;
     };
-    interface HTMLVocablySubscriptionTimerElement extends Components.VocablySubscriptionTimer, HTMLStencilElement {
-    }
-    var HTMLVocablySubscriptionTimerElement: {
-        prototype: HTMLVocablySubscriptionTimerElement;
-        new (): HTMLVocablySubscriptionTimerElement;
-    };
     interface HTMLVocablyTagFormElement extends Components.VocablyTagForm, HTMLStencilElement {
     }
     var HTMLVocablyTagFormElement: {
@@ -520,7 +507,6 @@ declare global {
         "vocably-sign-in": HTMLVocablySignInElement;
         "vocably-spinner": HTMLVocablySpinnerElement;
         "vocably-subscribe": HTMLVocablySubscribeElement;
-        "vocably-subscription-timer": HTMLVocablySubscriptionTimerElement;
         "vocably-tag-form": HTMLVocablyTagFormElement;
         "vocably-tags-menu": HTMLVocablyTagsMenuElement;
         "vocably-translation": HTMLVocablyTranslationElement;
@@ -650,10 +636,6 @@ declare namespace LocalJSX {
         "onConfirm"?: (event: VocablySubscribeCustomEvent<any>) => void;
         "trial"?: boolean;
     }
-    interface VocablySubscriptionTimer {
-        "onElapsed"?: (event: VocablySubscriptionTimerCustomEvent<any>) => void;
-        "seconds"?: number;
-    }
     interface VocablyTagForm {
         "deleteTag"?: (tag: TagItem) => Promise<Result<unknown>>;
         "onHide"?: (event: VocablyTagFormCustomEvent<void>) => void;
@@ -756,7 +738,6 @@ declare namespace LocalJSX {
         "vocably-sign-in": VocablySignIn;
         "vocably-spinner": VocablySpinner;
         "vocably-subscribe": VocablySubscribe;
-        "vocably-subscription-timer": VocablySubscriptionTimer;
         "vocably-tag-form": VocablyTagForm;
         "vocably-tags-menu": VocablyTagsMenu;
         "vocably-translation": VocablyTranslation;
@@ -804,7 +785,6 @@ declare module "@stencil/core" {
             "vocably-sign-in": LocalJSX.VocablySignIn & JSXBase.HTMLAttributes<HTMLVocablySignInElement>;
             "vocably-spinner": LocalJSX.VocablySpinner & JSXBase.HTMLAttributes<HTMLVocablySpinnerElement>;
             "vocably-subscribe": LocalJSX.VocablySubscribe & JSXBase.HTMLAttributes<HTMLVocablySubscribeElement>;
-            "vocably-subscription-timer": LocalJSX.VocablySubscriptionTimer & JSXBase.HTMLAttributes<HTMLVocablySubscriptionTimerElement>;
             "vocably-tag-form": LocalJSX.VocablyTagForm & JSXBase.HTMLAttributes<HTMLVocablyTagFormElement>;
             "vocably-tags-menu": LocalJSX.VocablyTagsMenu & JSXBase.HTMLAttributes<HTMLVocablyTagsMenuElement>;
             "vocably-translation": LocalJSX.VocablyTranslation & JSXBase.HTMLAttributes<HTMLVocablyTranslationElement>;

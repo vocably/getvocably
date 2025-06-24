@@ -221,29 +221,19 @@ export const setContents = async ({
   let timerElapsed = false;
 
   const isAlright = (): Promise<
-    [boolean, number, GoogleLanguage | null, GoogleLanguage | null]
+    [boolean, GoogleLanguage | null, GoogleLanguage | null]
   > => {
     return Promise.all([
       api.isLoggedIn(),
-      api.getSecondsBeforeNextTranslation(),
       api.getInternalSourceLanguage(),
       api.getInternalProxyLanguage(),
     ]);
   };
 
-  const [
-    isLoggedIn,
-    secondsBeforeNextTranslation,
-    internalSourceLanguage,
-    internalTargetLanguage,
-  ] = await isAlright();
+  const [isLoggedIn, internalSourceLanguage, internalTargetLanguage] =
+    await isAlright();
 
-  if (
-    isLoggedIn &&
-    (secondsBeforeNextTranslation === 0 || timerElapsed) &&
-    internalSourceLanguage &&
-    internalTargetLanguage
-  ) {
+  if (isLoggedIn && internalSourceLanguage && internalTargetLanguage) {
     await setTranslation();
     return tearDown;
   }
@@ -252,7 +242,6 @@ export const setContents = async ({
 
   const updateAlertMessage = async (
     isLoggedIn: boolean,
-    secondsBeforeNextTranslation: number,
     internalSourceLanguage: GoogleLanguage | null,
     internalTargetLanguage: GoogleLanguage | null
   ) => {
@@ -269,23 +258,6 @@ export const setContents = async ({
         });
 
         alert.appendChild(signInElement);
-      }
-      return;
-    }
-
-    if (secondsBeforeNextTranslation > 0) {
-      if (alert.dataset.message !== 'subscribe') {
-        alert.dataset.message = 'subscribe';
-        alert.innerHTML = '';
-        const subscribeElement = document.createElement(
-          'vocably-subscription-timer'
-        );
-        // @ts-ignore
-        subscribeElement.seconds = secondsBeforeNextTranslation;
-        subscribeElement.addEventListener('elapsed', () => {
-          timerElapsed = true;
-        });
-        alert.appendChild(subscribeElement);
       }
       return;
     }
@@ -318,7 +290,6 @@ export const setContents = async ({
 
   await updateAlertMessage(
     isLoggedIn,
-    secondsBeforeNextTranslation,
     internalSourceLanguage,
     internalTargetLanguage
   );
@@ -333,18 +304,9 @@ export const setContents = async ({
   };
 
   intervalId = setInterval(async () => {
-    const [
-      isLoggedIn,
-      secondsBeforeNextTranslation,
-      internalSourceLanguage,
-      internalTargetLanguage,
-    ] = await isAlright();
-    if (
-      isLoggedIn &&
-      (secondsBeforeNextTranslation === 0 || timerElapsed) &&
-      internalSourceLanguage &&
-      internalTargetLanguage
-    ) {
+    const [isLoggedIn, internalSourceLanguage, internalTargetLanguage] =
+      await isAlright();
+    if (isLoggedIn && internalSourceLanguage && internalTargetLanguage) {
       clearInterval(intervalId);
       intervalId = undefined;
       await setTranslation();
@@ -352,7 +314,6 @@ export const setContents = async ({
     } else {
       await updateAlertMessage(
         isLoggedIn,
-        secondsBeforeNextTranslation,
         internalSourceLanguage,
         internalTargetLanguage
       );
