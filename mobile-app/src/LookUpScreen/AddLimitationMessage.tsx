@@ -82,7 +82,7 @@ export const AddLimitationMessage: FC<Props> = ({
           .
         </Text>
         <Button mode="contained" onPress={upgradeClick}>
-          Upgrade for unlimited cards
+          Upgrade to Premium
         </Button>
       </View>
     </>

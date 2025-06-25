@@ -3,11 +3,14 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { CustomerInfo } from 'react-native-purchases';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from '../auth/AuthContext';
 import { CustomerInfoContext } from '../CustomerInfoContainer';
+import { isPaid } from '../isPaid';
 import { InlineLoader } from '../loaders/InlineLoader';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
 import { usePresentPaywall } from '../usePresentPaywall';
+import { PaidAccount } from './PaidAccount';
 import { Premium } from './Premium';
 
 type Props = {
@@ -29,6 +32,17 @@ export const Subscription: FC<Props> = ({
   const presentPaywall = usePresentPaywall();
 
   const customerInfoStatus = useContext(CustomerInfoContext);
+  const authStatus = useContext(AuthContext);
+
+  const useIsPaid =
+    customerInfoStatus.status === 'loaded' &&
+    !isPremium(customerInfoStatus.customerInformation) &&
+    isPaid(authStatus);
+
+  if (useIsPaid) {
+    return <PaidAccount style={style} />;
+  }
+
   return (
     <CustomSurface style={style}>
       {customerInfoStatus.status === 'undefined' && (
@@ -64,7 +78,7 @@ export const Subscription: FC<Props> = ({
             <ListItem
               leftIcon="crown-outline"
               rightIcon=""
-              title="Subscribe"
+              title="Go Premium"
               onPress={() => presentPaywall('mobile-premium')}
             />
           )}
