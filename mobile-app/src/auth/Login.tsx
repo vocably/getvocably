@@ -1,6 +1,6 @@
 import { signInWithRedirect } from 'aws-amplify/auth';
 import React, { FC, ReactNode, useContext } from 'react';
-import { Linking, Platform, ScrollView } from 'react-native';
+import { Linking, Platform, ScrollView, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Loader } from '../loaders/Loader';
@@ -38,16 +38,31 @@ export const Login: FC<{
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingLeft: insets.left + 16,
-        paddingRight: insets.right + 16,
-        gap: 18,
+        paddingLeft: insets.left + 24,
+        paddingRight: insets.right + 24,
+        gap: 12,
       }}
     >
-      <Text variant="headlineSmall" style={{ textAlign: 'center' }}>
-        Vocably - a language-learning ecosystem available in desktop browsers
-        and mobile devices.
+      <Text variant="bodyLarge" style={{ textAlign: 'center' }}>
+        Vocably helps to translate and save the translations as flashcards:
       </Text>
-      <Text variant="bodyLarge">Sign in to try the Vocably for free.</Text>
+      <View style={{ gap: 4 }}>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <Text variant="bodyLarge">{'\u2022'}</Text>
+          <Text variant="bodyLarge">
+            On all your mobile devices (iOS and Android)
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <Text variant="bodyLarge">{'\u2022'}</Text>
+          <Text variant="bodyLarge">
+            In desktop browsers (Chrome and Safari)
+          </Text>
+        </View>
+      </View>
+      <Text variant="bodyLarge" style={{ textAlign: 'center' }}>
+        You need an account for that.
+      </Text>
       <Button mode="contained" onPress={signIn}>
         Sign in or Create an account
       </Button>
