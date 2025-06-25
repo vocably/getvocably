@@ -229,10 +229,6 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
         vocably-icon-plus {
           --color: var(--button-color);
         }
-
-        &.vocably-card-action-add-disabled {
-          --button-color: #{$v-light-color-muted};
-        }
       }
     }
   }
@@ -385,9 +381,10 @@ vocably-play-sound {
     padding-bottom: 8px;
     border-radius: 12px;
     display: flex;
+    flex-direction: column;
     gap: 8px;
     flex-wrap: wrap;
-    align-items: center;
+    justify-content: flex-start;
   }
 
   .upgrade-button {

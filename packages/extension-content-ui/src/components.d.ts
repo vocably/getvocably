@@ -164,6 +164,7 @@ export namespace Components {
         "playAudioPronunciation": (
     payload: AudioPronunciationPayload
   ) => Promise<Result<true>>;
+        "premiumCtaSuffix": string;
         "result": Result<TranslationCards> | null;
         "showLanguages": boolean;
         "showSaveHint": boolean;
@@ -687,6 +688,7 @@ declare namespace LocalJSX {
         "playAudioPronunciation"?: (
     payload: AudioPronunciationPayload
   ) => Promise<Result<true>>;
+        "premiumCtaSuffix"?: string;
         "result"?: Result<TranslationCards> | null;
         "showLanguages"?: boolean;
         "showSaveHint"?: boolean;

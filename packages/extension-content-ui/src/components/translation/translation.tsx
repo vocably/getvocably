@@ -88,6 +88,7 @@ export class VocablyTranslation {
   @Prop() hideChatGpt: boolean = false;
   @Prop() maxCards: number | 'unlimited' = 'unlimited';
   @Prop() paymentLink: string = '';
+  @Prop() premiumCtaSuffix: string = '';
 
   @Event() ratingInteraction: EventEmitter<RateInteractionPayload>;
 
@@ -392,19 +393,19 @@ export class VocablyTranslation {
         !isToday(this.result.value.lastAdded));
 
     const isOkayToAskForRating = this.askForRating && canAdd;
-    const totalCards =
-      (this.result &&
-        this.result.success &&
-        this.result.value.collectionLength) ||
-      0;
+    // const totalCards =
+    //   (this.result &&
+    //     this.result.success &&
+    //     this.result.value.collectionLength) ||
+    //   0;
 
-    const collectionLength =
-      (this.result &&
-        this.result.success &&
-        this.result.value.collectionLength) ||
-      0;
-    const canShowCardsCounter =
-      collectionLength && this.maxCards !== 'unlimited';
+    // const collectionLength =
+    //   (this.result &&
+    //     this.result.success &&
+    //     this.result.value.collectionLength) ||
+    //   0;
+    // const canShowCardsCounter =
+    //   collectionLength && this.maxCards !== 'unlimited';
 
     return (
       <Host data-test="translation-container">
@@ -524,12 +525,19 @@ export class VocablyTranslation {
                               <div class="max-limit-2">
                                 <div class="max-limit-3">
                                   <div>
-                                    Your collection has
-                                    {totalCards > this.maxCards
-                                      ? ' more  than'
-                                      : ''}{' '}
-                                    {this.maxCards} cards. You can now save one
-                                    card per day.
+                                    The{' '}
+                                    <strong class="vocably-emphasized">
+                                      Free Plan
+                                    </strong>{' '}
+                                    allows to freely save up to{' '}
+                                    <strong>{this.maxCards}</strong> cards.
+                                  </div>
+                                  <div>
+                                    After you reached the limit, you can save{' '}
+                                    <strong class="vocably-emphasized">
+                                      one card per day
+                                    </strong>
+                                    .
                                   </div>
                                   <a
                                     href={this.paymentLink}
@@ -539,7 +547,7 @@ export class VocablyTranslation {
                                       this.watchMePaying.emit();
                                     }}
                                   >
-                                    Upgrade to Premium Plan
+                                    Upgrade to Premium{this.premiumCtaSuffix}
                                   </a>
                                 </div>
                               </div>
@@ -566,15 +574,15 @@ export class VocablyTranslation {
                                       marginTop: '4px',
                                     }}
                                   >
-                                    {this.addedItemIndex === itemIndex &&
-                                      canShowCardsCounter &&
-                                      this.maxCards !== 'unlimited' && (
-                                        <vocably-card-counter
-                                          collectionLength={collectionLength}
-                                          maxCards={this.maxCards}
-                                          paymentLink={this.paymentLink}
-                                        ></vocably-card-counter>
-                                      )}
+                                    {/*{this.addedItemIndex === itemIndex &&*/}
+                                    {/*  canShowCardsCounter &&*/}
+                                    {/*  this.maxCards !== 'unlimited' && (*/}
+                                    {/*    <vocably-card-counter*/}
+                                    {/*      collectionLength={collectionLength}*/}
+                                    {/*      maxCards={this.maxCards}*/}
+                                    {/*      paymentLink={this.paymentLink}*/}
+                                    {/*    ></vocably-card-counter>*/}
+                                    {/*  )}*/}
                                     <button
                                       class="vocably-card-action-button"
                                       title="Remove card"
@@ -636,7 +644,6 @@ export class VocablyTranslation {
                                   class={{
                                     'vocably-card-action-button': true,
                                     'vocably-card-add-button': true,
-                                    'vocably-card-action-add-disabled': !canAdd,
                                   }}
                                   title="Add card"
                                   disabled={this.isUpdating !== null}
