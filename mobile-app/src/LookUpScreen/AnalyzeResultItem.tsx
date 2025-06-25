@@ -1,6 +1,7 @@
 import { CardItem, Result, TagItem } from '@vocably/model';
 import { getLastAdded } from '@vocably/model-operations';
 import { isToday } from '@vocably/sulna';
+import { usePostHog } from 'posthog-react-native';
 import React, { FC, useState } from 'react';
 import { PixelRatio, StyleProp, View, ViewStyle } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
@@ -48,6 +49,8 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
 
   const [isBannerVisible, setIsBannerVisible] = useState(false);
 
+  const posthog = usePostHog();
+
   const toggleCard = async () => {
     setIsProcessing(true);
     if (item.id) {
@@ -56,6 +59,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
     } else if (canAdd) {
       await onAdd(item);
     } else {
+      posthog.capture('limitation-showed');
       setIsBannerVisible(true);
     }
     setIsProcessing(false);
@@ -117,11 +121,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
             <IconButton
               icon={!item.id ? 'plus-circle-outline' : 'bookmark-check'}
               animated={true}
-              iconColor={
-                canAdd || item.id
-                  ? theme.colors.primary
-                  : theme.colors.onSurface
-              }
+              iconColor={theme.colors.primary}
               onPress={toggleCard}
               disabled={isProcessing}
               style={{ margin: 0 }}

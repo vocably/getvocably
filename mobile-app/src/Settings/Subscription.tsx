@@ -65,7 +65,7 @@ export const Subscription: FC<Props> = ({
               leftIcon="crown-outline"
               rightIcon=""
               title="Subscribe"
-              onPress={presentPaywall}
+              onPress={() => presentPaywall('mobile-premium')}
             />
           )}
         </>

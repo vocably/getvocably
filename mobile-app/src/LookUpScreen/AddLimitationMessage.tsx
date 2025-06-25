@@ -1,7 +1,7 @@
 import { CardItem } from '@vocably/model';
 import { FC, useState } from 'react';
 import { Linking, View } from 'react-native';
-import { Button, Dialog, Portal, Text } from 'react-native-paper';
+import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
 import { mainPadding } from '../styles';
 import { usePresentPaywall } from '../usePresentPaywall';
 
@@ -23,6 +23,7 @@ export const AddLimitationMessage: FC<Props> = ({
   const [upgradeDialogVisible, setUpgradeDialogVisibility] = useState(false);
 
   const presentPaywall = usePresentPaywall();
+  const theme = useTheme();
 
   if (maxCards === 'unlimited') {
     return <></>;
@@ -70,8 +71,15 @@ export const AddLimitationMessage: FC<Props> = ({
       >
         <Text>
           Your collection has
-          {cards.length > maxCards ? ' more  than' : ''} {maxCards} cards. You
-          can save one card per day.
+          {cards.length > maxCards ? ' more  than' : ''}{' '}
+          <Text style={{ fontWeight: 'bold', color: theme.colors.secondary }}>
+            {maxCards}
+          </Text>{' '}
+          cards. Now you can save{' '}
+          <Text style={{ fontWeight: 'bold', color: theme.colors.secondary }}>
+            one card per day
+          </Text>
+          .
         </Text>
         <Button mode="contained" onPress={upgradeClick}>
           Upgrade for unlimited cards

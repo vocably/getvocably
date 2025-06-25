@@ -1,13 +1,17 @@
 import Purchases from 'react-native-purchases';
 import RevenueCatUI, { PAYWALL_RESULT } from 'react-native-purchases-ui';
 
-type OfferingId = 'mobile-premium' | 'mobile-premium-1-free';
+export type OfferingId =
+  | 'mobile-premium'
+  | 'mobile-premium-1-free'
+  | 'mobile-premium-add-card';
 
 export const presentPaywall = async (
   offeringId: OfferingId = 'mobile-premium'
 ): Promise<boolean> => {
   const offerings = await Purchases.getOfferings();
   const offering = offerings.all[offeringId];
+
   // Present paywall for current offering:
   const paywallResult: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({
     offering: offering,
