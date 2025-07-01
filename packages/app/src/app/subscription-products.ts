@@ -7,6 +7,7 @@ export type SubscriptionProduct = {
   perMonth: string;
   total: string;
   maxTotal: string;
+  title: string;
 };
 
 export const subscriptionProducts: SubscriptionProduct[] = [
@@ -17,6 +18,7 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     perMonth: '$4.99',
     total: '$4.99',
     maxTotal: '',
+    title: 'Monthly premium',
   },
   {
     priceId: environment.paddleYearlyPriceId,
@@ -25,6 +27,7 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     perMonth: '$2.50',
     total: '$29.99',
     maxTotal: '$59.88',
+    title: 'Yearly premium',
   },
   {
     priceId: environment.paddleLifetimePriceId,
@@ -33,5 +36,6 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     perMonth: '',
     total: '$59.99',
     maxTotal: '',
+    title: 'Lifetime   premium',
   },
 ];

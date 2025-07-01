@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
+import { SuccessPageComponent } from './pages/success-page/success-page.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
@@ -12,6 +13,11 @@ const routes: Routes = [
         path: '',
         title: 'Subscribe',
         component: IndexPageComponent,
+      },
+      {
+        path: 'success/:priceId',
+        title: 'Success',
+        component: SuccessPageComponent,
       },
     ],
   },

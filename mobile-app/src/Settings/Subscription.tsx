@@ -34,6 +34,8 @@ export const Subscription: FC<Props> = ({
   const customerInfoStatus = useContext(CustomerInfoContext);
   const authStatus = useContext(AuthContext);
 
+  console.log(customerInfoStatus);
+
   const useIsPaid =
     customerInfoStatus.status === 'loaded' &&
     !isPremium(customerInfoStatus.customerInformation) &&
