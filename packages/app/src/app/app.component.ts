@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { getPaddleInstance } from '@paddle/paddle-js';
 import * as Sentry from '@sentry/browser';
 import * as PullToRefresh from 'pulltorefreshjs';
 import { distinct, firstValueFrom, map } from 'rxjs';
@@ -35,6 +36,17 @@ export class AppComponent implements OnInit {
       )
       .subscribe((email) => {
         Sentry.setUser({ email });
+
+        const paddle = getPaddleInstance();
+
+        if (paddle) {
+          paddle.Update({
+            pwCustomer: {
+              email: email,
+              id: email,
+            },
+          });
+        }
 
         if (!isPiwikSet) {
           setUp(environment.piwikId);

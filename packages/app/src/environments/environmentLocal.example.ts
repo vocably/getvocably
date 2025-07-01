@@ -6,6 +6,10 @@ export const environmentLocal = {
   sentryEnvironment: 'dev',
   wwwBaseUrl: 'https://dev.env.vocably.pro',
   revenueCatWeblink: 'https://pay.rev.cat/sandbox/nhscxmehgplykyuc/',
+  paddleClientSideToken: 'live_813a7ee9405b281277af57927a0',
+  paddleMonthlyProductId: 'pro_01jym0q99cpvjdhtscx7x0wsjw',
+  paddleYearlyProductId: 'pro_01jz0q7b2hbyktwx000jmxz5j1',
+  paddleLifetimeProductId: 'pro_01jz0q9s5h496p5cxvar5ptsbj',
   auth: {
     region: 'eu-central-1',
     userPoolId: 'eu-central-1_Tpn3gUQYg',

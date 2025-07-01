@@ -13,7 +13,10 @@ export const environmentLocal = {
   piwikId: '${var.piwik_app_id}',
   sentryEnvironment: '${var.sentry_environment}',
   wwwBaseUrl: '${local.www_base_url}',
-  revenueCatWeblink: '${var.revenue_cat_web_link}',
+  paddleClientSideToken: '${var.paddle_client_side_token}',
+  paddleMonthlyProductId: '${var.paddle_monthly_premium_id}',
+  paddleYearlyProductId: '${var.paddle_yearly_premium_id}',
+  paddleLifetimeProductId: '${var.paddle_lifetime_premium_id}',
   auth: {
     region: '${data.aws_region.current.name}',
     userPoolId: '${aws_cognito_user_pool.users.id}',

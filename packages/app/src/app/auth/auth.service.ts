@@ -115,7 +115,7 @@ export class AuthService {
     });
   }
 
-  async isActive(): Promise<boolean> {
+  async isPaidGroup(): Promise<boolean> {
     const user = await Auth.currentAuthenticatedUser().catch(() => false);
 
     if (!user) {

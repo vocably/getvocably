@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { getPaddleInstance } from '@paddle/paddle-js';
 import { Subject, takeUntil } from 'rxjs';
-import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
@@ -17,7 +17,25 @@ export class IndexPageComponent implements OnInit, OnDestroy {
     this.authService.fetchUserData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((userData) => {
-        location.href = environment.revenueCatWeblink + userData.email;
+        const paddleInstance = getPaddleInstance();
+        if (!paddleInstance) {
+          console.error('No paddle instance');
+          return;
+        }
+        paddleInstance.Checkout.open({
+          items: [
+            {
+              priceId: 'pri_01jyzzammkt25f6mmf8tjsxr9p',
+              quantity: 1,
+            },
+          ],
+          customer: {
+            email: userData.email,
+          },
+          customData: {
+            revenue_cat_id: userData.email,
+          },
+        });
       });
   }
 

@@ -1,0 +1,40 @@
+<div class="text-center">
+  <ng-container *ngIf="membershipStatus.type === 'loading'">
+    <ion-spinner name="dots" class="mr-1"></ion-spinner>Checking membership
+    status...
+  </ng-container>
+  <ng-container *ngIf="membershipStatus.type === 'paid_group'">
+    <div>Premium</div>
+  </ng-container>
+  <ng-container *ngIf="membershipStatus.type === 'free'">
+    <div>Free</div>
+    <a [routerLink]="['/subscribe']" target="_blank">Upgrade</a>
+  </ng-container>
+  <ng-container *ngIf="membershipStatus.type === 'revenue_cat'">
+    <div>Premium</div>
+    <div
+      *ngIf="
+        membershipStatus.entitlementInfo.willRenew &&
+        membershipStatus.customerInfo.managementURL
+      "
+    >
+      <a [href]="membershipStatus.customerInfo.managementURL" target="_blank"
+        >Manage your subscription</a
+      >
+    </div>
+  </ng-container>
+  <ng-container *ngIf="membershipStatus.type === 'error'">
+    <div>Unable to load your membership status</div>
+  </ng-container>
+  <div *ngIf="membershipStatus.type !== 'loading'">
+    <button
+      class="unstyled link"
+      style="text-decoration: none !important"
+      (click)="reload$.next('with_loader')"
+    >
+      <mat-icon inline="true" class="middle" style="margin-right: 0.25rem"
+        >refresh</mat-icon
+      >Reload
+    </button>
+  </div>
+</div>

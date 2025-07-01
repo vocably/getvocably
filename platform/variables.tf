@@ -151,3 +151,23 @@ variable "revenue_cat_auth_header" {
 variable "revenue_cat_web_link" {
   type = string
 }
+
+variable "paddle_client_side_token" {
+  type    = string
+  default = "live_813a7ee9405b281277af57927a0"
+}
+
+variable "paddle_monthly_premium_id" {
+  type    = string
+  default = "pro_01jym0q99cpvjdhtscx7x0wsjw"
+}
+
+variable "paddle_yearly_premium_id" {
+  type    = string
+  default = "pro_01jz0q7b2hbyktwx000jmxz5j1"
+}
+
+variable "paddle_lifetime_premium_id" {
+  type    = string
+  default = "pro_01jz0q9s5h496p5cxvar5ptsbj"
+}
