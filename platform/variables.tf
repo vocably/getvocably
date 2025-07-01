@@ -159,15 +159,15 @@ variable "paddle_client_side_token" {
 
 variable "paddle_monthly_premium_id" {
   type    = string
-  default = "pro_01jym0q99cpvjdhtscx7x0wsjw"
+  default = "pri_01jym0ssdz54dmmhk15se4a171"
 }
 
 variable "paddle_yearly_premium_id" {
   type    = string
-  default = "pro_01jz0q7b2hbyktwx000jmxz5j1"
+  default = "pri_01jz0q88xn4ba9rnqhq61vhaxf"
 }
 
 variable "paddle_lifetime_premium_id" {
   type    = string
-  default = "pro_01jz0q9s5h496p5cxvar5ptsbj"
+  default = "pri_01jz0qapwnkm9xjsjbhd54nr44"
 }

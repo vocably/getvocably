@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getPaddleInstance } from '@paddle/paddle-js';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
+import { SubscriptionProduct } from '../../../subscription-products';
 
 @Component({
   selector: 'app-index-page',
@@ -13,7 +14,14 @@ export class IndexPageComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
+  }
+
+  onSelect(product: SubscriptionProduct) {
     this.authService.fetchUserData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((userData) => {
@@ -25,8 +33,7 @@ export class IndexPageComponent implements OnInit, OnDestroy {
         paddleInstance.Checkout.open({
           items: [
             {
-              priceId: 'pri_01jyzzammkt25f6mmf8tjsxr9p',
-              quantity: 1,
+              priceId: product.priceId,
             },
           ],
           customer: {
@@ -35,12 +42,11 @@ export class IndexPageComponent implements OnInit, OnDestroy {
           customData: {
             revenue_cat_id: userData.email,
           },
+          settings: {
+            successUrl:
+              location.origin + `/subscribe/success/${product.priceId}`,
+          },
         });
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
   }
 }
