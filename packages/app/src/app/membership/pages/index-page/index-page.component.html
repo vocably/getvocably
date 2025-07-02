@@ -15,10 +15,10 @@
     <div
       *ngIf="
         membershipStatus.entitlementInfo.willRenew &&
-        membershipStatus.customerInfo.managementURL
+        membershipStatus.managementUrl
       "
     >
-      <a [href]="membershipStatus.customerInfo.managementURL" target="_blank"
+      <a [href]="membershipStatus.managementUrl" target="_blank"
         >Manage your subscription</a
       >
     </div>

@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  CustomerInfo,
-  EntitlementInfo,
-  Purchases,
-} from '@revenuecat/purchases-js';
+import { EntitlementInfo, Purchases } from '@revenuecat/purchases-js';
+import { getUserStaticMetadata } from '@vocably/api';
 import { startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 
@@ -19,7 +16,7 @@ type MembershipStatus =
     }
   | {
       type: 'revenue_cat';
-      customerInfo: CustomerInfo;
+      managementUrl: string | null;
       entitlementInfo: EntitlementInfo;
     }
   | {
@@ -61,6 +58,7 @@ export class IndexPageComponent implements OnInit, OnDestroy {
               return Promise.all([
                 this.authService.isPaidGroup(),
                 purchases.getCustomerInfo(),
+                getUserStaticMetadata(),
               ]);
             })
           );
@@ -68,11 +66,18 @@ export class IndexPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe({
-        next: ([isPaidGroup, customerInfo]) => {
+        next: ([isPaidGroup, customerInfo, staticMetadataResult]) => {
+          console.log(customerInfo);
           if (customerInfo.entitlements.active['premium']) {
             this.membershipStatus = {
               type: 'revenue_cat',
-              customerInfo,
+              managementUrl:
+                customerInfo.entitlements.active['premium'] &&
+                customerInfo.entitlements.active['premium'].store ===
+                  'paddle' &&
+                staticMetadataResult.success === true
+                  ? staticMetadataResult.value.management_url
+                  : customerInfo.managementURL,
               entitlementInfo: customerInfo.entitlements.active['premium'],
             };
 
