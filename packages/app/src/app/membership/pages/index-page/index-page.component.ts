@@ -20,6 +20,7 @@ type MembershipStatus =
       type: 'revenue_cat';
       managementUrl: string | null;
       nextPaymentDate: Date | null;
+      endDate: Date | null;
       entitlementInfo: EntitlementInfo;
     }
   | {
@@ -85,6 +86,11 @@ export class IndexPageComponent implements OnInit, OnDestroy {
                 staticMetadataResult.success === true
                   ? staticMetadataResult.value.management_url
                   : customerInfo.managementURL,
+              endDate:
+                (customerInfo.entitlements.active['premium'] &&
+                  !customerInfo.entitlements.active['premium'].willRenew &&
+                  customerInfo.entitlements.active['premium'].expirationDate) ||
+                null,
               entitlementInfo: customerInfo.entitlements.active['premium'],
             };
 

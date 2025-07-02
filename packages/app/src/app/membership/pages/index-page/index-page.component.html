@@ -22,6 +22,10 @@
       </ng-container>
       <ng-container *ngIf="membershipStatus.type === 'revenue_cat'">
         <h1>You are a Premium user</h1>
+        <p *ngIf="membershipStatus.endDate">
+          Your subscription ends at:
+          {{ membershipStatus.endDate.toLocaleDateString() }}
+        </p>
         <p *ngIf="membershipStatus.nextPaymentDate">
           Next payment:
           {{ membershipStatus.nextPaymentDate.toLocaleDateString() }}
