@@ -1,17 +1,9 @@
-<div class="container-l mb-2">
-  <div class="mat-display-1 text-center text-emphasize mb-2">
-    Vocably Premium
-  </div>
-</div>
-
-<div class="container mb-2 text-center">Learn as many words as you like.</div>
-
-<div class="container-l mb-2">
-  <div class="cards mb-1">
+<div class="container-l">
+  <div class="cards mb-2">
     <button
       class="card flex-1"
       *ngFor="let product of subscriptionProducts"
-      (click)="select.emit(product)"
+      (click)="onSelect(product)"
     >
       <div class="break-word text-center mb-1">
         <span class="text-emphasize text-x200">{{ product.duration }}</span
@@ -43,5 +35,10 @@
         <div class="select-button">Select</div>
       </div>
     </button>
+  </div>
+
+  <div class="text-center">
+    All your saved cards will stay in your collection after you cancel your
+    subscription.
   </div>
 </div>

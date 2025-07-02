@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { EntitlementInfo, Purchases } from '@revenuecat/purchases-js';
 import { getUserStaticMetadata } from '@vocably/api';
 import { startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
+import { WhyPaidComponent } from './why-paid/why-paid.component';
 
 type MembershipStatus =
   | {
@@ -17,6 +19,7 @@ type MembershipStatus =
   | {
       type: 'revenue_cat';
       managementUrl: string | null;
+      nextPaymentDate: Date | null;
       entitlementInfo: EntitlementInfo;
     }
   | {
@@ -37,7 +40,7 @@ export class IndexPageComponent implements OnInit, OnDestroy {
 
   public reload$ = new Subject<'with_loader' | 'without_loader'>();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.reload$
@@ -67,10 +70,14 @@ export class IndexPageComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: ([isPaidGroup, customerInfo, staticMetadataResult]) => {
-          console.log(customerInfo);
           if (customerInfo.entitlements.active['premium']) {
             this.membershipStatus = {
               type: 'revenue_cat',
+              nextPaymentDate:
+                (customerInfo.entitlements.active['premium'] &&
+                  customerInfo.entitlements.active['premium'].willRenew &&
+                  customerInfo.entitlements.active['premium'].expirationDate) ||
+                null,
               managementUrl:
                 customerInfo.entitlements.active['premium'] &&
                 customerInfo.entitlements.active['premium'].store ===
@@ -98,6 +105,10 @@ export class IndexPageComponent implements OnInit, OnDestroy {
           };
         },
       });
+  }
+
+  showWhyPaid() {
+    this.dialog.open(WhyPaidComponent);
   }
 
   ngOnDestroy(): void {
