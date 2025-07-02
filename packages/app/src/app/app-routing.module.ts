@@ -70,6 +70,12 @@ const routes: Routes = [
     canActivate: [CognitoAuthGuard],
   },
   {
+    path: 'membership',
+    loadChildren: () =>
+      import('./membership/membership.module').then((m) => m.MembershipModule),
+    canActivate: [CognitoAuthGuard],
+  },
+  {
     path: 'page',
     loadChildren: () =>
       import('./static-pages/static-pages.module').then(

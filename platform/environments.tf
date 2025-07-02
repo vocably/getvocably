@@ -13,7 +13,10 @@ export const environmentLocal = {
   piwikId: '${var.piwik_app_id}',
   sentryEnvironment: '${var.sentry_environment}',
   wwwBaseUrl: '${local.www_base_url}',
-  revenueCatWeblink: '${var.revenue_cat_web_link}',
+  paddleClientSideToken: '${var.paddle_client_side_token}',
+  paddleMonthlyPriceId: '${var.paddle_monthly_premium_id}',
+  paddleYearlyPriceId: '${var.paddle_yearly_premium_id}',
+  paddleLifetimePriceId: '${var.paddle_lifetime_premium_id}',
   auth: {
     region: '${data.aws_region.current.name}',
     userPoolId: '${aws_cognito_user_pool.users.id}',
@@ -131,6 +134,8 @@ locals {
 USER_POOL_ID="${aws_cognito_user_pool.users.id}"
 STATIC_USER_FILES_BUCKET="${aws_s3_bucket.user_static_files.bucket}"
 REVENUE_CAT_AUTHORIZATION_HEADER="${var.revenue_cat_auth_header}"
+PADDLE_API_KEY="${var.paddle_api_key}"
+PADDLE_WEBHOOK_SECRET_KEY="${var.paddle_webhook_secret_key}"
   EOT
 }
 

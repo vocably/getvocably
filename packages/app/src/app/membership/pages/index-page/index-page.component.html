@@ -1,0 +1,49 @@
+<div class="container-xl top">
+  <app-header></app-header>
+</div>
+<div class="container-xl bottom">
+  <div class="hero">
+    <div class="text-center">
+      <ng-container *ngIf="membershipStatus.type === 'loading'">
+        <ion-spinner name="dots" class="mr-1"></ion-spinner>Checking membership
+        status...
+      </ng-container>
+      <ng-container *ngIf="membershipStatus.type === 'paid_group'">
+        <h1>You are a Premium user</h1>
+        <div>
+          <button class="unstyled link" (click)="showWhyPaid()">Why?</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="membershipStatus.type === 'free'">
+        <div style="padding: 0 2rem">
+          <h1 style="margin-bottom: 3rem">Save as many cards as you like.</h1>
+        </div>
+        <app-membership-selector></app-membership-selector>
+      </ng-container>
+      <ng-container *ngIf="membershipStatus.type === 'revenue_cat'">
+        <h1>You are a Premium user</h1>
+        <p *ngIf="membershipStatus.endDate">
+          Your subscription ends at:
+          {{ membershipStatus.endDate.toLocaleDateString() }}
+        </p>
+        <p *ngIf="membershipStatus.nextPaymentDate">
+          Next payment:
+          {{ membershipStatus.nextPaymentDate.toLocaleDateString() }}
+        </p>
+        <div
+          *ngIf="
+            membershipStatus.entitlementInfo.willRenew &&
+            membershipStatus.managementUrl
+          "
+        >
+          <a [href]="membershipStatus.managementUrl"
+            >Manage your subscription</a
+          >
+        </div>
+      </ng-container>
+      <ng-container *ngIf="membershipStatus.type === 'error'">
+        <div>Unable to load your membership status</div>
+      </ng-container>
+    </div>
+  </div>
+</div>

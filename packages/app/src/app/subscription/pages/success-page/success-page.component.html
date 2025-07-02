@@ -1,0 +1,13 @@
+<div class="text-center">
+  <div style="margin-bottom: 1rem">
+    <mat-icon
+      class="text-primary"
+      style="font-size: 10rem; width: 10rem; height: 10rem"
+      >check_circle</mat-icon
+    >
+  </div>
+  <div *ngIf="productResult.status === 'product'">
+    <div>{{ productResult.product.title }} is successfully purchased.</div>
+    <div>Have fun.</div>
+  </div>
+</div>

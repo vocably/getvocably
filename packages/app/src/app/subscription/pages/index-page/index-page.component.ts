@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../../auth/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-index-page',
@@ -11,15 +9,7 @@ import { AuthService } from '../../../auth/auth.service';
 export class IndexPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.fetchUserData$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((userData) => {
-        location.href = environment.revenueCatWeblink + userData.email;
-      });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next(null);

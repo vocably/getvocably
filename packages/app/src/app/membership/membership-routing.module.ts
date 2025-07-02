@@ -1,23 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MembershipComponent } from './membership/membership.component';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
-import { SuccessPageComponent } from './pages/success-page/success-page.component';
-import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SubscriptionComponent,
+    component: MembershipComponent,
     children: [
       {
         path: '',
-        title: 'Subscribe',
+        title: 'Membership',
         component: IndexPageComponent,
-      },
-      {
-        path: 'success/:priceId',
-        title: 'Success',
-        component: SuccessPageComponent,
       },
     ],
   },
@@ -27,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SubscriptionRoutingModule {}
+export class MembershipRoutingModule {}

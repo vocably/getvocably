@@ -1,0 +1,44 @@
+<div class="container-l">
+  <div class="cards mb-2">
+    <button
+      class="card flex-1"
+      *ngFor="let product of subscriptionProducts"
+      (click)="onSelect(product)"
+    >
+      <div class="break-word text-center mb-1">
+        <span class="text-emphasize text-x200">{{ product.duration }}</span
+        ><br class="hide-when-needed" />
+        <span class="text-x150">{{ product.durationUnit }}</span>
+      </div>
+      <div
+        class="display-flex justify-content-center align-items-center border-bottom mb-1 pb-1"
+      >
+        <div class="text-emphasize flex-1 nowrap">
+          {{ product.perMonth ? 'Per month' : '&nbsp;' }}
+        </div>
+        <div class="text-primary text-x150 flex-1 text-right">
+          {{ product.perMonth ? product.perMonth : '&nbsp;' }}
+        </div>
+      </div>
+      <div class="display-flex justify-content-center align-items-center mb-2">
+        <div class="text-emphasize flex-0">Total</div>
+        <del
+          *ngIf="product.maxTotal"
+          class="flex-1 ml-1 text-x150 text-center"
+          >{{ product.maxTotal }}</del
+        >
+        <div class="text-primary text-x150 flex-1 text-right">
+          {{ product.total }}
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="select-button">Select</div>
+      </div>
+    </button>
+  </div>
+
+  <div class="text-center">
+    All your saved cards will stay in your collection after you cancel your
+    subscription.
+  </div>
+</div>

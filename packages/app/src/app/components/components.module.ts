@@ -22,6 +22,7 @@ import { GoogleIconComponent } from './google-icon/google-icon.component';
 import { LanguageIconComponent } from './language-icon/language-icon.component';
 import { LanguageInputComponent } from './language-input/language-input.component';
 import { LoaderComponent } from './loader/loader.component';
+import { MembershipSelectorComponent } from './membership-selector/membership-selector.component';
 import { SubscriptionStatusPipe } from './subscription-status.pipe';
 import { TooltipTriggerForDirective } from './tooltip/tooltip-trigger-for.directive';
 import { TooltipComponent } from './tooltip/tooltip.component';
@@ -39,6 +40,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     ExpansionComponent,
     AppQrCodeComponent,
     DeckSelectorComponent,
+    MembershipSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     AppQrCodeComponent,
     DeckSelectorComponent,
     LoaderComponent,
+    MembershipSelectorComponent,
   ],
 })
 export class ComponentsModule {}

@@ -12,8 +12,8 @@ import { lastValueFrom, mergeMap, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { buildErrorResponse } from '../../utils/buildErrorResponse';
 import { buildResponse } from '../../utils/buildResponse';
+import { getSub } from '../../utils/getSub';
 import { getPartialStaticMetadata } from './getPartialStaticMetadata';
-import { getSub } from './getSub';
 
 export const revenueCatWebhook = async (
   event: APIGatewayProxyEvent

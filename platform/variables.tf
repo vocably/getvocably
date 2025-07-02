@@ -151,3 +151,33 @@ variable "revenue_cat_auth_header" {
 variable "revenue_cat_web_link" {
   type = string
 }
+
+variable "paddle_client_side_token" {
+  type    = string
+  default = "live_813a7ee9405b281277af57927a0"
+}
+
+variable "paddle_monthly_premium_id" {
+  type    = string
+  default = "pri_01jym0ssdz54dmmhk15se4a171"
+}
+
+variable "paddle_yearly_premium_id" {
+  type    = string
+  default = "pri_01jz0q88xn4ba9rnqhq61vhaxf"
+}
+
+variable "paddle_lifetime_premium_id" {
+  type    = string
+  default = "pri_01jz0qapwnkm9xjsjbhd54nr44"
+}
+
+variable "paddle_api_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "paddle_webhook_secret_key" {
+  type      = string
+  sensitive = true
+}
