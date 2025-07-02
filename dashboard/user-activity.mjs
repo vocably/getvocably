@@ -43,3 +43,33 @@ const userMetadata = JSON.parse(
 );
 
 console.log('User metadata', inspect(userMetadata, { depth: null }));
+
+try {
+  const userCardCollections = JSON.parse(
+    (
+      await execute(
+        `aws s3api list-objects --bucket ${process.env.DECKS_BUCKET} --prefix "${sub}/"`
+      )
+    ).stdout
+  );
+
+  console.log(
+    'Cards collections',
+    inspect(userCardCollections, { depth: null })
+  );
+} catch (error) {
+  console.error(error);
+}
+
+const userStaticMetadata = JSON.parse(
+  (
+    await execute(
+      `aws s3 cp s3://${process.env.USER_STATIC_FILES_BUCKET}/${sub}/static-metadata.json -`
+    )
+  ).stdout || '""'
+);
+
+console.log(
+  'User static metadata',
+  inspect(userStaticMetadata, { depth: null })
+);

@@ -7,6 +7,7 @@
     "test": "echo '@vocably/www-backend has no tests.'"
   },
   "devDependencies": {
+    "@paddle/paddle-node-sdk": "^2.8.0",
     "@puzzmo/revenue-cat-webhook-types": "^0.3.0"
   }
 }

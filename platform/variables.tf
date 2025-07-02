@@ -171,3 +171,13 @@ variable "paddle_lifetime_premium_id" {
   type    = string
   default = "pri_01jz0qapwnkm9xjsjbhd54nr44"
 }
+
+variable "paddle_api_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "paddle_webhook_secret_key" {
+  type      = string
+  sensitive = true
+}
