@@ -34,15 +34,19 @@ try {
   console.error(error);
 }
 
-const userMetadata = JSON.parse(
-  (
-    await execute(
-      `aws s3 cp s3://${process.env.USER_FILES_BUCKET}/${sub}/files/metadata.json -`
-    )
-  ).stdout || '""'
-);
+try {
+  const userMetadata = JSON.parse(
+    (
+      await execute(
+        `aws s3 cp s3://${process.env.USER_FILES_BUCKET}/${sub}/files/metadata.json -`
+      )
+    ).stdout || '""'
+  );
 
-console.log('User metadata', inspect(userMetadata, { depth: null }));
+  console.log('User metadata', inspect(userMetadata, { depth: null }));
+} catch (error) {
+  console.log("Can't read user metadata.", error.toString());
+}
 
 try {
   const userCardCollections = JSON.parse(
@@ -58,18 +62,22 @@ try {
     inspect(userCardCollections, { depth: null })
   );
 } catch (error) {
-  console.error(error);
+  console.log("Can't read user cards collection", error.toString());
 }
 
-const userStaticMetadata = JSON.parse(
-  (
-    await execute(
-      `aws s3 cp s3://${process.env.USER_STATIC_FILES_BUCKET}/${sub}/static-metadata.json -`
-    )
-  ).stdout || '""'
-);
+try {
+  const userStaticMetadata = JSON.parse(
+    (
+      await execute(
+        `aws s3 cp s3://${process.env.USER_STATIC_FILES_BUCKET}/${sub}/static-metadata.json -`
+      )
+    ).stdout || '""'
+  );
 
-console.log(
-  'User static metadata',
-  inspect(userStaticMetadata, { depth: null })
-);
+  console.log(
+    'User static metadata',
+    inspect(userStaticMetadata, { depth: null })
+  );
+} catch (error) {
+  console.log("Can't read user static metadata.", error.toString());
+}
