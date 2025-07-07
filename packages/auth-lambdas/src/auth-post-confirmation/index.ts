@@ -1,6 +1,5 @@
 import { nodeSaveUserMetadata } from '@vocably/lambda-shared';
 import { Callback, Context, PostConfirmationTriggerEvent } from 'aws-lambda';
-import { adminAddUserToGroup } from './adminAddUserToGroup';
 import { adminGetUser } from './adminGetUser';
 import { addContact } from './brevo';
 import { getAttribute } from './getAttribute';
@@ -13,11 +12,11 @@ export const authPostConfirmation = async (
   const { userPoolId, userName } = event;
 
   try {
-    await adminAddUserToGroup({
-      userPoolId,
-      username: userName,
-      groupName: 'paid',
-    });
+    // await adminAddUserToGroup({
+    //   userPoolId,
+    //   username: userName,
+    //   groupName: 'paid',
+    // });
 
     const user = await adminGetUser({
       userPoolId,
