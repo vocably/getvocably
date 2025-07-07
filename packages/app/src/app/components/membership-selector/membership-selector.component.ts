@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { getPaddleInstance } from '@paddle/paddle-js';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
@@ -12,7 +12,7 @@ import {
   templateUrl: './membership-selector.component.html',
   styleUrls: ['./membership-selector.component.scss'],
 })
-export class MembershipSelectorComponent implements OnInit {
+export class MembershipSelectorComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   subscriptionProducts = subscriptionProducts;
