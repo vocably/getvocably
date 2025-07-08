@@ -53,12 +53,12 @@
 }
 
 .popup-slide .hero-slide-body {
-  padding: 2rem;
+  padding: 3rem;
 }
 
 @media (min-width: $lg) {
   .popup-slide .text {
-    margin-top: -4rem;
+    margin-top: -2rem;
   }
 }
 
@@ -106,5 +106,16 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
+  }
+}
+
+.youtube-slide {
+  .hero-slide-body {
+    padding: 3rem;
+    gap: 3rem;
+  }
+
+  img {
+    filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.4));
   }
 }
