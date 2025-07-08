@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import '@sneas/telephone/iphone-16-max';
 import { ComponentsModule } from '../components/components.module';
 import { HeaderModule } from '../header/header.module';
+import { CarouselComponent } from './carousel/carousel.component';
 import { AutoSignInSuccessPageComponent } from './pages/auto-sign-in-success-page/auto-sign-in-success-page.component';
 import { HandsFreePageComponent } from './pages/hands-free-page/hands-free-page.component';
 import { ManualSignInSuccessPageComponent } from './pages/manual-sign-in-success-page/manual-sign-in-success-page.component';
@@ -20,6 +21,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     SignInComponent,
     AutoSignInSuccessPageComponent,
     ManualSignInSuccessPageComponent,
+    CarouselComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     AutoSignInSuccessPageComponent,
     ManualSignInSuccessPageComponent,
     SignInComponent,
+    CarouselComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
