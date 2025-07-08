@@ -1,5 +1,6 @@
 <div class="container-xl top"><app-header></app-header></div>
 <div class="container-l bottom">
+  <div class="text-center mb-1 lead-1">A language-learning ecosystem.</div>
   <div class="mb-1">
     <swiper-container slides-per-view="1" navigation="true" pagination="true">
       <swiper-slide class="hero-slide popup-slide">
@@ -51,9 +52,26 @@
           </div>
         </div>
       </swiper-slide>
+      <swiper-slide class="hero-slide master-cards-slide">
+        <div class="hero-slide-body">
+          <div class="image">
+            <div class="iphone">
+              <iphone-16-max mode="light">
+                <img
+                  src="assets/sign-up/reverse-translation.webp"
+                  alt="Study"
+                />
+              </iphone-16-max>
+            </div>
+          </div>
+          <div class="text">
+            Don't know the right word? Search for it in your native language.
+          </div>
+        </div>
+      </swiper-slide>
     </swiper-container>
   </div>
-  <div class="text-center mb-1">You need an account to use Vocably.</div>
+  <div class="text-center mb-1 lead-1">You'll need an account to use it.</div>
 
   <app-sign-in></app-sign-in>
 </div>
