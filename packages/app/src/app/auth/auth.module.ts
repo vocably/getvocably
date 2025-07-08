@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { IonicModule } from '@ionic/angular';
 import { ComponentsModule } from '../components/components.module';
@@ -33,5 +33,6 @@ import { SignInComponent } from './sign-in/sign-in.component';
     ManualSignInSuccessPageComponent,
     SignInComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AuthModule {}

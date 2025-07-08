@@ -1,0 +1,91 @@
+@import '../../../../styles/variables';
+
+.hero-slide {
+  overflow: hidden;
+  padding: 0 60px 0 60px;
+}
+
+.hero-slide-body {
+  background-color: var(--contrast-bg);
+  border-radius: 2rem;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.light,
+.dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .light {
+    display: block;
+  }
+}
+
+@media (min-width: $md) {
+  .image {
+    width: 60%;
+  }
+
+  .text {
+    width: 40%;
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: $md) {
+  .image {
+    width: 100%;
+  }
+  .text {
+    display: none;
+  }
+}
+
+@media (min-width: $lg) {
+  .popup-slide .text {
+    margin-top: -4rem;
+  }
+}
+
+.popup-demonstration {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+  height: 100%;
+
+  .popup {
+    content: ' ';
+    height: 300px;
+    width: 100%;
+    background: url('./chrome-popup.webp') no-repeat bottom center;
+    background-size: contain;
+    filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.4));
+  }
+
+  .selected-text {
+    content: ' ';
+    height: 100px;
+    width: 100%;
+    background: url('./chrome-text-light.svg') no-repeat top center;
+    background-size: contain;
+
+    @media (prefers-color-scheme: dark) {
+      background-image: url('./chrome-text-dark.svg');
+    }
+  }
+}

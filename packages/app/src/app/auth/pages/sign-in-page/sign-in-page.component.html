@@ -1,13 +1,30 @@
 <div class="container-xl top"><app-header></app-header></div>
 <div class="container-l bottom">
-  <div class="hero">
-    <div class="hero-body">
-      <div class="lead-2 text-center text-emphasize mb-2">
-        First time here?
-        <a href="https://vocably.pro">Read more about Vocably.</a>
-      </div>
-
-      <app-sign-in></app-sign-in>
-    </div>
+  <div class="mb-1">
+    <swiper-container slides-per-view="1" navigation="true" pagination="true">
+      <swiper-slide class="hero-slide">
+        <div class="hero-slide-body popup-slide">
+          <div class="image popup-demonstration">
+            <div class="popup"></div>
+            <div class="selected-text"></div>
+          </div>
+          <div class="text">
+            <div class="mb-1">
+              Instant context-aware translations on any website.
+            </div>
+            <div>Save your translations as flashcards.</div>
+          </div>
+        </div>
+      </swiper-slide>
+      <swiper-slide class="hero-slide">
+        <div class="hero-slide-body">Slide 1</div>
+      </swiper-slide>
+      <swiper-slide class="hero-slide">
+        <div class="hero-slide-body">Slide 1</div>
+      </swiper-slide>
+    </swiper-container>
   </div>
+  <div class="text-center mb-1">You need an account to use Vocably.</div>
+
+  <app-sign-in></app-sign-in>
 </div>
