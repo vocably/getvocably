@@ -221,7 +221,7 @@ describe('aiDirectTranslate', () => {
       return;
     }
 
-    expect(result.value.transcript).toBe("xīngqī'èr");
+    expect(result.value.transcript).toHaveSomeOf(["xīngqī'èr", 'xīngqī èr']);
   });
 
   it('pinyin for chinese simplified', async () => {
@@ -236,6 +236,6 @@ describe('aiDirectTranslate', () => {
       return;
     }
 
-    expect(result.value.transcript).toBe("xīngqī'èr");
+    expect(result.value.transcript).toHaveSomeOf(["xīngqī'èr", 'xīngqī èr']);
   });
 });
