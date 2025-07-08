@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { IonicModule } from '@ionic/angular';
+import '@sneas/telephone/iphone-16-max';
 import { ComponentsModule } from '../components/components.module';
 import { HeaderModule } from '../header/header.module';
 import { AutoSignInSuccessPageComponent } from './pages/auto-sign-in-success-page/auto-sign-in-success-page.component';

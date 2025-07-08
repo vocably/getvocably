@@ -13,7 +13,6 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 2rem;
 }
 
 .light,
@@ -53,6 +52,10 @@
   }
 }
 
+.popup-slide .hero-slide-body {
+  padding: 2rem;
+}
+
 @media (min-width: $lg) {
   .popup-slide .text {
     margin-top: -4rem;
@@ -87,5 +90,21 @@
     @media (prefers-color-scheme: dark) {
       background-image: url('./chrome-text-dark.svg');
     }
+  }
+}
+
+.master-cards-slide {
+  .hero-slide-body {
+    padding: 2rem 4rem 0 4rem;
+  }
+
+  .image {
+    align-self: flex-end;
+  }
+  .iphone {
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
   }
 }
