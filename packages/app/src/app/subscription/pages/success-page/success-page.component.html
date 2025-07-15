@@ -3,11 +3,14 @@
     <mat-icon
       class="text-primary"
       style="font-size: 10rem; width: 10rem; height: 10rem"
-      >check_circle</mat-icon
+      >priority</mat-icon
     >
   </div>
   <div *ngIf="productResult.status === 'product'">
-    <div>{{ productResult.product.title }} is successfully purchased.</div>
-    <div>Have fun.</div>
+    <div>
+      <div class="mat-h1">{{ productResult.product.title }}</div>
+      <div class="mat-h2">is successfully purchased.</div>
+    </div>
+    <a [href]="'/membership'">Go back to the membership page.</a>
   </div>
 </div>
