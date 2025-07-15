@@ -8,6 +8,7 @@ export type SubscriptionProduct = {
   total: string;
   maxTotal: string;
   title: string;
+  trialDays: number;
 };
 
 export const subscriptionProducts: SubscriptionProduct[] = [
@@ -19,6 +20,7 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     total: '$4.99',
     maxTotal: '',
     title: 'Monthly premium',
+    trialDays: 7,
   },
   {
     priceId: environment.paddleYearlyPriceId,
@@ -28,6 +30,7 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     total: '$29.99',
     maxTotal: '$59.88',
     title: 'Yearly premium',
+    trialDays: 7,
   },
   {
     priceId: environment.paddleLifetimePriceId,
@@ -37,5 +40,6 @@ export const subscriptionProducts: SubscriptionProduct[] = [
     total: '$59.99',
     maxTotal: '',
     title: 'Lifetime   premium',
+    trialDays: 0,
   },
 ];

@@ -47,6 +47,11 @@
 
   .text-x150 {
     font-size: 150%;
+    line-height: 2rem;
+  }
+
+  .text-x150-line-height {
+    line-height: 2rem;
   }
 
   .border-bottom {
@@ -71,6 +76,108 @@
   .hide-when-needed {
     @media (min-width: $sm + 100px) {
       display: none;
+    }
+  }
+}
+
+.features {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--contrast-bg);
+  border-radius: $border-radius;
+  text-align: left;
+
+  .feature {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .feature-explanation {
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+
+  .feature:last-child .feature-explanation {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .divider {
+    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+  }
+
+  .feature-title {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.comparison {
+  display: flex;
+  justify-content: center;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+.social-proof {
+  background-color: var(--contrast-bg);
+  border-radius: $border-radius;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  .stars-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stars {
+    --star-size: 3rem;
+
+    mat-icon {
+      font-size: var(--star-size);
+      width: var(--star-size);
+      height: var(--star-size);
+    }
+
+    .background,
+    .foreground {
+      line-height: var(--star-size);
+      height: var(--star-size);
+    }
+
+    .background {
+      color: var(--text-muted);
+    }
+
+    .foreground {
+      color: #ffa000;
+      overflow: hidden;
+      width: 94%;
+      white-space: nowrap;
+      margin-top: calc(var(--star-size) * -1);
     }
   }
 }

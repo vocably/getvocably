@@ -15,9 +15,6 @@
         </div>
       </ng-container>
       <ng-container *ngIf="membershipStatus.type === 'free'">
-        <div style="padding: 0 2rem">
-          <h1 style="margin-bottom: 3rem">Save as many cards as you like.</h1>
-        </div>
         <app-membership-selector></app-membership-selector>
       </ng-container>
       <ng-container *ngIf="membershipStatus.type === 'revenue_cat'">

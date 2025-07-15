@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import { Platform } from '@ionic/angular';
 import { getPaddleInstance } from '@paddle/paddle-js';
 import * as Sentry from '@sentry/browser';
@@ -22,8 +23,12 @@ export class AppComponent implements OnInit {
     routerParams: RouterParamsService,
     private refreshService: RefreshService,
     public platform: Platform,
-    private auth: AuthService
+    private auth: AuthService,
+    iconRegistry: MatIconRegistry
   ) {
+    iconRegistry.registerFontClassAlias('material-symbols-outlined');
+    iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+
     routerParams.data$.subscribe((data) => {
       this.disabledRefresher = data['disabledRefresher'] ?? false;
     });
