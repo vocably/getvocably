@@ -110,7 +110,10 @@ export const Streak: FC<Props> = ({ consecutiveDays, hasBeenShown }) => {
             transform: [{ translateY: previousNumberTranslateY }],
           }}
         >
-          <Text style={{ fontSize: 96 }}>{consecutiveDays - 1}</Text>
+          <Text style={{ fontSize: 96 }}>
+            {/* This is a monkey-patch to prevent -1. I don't know how to fix it the right way */}
+            {consecutiveDays > 0 ? consecutiveDays - 1 : consecutiveDays}
+          </Text>
         </Animated.View>
 
         <Animated.View
@@ -124,7 +127,8 @@ export const Streak: FC<Props> = ({ consecutiveDays, hasBeenShown }) => {
               fontSize: 96,
             }}
           >
-            {consecutiveDays}
+            {/* This is a monkey-patch to prevent -1. I don't know how to fix it the right way */}
+            {consecutiveDays === 0 ? 1 : consecutiveDays}
           </Text>
         </Animated.View>
       </View>

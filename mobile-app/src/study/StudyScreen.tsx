@@ -86,6 +86,8 @@ export const StudyScreen: Props = ({ route, navigation }) => {
   const [streakHasShownToday, setStreakHasShown] = useStreakHasBeenShown();
   const studyStatsResult = useStudyStats();
 
+  console.log('study stats result', studyStatsResult);
+
   useEffect(() => {
     if (
       cardsAnsweredToday !== null &&
