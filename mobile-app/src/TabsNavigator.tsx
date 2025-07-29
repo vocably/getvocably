@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DeckStack } from './DeckStack';
 import { LookUpScreen } from './LookUpScreen';
 import { SettingsStack } from './Settings/SettingsStack';
+import { TipsStack } from './Tips/TipsStack';
 import { useWelcomeRequired } from './useWelcomeRequired';
 
 const Tabs = createMaterialBottomTabNavigator();
@@ -60,6 +61,16 @@ export const TabsNavigator: FC<Props> = ({ navigation }) => {
             title: 'Look up',
             tabBarIcon: ({ color }) => (
               <Icon name="translate" color={color} size={24} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Tips"
+          component={TipsStack}
+          options={{
+            title: 'Tips',
+            tabBarIcon: ({ color }) => (
+              <Icon name="information-outline" color={color} size={24} />
             ),
           }}
         />

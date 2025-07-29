@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,6 +15,8 @@ type Props = {
 };
 
 const BORDER_RADIUS = 12;
+const LEFT_ICON_WIDTH = 56;
+const RIGHT_ICON_WIDTH = 48;
 
 export const ListItem: FC<Props> = ({
   style,
@@ -27,6 +29,8 @@ export const ListItem: FC<Props> = ({
   order = 'single',
 }) => {
   const theme = useTheme();
+  const [itemWidth, setItemWidth] = useState(0);
+
   return (
     <TouchableRipple
       disabled={disabled}
@@ -49,13 +53,20 @@ export const ListItem: FC<Props> = ({
       onPress={onPress}
     >
       <View
+        onLayout={(event) => {
+          setItemWidth(event.nativeEvent.layout.width);
+        }}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <View style={{ width: 56 }}>
+        <View
+          style={{
+            width: LEFT_ICON_WIDTH,
+          }}
+        >
           <Icon
             name={leftIcon}
             size={24}
@@ -63,7 +74,13 @@ export const ListItem: FC<Props> = ({
             style={{ marginLeft: 16 }}
           />
         </View>
-        <View style={{ flexGrow: 1 }}>
+        <View
+          style={{
+            width:
+              itemWidth - LEFT_ICON_WIDTH - (rightIcon ? RIGHT_ICON_WIDTH : 0),
+            paddingRight: 16,
+          }}
+        >
           <Text
             style={{
               color: color ?? theme.colors.onBackground,
@@ -74,7 +91,11 @@ export const ListItem: FC<Props> = ({
           </Text>
         </View>
         {rightIcon && (
-          <View style={{ width: 48 }}>
+          <View
+            style={{
+              width: RIGHT_ICON_WIDTH,
+            }}
+          >
             <Icon
               name={rightIcon}
               size={24}

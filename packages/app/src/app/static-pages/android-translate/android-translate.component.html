@@ -1,0 +1,30 @@
+<div class="container-xl top mb-2">
+  <app-logo style="height: 30px"></app-logo>
+</div>
+<div class="container bottom">
+  <div *ngIf="isLoading" class="text-center">
+    <ion-spinner name="dots" class="mr-1"></ion-spinner>Loading example text...
+  </div>
+  <div *ngIf="!isLoading">
+    <div class="mb-1">To translate any word on any website or app:</div>
+
+    <ol class="mb-1">
+      <li>Select the word</li>
+      <li>
+        Click
+        <span class="more-button"><mat-icon>more_vert</mat-icon></span>
+      </li>
+      <li>Click "Translate with Vocably"</li>
+    </ol>
+    <ng-container *ngIf="exampleHtml">
+      <div class="mb-1">
+        Try it on this text <mat-icon class="middle">arrow_downward</mat-icon>
+      </div>
+      <div
+        class="text-example"
+        [lang]="sourceLanguage"
+        [innerHTML]="exampleHtml"
+      ></div>
+    </ng-container>
+  </div>
+</div>

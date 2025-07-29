@@ -1,7 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { Divider, Text, useTheme } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { DeleteDeckButton } from './DeleteDeckButton';
 import { useSelectedDeck } from './languageDeck/useSelectedDeck';
 import { CustomScrollView } from './ui/CustomScrollView';
@@ -15,8 +15,6 @@ type Props = {
 };
 
 export const EditDeckScreen: FC<Props> = ({ navigation }) => {
-  const theme = useTheme();
-
   const languageName = useCurrentLanguageName();
   const deck = useSelectedDeck({ autoReload: false });
 
@@ -47,32 +45,6 @@ export const EditDeckScreen: FC<Props> = ({ navigation }) => {
           <Text style={{ fontWeight: 'bold' }}>{languageName}</Text> cards.
         </Text>
       </View>
-
-      <CustomSurface style={{ marginBottom: 32 }}>
-        <ListItem
-          order="first"
-          title="How to edit cards"
-          onPress={() => navigation.navigate('HowToEditCards')}
-          leftIcon="pencil-outline"
-          rightIcon="menu-right"
-        ></ListItem>
-        <Divider style={{ alignSelf: 'stretch' }} />
-        <ListItem
-          order="middle"
-          title="How to group cards"
-          onPress={() => navigation.navigate('HowToGroupCards')}
-          leftIcon="group"
-          rightIcon="menu-right"
-        ></ListItem>
-        <Divider style={{ alignSelf: 'stretch' }} />
-        <ListItem
-          order="last"
-          title="How to import and export"
-          onPress={() => navigation.navigate('HowToImportAndExport')}
-          leftIcon="swap-vertical"
-          rightIcon="menu-right"
-        ></ListItem>
-      </CustomSurface>
 
       <CustomSurface style={{ marginBottom: 32 }}>
         <DeleteDeckButton />

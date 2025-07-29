@@ -1,0 +1,18 @@
+.text-example {
+  padding: 2rem;
+  color: var(--emphasize-color);
+  background: var(--contrast-bg);
+  font-size: 140%;
+}
+
+.more-button {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  background: var(--contrast-bg);
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  vertical-align: middle;
+}
