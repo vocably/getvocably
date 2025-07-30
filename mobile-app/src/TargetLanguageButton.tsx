@@ -1,18 +1,13 @@
 import { NavigationProp } from '@react-navigation/native';
 import { GoogleLanguage, languageList } from '@vocably/model';
 import { FC } from 'react';
-import { NativeModules, Platform, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
+import { getDeviceLanguage } from './getDeviceLanguage';
 import { Preset } from './TranslationPreset/TranslationPresetContainer';
 import { LanguagePairs } from './TranslationPreset/useLanguagePairs';
 
-const deviceLocale =
-  Platform.OS === 'ios'
-    ? NativeModules.SettingsManager.settings.AppleLanguages[0] ||
-      NativeModules.SettingsManager.settings.AppleLocale
-    : NativeModules.I18nManager.localeIdentifier;
-
-const deviceLanguage = deviceLocale.substring(0, 2);
+const deviceLanguage = getDeviceLanguage();
 
 type Props = {
   navigation: NavigationProp<any>;
