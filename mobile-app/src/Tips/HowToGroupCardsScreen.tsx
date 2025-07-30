@@ -9,7 +9,7 @@ type Props = {};
 export const HowToGroupCardsScreen: FC<Props> = () => {
   return (
     <CustomScrollView>
-      <ScreenTitle icon="group" title="How to group cards" />
+      <ScreenTitle icon="folder-outline" title="How to group cards" />
       <View style={{ paddingHorizontal: 16 }}>
         <HowToGroupCards />
       </View>

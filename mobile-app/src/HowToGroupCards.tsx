@@ -19,16 +19,15 @@ export const HowToGroupCards: FC<Props> = () => {
       <Text style={styles.text}>Grouping can be done with tags.</Text>
       <Text style={styles.text}>
         Swipe any existing card left and press{' '}
-        <Icon name={'tag-plus'} size={16} /> button.
+        <Icon name={'tag-plus'} size={24} /> button.
       </Text>
       <Text style={styles.text}>
-        Or press the{' '}
-        <Icon name={'tag-plus'} color={theme.colors.primary} size={16} /> button
-        on a newly added card.
+        Or press the <Icon name={'tag-plus'} size={24} /> button on a newly
+        added card.
       </Text>
       <Text style={styles.text}>
         When at least one tag is created, press the{' '}
-        <Icon name={'tag'} size={16} /> icon on the Study button to study a
+        <Icon name={'tag'} size={24} /> icon on the Study button to study a
         selected tag or a group of selected tags.
       </Text>
       <Text style={styles.text}>

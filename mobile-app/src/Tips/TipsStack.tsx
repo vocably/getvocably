@@ -5,7 +5,7 @@ import { Header } from '../Header';
 import { HowToEditCardsScreen } from './HowToEditCardsScreen';
 import { HowToGroupCardsScreen } from './HowToGroupCardsScreen';
 import { HowToImportAndExportScreen } from './HowToImportAndExportScreen';
-import { HowToTranslateOnAndroid } from './HowToTranslateOnAndroid';
+import { HowToViewStudyStatisticsScreen } from './HowToViewStudyStatisticsScreen';
 import { TipsScreen } from './TipsScreen';
 
 const Stack = createStackNavigator();
@@ -42,9 +42,9 @@ export const TipsStack: FC = () => {
         component={HowToImportAndExportScreen}
       />
       <Stack.Screen
-        name="HowToTranslateOnAndroid"
+        name="HowToViewStudyStatistics"
         options={{ title: `Tips` }}
-        component={HowToTranslateOnAndroid}
+        component={HowToViewStudyStatisticsScreen}
       />
     </Stack.Navigator>
   );
