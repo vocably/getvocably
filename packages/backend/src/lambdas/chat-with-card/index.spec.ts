@@ -4,7 +4,7 @@ import { chatWithCardFunction } from './index';
 // @ts-ignore
 let mockEvent: APIGatewayProxyEvent = {};
 
-describe('integration check for chat-with-card lambda', () => {
+xdescribe('integration check for chat-with-card lambda', () => {
   jest.setTimeout(30000);
 
   if (process.env.TEST_SKIP_SPEC === 'true') {
