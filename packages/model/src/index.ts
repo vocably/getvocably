@@ -1,6 +1,7 @@
 export * from './analysis';
 export * from './audio-pronunciation';
 export * from './bulk-analysis';
+export * from './chat-with-card';
 export * from './constants';
 export * from './errors';
 export * from './language';

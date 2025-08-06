@@ -1,4 +1,4 @@
-import { isObject } from 'lodash-es';
+import { isObject, isString } from 'lodash-es';
 
 export type Tag = {
   title: string;
@@ -63,6 +63,19 @@ export type Card = {
   translation: string;
   partOfSpeech: string;
   tags: TagItem[];
+};
+
+export const isCard = (something: any): something is Card => {
+  return (
+    isObject(something) &&
+    isString(something['language']) &&
+    isString(something['source']) &&
+    isString(something['definition']) &&
+    isString(something['translation']) &&
+    isString(something['partOfSpeech']) &&
+    Array.isArray(something['tags']) &&
+    something['tags'].every(isTagItem)
+  );
 };
 
 export type SrsCard = Card & SrsItem;
