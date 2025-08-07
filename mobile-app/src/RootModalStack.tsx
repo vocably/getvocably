@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'react-native-paper';
+import { ChatWithCardModal } from './ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
-import { MnemonicModal } from './MnemonicModal';
 import { PaymentSuccessModal } from './PaymentSuccessModal';
 import { StudyScreen } from './study/StudyScreen';
 import { TabsNavigator } from './TabsNavigator';
@@ -38,7 +38,7 @@ export const RootModalStack = () => {
         />
         <Stack.Screen name="Study" component={StudyScreen} />
         <Stack.Screen name="EditCardModal" component={EditCardScreen} />
-        <Stack.Screen name="MnemonicModal" component={MnemonicModal} />
+        <Stack.Screen name="ChatWithCardModal" component={ChatWithCardModal} />
         <Stack.Screen
           name="PaymentSuccessModal"
           component={PaymentSuccessModal}

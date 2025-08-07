@@ -1,5 +1,5 @@
 import { NavigationProp, Route } from '@react-navigation/native';
-import { CardItem, GoogleLanguage, isGoogleLanguage } from '@vocably/model';
+import { CardItem, GoogleLanguage } from '@vocably/model';
 import { grade, slice, SrsScore } from '@vocably/srs';
 import { setBadgeCount } from 'aws-amplify/push-notifications';
 import { shuffle } from 'lodash-es';
@@ -38,12 +38,6 @@ type Props = FC<{
   route: Route<string, any>;
   navigation: NavigationProp<any>;
 }>;
-
-const isOkayForMnemonic = (cardItem: CardItem) => {
-  return (
-    cardItem.data.partOfSpeech && !cardItem.data.partOfSpeech.includes('phrase')
-  );
-};
 
 export const StudyScreen: Props = ({ route, navigation }) => {
   const theme = useTheme();
@@ -340,25 +334,19 @@ export const StudyScreen: Props = ({ route, navigation }) => {
                   backgroundColor: theme.colors.background,
                 }}
               />
-              {isOkayForMnemonic(cards[0]) &&
-                isGoogleLanguage(language) &&
-                isGoogleLanguage(translationLanguage ?? '') && (
-                  <IconButton
-                    icon={'creation'}
-                    size={24}
-                    onPress={() =>
-                      navigation.navigate('MnemonicModal', {
-                        sourceLanguage: language,
-                        targetLanguage: translationLanguage,
-                        card: cards[0],
-                      })
-                    }
-                    style={{
-                      transform: [{ translateX: -9 }],
-                      backgroundColor: theme.colors.background,
-                    }}
-                  />
-                )}
+              <IconButton
+                icon={'creation'}
+                size={24}
+                onPress={() =>
+                  navigation.navigate('ChatWithCardModal', {
+                    cardItem: cards[0],
+                  })
+                }
+                style={{
+                  transform: [{ translateX: -9 }],
+                  backgroundColor: theme.colors.background,
+                }}
+              />
             </>
           )}
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
