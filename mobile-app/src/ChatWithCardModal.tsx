@@ -3,7 +3,7 @@ import { chatWithCard } from '@vocably/api';
 import { CardItem, ChatWithCardMessage } from '@vocably/model';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
-import { Appbar, Surface } from 'react-native-paper';
+import { Appbar, Button, Surface, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChatTextInput, ChatTextInputRef } from './ChatWithCards/ChatTextInput';
 import { getInitialMessage } from './ChatWithCards/getInitialMessage';
@@ -30,6 +30,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
   const [messages, setMessages] = useState<ChatWithCardMessage[]>([]);
   const [isThinking, setIsThinking] = useState(false);
   const inputRef = useRef<ChatTextInputRef>(null);
+  const theme = useTheme();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -49,17 +50,21 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     }
   }, []);
 
-  const send = async () => {
+  const send = async (message?: string) => {
     const newMessages: ChatWithCardMessage[] = [
       ...messages,
       {
         timestamp: new Date().getTime(),
         role: 'user',
-        message: inputValue,
+        message: message ?? inputValue,
       },
     ];
     setMessages(newMessages);
-    setInputValue('');
+
+    if (!message) {
+      setInputValue('');
+    }
+
     setIsThinking(true);
     const chatResult = await chatWithCard({
       card: cardItem.data,
@@ -142,6 +147,74 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               paddingRight: insets.right + 16,
             }}
           >
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 4,
+                marginBottom: 8,
+              }}
+            >
+              <Button
+                mode="outlined"
+                compact={true}
+                textColor={theme.colors.outlineVariant}
+                style={{
+                  borderColor: isThinking
+                    ? theme.colors.surfaceDisabled
+                    : theme.colors.outlineVariant,
+                }}
+                labelStyle={{
+                  marginHorizontal: 8,
+                  marginVertical: 4,
+                }}
+                disabled={isThinking}
+                onPress={() => {
+                  send('Explain');
+                }}
+              >
+                Explain
+              </Button>
+              <Button
+                mode="outlined"
+                compact={true}
+                textColor={theme.colors.outlineVariant}
+                style={{
+                  borderColor: isThinking
+                    ? theme.colors.surfaceDisabled
+                    : theme.colors.outlineVariant,
+                }}
+                labelStyle={{
+                  marginHorizontal: 8,
+                  marginVertical: 4,
+                }}
+                disabled={isThinking}
+                onPress={() => {
+                  send('Provide several example sentences');
+                }}
+              >
+                Examples
+              </Button>
+              <Button
+                mode="outlined"
+                compact={true}
+                textColor={theme.colors.outlineVariant}
+                style={{
+                  borderColor: isThinking
+                    ? theme.colors.surfaceDisabled
+                    : theme.colors.outlineVariant,
+                }}
+                labelStyle={{
+                  marginHorizontal: 8,
+                  marginVertical: 4,
+                }}
+                disabled={isThinking}
+                onPress={() => {
+                  send('Help me to remember this card');
+                }}
+              >
+                Remember
+              </Button>
+            </View>
             <ChatTextInput
               ref={inputRef}
               disabled={isThinking}
