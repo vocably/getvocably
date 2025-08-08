@@ -37,6 +37,7 @@ export const Message: FC<Props> = ({ message, direction }) => {
             : theme.colors.primary,
         borderRadius: 16,
         paddingHorizontal: 16,
+        paddingVertical: 8,
       }}
     >
       <Markdown style={markdownStyles}>{fixMarkdown(message)}</Markdown>

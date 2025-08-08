@@ -5,7 +5,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Appbar, Surface } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChatTextInput } from './ChatWithCards/ChatTextInput';
+import { ChatTextInput, ChatTextInputRef } from './ChatWithCards/ChatTextInput';
 import { getInitialMessage } from './ChatWithCards/getInitialMessage';
 import { Message } from './ChatWithCards/Message';
 import { Thinking } from './ChatWithCards/Thinking';
@@ -29,6 +29,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatWithCardMessage[]>([]);
   const [isThinking, setIsThinking] = useState(false);
+  const inputRef = useRef<ChatTextInputRef>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -41,6 +42,12 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
       clearTimeout(timeoutId);
     };
   }, [messages]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const send = async () => {
     const newMessages: ChatWithCardMessage[] = [
@@ -84,7 +91,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               paddingVertical: 6,
             }}
           >
-            <Appbar.Content title="Chat with card" />
+            <Appbar.Content title="Chat about this card" />
             <Appbar.Action
               icon={'close'}
               size={24}
@@ -97,13 +104,16 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
           <View
             style={{
               flex: 1,
-              paddingLeft: insets.left + 16,
-              paddingRight: insets.right + 16,
+              marginTop: 16,
+              marginBottom: 8,
+              marginLeft: insets.left + 16,
+              marginRight: insets.right + 16,
+              borderRadius: 16,
+              overflow: 'hidden',
             }}
           >
             <ScrollView
               contentContainerStyle={{
-                paddingTop: 16,
                 flexGrow: 1,
                 gap: 8,
               }}
@@ -122,24 +132,29 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               ))}
               {isThinking && <Thinking />}
             </ScrollView>
-            <View
-              style={{
-                paddingVertical: 8,
-              }}
-            >
-              <ChatTextInput
-                disabled={isThinking}
-                value={inputValue}
-                placeholder={
-                  isThinking
-                    ? 'This input is disabled now'
-                    : 'Type your message here...'
-                }
-                multiline={true}
-                onChange={setInputValue}
-                onSubmit={send}
-              />
-            </View>
+          </View>
+        }
+        footer={
+          <View
+            style={{
+              paddingBottom: insets.bottom + 16,
+              paddingLeft: insets.left + 16,
+              paddingRight: insets.right + 16,
+            }}
+          >
+            <ChatTextInput
+              ref={inputRef}
+              disabled={isThinking}
+              value={inputValue}
+              placeholder={
+                isThinking
+                  ? 'This input is disabled now'
+                  : 'Type your message here...'
+              }
+              multiline={true}
+              onChange={setInputValue}
+              onSubmit={send}
+            />
           </View>
         }
       />

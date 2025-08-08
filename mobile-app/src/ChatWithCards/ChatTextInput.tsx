@@ -99,14 +99,6 @@ export const ChatTextInput = forwardRef<ChatTextInputRef, Props>(
           placeholderTextColor={theme.colors.tertiary}
           onSubmitEditing={() => onSubmit(value)}
         />
-        {pasteFromClipboard && !value && clipboardHasText && (
-          <IconButton
-            icon={'content-paste'}
-            iconColor={theme.colors.outlineVariant}
-            onPress={setTextFromClipboard}
-            style={{ backgroundColor: 'transparent' }}
-          />
-        )}
         <IconButton
           icon={'arrow-up-thin'}
           mode="contained"
@@ -114,7 +106,7 @@ export const ChatTextInput = forwardRef<ChatTextInputRef, Props>(
           style={{
             backgroundColor: isSearchDisabled
               ? 'transparent'
-              : theme.colors.primary,
+              : theme.colors.onSurface,
           }}
           onPress={() => onSubmit(value)}
           disabled={isSearchDisabled}
