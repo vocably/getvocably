@@ -1,6 +1,7 @@
 import { NavigationProp, Route } from '@react-navigation/native';
 import { chatWithCard } from '@vocably/api';
 import { CardItem, ChatWithCardMessage } from '@vocably/model';
+import { last } from 'lodash-es';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Appbar, Button, Surface, useTheme } from 'react-native-paper';
@@ -28,6 +29,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
 
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatWithCardMessage[]>([]);
+  const [lastMessageError, setLastMessageError] = useState<string | null>(null);
   const [isThinking, setIsThinking] = useState(false);
   const inputRef = useRef<ChatTextInputRef>(null);
   const theme = useTheme();
@@ -51,6 +53,8 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
   }, []);
 
   const send = async (message?: string) => {
+    setLastMessageError(null);
+
     const newMessages: ChatWithCardMessage[] = [
       ...messages,
       {
@@ -66,6 +70,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     }
 
     setIsThinking(true);
+
     const chatResult = await chatWithCard({
       card: cardItem.data,
       history: newMessages,
@@ -73,6 +78,11 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
 
     if (chatResult.success === true) {
       setMessages(chatResult.value.messages);
+    } else {
+      setLastMessageError('An error occurred. Please try again.');
+      const lastMessage = last(newMessages);
+      lastMessage && setInputValue(lastMessage.message);
+      setMessages(newMessages.slice(0, -1));
     }
 
     setIsThinking(false);
@@ -96,7 +106,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               paddingVertical: 6,
             }}
           >
-            <Appbar.Content title="Chat about this card" />
+            <Appbar.Content title="Chat with a card" />
             <Appbar.Action
               icon={'close'}
               size={24}
@@ -136,6 +146,13 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
                 />
               ))}
               {isThinking && <Thinking />}
+              {lastMessageError && (
+                <Message
+                  direction="fromAi"
+                  message={lastMessageError}
+                  error={true}
+                />
+              )}
             </ScrollView>
           </View>
         }
@@ -221,12 +238,12 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               value={inputValue}
               placeholder={
                 isThinking
-                  ? 'This input is disabled now'
+                  ? 'This input is disabled now.'
                   : 'Type your message here...'
               }
               multiline={true}
               onChange={setInputValue}
-              onSubmit={send}
+              onSubmit={() => send()}
             />
           </View>
         }
