@@ -88,7 +88,7 @@ describe('translateDefinitions', () => {
     // @ts-ignore
     expect(translationResult.value[0]).toEqual('источник');
     expect(translationResult.value[1]).toHaveSomeOf(
-      'месторождение, рудник, место нахождения'
+      'месторождение, рудник, место нахождения, место нахождения ценных веществ'
     );
   }, 60_000);
 
