@@ -2,6 +2,7 @@ import { NavigationProp, Route } from '@react-navigation/native';
 import { chatWithCard } from '@vocably/api';
 import { CardItem, ChatWithCardMessage } from '@vocably/model';
 import { last } from 'lodash-es';
+import { usePostHog } from 'posthog-react-native';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Appbar, Button, Surface, useTheme } from 'react-native-paper';
@@ -33,6 +34,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
   const [isThinking, setIsThinking] = useState(false);
   const inputRef = useRef<ChatTextInputRef>(null);
   const theme = useTheme();
+  const posthog = usePostHog();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -50,6 +52,9 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+    posthog.capture('chat-with-card-modal-opened', {
+      cardItem: cardItem,
+    });
   }, []);
 
   const send = async (message?: string) => {
@@ -65,6 +70,11 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     ];
     setMessages(newMessages);
 
+    posthog.capture('chat-with-card-message-sent', {
+      cardItem: cardItem,
+      messages: newMessages,
+    });
+
     if (!message) {
       setInputValue('');
     }
@@ -74,6 +84,11 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     const chatResult = await chatWithCard({
       card: cardItem.data,
       history: newMessages,
+    });
+
+    posthog.capture('chat-with-card-message-result', {
+      cardItem: cardItem,
+      result: chatResult,
     });
 
     if (chatResult.success === true) {
