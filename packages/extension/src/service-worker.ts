@@ -1,6 +1,5 @@
 import { Auth } from '@aws-amplify/auth';
 import { registerServiceWorker } from '@vocably/extension-service-worker';
-import '@vocably/extension-stay-alive';
 import { registerExtensionStorage } from '@vocably/pontis';
 import { browserEnv } from './browserEnv';
 const storage = registerExtensionStorage('sync');
