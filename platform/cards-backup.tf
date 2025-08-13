@@ -94,7 +94,7 @@ resource "aws_lambda_function" "cards_backupper" {
   role             = aws_iam_role.cards_backupper_lambda_execution.arn
   handler          = "cards-backupper.cardsBackupper"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 300
   memory_size      = 256
 }

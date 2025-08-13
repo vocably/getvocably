@@ -66,7 +66,7 @@ resource "aws_lambda_function" "revenue_cat_webhook" {
   role             = aws_iam_role.revenue_cat_webhook_lambda.arn
   handler          = "revenueCatWebhook.revenueCatWebhook"
   source_code_hash = data.archive_file.www_backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 10
 }
 

@@ -1,6 +1,6 @@
 data "external" "www_backend_build" {
   depends_on = [local_file.www_backend_environment]
-  program = ["bash", "-c", <<EOT
+  program = ["bash", "-lc", <<EOT
 (NODE_OPTIONS=--max-old-space-size=1024 npm run build --loglevel verbose) >&2 && echo "{\"dest\": \"dist\"}"
 EOT
   ]

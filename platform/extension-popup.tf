@@ -1,6 +1,6 @@
 data "external" "extension_popup_build" {
   depends_on = [local_file.extension_popup_environment, data.external.www_build]
-  program = ["bash", "-c", <<EOT
+  program = ["bash", "-lc", <<EOT
 (NODE_OPTIONS=--max-old-space-size=1024 npm run build --loglevel verbose) >&2 && echo "{\"dest\": \"$(pwd)/dist\"}"
 EOT
   ]

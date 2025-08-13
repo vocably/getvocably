@@ -126,7 +126,7 @@ resource "aws_lambda_function" "notifications_sender" {
   role             = aws_iam_role.notifications_sender_lambda_execution.arn
   handler          = "notifications-sender.notificationsSender"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
 }
 
 resource "aws_cloudwatch_log_group" "notifications_sender" {

@@ -4,7 +4,7 @@ resource "aws_lambda_function" "bulk_analyze" {
   role             = aws_iam_role.lambda_execution.arn
   handler          = "bulk-analyze.bulkAnalyze"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 10
 }
 

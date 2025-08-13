@@ -13,7 +13,7 @@ resource "local_file" "auth_lambdas_environment" {
 data "external" "auth_lambdas_build" {
   depends_on = [local_file.auth_lambdas_environment]
 
-  program = ["bash", "-c", <<EOT
+  program = ["bash", "-lc", <<EOT
 (NODE_OPTIONS=--max-old-space-size=1024 npm run build --loglevel verbose) >&2 && echo "{\"dest\": \"dist\"}"
 EOT
   ]
@@ -102,7 +102,7 @@ resource "aws_lambda_function" "auth_post_confirmation" {
   role             = aws_iam_role.auth_post_confirmation_lambda_execution.arn
   handler          = "auth-post-confirmation.authPostConfirmation"
   source_code_hash = data.archive_file.auth_lambdas_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
 }
 
 resource "aws_lambda_permission" "auth_post_confirmation" {

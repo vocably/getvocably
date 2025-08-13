@@ -76,7 +76,7 @@ resource "aws_lambda_function" "get_notification_time" {
   role             = aws_iam_role.notification_time_lambda_execution.arn
   handler          = "get-notification-time.getNotificationTime"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 10
 }
 
@@ -147,7 +147,7 @@ resource "aws_lambda_function" "set_notification_time" {
   role             = aws_iam_role.notification_time_lambda_execution.arn
   handler          = "set-notification-time.setNotificationTime"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 10
 }
 
@@ -217,7 +217,7 @@ resource "aws_lambda_function" "delete_notification_time" {
   role             = aws_iam_role.notification_time_lambda_execution.arn
   handler          = "delete-notification-time.deleteNotificationTime"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
-  runtime          = "nodejs18.x"
+  runtime          = "nodejs22.x"
   timeout          = 10
 }
 
