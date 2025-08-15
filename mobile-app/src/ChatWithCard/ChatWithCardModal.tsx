@@ -1,21 +1,21 @@
 import { NavigationProp, Route } from '@react-navigation/native';
 import { chatWithCard } from '@vocably/api';
-import { CardItem, ChatWithCardMessage } from '@vocably/model';
+import { ChatCard, ChatWithCardMessage } from '@vocably/model';
 import { last } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Appbar, Button, Surface, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChatTextInput, ChatTextInputRef } from './ChatWithCards/ChatTextInput';
-import { getInitialMessage } from './ChatWithCards/getInitialMessage';
-import { Message } from './ChatWithCards/Message';
-import { Thinking } from './ChatWithCards/Thinking';
-import { mainPadding } from './styles';
-import { ScreenLayout } from './ui/ScreenLayout';
+import { mainPadding } from '../styles';
+import { ScreenLayout } from '../ui/ScreenLayout';
+import { ChatTextInput, ChatTextInputRef } from './ChatTextInput';
+import { getInitialMessage } from './getInitialMessage';
+import { Message } from './Message';
+import { Thinking } from './Thinking';
 
 export type ChatWithCardParams = {
-  cardItem: CardItem;
+  card: ChatCard;
 };
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
 };
 
 export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
-  const { cardItem } = route.params as ChatWithCardParams;
+  const { card } = route.params as ChatWithCardParams;
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -53,7 +53,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
       inputRef.current.focus();
     }
     posthog.capture('chat-with-card-modal-opened', {
-      cardItem: cardItem,
+      card,
     });
   }, []);
 
@@ -71,7 +71,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     setMessages(newMessages);
 
     posthog.capture('chat-with-card-message-sent', {
-      cardItem: cardItem,
+      card,
       messages: newMessages,
     });
 
@@ -82,12 +82,12 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
     setIsThinking(true);
 
     const chatResult = await chatWithCard({
-      card: cardItem.data,
+      card,
       history: newMessages,
     });
 
     posthog.capture('chat-with-card-message-result', {
-      cardItem: cardItem,
+      card,
       result: chatResult,
     });
 
@@ -121,7 +121,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               paddingVertical: 6,
             }}
           >
-            <Appbar.Content title="Chat with a card" />
+            <Appbar.Content title="Chat with the card" />
             <Appbar.Action
               icon={'close'}
               size={24}
@@ -149,10 +149,7 @@ export const ChatWithCardModal: FC<Props> = ({ route, navigation }) => {
               }}
               ref={scrollViewRef}
             >
-              <Message
-                direction="fromAi"
-                message={getInitialMessage(cardItem.data)}
-              />
+              <Message direction="fromAi" message={getInitialMessage(card)} />
               {messages.map((message) => (
                 <Message
                   key={message.timestamp}

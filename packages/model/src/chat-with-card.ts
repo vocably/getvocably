@@ -1,8 +1,13 @@
 import { isNumber, isObject } from 'lodash-es';
-import { Card } from './language-deck';
+
+export type ChatCard = {
+  language: string;
+  source: string;
+  partOfSpeech: string;
+};
 
 export type ChatWithCardPayload = {
-  card: Card;
+  card: ChatCard;
   history: ChatWithCardMessage[];
 };
 

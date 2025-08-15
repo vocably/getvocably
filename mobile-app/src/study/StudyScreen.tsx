@@ -339,7 +339,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
                 size={24}
                 onPress={() =>
                   navigation.navigate('ChatWithCardModal', {
-                    cardItem: cards[0],
+                    card: cards[0].data,
                   })
                 }
                 style={{

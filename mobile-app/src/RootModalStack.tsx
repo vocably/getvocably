@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'react-native-paper';
-import { ChatWithCardModal } from './ChatWithCardModal';
+import { ChatWithCardModal } from './ChatWithCard/ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
