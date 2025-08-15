@@ -23,7 +23,7 @@ describe('aiDirectTranslate', () => {
     }
 
     expect(result.value.source).toBe('cover');
-    expect(result.value.partOfSpeech).toBe('noun');
+    expect(result.value.partOfSpeech).toBe('noun/verb');
     expect(result.value.sourceLanguage).toBe('en');
     expect(result.value.targetLanguage).toBe('ru');
   });
@@ -237,5 +237,20 @@ describe('aiDirectTranslate', () => {
     }
 
     expect(result.value.transcript).toHaveSomeOf(["xīngqī'èr", 'xīngqī èr']);
+  });
+
+  it('translate wrongly selected stuff', async () => {
+    const result = await aiDirectTranslate({
+      source: 'ребята',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    expect(result.value.source).toHaveSomeOf(['guys']);
   });
 });

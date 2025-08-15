@@ -11,11 +11,8 @@ import {
   Result,
   Translation,
 } from '@vocably/model';
-import {
-  AiTranslation,
-  isAiTranslation,
-  resultExamples,
-} from './aiDirectTranslateConstants';
+import { get } from 'lodash-es';
+import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
 
 type Payload = {
@@ -24,42 +21,54 @@ type Payload = {
   targetLanguage: GoogleLanguage;
 };
 
+const transcriptionName = {
+  zh: 'pinyin',
+  'zh-TW': 'pinyin',
+  ja: 'romaji',
+  ko: 'hangul',
+  vi: 'vietnamese',
+  th: 'thai',
+  id: 'indonesian',
+  ms: 'malay',
+  my: 'burmese',
+  hi: 'hindi',
+  ar: 'arabic',
+};
+
 const internalAiDirectTranslate = async (
   payload: Payload,
   model: OpenAiModel
 ): Promise<Result<Translation>> => {
   const source = truncateAsIs(payload.source, 500);
 
-  const example: AiTranslation = resultExamples[payload.sourceLanguage][
-    payload.targetLanguage
-  ] ?? {
-    fixedSource: 'hedgehog',
-    translation: 'ёж',
-    partOfSpeech: 'noun',
-  };
-
-  const diacriticMarks = !['en', 'nl', 'he'].includes(payload.sourceLanguage)
-    ? ', fix diacritic marks'
-    : '';
-
   const prompt = [
-    `Translate the ${languageList[payload.sourceLanguage]} word/phrase`,
-    `<word-or-phrase>${source}</word-or-phrase>`,
-    `into ${languageList[payload.targetLanguage]}.`,
-    `Provide the part of speech, fix spelling, preserve punctuation${diacriticMarks}.`,
-    '',
-    `Respond in JSON, as in example: ${JSON.stringify(example)}`,
+    `You are a smart language dictionary.`,
+    `Only respond in JSON format with an object containing the following properties:`,
+    `- source - the user input translated into ${
+      languageList[payload.sourceLanguage]
+    }`,
+    `- target - the user input translated into${
+      languageList[payload.targetLanguage]
+    }`,
+    `- partOfSpeech`,
+    `- transcript - the ${get(
+      transcriptionName,
+      payload.sourceLanguage,
+      'IPA'
+    )} transcription of the ${languageList[payload.sourceLanguage]} source`,
+    `User provides a string in any language.`,
   ].join('\n');
 
   const responseResult = await chatGptRequest({
     messages: [
-      {
-        role: 'system',
-        content: `You are a ${languageList[payload.sourceLanguage]}-${
-          languageList[payload.targetLanguage]
-        } dictionary.`,
-      },
-      { role: 'user', content: prompt },
+      // {
+      //   role: 'system',
+      //   content: `You are a ${languageList[payload.sourceLanguage]}-${
+      //     languageList[payload.targetLanguage]
+      //   } dictionary.`,
+      // },
+      { role: 'system', content: prompt },
+      { role: 'user', content: source },
     ],
     model,
     timeoutMs: 3000,
@@ -82,12 +91,12 @@ const internalAiDirectTranslate = async (
   return {
     success: true,
     value: {
-      source: response.fixedSource,
-      target: response.translation,
+      source: response.source,
+      target: response.target,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       partOfSpeech: response.partOfSpeech,
-      transcript: response.pinyin,
+      transcript: response.transcript,
     },
   };
 };
