@@ -109,6 +109,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
           savingTagsInProgress={isSavingTags}
           onTagsChange={onTagsChange}
           allowCopy={true}
+          brightAiButton={true}
         />
         {!hideOperations && (
           <View

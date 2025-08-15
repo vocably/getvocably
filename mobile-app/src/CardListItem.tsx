@@ -1,4 +1,5 @@
 import Clipboard from '@react-native-clipboard/clipboard';
+import { useNavigation } from '@react-navigation/native';
 import { Card, isGoogleTTSLanguage, TagItem } from '@vocably/model';
 import React, { FC, useState } from 'react';
 import {
@@ -30,6 +31,7 @@ type Props = {
   savingTagsInProgress?: boolean;
   onTagsChange?: (tags: TagItem[]) => Promise<any>;
   allowCopy?: boolean;
+  brightAiButton?: boolean;
 };
 
 const textTransform = [{ translateY: Platform.OS === 'android' ? 6 : 3 }];
@@ -42,8 +44,10 @@ export const CardListItem: FC<Props> = ({
   savingTagsInProgress = false,
   onTagsChange = () => null,
   allowCopy = false,
+  brightAiButton = false,
 }) => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const onTagClose = (tagToRemove: TagItem) => () => {
     onTagsChange(card.tags.filter((t) => t.id !== tagToRemove.id));
@@ -111,12 +115,38 @@ export const CardListItem: FC<Props> = ({
                 >
                   <Icon
                     name="content-copy"
-                    size={16 * fontScale}
+                    size={17 * fontScale}
                     color={theme.colors.onSurface}
                   />
                 </Pressable>
               </>
             )}
+            {'\u00A0'}
+            {'\u00A0'}
+            {'\u00A0'}
+            <Pressable
+              hitSlop={10}
+              onPress={() => {
+                navigation.navigate('ChatWithCardModal', {
+                  card,
+                });
+              }}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.4 : 1,
+                transform: [{ translateY: Platform.OS === 'android' ? 3 : 0 }],
+              })}
+            >
+              <Icon
+                name="creation"
+                size={17 * fontScale}
+                color={
+                  brightAiButton ? theme.colors.primary : theme.colors.onSurface
+                }
+              />
+            </Pressable>
+            {'\u00A0'}
+            {'\u00A0'}
+            {'\u00A0'}
             {card.ipa && (
               <>
                 {' '}

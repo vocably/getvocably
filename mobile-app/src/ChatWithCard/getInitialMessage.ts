@@ -5,8 +5,8 @@ export const getInitialMessage = (card: ChatCard): string => {
     card.partOfSpeech ? ` the ${card.partOfSpeech}` : ''
   } **${card.source}**, like:
 
-  * provide examples
   * explain the meaning
+  * provide examples
   * help to remember
 
 This is a beta feature.`;
