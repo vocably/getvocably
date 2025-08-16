@@ -29,10 +29,7 @@ export type ReverseAnalyzePayload = {
 export type AnalyzePayload = DirectAnalyzePayload | ReverseAnalyzePayload;
 
 export const isDirectAnalyzePayload = (o: any): o is DirectAnalyzePayload => {
-  return (
-    !(!o || !o.source || !o.targetLanguage) &&
-    o.sourceLanguage !== o.targetLanguage
-  );
+  return !(!o || !o.source || !o.targetLanguage);
 };
 
 export const isReverseAnalyzePayload = (o: any): o is DirectAnalyzePayload => {

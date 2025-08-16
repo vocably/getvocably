@@ -15,7 +15,9 @@ const sourcesAreMatched =
     return (
       sourcesAreMatched &&
       (translation.partOfSpeech === undefined ||
-        translation.partOfSpeech === item.partOfSpeech)
+        translation.partOfSpeech === item.partOfSpeech ||
+        (translation.partOfSpeech === 'phrasal verb' &&
+          item.partOfSpeech === 'verb'))
     );
   };
 

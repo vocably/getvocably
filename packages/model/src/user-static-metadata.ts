@@ -13,7 +13,7 @@ export const defaultUserStaticMetadata: UserStaticMetadata = {
   premium_status: 'NONE',
   premium_expiration_at_ms: null,
   premium_last_event_ms: 0,
-  max_cards: 300,
+  max_cards: 500,
   thanks_trial: 'none',
   management_url: null,
 };
