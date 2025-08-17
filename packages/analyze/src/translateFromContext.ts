@@ -8,6 +8,7 @@ import {
   Translation,
 } from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
+import { get } from 'lodash-es';
 
 type Payload = {
   source: string;
@@ -17,12 +18,14 @@ type Payload = {
 };
 
 type ContextTranslation = {
+  source: string;
   target: string;
   partOfSpeech?: string;
+  transcript?: string;
 };
 
 const isContextTranslation = (o: any): o is ContextTranslation => {
-  return !(!o || !o.target);
+  return !(!o || !o.target || !o.source);
 };
 
 export const isContextPayload = (o: any): o is Payload => {
@@ -52,34 +55,51 @@ export const itMakesSense = (p: Payload): boolean => {
   return true;
 };
 
+const transcriptionName = {
+  zh: 'pinyin',
+  'zh-TW': 'pinyin',
+  ja: 'romaji',
+  ko: 'hangul',
+  vi: 'vietnamese',
+  th: 'thai',
+  id: 'indonesian',
+  ms: 'malay',
+  my: 'burmese',
+  hi: 'hindi',
+  ar: 'arabic',
+};
+
 export const translateFromContext = async (
   payload: Payload
 ): Promise<Result<Translation>> => {
   const source = truncateAsIs(payload.source, 400);
-  const context = truncateAsIs(payload.context, 400);
+  const context = truncateAsIs(payload.context, 400).replace(/\n/g, ' ');
 
   const prompt = [
-    `Translate the ${languageList[payload.sourceLanguage]} word/phrase`,
-    `<word-or-phrase>${source}</word-or-phrase>`,
-    `that appears in the context of sentence:`,
-    `<sentence>${context}</sentence>`,
-    `from ${languageList[payload.sourceLanguage]} to ${
+    `You are a smart language dictionary.`,
+    `Use provides a substring and its context separated by new line character.`,
+    `Only respond in JSON format with an object containing the following properties:`,
+    `- source - the substring translated into ${
+      languageList[payload.sourceLanguage]
+    }`,
+    `- target - the substring translated into${
       languageList[payload.targetLanguage]
-    }.`,
-    '',
-    `Respond in JSON, as in example: {"target": "the translated word", "partOfSpeech": "noun"'}`,
+    }`,
+    `- partOfSpeech`,
+    `- transcript - the ${get(
+      transcriptionName,
+      payload.sourceLanguage,
+      'IPA'
+    )} transcription of the ${languageList[payload.sourceLanguage]} source`,
   ].join('\n');
 
   const responseResult = await chatGptRequest({
     messages: [
-      {
-        role: 'system',
-        content:
-          'You are a smart language assistant. Only respond to questions about vocabulary and translations.',
-      },
-      { role: 'user', content: prompt },
+      { role: 'system', content: prompt },
+      { role: 'user', content: `${source}\n${context}` },
     ],
     model: GPT_4O_MINI,
+    timeoutMs: 5000,
   });
 
   if (!responseResult.success) {
@@ -99,11 +119,12 @@ export const translateFromContext = async (
   return {
     success: true,
     value: {
-      source: payload.source,
+      source: response.source,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       target: response.target,
       partOfSpeech: response.partOfSpeech,
+      transcript: response.transcript,
     },
   };
 };

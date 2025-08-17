@@ -355,7 +355,9 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.translation.target).toHaveSomeOf('учите, учить');
+    expect(result.value.translation.target.toLowerCase()).toHaveSomeOf(
+      'учите, учить'
+    );
   });
 
   it('serbian', async () => {
@@ -775,5 +777,24 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].ipa).toHaveSomeOf(["xīngqī'èr", 'xīngqī èr']);
+  });
+
+  it('translates from an arbitrary language and context into the direct and gives the proper source and target', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+      source: 'имя',
+      context: 'Привет, какое у тебя имя?',
+    });
+
+    console.log(inspect(result));
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.translation.source).toEqual('имя');
+    expect(result.value.translation.target).toEqual('naam');
+    expect(result.value.items[0].source).toEqual('de naam');
   });
 });

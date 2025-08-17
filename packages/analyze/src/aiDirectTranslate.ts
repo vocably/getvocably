@@ -61,12 +61,6 @@ const internalAiDirectTranslate = async (
 
   const responseResult = await chatGptRequest({
     messages: [
-      // {
-      //   role: 'system',
-      //   content: `You are a ${languageList[payload.sourceLanguage]}-${
-      //     languageList[payload.targetLanguage]
-      //   } dictionary.`,
-      // },
       { role: 'system', content: prompt },
       { role: 'user', content: source },
     ],

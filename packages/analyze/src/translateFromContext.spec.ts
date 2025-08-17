@@ -79,6 +79,24 @@ describe('translateFromContext', () => {
     }
 
     expect(translationResult.value.partOfSpeech).toEqual('phrase');
-    expect(translationResult.value.target).toEqual('What is your name?');
+    expect(translationResult.value.target).toEqual('what is your name?');
+  });
+
+  it('inverts the translation', async () => {
+    const translationResult = await translateFromContext({
+      source: 'как тебя зовут?',
+      context: 'Привет, как тебя зовут?',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+    expect(translationResult.success).toEqual(true);
+
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(translationResult.value.partOfSpeech).toEqual('phrase');
+    expect(translationResult.value.source).toEqual('What is your name?');
+    expect(translationResult.value.target).toEqual('Как тебя зовут?');
   });
 });

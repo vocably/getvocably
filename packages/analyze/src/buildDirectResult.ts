@@ -225,11 +225,26 @@ export const buildDirectResult = async ({
     };
   }
 
+  const firstTranslation = translations[0];
+
+  const directTranslation: Translation =
+    trimArticle(payload.sourceLanguage, payload.source).source.toLowerCase() ===
+    trimArticle(
+      payload.sourceLanguage,
+      firstTranslation.source
+    ).source.toLowerCase()
+      ? firstTranslation
+      : {
+          ...firstTranslation,
+          source: payload.source,
+          target: firstTranslation.source,
+        };
+
   return {
     success: true,
     value: {
       source: payload.source,
-      translation: translations[0],
+      translation: directTranslation,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       explanation,
