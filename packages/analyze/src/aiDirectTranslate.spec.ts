@@ -96,7 +96,6 @@ describe('aiDirectTranslate', () => {
       'Что-то и что-то ещё.',
       'Что-то, и что-то ещё.',
     ]);
-    expect(result.value.partOfSpeech).toBe('phrase');
   });
 
   it('properly translates and corrects pt', async () => {

@@ -75,6 +75,8 @@ export const translateFromContext = async (
   const source = truncateAsIs(payload.source, 400);
   const context = truncateAsIs(payload.context, 400).replace(/\n/g, ' ');
 
+  const isTranscriptionNeeded = source.length <= 20;
+
   const prompt = [
     `You are a smart language dictionary.`,
     `Use provides a substring and its context separated by new line character.`,
@@ -86,12 +88,16 @@ export const translateFromContext = async (
       languageList[payload.targetLanguage]
     }`,
     `- partOfSpeech`,
-    `- transcript - the ${get(
-      transcriptionName,
-      payload.sourceLanguage,
-      'IPA'
-    )} transcription of the ${languageList[payload.sourceLanguage]} source`,
-  ].join('\n');
+    isTranscriptionNeeded
+      ? `- transcript - the ${get(
+          transcriptionName,
+          payload.sourceLanguage,
+          'IPA'
+        )} transcription of the ${languageList[payload.sourceLanguage]} source`
+      : null,
+  ]
+    .filter((s) => !!s)
+    .join('\n');
 
   const responseResult = await chatGptRequest({
     messages: [

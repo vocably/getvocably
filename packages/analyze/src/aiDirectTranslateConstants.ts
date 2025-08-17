@@ -13,7 +13,6 @@ export const isAiTranslation = (value: any): value is AiTranslation => {
     isSafeObject(value) &&
     isString(value['source']) &&
     isString(value['target']) &&
-    isString(value['transcript']) &&
     isString(value['partOfSpeech'])
   );
 };

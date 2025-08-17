@@ -41,6 +41,8 @@ const internalAiDirectTranslate = async (
 ): Promise<Result<Translation>> => {
   const source = truncateAsIs(payload.source, 500);
 
+  const transcriptionIsNeeded = payload.source.length <= 20;
+
   const prompt = [
     `You are a smart language dictionary.`,
     `Only respond in JSON format with an object containing the following properties:`,
@@ -51,13 +53,17 @@ const internalAiDirectTranslate = async (
       languageList[payload.targetLanguage]
     }`,
     `- partOfSpeech`,
-    `- transcript - the ${get(
-      transcriptionName,
-      payload.sourceLanguage,
-      'IPA'
-    )} transcription of the ${languageList[payload.sourceLanguage]} source`,
+    transcriptionIsNeeded
+      ? `- transcript - the ${get(
+          transcriptionName,
+          payload.sourceLanguage,
+          'IPA'
+        )} transcription of the ${languageList[payload.sourceLanguage]} source`
+      : null,
     `User provides a string in any language.`,
-  ].join('\n');
+  ]
+    .filter((s) => !!s)
+    .join('\n');
 
   const responseResult = await chatGptRequest({
     messages: [
