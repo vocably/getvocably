@@ -31,7 +31,7 @@ type Props = {
   savingTagsInProgress?: boolean;
   onTagsChange?: (tags: TagItem[]) => Promise<any>;
   allowCopy?: boolean;
-  brightAiButton?: boolean;
+  aiButton: 'dimmed' | 'bright' | 'none';
 };
 
 const textTransform = [{ translateY: Platform.OS === 'android' ? 6 : 3 }];
@@ -44,7 +44,7 @@ export const CardListItem: FC<Props> = ({
   savingTagsInProgress = false,
   onTagsChange = () => null,
   allowCopy = false,
-  brightAiButton = false,
+  aiButton = 'dimmed',
 }) => {
   const theme = useTheme();
   const navigation = useNavigation();
@@ -121,32 +121,40 @@ export const CardListItem: FC<Props> = ({
                 </Pressable>
               </>
             )}
-            {'\u00A0'}
-            {'\u00A0'}
-            {'\u00A0'}
-            <Pressable
-              hitSlop={10}
-              onPress={() => {
-                navigation.navigate('ChatWithCardModal', {
-                  card,
-                });
-              }}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.4 : 1,
-                transform: [{ translateY: Platform.OS === 'android' ? 3 : 0 }],
-              })}
-            >
-              <Icon
-                name="creation"
-                size={17 * fontScale}
-                color={
-                  brightAiButton ? theme.colors.primary : theme.colors.onSurface
-                }
-              />
-            </Pressable>
-            {'\u00A0'}
-            {'\u00A0'}
-            {'\u00A0'}
+            {aiButton !== 'none' && (
+              <>
+                {'\u00A0'}
+                {'\u00A0'}
+                {'\u00A0'}
+                <Pressable
+                  hitSlop={10}
+                  onPress={() => {
+                    navigation.navigate('ChatWithCardModal', {
+                      card,
+                    });
+                  }}
+                  style={({ pressed }) => ({
+                    opacity: pressed ? 0.4 : 1,
+                    transform: [
+                      { translateY: Platform.OS === 'android' ? 3 : 0 },
+                    ],
+                  })}
+                >
+                  <Icon
+                    name="creation"
+                    size={17 * fontScale}
+                    color={
+                      aiButton === 'bright'
+                        ? theme.colors.primary
+                        : theme.colors.onSurface
+                    }
+                  />
+                </Pressable>
+                {'\u00A0'}
+                {'\u00A0'}
+                {'\u00A0'}
+              </>
+            )}
             {card.ipa && (
               <>
                 {' '}
