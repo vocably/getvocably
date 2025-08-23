@@ -2,9 +2,21 @@
   muted
   controls
   style="width: 100%; cursor: pointer"
-  poster="assets/how-to-extension.png"
+  [poster]="'/assets/how-to/' + videoLanguage + '/poster.png'"
   (play)="onPlay()"
 >
-  <source src="/assets/how-to-extension.webm" type="video/webm" />
-  <source src="/assets/how-to-extension.mp4" type="video/mp4" />
+  <source
+    [src]="'/assets/how-to/' + videoLanguage + '/how-to.webm'"
+    type="video/webm"
+  />
+  <source
+    [src]="'/assets/how-to/' + videoLanguage + '/how-to.mp4'"
+    type="video/mp4"
+  />
+  <track
+    kind="subtitles"
+    [srclang]="videoLanguage"
+    [src]="'/assets/how-to/' + videoLanguage + '/how-to.vtt'"
+    default
+  />
 </video>

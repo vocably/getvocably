@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { GoogleLanguage } from '@vocably/model';
 import posthog from 'posthog-js';
 
 @Component({
@@ -7,9 +8,21 @@ import posthog from 'posthog-js';
   styleUrls: ['./how-to-video.component.scss'],
 })
 export class HowToVideoComponent implements OnInit {
+  @Input() public targetLanguage!: GoogleLanguage;
+
+  public videoLanguage: 'en' | 'ru' = 'en';
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    switch (this.targetLanguage) {
+      case 'ru':
+        this.videoLanguage = 'ru';
+        break;
+      default:
+        this.videoLanguage = 'en';
+    }
+  }
 
   onPlay() {
     posthog.capture('play_video');

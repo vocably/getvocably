@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GoogleLanguage } from '@vocably/model';
-import { isIOS } from '../../../browser';
 
 @Component({
   selector: 'app-detailed-explanation',
@@ -8,9 +7,8 @@ import { isIOS } from '../../../browser';
   styleUrls: ['./detailed-explanation.component.scss'],
 })
 export class DetailedExplanationComponent implements OnInit {
-  @Input() public language!: GoogleLanguage;
-
-  public isMobilePlatform = isIOS();
+  @Input() public sourceLanguage!: GoogleLanguage;
+  @Input() public targetLanguage!: GoogleLanguage;
 
   constructor() {}
 
