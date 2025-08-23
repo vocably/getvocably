@@ -10,7 +10,7 @@ import posthog from 'posthog-js';
 export class HowToVideoComponent implements OnInit {
   @Input() public targetLanguage!: GoogleLanguage;
 
-  public videoLanguage: 'en' | 'ru' = 'en';
+  public videoLanguage: 'en' | 'ru' | 'uk' = 'en';
 
   constructor() {}
 
@@ -18,6 +18,9 @@ export class HowToVideoComponent implements OnInit {
     switch (this.targetLanguage) {
       case 'ru':
         this.videoLanguage = 'ru';
+        break;
+      case 'uk':
+        this.videoLanguage = 'uk';
         break;
       default:
         this.videoLanguage = 'en';
