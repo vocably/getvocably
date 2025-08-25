@@ -203,9 +203,11 @@ export const StudySettingsScreen: FC<Props> = () => {
         }}
       >
         <Text>
-          <Icon name="alert-outline" size={16} /> This option disables the
-          SuperMemo algorithm, which was created to help people remember large
-          amounts of information.{' '}
+          <Icon name="alert-outline" size={16} /> Enabling this option is
+          generally a <Text style={{ fontWeight: 'bold' }}>bad idea</Text>. This
+          option disables the smart study algorithm. People who disable the
+          smart study algorithm eventually get frustrated with their study
+          progress.{' '}
           <Text onPress={() => Linking.openURL('https://vocably.pro/srs.html')}>
             <Text
               style={{
@@ -213,8 +215,8 @@ export const StudySettingsScreen: FC<Props> = () => {
                 color: theme.colors.primary,
               }}
             >
-              Read how Vocably uses this algorithm to help you learn more words
-              in a shorter time.
+              Read how Vocably uses the smart study algorithm to help you learn
+              more words in a shorter time.
             </Text>
             {''}
             <Text

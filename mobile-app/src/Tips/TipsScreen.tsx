@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { usePostHog } from 'posthog-react-native';
 import { FC } from 'react';
 import { Linking, Platform, View } from 'react-native';
-import { Divider, Text, useTheme } from 'react-native-paper';
+import { Divider, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslationPreset } from '../TranslationPreset/useTranslationPreset';
 import { CustomScrollView } from '../ui/CustomScrollView';
@@ -14,7 +14,6 @@ type Props = {};
 export const TipsScreen: FC<Props> = () => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const theme = useTheme();
   const posthog = usePostHog();
 
   const translationPreset = useTranslationPreset();
@@ -43,6 +42,49 @@ export const TipsScreen: FC<Props> = () => {
         paddingTop: insets.top + 32,
       }}
     >
+      <CustomSurface style={{ marginBottom: 32 }}>
+        {Platform.OS === 'android' && (
+          <ListItem
+            order="first"
+            title="How to translate any selected text in any app on your mobile."
+            onPress={() => {
+              posthog.capture('tip-android-translate-clicked');
+              Linking.openURL(
+                `https://app.vocably.pro/page/android-translate/${languagePreset}`
+              );
+            }}
+            leftIcon="android"
+            rightIcon="menu-right"
+          ></ListItem>
+        )}
+        {Platform.OS === 'ios' && (
+          <ListItem
+            order="first"
+            title="Translate any word on any website with Vocably iOS Safari Extension."
+            onPress={() => {
+              {
+                posthog.capture('tip-ios-translate-clicked');
+                Linking.openURL(
+                  `https://app.vocably.pro/page/ios-extension/${languagePreset}`
+                );
+              }
+            }}
+            leftIcon="apple-safari"
+            rightIcon="menu-right"
+          ></ListItem>
+        )}
+        <Divider style={{ alignSelf: 'stretch' }} />
+        <ListItem
+          order="last"
+          leftIcon="laptop"
+          title="Are you using Chrome or Safari on your computer? Try the Vocably extension."
+          onPress={() => {
+            posthog.capture('tip-desktop-extension-clicked');
+            Linking.openURL(`https://vocably.pro`);
+          }}
+        ></ListItem>
+      </CustomSurface>
+
       <CustomSurface style={{ marginBottom: 32 }}>
         <ListItem
           order="first"
@@ -79,7 +121,7 @@ export const TipsScreen: FC<Props> = () => {
         <Divider style={{ alignSelf: 'stretch' }} />
         <ListItem
           order="last"
-          title="How to view study statistics"
+          title="How to view study plan"
           onPress={() => {
             navigation.navigate('HowToViewStudyStatistics');
             posthog.capture('tip-view-stats-clicked');
@@ -88,57 +130,6 @@ export const TipsScreen: FC<Props> = () => {
           rightIcon="menu-right"
         ></ListItem>
       </CustomSurface>
-
-      {Platform.OS === 'android' && (
-        <CustomSurface style={{ marginBottom: 8 }}>
-          <ListItem
-            title="See a new word in any app? Select and translate it with Vocably"
-            onPress={() => {
-              posthog.capture('tip-android-translate-clicked');
-              Linking.openURL(
-                `https://app.vocably.pro/page/android-translate/${languagePreset}`
-              );
-            }}
-            leftIcon="android"
-            rightIcon="menu-right"
-          ></ListItem>
-        </CustomSurface>
-      )}
-
-      {Platform.OS === 'ios' && (
-        <CustomSurface style={{ marginBottom: 8 }}>
-          <ListItem
-            title="See a new word on any website? Translate it with iOS Safari Extension"
-            onPress={() => {
-              {
-                posthog.capture('tip-ios-translate-clicked');
-                Linking.openURL(
-                  `https://app.vocably.pro/page/ios-extension/${languagePreset}`
-                );
-              }
-            }}
-            leftIcon="apple-safari"
-            rightIcon="menu-right"
-          ></ListItem>
-        </CustomSurface>
-      )}
-
-      <View style={{ paddingHorizontal: 16, marginBottom: 32 }}>
-        <Text>
-          Using a desktop computer? Vocably is available as Chrome and Safari
-          extensions. Visit{' '}
-          <Text
-            style={{ color: theme.colors.primary }}
-            onPress={() => {
-              posthog.capture('tip-desktop-extension-clicked');
-              Linking.openURL('https://getvocably.com');
-            }}
-          >
-            getvocably.com
-          </Text>{' '}
-          to learn more.
-        </Text>
-      </View>
 
       <CustomSurface style={{ marginBottom: 8 }}>
         <ListItem
