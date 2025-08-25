@@ -26,19 +26,18 @@ type RegisterContentScriptOptions = {
 };
 
 const onCreateSelectionTimeout = async () => {
-  const selection = getSelection();
-  if (!isValidSelection(selection)) {
-    return;
-  }
-
   try {
     await api.ping();
-  } catch (e) {
-    console.error('Vocably: unable to ping Service Worker', e);
+  } catch {
     return;
   }
 
   destroyButton();
+
+  const selection = getSelection();
+  if (!isValidSelection(selection)) {
+    return;
+  }
 
   await createButton(selection);
 };
@@ -54,26 +53,12 @@ const onTextSelect = async () => {
   createSelectionTimeout = setTimeout(onCreateSelectionTimeout, 500);
 };
 
-let selectionFixIntervalId: ReturnType<typeof setInterval> | null = null;
-
 const enableSelectionChangeDetection = () => {
   if (!contentScriptConfiguration.displayMobileLookupButton) {
     return;
   }
 
-  document.removeEventListener('selectionchange', onTextSelect, false);
   document.addEventListener('selectionchange', onTextSelect, false);
-
-  if (selectionFixIntervalId) {
-    clearInterval(selectionFixIntervalId);
-  }
-
-  // Resubscribe to selectionchange event because
-  // the motherfucking iOS Safari is losing it.
-  selectionFixIntervalId = setInterval(() => {
-    document.removeEventListener('selectionchange', onTextSelect, false);
-    document.addEventListener('selectionchange', onTextSelect, false);
-  }, 1000);
 };
 
 const disableSelectionChangeDetection = () =>
@@ -130,8 +115,7 @@ const onMouseUp = async (event: MouseEvent) => {
 
   try {
     await api.ping();
-  } catch (e) {
-    console.error('Vocably: unable to ping Service Worker', e);
+  } catch {
     return;
   }
 
@@ -217,8 +201,7 @@ const onMouseDown = async (event: MouseEvent) => {
   disableSelectionChangeDetection();
   try {
     await api.ping();
-  } catch (e) {
-    console.error('Vocably: unable to ping Service Worker', e);
+  } catch {
     return;
   }
 

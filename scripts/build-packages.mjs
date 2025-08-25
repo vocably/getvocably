@@ -16,6 +16,7 @@ const packages = [
   'lambda-shared',
   'analyze',
   'browser',
+  'extension-stay-alive',
   'extension-messages',
   'extension-service-worker',
   'extension-content-ui',
