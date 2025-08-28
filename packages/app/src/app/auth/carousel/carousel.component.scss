@@ -13,10 +13,17 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  padding: 3rem;
 
   @media (width < $md) {
+    padding: 2rem;
     height: 600px;
     flex-direction: column;
+  }
+
+  @media (width < $sm) {
+    padding: 1rem;
+    height: 400px;
   }
 }
 
@@ -55,14 +62,17 @@
   .text {
     font-size: 1.4rem;
     order: -1;
+    text-align: center;
   }
 }
 
-.popup-slide .hero-slide-body {
-  padding: 3rem;
+@media (width < $sm) {
+  .text {
+    font-size: 1.2rem;
+  }
 
-  @media (width < $md) {
-    padding-top: 6rem;
+  .save-your-cards {
+    display: none;
   }
 }
 
@@ -101,28 +111,33 @@
     @media (prefers-color-scheme: dark) {
       background-image: url('./chrome-text-dark.svg');
     }
+
+    @media (width < $sm) {
+      opacity: 0;
+      height: 0;
+    }
   }
 }
 
 .master-cards-slide {
   .hero-slide-body {
-    padding: 2rem 4rem 0 4rem;
-  }
+    .image {
+      align-self: flex-end;
+    }
+    .iphone {
+      height: 350px;
+      display: flex;
+      justify-content: center;
 
-  .image {
-    align-self: flex-end;
-  }
-  .iphone {
-    height: 350px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+      @media (width < $md) {
+        height: 250px;
+      }
+    }
   }
 }
 
 .youtube-slide {
   .hero-slide-body {
-    padding: 3rem;
     gap: 3rem;
   }
 
