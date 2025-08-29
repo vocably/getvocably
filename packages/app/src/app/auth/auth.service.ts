@@ -83,6 +83,8 @@ export class AuthService {
     refreshUserData$.subscribe();
 
     this.userData$.subscribe((userData) => {
+      localStorage.setItem('userSub', userData.sub);
+      localStorage.setItem('userEmail', userData.email);
       posthog.identify(userData.sub, {
         email: userData.email,
       });
