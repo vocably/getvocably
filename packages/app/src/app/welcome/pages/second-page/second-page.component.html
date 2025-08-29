@@ -1,7 +1,13 @@
 <div *ngIf="isLoading">
   <ion-spinner name="dots" class="mr-1"></ion-spinner>Loading example text...
 </div>
-<div *ngIf="sourceLanguage && targetLanguage" class="contrast-panel mb-2">
+<div class="mb-2" *ngIf="targetLanguage">
+  <app-how-to-video [targetLanguage]="targetLanguage"></app-how-to-video>
+</div>
+<div
+  *ngIf="sourceLanguage && targetLanguage"
+  class="contrast-panel rounded mb-2"
+>
   You study <strong>{{ sourceLanguage | language }}</strong> and your mother
   tongue is <strong>{{ targetLanguage | language }}</strong
   >.
@@ -9,32 +15,21 @@
   <a href="/welcome">Change</a>.
 </div>
 <ng-container *ngIf="!isLoading && exampleHtml">
-  <div class="mat-display-1 mb-2 mt-1">
-    <span highlight>Select</span> any word or phrase to see its meaning. Give it
-    a try on this text
-    <mat-icon style="vertical-align: middle; transform: scale(1.6)"
-      >arrow_downward</mat-icon
-    >
+  <div class="mat-display-1 mb-2">
+    <span highlight>Select</span> any word or phrase on any website to see its
+    meaning.
+  </div>
+  <div class="mb-2">
+    Try selecting any word or phrase in this text
+    <mat-icon style="vertical-align: middle">arrow_downward</mat-icon>
   </div>
   <div class="mb-2">
     <div
       *ngIf="!isLoading && exampleHtml"
-      class="text-example"
+      class="text-example rounded"
       [lang]="sourceLanguage"
       [innerHTML]="exampleHtml"
     ></div>
-  </div>
-  <div>
-    <app-expansion
-      label="Explain it better (A short video)"
-      *ngIf="sourceLanguage && targetLanguage"
-      panelStyle="padding-top: 2rem;"
-    >
-      <app-detailed-explanation
-        [sourceLanguage]="sourceLanguage"
-        [targetLanguage]="targetLanguage"
-      ></app-detailed-explanation>
-    </app-expansion>
   </div>
 </ng-container>
 <app-generic-instruction

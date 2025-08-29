@@ -41,3 +41,7 @@
 .strike {
   @include strike-through();
 }
+
+.rounded {
+  border-radius: $v-border-radius;
+}
