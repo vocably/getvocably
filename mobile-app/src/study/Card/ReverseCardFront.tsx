@@ -7,9 +7,12 @@ import { CardDefinition } from '../../CardDefinition';
 import { CardExample } from '../../CardExample';
 import { maskTheWord } from '../../maskTheWord';
 
-export const ReverseCardFront: FC<{ card: CardItem; hasChecked: boolean }> = ({
+type Props = { card: CardItem; hasChecked: boolean; requiredAction?: string };
+
+export const ReverseCardFront: FC<Props> = ({
   card,
   hasChecked,
+  requiredAction = 'Guess',
 }) => {
   const theme = useTheme();
 
@@ -25,7 +28,7 @@ export const ReverseCardFront: FC<{ card: CardItem; hasChecked: boolean }> = ({
   return (
     <View>
       <Text style={{ fontSize: 24, marginBottom: 12 }}>
-        Guess the{' '}
+        {requiredAction} the{' '}
         {card.data.partOfSpeech ? (
           <Text style={{ color: theme.colors.secondary }}>
             {card.data.partOfSpeech}

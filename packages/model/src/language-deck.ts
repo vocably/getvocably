@@ -24,7 +24,7 @@ export type NewTag = {
 };
 
 export type StrategyStep = {
-  step: 'sf' | 'sb' | 'mf' | 'mb';
+  step: 'sf' | 'sb' | 'mf' | 'mb' | 'ab';
   allowedFailures: number | null;
 };
 

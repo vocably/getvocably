@@ -1,6 +1,7 @@
 import { CardItem } from '@vocably/model';
 import { SrsScore } from '@vocably/srs';
 import React, { FC } from 'react';
+import { ArrangeByLetters } from './ArrangeByLetters';
 import { Card } from './Card';
 import { craftTheStrategy } from './craftTheStrategy';
 import { MultiChoice } from './MultiChoice';
@@ -63,6 +64,8 @@ export const Grade: FC<Props> = ({
             direction="back"
           />
         );
+      case 'ab':
+        return <ArrangeByLetters key={card.id} card={card} onGrade={onGrade} />;
       default:
         return (
           <SwipeGrade onGrade={onGrade} key={card.id}>
