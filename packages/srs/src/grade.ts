@@ -8,6 +8,7 @@ export type SrsScore = 0 | 1 | 2 | 3 | 4 | 5;
 const stepWeights: Record<StrategyStep['step'], number> = {
   sf: 0.8,
   sb: 0.8,
+  ab: 0.8,
   mf: 0.25,
   mb: 0.25,
 };
