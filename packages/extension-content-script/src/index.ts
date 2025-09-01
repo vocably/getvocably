@@ -53,16 +53,27 @@ const onTextSelect = async () => {
   createSelectionTimeout = setTimeout(onCreateSelectionTimeout, 500);
 };
 
+let selectionFixIntervalId: ReturnType<typeof setInterval> | null = null;
+
 const enableSelectionChangeDetection = () => {
   if (!contentScriptConfiguration.displayMobileLookupButton) {
     return;
   }
 
+  document.removeEventListener('selectionchange', onTextSelect, false);
   document.addEventListener('selectionchange', onTextSelect, false);
-};
 
-const disableSelectionChangeDetection = () =>
-  document.removeEventListener('selectionchange', onTextSelect);
+  if (selectionFixIntervalId) {
+    clearInterval(selectionFixIntervalId);
+  }
+
+  // Resubscribe to selectionchange event because
+  // the motherfucking iOS Safari is losing it.
+  selectionFixIntervalId = setInterval(() => {
+    document.removeEventListener('selectionchange', onTextSelect, false);
+    document.addEventListener('selectionchange', onTextSelect, false);
+  }, 1000);
+};
 
 const isInSelection = (element: HTMLElement, selection: Selection) => {
   if (!selection || selection.rangeCount === 0) {
@@ -110,8 +121,6 @@ const onMouseUp = async (event: MouseEvent) => {
   ) {
     return;
   }
-
-  enableSelectionChangeDetection();
 
   try {
     await api.ping();
@@ -198,7 +207,6 @@ const onMouseDown = async (event: MouseEvent) => {
     return;
   }
 
-  disableSelectionChangeDetection();
   try {
     await api.ping();
   } catch {
