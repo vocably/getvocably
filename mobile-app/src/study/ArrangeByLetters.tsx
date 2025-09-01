@@ -147,6 +147,9 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
 
   const letterStyle: StyleProp<TextStyle> = {
     fontSize: 24,
+    width: 32,
+    lineHeight: 30,
+    textAlign: 'center',
   };
 
   const response: Array<number | false> = lettersRef.current.map((_, index) => {
