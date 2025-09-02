@@ -186,7 +186,7 @@ export const buildDirectResult = async ({
             })
           ),
           translation
-        ),
+        ).sort(sortByRelevance(translation)),
       };
     }
 

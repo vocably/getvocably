@@ -22,6 +22,19 @@ describe('translateFromContext', () => {
     expect(translationResult.value.target).toEqual('берег');
   }, 60_000);
 
+  it('groundbreaking', async () => {
+    const translationResult = await translateFromContext({
+      source: 'groundbreaking',
+      context:
+        "Scientists have announced a groundbreaking discovery on Saturn's moon Titan: a new form of life that looks like algae.",
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+    expect(translationResult.success).toEqual(true);
+    // @ts-ignore
+    expect(translationResult.value.target).toEqual('революционный');
+  }, 60_000);
+
   it('out of context', async () => {
     const translationResult = await translateFromContext({
       source: 'doctor',

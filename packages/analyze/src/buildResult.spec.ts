@@ -342,6 +342,24 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation.target).toEqual('опоздать');
   });
 
+  it('sort lexicala results by the context translation partOfSpeech', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      source: 'groundbreaking',
+      context: `Scientists have announced a groundbreaking discovery on Saturn's moon Titan: a new form of life that looks like algae.`,
+    });
+
+    expect(result.success).toBeTruthy();
+    if (result.success === false) {
+      return;
+    }
+
+    expect(result.value.translation.partOfSpeech).toEqual('adjective');
+    expect(result.value.translation.target).toEqual('революционный');
+    expect(result.value.items[0].partOfSpeech).toEqual('adjective');
+  });
+
   it('learn the language by using it', async () => {
     const result = await buildResult({
       sourceLanguage: 'en',
