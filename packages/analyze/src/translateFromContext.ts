@@ -52,6 +52,10 @@ export const itMakesSense = (p: Payload): boolean => {
     return false;
   }
 
+  if (source.length >= context.length) {
+    return false;
+  }
+
   return true;
 };
 
@@ -79,7 +83,9 @@ export const translateFromContext = async (
 
   const prompt = [
     `You are a smart language dictionary.`,
-    `Use provides a substring and its context separated by new line character.`,
+    `Use provides two inputs:`,
+    `The first input is context sentence`,
+    `The second input is substring in that sentence`,
     `Only respond in JSON format with an object containing the following properties:`,
     `- source - the substring translated into ${
       languageList[payload.sourceLanguage]
@@ -102,7 +108,8 @@ export const translateFromContext = async (
   const responseResult = await chatGptRequest({
     messages: [
       { role: 'system', content: prompt },
-      { role: 'user', content: `${source}\n${context}` },
+      { role: 'user', content: context },
+      { role: 'user', content: source },
     ],
     model: GPT_4O_MINI,
     timeoutMs: 5000,

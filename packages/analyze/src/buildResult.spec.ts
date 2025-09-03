@@ -339,7 +339,11 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.translation.target).toEqual('опоздать');
+    expect(result.value.translation.target).toHaveSomeOf([
+      'опоздать',
+      'поздно',
+      'опоздавший',
+    ]);
   });
 
   it('sort lexicala results by the context translation partOfSpeech', async () => {
