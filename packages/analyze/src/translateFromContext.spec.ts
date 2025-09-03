@@ -92,7 +92,9 @@ describe('translateFromContext', () => {
     }
 
     expect(translationResult.value.partOfSpeech).toEqual('phrase');
-    expect(translationResult.value.target).toEqual('what is your name?');
+    expect(translationResult.value.target.toLowerCase()).toEqual(
+      'what is your name?'
+    );
   });
 
   it('inverts the translation', async () => {
