@@ -128,9 +128,11 @@
       height: 350px;
       display: flex;
       justify-content: center;
+      padding-top: 2rem;
 
       @media (width < $md) {
         height: 250px;
+        padding-top: 1rem;
       }
     }
   }

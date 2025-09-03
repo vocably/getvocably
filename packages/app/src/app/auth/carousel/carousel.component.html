@@ -18,7 +18,7 @@
         </div>
       </div>
     </swiper-slide>
-    <swiper-slide class="hero-slide master-cards-slide">
+    <swiper-slide *ngIf="!isIOS" class="hero-slide master-cards-slide">
       <div class="hero-slide-body">
         <div class="image">
           <div class="iphone">
@@ -32,7 +32,7 @@
         </div>
       </div>
     </swiper-slide>
-    <swiper-slide class="hero-slide youtube-slide">
+    <swiper-slide *ngIf="!isIOS" class="hero-slide youtube-slide">
       <div class="hero-slide-body">
         <div class="image">
           <img src="assets/sign-up/youtube.webp" alt="YouTube" />
@@ -40,7 +40,7 @@
         <div class="text">Translate directly from YouTube subtitles.</div>
       </div>
     </swiper-slide>
-    <swiper-slide class="hero-slide youtube-slide">
+    <swiper-slide *ngIf="!isIOS" class="hero-slide youtube-slide">
       <div class="hero-slide-body">
         <div class="text">
           Translate and save words during your online classes.
@@ -50,7 +50,7 @@
         </div>
       </div>
     </swiper-slide>
-    <swiper-slide class="hero-slide master-cards-slide">
+    <swiper-slide *ngIf="!isIOS" class="hero-slide master-cards-slide">
       <div class="hero-slide-body">
         <div class="image">
           <div class="iphone">
