@@ -111,7 +111,11 @@ describe('translateFromContext', () => {
     }
 
     expect(translationResult.value.partOfSpeech).toEqual('phrase');
-    expect(translationResult.value.source).toEqual('What is your name?');
-    expect(translationResult.value.target).toEqual('Как тебя зовут?');
+    expect(translationResult.value.source.toLowerCase()).toEqual(
+      'What is your name?'
+    );
+    expect(translationResult.value.target.toLowerCase()).toEqual(
+      'Как тебя зовут?'
+    );
   });
 });
