@@ -5,6 +5,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Easing,
+  PixelRatio,
   ScrollView,
   StyleProp,
   TextStyle,
@@ -40,6 +41,8 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
     lettersRef.current.map(() => false)
   );
   const [isAnswerVisible, setIsAnswerVisible] = useState(false);
+
+  const fontScale = Math.max(1, PixelRatio.getFontScale());
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
@@ -139,16 +142,17 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
   const letterContainerStyle: StyleProp<ViewStyle> = {
     borderWidth: 1,
     borderRadius: 12,
-    width: 32,
-    height: 32,
+    width: 32 * fontScale,
+    height: 32 * fontScale,
     alignItems: 'center',
     justifyContent: 'center',
   };
 
   const letterStyle: StyleProp<TextStyle> = {
-    fontSize: 24,
-    width: 32,
+    fontSize: 16,
     lineHeight: 30,
+    fontWeight: 'bold',
+    width: 32 * fontScale,
     textAlign: 'center',
   };
 
