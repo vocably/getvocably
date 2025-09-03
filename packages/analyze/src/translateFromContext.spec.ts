@@ -112,10 +112,10 @@ describe('translateFromContext', () => {
 
     expect(translationResult.value.partOfSpeech).toEqual('phrase');
     expect(translationResult.value.source.toLowerCase()).toEqual(
-      'What is your name?'
+      'what is your name?'
     );
     expect(translationResult.value.target.toLowerCase()).toEqual(
-      'Как тебя зовут?'
+      'как тебя зовут?'
     );
   });
 });
