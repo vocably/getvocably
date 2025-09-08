@@ -17,15 +17,12 @@
 		327FB2032AA30BBF0040A61F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2022AA30BBF0040A61F /* Assets.xcassets */; };
 		327FB20C2AA30BBF0040A61F /* Vocably Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 327FB20B2AA30BBF0040A61F /* Vocably Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		327FB2112AA30BBF0040A61F /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327FB2102AA30BBF0040A61F /* SafariWebExtensionHandler.swift */; };
-		327FB2282AA30BBF0040A61F /* service-worker.js.LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 327FB21E2AA30BBF0040A61F /* service-worker.js.LICENSE.txt */; };
 		327FB2292AA30BBF0040A61F /* content-script.d.ts in Resources */ = {isa = PBXBuildFile; fileRef = 327FB21F2AA30BBF0040A61F /* content-script.d.ts */; };
-		327FB22A2AA30BBF0040A61F /* content-script.js.LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2202AA30BBF0040A61F /* content-script.js.LICENSE.txt */; };
 		327FB22B2AA30BBF0040A61F /* popup in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2212AA30BBF0040A61F /* popup */; };
 		327FB22C2AA30BBF0040A61F /* images in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2222AA30BBF0040A61F /* images */; };
 		327FB22D2AA30BBF0040A61F /* service-worker.d.ts in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2232AA30BBF0040A61F /* service-worker.d.ts */; };
 		327FB22E2AA30BBF0040A61F /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2242AA30BBF0040A61F /* manifest.json */; };
 		327FB22F2AA30BBF0040A61F /* content-script.js in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2252AA30BBF0040A61F /* content-script.js */; };
-		327FB2302AA30BBF0040A61F /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2262AA30BBF0040A61F /* options.html */; };
 		327FB2312AA30BBF0040A61F /* service-worker.js in Resources */ = {isa = PBXBuildFile; fileRef = 327FB2272AA30BBF0040A61F /* service-worker.js */; };
 /* End PBXBuildFile section */
 
@@ -70,15 +67,12 @@
 		327FB2102AA30BBF0040A61F /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		327FB2122AA30BBF0040A61F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327FB2132AA30BBF0040A61F /* Vocably_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vocably_Extension.entitlements; sourceTree = "<group>"; };
-		327FB21E2AA30BBF0040A61F /* service-worker.js.LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "service-worker.js.LICENSE.txt"; path = "Resources/service-worker.js.LICENSE.txt"; sourceTree = "<group>"; };
 		327FB21F2AA30BBF0040A61F /* content-script.d.ts */ = {isa = PBXFileReference; lastKnownFileType = text; name = "content-script.d.ts"; path = "Resources/content-script.d.ts"; sourceTree = "<group>"; };
-		327FB2202AA30BBF0040A61F /* content-script.js.LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "content-script.js.LICENSE.txt"; path = "Resources/content-script.js.LICENSE.txt"; sourceTree = "<group>"; };
 		327FB2212AA30BBF0040A61F /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = Resources/popup; sourceTree = "<group>"; };
 		327FB2222AA30BBF0040A61F /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = Resources/images; sourceTree = "<group>"; };
 		327FB2232AA30BBF0040A61F /* service-worker.d.ts */ = {isa = PBXFileReference; lastKnownFileType = text; name = "service-worker.d.ts"; path = "Resources/service-worker.d.ts"; sourceTree = "<group>"; };
 		327FB2242AA30BBF0040A61F /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
 		327FB2252AA30BBF0040A61F /* content-script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "content-script.js"; path = "Resources/content-script.js"; sourceTree = "<group>"; };
-		327FB2262AA30BBF0040A61F /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = Resources/options.html; sourceTree = "<group>"; };
 		327FB2272AA30BBF0040A61F /* service-worker.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "service-worker.js"; path = "Resources/service-worker.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,15 +152,12 @@
 		327FB21D2AA30BBF0040A61F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				327FB21E2AA30BBF0040A61F /* service-worker.js.LICENSE.txt */,
 				327FB21F2AA30BBF0040A61F /* content-script.d.ts */,
-				327FB2202AA30BBF0040A61F /* content-script.js.LICENSE.txt */,
 				327FB2212AA30BBF0040A61F /* popup */,
 				327FB2222AA30BBF0040A61F /* images */,
 				327FB2232AA30BBF0040A61F /* service-worker.d.ts */,
 				327FB2242AA30BBF0040A61F /* manifest.json */,
 				327FB2252AA30BBF0040A61F /* content-script.js */,
-				327FB2262AA30BBF0040A61F /* options.html */,
 				327FB2272AA30BBF0040A61F /* service-worker.js */,
 			);
 			name = Resources;
@@ -270,13 +261,10 @@
 				327FB22C2AA30BBF0040A61F /* images in Resources */,
 				327FB22F2AA30BBF0040A61F /* content-script.js in Resources */,
 				327FB22E2AA30BBF0040A61F /* manifest.json in Resources */,
-				327FB2282AA30BBF0040A61F /* service-worker.js.LICENSE.txt in Resources */,
 				327FB22B2AA30BBF0040A61F /* popup in Resources */,
 				327FB2292AA30BBF0040A61F /* content-script.d.ts in Resources */,
 				327FB2312AA30BBF0040A61F /* service-worker.js in Resources */,
 				327FB22D2AA30BBF0040A61F /* service-worker.d.ts in Resources */,
-				327FB22A2AA30BBF0040A61F /* content-script.js.LICENSE.txt in Resources */,
-				327FB2302AA30BBF0040A61F /* options.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "{{ process.env.NAME }}: Language Flashcards",
+  "description": "Translate and create flashcards on any website or YouTube. Study the flashcards on your mobile device.",
+  "version": "{{ process.env.VERSION }}",
+
+  "icons": {
+    "16": "images/icon-16x16.png",
+    "32": "images/icon-32x32.png",
+    "48": "images/icon-48x48.png",
+    "128": "images/icon-128x128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16x16.png",
+      "32": "images/icon-32x32.png",
+      "48": "images/icon-48x48.png",
+      "128": "images/icon-128x128.png"
+    },
+    "default_popup": "popup/index.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content-script.js", "play-audio.js"],
+      "exclude_matches": [{{ process.env.CONTENT_SCRIPT_EXCLUDED_MATCHES }}],
+      "all_frames": true
+    }
+  ],
+
+  "permissions": ["storage", "offscreen", "contextMenus"{{ process.env.EXTRA_PERMISSIONS }}],
+
+  "externally_connectable": {
+    "matches": [{{ process.env.EXTERNALLY_CONNECTABLE_MATCHES }}]
+  },
+  {{ process.env.HOST_PERMISSIONS }}
+  {{ process.env.KEY }}
+  "background": {
+    "service_worker": "service-worker.js"
+  }
+}

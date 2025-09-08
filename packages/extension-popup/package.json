@@ -5,6 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --output-hashing none --single-bundle",
+    "build-prod": "npm run set-prod-environment && rimraf dist && npm run build",
+    "build-dev": "npm run set-dev-environment && rimraf dist && npm run build",
+    "set-prod-environment": "cp src/environments/environmentLocal.prod.ts src/environments/environmentLocal.ts",
+    "set-dev-environment": "cp src/environments/environmentLocal.dev.ts src/environments/environmentLocal.ts",
     "watch": "ng build --watch --configuration production --output-hashing none --single-bundle",
     "test": "echo 'Use `@vocably/extension-popup has no tests.'",
     "extension-popup": "npm-run-all --parallel start watch"

@@ -1,1 +1,1 @@
-import '@vocably/extension-stay-alive';
+export {};
