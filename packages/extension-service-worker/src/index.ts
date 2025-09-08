@@ -106,6 +106,7 @@ type RegisterServiceWorkerOptions = {
   auth: Parameters<typeof Auth.configure>[0];
   api: Parameters<typeof configureApi>[0];
   facility: 'chrome-or-safari' | 'ios-safari';
+  unlimitedMaxCards?: boolean;
 };
 
 export const isLoggedIn$: Observable<boolean> = timer(0, 2000).pipe(
@@ -200,6 +201,9 @@ export const registerServiceWorker = (
   });
 
   onGetMaxCardsRequest(async (sendResponse) => {
+    if (registerServiceWorkerOptions.unlimitedMaxCards) {
+      return sendResponse('unlimited');
+    }
     return sendResponse(await getMaxCards());
   });
 

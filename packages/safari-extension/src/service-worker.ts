@@ -22,6 +22,7 @@ registerServiceWorker({
     },
   },
   facility: 'chrome-or-safari',
+  unlimitedMaxCards: true,
 });
 
 browserEnv.contextMenus.create({
@@ -35,18 +36,3 @@ browserEnv.contextMenus.onClicked.addListener((info, tab) => {
     action: 'contextMenuTranslateClicked',
   });
 });
-
-chrome.runtime.onInstalled.addListener(async (details) => {
-  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    await chrome.tabs.create({
-      url: `${process.env.APP_BASE_URL}/page/welcome`,
-    });
-  }
-});
-
-chrome.runtime.setUninstallURL('https://app.vocably.pro/page/uninstall');
-
-// @ts-ignore
-window.clearStorage = () => {
-  chrome.storage.sync.clear();
-};
