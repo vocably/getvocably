@@ -137,6 +137,7 @@ export const MultiChoice: FC<Props> = ({
                       ? theme.colors.primary
                       : undefined,
                   borderRadius: buttonBorderRadius + 2,
+                  overflow: 'hidden',
                 }}
               >
                 <TouchableRipple

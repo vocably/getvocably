@@ -9,6 +9,7 @@ import {
   Alert,
   ColorValue,
   PixelRatio,
+  Platform,
   Pressable,
   StyleProp,
   ViewStyle,
@@ -52,7 +53,7 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
         const soundUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
           text
         )}&tl=${language}&client=tw-ob`;
-        Sound.setCategory('Playback', true);
+        Sound.setCategory('Playback');
         const audio = new Sound(soundUrl, '', (error) => {
           if (error === null) {
             loadedAudioRef.current = audio;
@@ -118,7 +119,14 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
 
     const stop = () => {
       if (loadedAudioRef.current) {
-        loadedAudioRef.current.stop();
+        if (Platform.OS === 'android') {
+          loadedAudioRef.current.pause(() => {
+            loadedAudioRef.current?.release();
+            loadedAudioRef.current = undefined;
+          });
+        } else {
+          loadedAudioRef.current.stop();
+        }
       }
 
       if (loadedAudioResolverRef.current) {
