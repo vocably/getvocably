@@ -19,7 +19,7 @@ export const Loader: FC<Loader> = ({ children }) => {
       <ActivityIndicator
         color={theme.colors.secondary}
         style={{ marginBottom: 20 }}
-        size={25}
+        size={24}
       ></ActivityIndicator>
       <Text
         variant="bodyLarge"
