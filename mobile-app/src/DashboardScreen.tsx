@@ -60,6 +60,8 @@ import { useCurrentLanguageName } from './useCurrentLanguageName';
 import { usePresentPaywall } from './usePresentPaywall';
 
 const SWIPE_MENU_BUTTON_SIZE = 80;
+const STUDY_BUTTON_RADIUS = 12;
+const STUDY_BUTTON_SMALL_RADIUS = 6;
 
 const styles = StyleSheet.create({
   container: {
@@ -342,6 +344,8 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
     });
   };
 
+  const hasTags = deck.tags.length > 0;
+
   return (
     <ScreenLayout
       header={
@@ -419,16 +423,19 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                 paddingBottom: mainPadding,
               }}
             >
-              <View
-                style={{
-                  position: 'relative',
-                }}
-              >
+              <View style={{ flexDirection: 'row', gap: 4 }}>
                 <Button
                   style={{
                     height: 40 * fontScale,
                     justifyContent: 'center',
-                    borderRadius: 12,
+                    borderRadius: STUDY_BUTTON_RADIUS,
+                    borderTopRightRadius: hasTags
+                      ? STUDY_BUTTON_SMALL_RADIUS
+                      : STUDY_BUTTON_RADIUS,
+                    borderBottomRightRadius: hasTags
+                      ? STUDY_BUTTON_SMALL_RADIUS
+                      : STUDY_BUTTON_RADIUS,
+                    flex: 1,
                   }}
                   labelStyle={{
                     fontSize: 18,
@@ -439,10 +446,9 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                 >
                   Study{selectedTags.length > 0 ? ' selected tags' : ''}
                 </Button>
-                {deck.tags.length > 0 && (
+                {hasTags && (
                   <View
                     style={{
-                      position: 'absolute',
                       right: 0,
                       top: 0,
                       bottom: 0,
@@ -463,8 +469,15 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                         <Pressable
                           style={({ pressed }) => [
                             {
+                              backgroundColor: theme.colors.primary,
                               opacity: pressed ? 0.8 : 1,
                               padding: 8,
+                              borderRadius: STUDY_BUTTON_RADIUS,
+                              borderTopLeftRadius: STUDY_BUTTON_SMALL_RADIUS,
+                              borderBottomLeftRadius: STUDY_BUTTON_SMALL_RADIUS,
+                              height: 40 * fontScale,
+                              justifyContent: 'center',
+                              alignItems: 'center',
                             },
                           ]}
                           hitSlop={20}
