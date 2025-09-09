@@ -219,6 +219,7 @@ export const MultiChoice: FC<Props> = ({
             <Button
               style={{ marginTop: 16, alignSelf: 'center' }}
               onPress={showAnswer}
+              textColor={theme.colors.onBackground}
             >
               Show the correct answer
             </Button>
