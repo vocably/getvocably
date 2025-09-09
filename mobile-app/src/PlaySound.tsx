@@ -1,14 +1,13 @@
-import { GoogleTTSLanguage } from '@vocably/model';
+import { GoogleTTSLanguage, Result } from '@vocably/model';
 import React, {
-  FC,
   forwardRef,
-  useCallback,
-  useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react';
 import {
   Alert,
+  ColorValue,
   PixelRatio,
   Pressable,
   StyleProp,
@@ -20,70 +19,129 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Sentry } from './BetterSentry';
 import { iconButtonOpacity, pressedIconButtonOpacity } from './stupidConstants';
 
-type PlaySound = FC<{
+export type PlaySoundRef = {
+  play: () => Promise<Result<unknown>>;
+  stop: () => void;
+};
+
+type Props = {
   text: string;
   language: GoogleTTSLanguage;
   size?: number;
   style?: StyleProp<ViewStyle>;
-}>;
+  color?: ColorValue;
+};
 
-export const PlaySound: PlaySound = forwardRef(
-  ({ text, language, size = 16, style = {} }, ref) => {
+export const PlaySound = forwardRef<PlaySoundRef, Props>(
+  ({ text, language, size = 16, style = {}, color }, ref) => {
     const theme = useTheme();
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const [loadedAudio, setLoadedAudio] = useState<Sound | null>(null);
+    const loadedAudioRef = useRef<Sound>();
+    const loadedAudioResolverRef = useRef<(value: Result<unknown>) => void>();
 
-    const playSound = useCallback(() => {
-      Sound.setCategory('Playback');
+    const loadAudio = (): Promise<Result<Sound>> => {
+      if (loadedAudioRef.current) {
+        return Promise.resolve({
+          success: true,
+          value: loadedAudioRef.current,
+        });
+      }
 
-      const soundUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
-        text
-      )}&tl=${language}&client=tw-ob`;
-
-      const audio =
-        loadedAudio ??
-        new Sound(soundUrl, '', (error) => {
+      return new Promise((resolve) => {
+        const soundUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+          text
+        )}&tl=${language}&client=tw-ob`;
+        Sound.setCategory('SoloAmbient');
+        const audio = new Sound(soundUrl, '', (error) => {
           if (error === null) {
-            setLoadedAudio(audio);
+            loadedAudioRef.current = audio;
+
+            resolve({
+              success: true,
+              value: audio,
+            });
+
+            return;
           }
           if (error) {
+            resolve({
+              success: false,
+              errorCode: 'FUCKING_ERROR',
+              reason: 'Unable to load sound resource',
+            });
             Sentry.captureException(new Error(`Play sound error`), {
               extra: {
                 soundUrl,
                 error: JSON.stringify(error),
               },
             });
-            setIsPlaying(false);
-            Alert.alert(
-              'Error: The pronunciation could not be played',
-              `Something went wrong during the pronunciation playback.\n\nCould you please try again?`
-            );
           }
         });
+      });
+    };
 
+    const play = async (): Promise<Result<unknown>> => {
       setIsPlaying(true);
-    }, [text, language, setIsPlaying, setLoadedAudio, loadedAudio]);
+
+      const loadedAudioResult = await loadAudio();
+
+      if (!loadedAudioResult.success) {
+        setIsPlaying(false);
+        Alert.alert(
+          'Error: The pronunciation could not be played',
+          `Something went wrong during the pronunciation playback.\n\nCould you please try again?`
+        );
+        return loadedAudioResult;
+      }
+
+      return new Promise((resolve) => {
+        loadedAudioResolverRef.current = resolve;
+        loadedAudioResult.value.play((success) => {
+          setIsPlaying(false);
+
+          if (success) {
+            resolve({
+              success: true,
+              value: null,
+            });
+          } else {
+            resolve({
+              success: false,
+              errorCode: 'FUCKING_ERROR',
+              reason: 'Play sound ended up with error.',
+            });
+          }
+        });
+      });
+    };
+
+    const stop = () => {
+      if (loadedAudioRef.current) {
+        loadedAudioRef.current.stop();
+      }
+
+      if (loadedAudioResolverRef.current) {
+        loadedAudioResolverRef.current({
+          success: true,
+          value: null,
+        });
+
+        loadedAudioResolverRef.current = undefined;
+      }
+
+      setIsPlaying(false);
+    };
 
     useImperativeHandle(ref, () => ({
-      play() {
-        playSound();
-      },
+      play,
+      stop,
     }));
-
-    useEffect(() => {
-      if (isPlaying && loadedAudio) {
-        loadedAudio.play(() => {
-          setIsPlaying(false);
-        });
-      }
-    }, [isPlaying, loadedAudio, setIsPlaying]);
 
     const fontScale = PixelRatio.getFontScale();
 
     return (
       <Pressable
-        disabled={isPlaying}
         hitSlop={20}
         style={({ pressed }) => [
           {
@@ -93,12 +151,14 @@ export const PlaySound: PlaySound = forwardRef(
           },
           style,
         ]}
-        onPress={playSound}
+        onPress={() => {
+          isPlaying ? stop() : play();
+        }}
       >
         <Icon
           name={isPlaying ? 'volume-medium' : 'play-circle'}
           style={{
-            color: theme.colors.onBackground,
+            color: color ?? theme.colors.onBackground,
           }}
           size={size * fontScale}
         />

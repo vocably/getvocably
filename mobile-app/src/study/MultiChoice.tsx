@@ -4,8 +4,9 @@ import { shuffle } from 'lodash-es';
 import React, { FC, useMemo, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Text, TouchableRipple, useTheme } from 'react-native-paper';
+import { Button, Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { CardDefinition } from '../CardDefinition';
+import { PlaySound } from '../PlaySound';
 import { CardFront } from './Card/CardFront';
 import { Displayer, DisplayerRef } from './Displayer';
 import { PADDING_VERTICAL } from './StudyScreen';
@@ -31,9 +32,21 @@ export const MultiChoice: FC<Props> = ({
 
   const [wrong, setWrong] = useState<string[]>([]);
   const [correct, setCorrect] = useState<string>('');
+  const [playSoundIconVisible, setPlaySoundIconVisible] = useState(false);
   const displayerRef = useRef<DisplayerRef>(null);
+  const [correctVisible, setCorrectVisible] = useState(false);
 
   const answers = useMemo(() => shuffle([...alternatives, card]), []);
+
+  const closeAndGrade = (score: SrsScore) => {
+    if (displayerRef.current) {
+      displayerRef.current.hide().then(() => {
+        onGrade(score);
+      });
+    } else {
+      onGrade(score);
+    }
+  };
 
   const validate = (validateItem: CardItem) => {
     if (wrong.includes(card.id)) {
@@ -46,14 +59,16 @@ export const MultiChoice: FC<Props> = ({
     }
 
     setCorrect(card.id);
+    closeAndGrade(wrong.length === 0 && !correctVisible ? 5 : 3);
+  };
 
-    if (displayerRef.current) {
-      displayerRef.current.hide().then(() => {
-        onGrade(wrong.length === 0 ? 5 : 1);
-      });
-    } else {
-      onGrade(wrong.length === 0 ? 5 : 1);
+  const showAnswer = () => {
+    if (correctVisible) {
+      return;
     }
+
+    setCorrectVisible(true);
+    setPlaySoundIconVisible(true);
   };
 
   const [minHeight, setMinHeight] = useState(36);
@@ -109,58 +124,104 @@ export const MultiChoice: FC<Props> = ({
             style={{
               marginTop: 32,
               width: '100%',
-              gap: 8,
+              gap: 4,
             }}
           >
             {answers.map((answerCard, index) => (
-              <TouchableRipple
+              <View
                 key={answerCard.id}
-                borderless={true}
-                disabled={wrong.includes(answerCard.id)}
-                onPress={() => validate(answerCard)}
-                onLayout={(event) => {
-                  const { height } = event.nativeEvent.layout;
-                  if (height > minHeight) {
-                    setMinHeight(height);
-                  }
-                }}
                 style={{
-                  flexDirection: 'column',
-                  paddingVertical: 12,
-                  paddingHorizontal: 8,
-                  borderRadius: buttonBorderRadius,
-                  minHeight: minHeight,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderWidth: 1,
-                  borderColor: wrong.includes(answerCard.id)
-                    ? theme.colors.error
-                    : theme.colors.primary,
-                  backgroundColor: wrong.includes(answerCard.id)
-                    ? theme.colors.error
-                    : correct === answerCard.id
-                    ? theme.colors.primary
-                    : theme.colors.background,
+                  padding: 2,
+                  backgroundColor:
+                    correctVisible && card.id === answerCard.id
+                      ? theme.colors.primary
+                      : undefined,
+                  borderRadius: buttonBorderRadius + 2,
                 }}
               >
-                <Text
+                <TouchableRipple
+                  borderless={true}
+                  disabled={wrong.includes(answerCard.id)}
+                  onPress={() => validate(answerCard)}
+                  onLayout={(event) => {
+                    const { height } = event.nativeEvent.layout;
+                    if (height > minHeight) {
+                      setMinHeight(height);
+                    }
+                  }}
                   style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    fontSize: 18,
-                    color: wrong.includes(answerCard.id)
-                      ? theme.colors.onError
-                      : correct === answerCard.id
-                      ? theme.colors.onPrimary
+                    flexDirection: 'column',
+                    paddingVertical: 12,
+                    paddingHorizontal: 8,
+                    borderRadius: buttonBorderRadius,
+                    minHeight: minHeight,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderWidth: 1,
+                    borderColor: wrong.includes(answerCard.id)
+                      ? theme.colors.error
                       : theme.colors.primary,
+                    backgroundColor: wrong.includes(answerCard.id)
+                      ? theme.colors.error
+                      : correct === answerCard.id
+                      ? theme.colors.primary
+                      : theme.colors.background,
                   }}
                 >
-                  {direction === 'back'
-                    ? answerCard.data.source
-                    : answerCard.data.translation || answerCard.data.definition}
-                </Text>
-              </TouchableRipple>
+                  <View
+                    style={{
+                      alignSelf: 'stretch',
+                      position: 'relative',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        width: '100%',
+                        textAlign: 'center',
+                        fontSize: 18,
+                        color: wrong.includes(answerCard.id)
+                          ? theme.colors.onError
+                          : correct === answerCard.id
+                          ? theme.colors.onPrimary
+                          : theme.colors.primary,
+                      }}
+                    >
+                      {direction === 'back'
+                        ? answerCard.data.source
+                        : answerCard.data.translation ||
+                          answerCard.data.definition}
+                    </Text>
+                    {card.id === answerCard.id && direction === 'back' && (
+                      <PlaySound
+                        size={24} // size is needed for the translateY
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: '50%',
+                          display: playSoundIconVisible ? 'flex' : 'none',
+                          transform: [
+                            { translateY: -12 }, // half of the size
+                          ],
+                        }}
+                        color={
+                          correct === answerCard.id
+                            ? theme.colors.onPrimary
+                            : theme.colors.onBackground
+                        }
+                        text={answerCard.data.source}
+                        language={answerCard.data.language}
+                      />
+                    )}
+                  </View>
+                </TouchableRipple>
+              </View>
             ))}
+            <Button
+              style={{ marginTop: 16, alignSelf: 'center' }}
+              onPress={showAnswer}
+            >
+              Show the correct answer
+            </Button>
           </View>
         </Displayer>
       </ScrollView>
