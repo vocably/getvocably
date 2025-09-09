@@ -9,11 +9,9 @@ import {
 import { trimArticle } from '@vocably/sulna';
 import { buildDirectResultLegacy } from './buildDirectResultLegacy';
 import { combineItems } from './combineItems';
-import { explainSentence } from './explainSentence';
 import { filterOutByPartOfSpeech } from './filterOutByPartOfSpeech';
 import { fitsTheSize } from './fitsTheSize';
 import { getWords } from './isOneWord';
-import { isSingleWord as checkForASingleWord } from './isSingleWord';
 import { lexicala, LexicalaOverriddenParams } from './lexicala';
 import { languageToLexicalaLanguage } from './lexicala/lexicalaLanguageMapper';
 import { lexicalaSearchResultToAnalysisItem } from './lexicala/lexicalaSearchResultToAnalysisItem';
@@ -45,53 +43,23 @@ export const buildDirectResult = async ({
   const payload = sanitizePayload(rawPayload);
 
   let translations: [Translation, ...Translation[]];
+  // ToDo: delete this variable after explanation is removed from the app and extension
   let explanation: string = '';
 
-  const isSingleWord = checkForASingleWord(payload);
-
-  if (isSingleWord) {
-    const translationResult = await translate(payload);
-    if (translationResult.success === false) {
-      return translationResult;
-    }
-
-    translations = [
-      {
-        ...translationResult.value,
-        partOfSpeech:
-          translationResult.value.partOfSpeech ?? payload.partOfSpeech,
-        sourceLanguage:
-          translationResult.value.sourceLanguage ?? payload.sourceLanguage,
-      },
-    ];
-  } else {
-    const [translationResult, explanationResult] = await Promise.all([
-      translate(payload),
-      explainSentence({
-        sourceLanguage: payload.sourceLanguage,
-        sentence: payload.source,
-        targetLanguage: payload.targetLanguage,
-      }),
-    ]);
-
-    if (translationResult.success === false) {
-      return translationResult;
-    }
-
-    translations = [
-      {
-        ...translationResult.value,
-        partOfSpeech:
-          translationResult.value.partOfSpeech ?? payload.partOfSpeech,
-        sourceLanguage:
-          translationResult.value.sourceLanguage ?? payload.sourceLanguage,
-      },
-    ];
-
-    if (explanationResult.success === true) {
-      explanation = explanationResult.value.explanation;
-    }
+  const translationResult = await translate(payload);
+  if (translationResult.success === false) {
+    return translationResult;
   }
+
+  translations = [
+    {
+      ...translationResult.value,
+      partOfSpeech:
+        translationResult.value.partOfSpeech ?? payload.partOfSpeech,
+      sourceLanguage:
+        translationResult.value.sourceLanguage ?? payload.sourceLanguage,
+    },
+  ];
 
   const lexicalaLanguage = languageToLexicalaLanguage(payload.sourceLanguage);
 
