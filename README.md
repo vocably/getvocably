@@ -6,13 +6,11 @@
 [![Safari](https://img.shields.io/badge/Safari-extension-blue)](https://apps.apple.com/app/vocably-for-safari/id6464076425)
 [![Safari](https://img.shields.io/badge/iOS_Safari-extension-blue)](https://vocably.pro/ios-safari-extension.html)
 
-One day, you'll start using a foreign language — and it will be hard, no matter how much time you've spent on Duolingo or in class. That's when you should remember Vocably. It'll make things easier.
-
 ## How it works
 
 1. Select any new word (or phrase) (supports Chrome, Safari, iOS Safari, Android, and YouTube on Desktop).
-1. Translate it + Add it to your collection.
-1. Learn the words from your collection.
+1. Translate it + Save it to your collection.
+1. Learn the words from your collection on your mobile device.
 
 ## Works everywhere
 
