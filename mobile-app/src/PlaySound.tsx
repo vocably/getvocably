@@ -52,7 +52,7 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
         const soundUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
           text
         )}&tl=${language}&client=tw-ob`;
-        Sound.setCategory('SoloAmbient');
+        Sound.setCategory('Playback', true);
         const audio = new Sound(soundUrl, '', (error) => {
           if (error === null) {
             loadedAudioRef.current = audio;
