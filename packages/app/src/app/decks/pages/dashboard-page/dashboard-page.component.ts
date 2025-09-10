@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { byDate, CardItem } from '@vocably/model';
 import { isBoolean } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
+import { isDesktop } from '../../../../browser';
 import { DeckStoreService } from '../../deck-store.service';
 import { MobileAppEncouragerComponent } from './mobile-app-encourager/mobile-app-encourager.component';
 
@@ -16,6 +17,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   public cardItems: CardItem[] = [];
+
+  public isDesktop = isDesktop;
 
   constructor(
     public deckStore: DeckStoreService,
@@ -36,11 +39,6 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   async goToPractice() {
-    if (localStorage.getItem('skip-mobile-app-encourager')) {
-      await this.router.navigate(['study'], { relativeTo: this.route });
-      return;
-    }
-
     const dialogRef = this.dialog.open(MobileAppEncouragerComponent);
 
     dialogRef

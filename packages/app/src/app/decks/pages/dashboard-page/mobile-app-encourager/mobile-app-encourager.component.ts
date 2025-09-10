@@ -7,8 +7,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./mobile-app-encourager.component.scss'],
 })
 export class MobileAppEncouragerComponent implements OnInit {
-  dontShowAgain = false;
-
   constructor(public dialogRef: MatDialogRef<void>) {}
 
   ngOnInit(): void {}

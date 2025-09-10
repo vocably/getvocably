@@ -1,11 +1,11 @@
 <div class="gradient">
-  <div class="mb-1">
+  <div *ngIf="isDesktop" class="mb-1">
     <button
       class="button block track-click"
       id="practice-button"
       (click)="goToPractice()"
     >
-      Study
+      Study on mobile
     </button>
   </div>
   <ul class="unstyled separated mb-1 fix-button" data-test="dashboard-cards">
