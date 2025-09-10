@@ -9,7 +9,15 @@
     "
   >
     <div>
-      <video autoplay loop muted playsinline style="height: 400px">
+      <video
+        autoplay
+        loop
+        muted
+        playsinline
+        (load)="loaded = true"
+        style="width: 184px; height: 400px"
+        [style.visibility]="loaded ? 'visible' : 'hidden'"
+      >
         <source src="assets/study/mobile.mov" type="video/quicktime" />
         <source src="assets/study/mobile.webm" type="video/webm" />
         The video is not supported by your browser.
