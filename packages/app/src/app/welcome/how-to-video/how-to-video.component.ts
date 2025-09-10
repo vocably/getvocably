@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GoogleLanguage } from '@vocably/model';
+import { GoogleLanguage, languageList } from '@vocably/model';
 import posthog from 'posthog-js';
 
 @Component({
@@ -11,6 +11,8 @@ export class HowToVideoComponent implements OnInit {
   @Input() public targetLanguage!: GoogleLanguage;
 
   public videoLanguage: 'en' | 'ru' | 'uk' | 'tr' | 'vi' | 'ko' = 'en';
+
+  public languageList = languageList;
 
   constructor() {}
 
