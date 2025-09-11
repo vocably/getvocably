@@ -4,6 +4,7 @@ export * from './bulk-analysis';
 export * from './chat-with-card';
 export * from './constants';
 export * from './errors';
+export * from './explain';
 export * from './language';
 export * from './language-deck';
 export * from './language-list';

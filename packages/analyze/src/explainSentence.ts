@@ -1,27 +1,26 @@
 import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
-import { GoogleLanguage, languageList, Result } from '@vocably/model';
+import {
+  ExplainPayload,
+  Explanation,
+  languageList,
+  Result,
+} from '@vocably/model';
 import { isSafeObject, trimLanguage } from '@vocably/sulna';
 import { isString } from 'lodash-es';
 
-type ExplainSentencePayload = {
-  sourceLanguage: GoogleLanguage;
-  targetLanguage: GoogleLanguage;
-  sentence: string;
-};
-
-export type Explanation = {
+export type AiExplanation = {
   explanation: string;
 };
 
-const isExplanation = (variable: any): variable is Explanation => {
+const isAiExplanation = (variable: any): variable is AiExplanation => {
   return isSafeObject(variable) && isString(variable['explanation']);
 };
 
 export const explainSentence = async ({
   targetLanguage,
   sourceLanguage,
-  sentence,
-}: ExplainSentencePayload): Promise<Result<Explanation>> => {
+  source,
+}: ExplainPayload): Promise<Result<Explanation>> => {
   const responseResult = await chatGptRequest({
     messages: [
       {
@@ -41,7 +40,7 @@ export const explainSentence = async ({
       },
       {
         role: 'user',
-        content: sentence,
+        content: source,
       },
     ],
     responseFormat: {
@@ -54,10 +53,16 @@ export const explainSentence = async ({
     return responseResult;
   }
 
+  if (!isAiExplanation(responseResult.value)) {
+    return responseResult;
+  }
+
   return {
     success: true,
     value: {
-      explanation: responseResult.value,
+      sourceLanguage,
+      targetLanguage,
+      explanation: responseResult.value.explanation,
     },
   };
 };
