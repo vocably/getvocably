@@ -774,9 +774,21 @@ export class VocablyTranslation {
                               style={{ verticalAlign: 'middle' }}
                             ></vocably-icon-ai>
                             {this.explanation.state === 'loading' && (
-                              <vocably-inline-loader
-                                style={{ marginLeft: '8px' }}
-                              ></vocably-inline-loader>
+                              <Fragment>
+                                <span
+                                  style={{
+                                    display: 'inline-block',
+                                    marginLeft: '8px',
+                                    verticalAlign: 'middle',
+                                    fontSize: '13px',
+                                  }}
+                                >
+                                  Requesting ChatGPT
+                                </span>
+                                <vocably-inline-loader
+                                  style={{ marginLeft: '8px' }}
+                                ></vocably-inline-loader>
+                              </Fragment>
                             )}
                           </div>{' '}
                           {this.explanation.state === 'error' &&
