@@ -2,6 +2,7 @@ export { analyze } from './analyze';
 export { bulkAnalyze } from './bulkAnalyze';
 export * from './chat-with-card';
 export { configureApi } from './config';
+export { explain } from './explain';
 export {
   deleteLanguageDeck,
   deleteTag,

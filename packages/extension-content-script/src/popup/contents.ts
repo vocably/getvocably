@@ -115,6 +115,35 @@ export const setContents = async ({
             translation.play();
           }, 50);
         }
+
+        const source = translationResult.value.translation.source;
+
+        translation.explanation = { state: 'loading' };
+        if (source.trim().split(' ').length === 1) {
+          translation.explanationAnimationDelay = 2000;
+        }
+
+        api
+          .explain({
+            sourceLanguage: translationResult.value.translation.sourceLanguage,
+            targetLanguage: translationResult.value.translation.targetLanguage,
+            source: source,
+          })
+          .then((result) => {
+            if (result.success === true && result.value.explanation) {
+              translation.explanation = {
+                state: 'loaded',
+                value: result.value.explanation,
+              };
+            } else if (result.success === true && !result.value.explanation) {
+              translation.explanation = { state: 'none' };
+            } else {
+              translation.explanation = {
+                state: 'error',
+                error: 'Unable to load explanation.',
+              };
+            }
+          });
       }
 
       const existingLanguagesResult = await api.listLanguages();

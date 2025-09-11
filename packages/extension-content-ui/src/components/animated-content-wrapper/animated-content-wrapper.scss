@@ -1,0 +1,13 @@
+@import '../../styles/component';
+
+$scrollbar-track: 6px;
+
+:host {
+  display: block;
+}
+
+#content-wrapper {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+}

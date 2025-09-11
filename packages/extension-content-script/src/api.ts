@@ -7,6 +7,7 @@ import {
   cleanUp,
   deleteTag,
   detachTag,
+  explain,
   getAudioPronunciation,
   getInternalProxyLanguage,
   getInternalSourceLanguage,
@@ -65,6 +66,7 @@ export const api = {
   detachTag,
   updateTag,
   deleteTag,
+  explain,
 };
 
 export type ApiConfigOptions = Partial<typeof api>;

@@ -25,6 +25,19 @@ export const explain = async (
     of(event).pipe(
       map(extractPayload),
       mergeMap((payload) => {
+        const source = payload.source.trim();
+
+        if (source.length === 0 || source.split(' ').length === 1) {
+          return Promise.resolve({
+            success: true,
+            value: {
+              sourceLanguage: payload.sourceLanguage,
+              targetLanguage: payload.targetLanguage,
+              explanation: '',
+            },
+          });
+        }
+
         return explainSentence(payload);
       }),
       map((result) => {

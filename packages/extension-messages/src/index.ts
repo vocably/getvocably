@@ -7,6 +7,8 @@ import {
   DeleteTagPayload,
   DetachTagPayload,
   DirectAnalyzePayload,
+  ExplainPayload,
+  Explanation,
   GoogleLanguage,
   LanguagePairs,
   RateInteractionPayload,
@@ -77,6 +79,11 @@ export const [analyze, onAnalyzeRequest] = createScopedMessage<
   AnalyzePayload,
   Result<TranslationCards>
 >('analyze');
+
+export const [explain, onExplainRequest] = createScopedMessage<
+  ExplainPayload,
+  Result<Explanation>
+>('explain');
 
 export const [removeCard, onRemoveCardRequest] = createScopedMessage<
   RemoveCardPayload,

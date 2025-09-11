@@ -6,9 +6,17 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+import { ComponentExplanationState } from "./components/translation/translation";
 export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+export { ComponentExplanationState } from "./components/translation/translation";
 export namespace Components {
     interface VocablyAddCardHint {
+    }
+    interface VocablyAnimatedContentWrapper {
+        /**
+          * @default 0
+         */
+        "delay": number;
     }
     interface VocablyButton {
     }
@@ -90,6 +98,17 @@ export namespace Components {
     interface VocablyIconVolumeMedium {
     }
     interface VocablyIconWindowClose {
+    }
+    interface VocablyInlineLoader {
+        /**
+          * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+         */
+        "duration"?: number;
+        /**
+          * If `true`, the spinner's animation will be paused.
+          * @default false
+         */
+        "paused": boolean;
     }
     interface VocablyLanguage {
         "sourceLanguage": string;
@@ -197,6 +216,14 @@ export namespace Components {
           * @default []
          */
         "existingTargetLanguages": GoogleLanguage[];
+        /**
+          * @default { state: 'none' }
+         */
+        "explanation": ComponentExplanationState;
+        /**
+          * @default 0
+         */
+        "explanationAnimationDelay": number;
         "extensionPlatform": {
     name: string;
     url: string;
@@ -264,6 +291,10 @@ export interface VocablyAddCardHintCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyAddCardHintElement;
 }
+export interface VocablyAnimatedContentWrapperCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVocablyAnimatedContentWrapperElement;
+}
 export interface VocablyCardCounterExplanationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyCardCounterExplanationElement;
@@ -321,6 +352,23 @@ declare global {
     var HTMLVocablyAddCardHintElement: {
         prototype: HTMLVocablyAddCardHintElement;
         new (): HTMLVocablyAddCardHintElement;
+    };
+    interface HTMLVocablyAnimatedContentWrapperElementEventMap {
+        "close": void;
+    }
+    interface HTMLVocablyAnimatedContentWrapperElement extends Components.VocablyAnimatedContentWrapper, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVocablyAnimatedContentWrapperElementEventMap>(type: K, listener: (this: HTMLVocablyAnimatedContentWrapperElement, ev: VocablyAnimatedContentWrapperCustomEvent<HTMLVocablyAnimatedContentWrapperElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVocablyAnimatedContentWrapperElementEventMap>(type: K, listener: (this: HTMLVocablyAnimatedContentWrapperElement, ev: VocablyAnimatedContentWrapperCustomEvent<HTMLVocablyAnimatedContentWrapperElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVocablyAnimatedContentWrapperElement: {
+        prototype: HTMLVocablyAnimatedContentWrapperElement;
+        new (): HTMLVocablyAnimatedContentWrapperElement;
     };
     interface HTMLVocablyButtonElement extends Components.VocablyButton, HTMLStencilElement {
     }
@@ -494,6 +542,12 @@ declare global {
     var HTMLVocablyIconWindowCloseElement: {
         prototype: HTMLVocablyIconWindowCloseElement;
         new (): HTMLVocablyIconWindowCloseElement;
+    };
+    interface HTMLVocablyInlineLoaderElement extends Components.VocablyInlineLoader, HTMLStencilElement {
+    }
+    var HTMLVocablyInlineLoaderElement: {
+        prototype: HTMLVocablyInlineLoaderElement;
+        new (): HTMLVocablyInlineLoaderElement;
     };
     interface HTMLVocablyLanguageElementEventMap {
         "confirm": {
@@ -683,6 +737,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "vocably-add-card-hint": HTMLVocablyAddCardHintElement;
+        "vocably-animated-content-wrapper": HTMLVocablyAnimatedContentWrapperElement;
         "vocably-button": HTMLVocablyButtonElement;
         "vocably-card-counter": HTMLVocablyCardCounterElement;
         "vocably-card-counter-explanation": HTMLVocablyCardCounterExplanationElement;
@@ -708,6 +763,7 @@ declare global {
         "vocably-icon-tag-edit": HTMLVocablyIconTagEditElement;
         "vocably-icon-volume-medium": HTMLVocablyIconVolumeMediumElement;
         "vocably-icon-window-close": HTMLVocablyIconWindowCloseElement;
+        "vocably-inline-loader": HTMLVocablyInlineLoaderElement;
         "vocably-language": HTMLVocablyLanguageElement;
         "vocably-language-selector": HTMLVocablyLanguageSelectorElement;
         "vocably-logo": HTMLVocablyLogoElement;
@@ -728,6 +784,13 @@ declare global {
 declare namespace LocalJSX {
     interface VocablyAddCardHint {
         "onConfirm"?: (event: VocablyAddCardHintCustomEvent<any>) => void;
+    }
+    interface VocablyAnimatedContentWrapper {
+        /**
+          * @default 0
+         */
+        "delay"?: number;
+        "onClose"?: (event: VocablyAnimatedContentWrapperCustomEvent<void>) => void;
     }
     interface VocablyButton {
     }
@@ -812,6 +875,17 @@ declare namespace LocalJSX {
     interface VocablyIconVolumeMedium {
     }
     interface VocablyIconWindowClose {
+    }
+    interface VocablyInlineLoader {
+        /**
+          * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+         */
+        "duration"?: number;
+        /**
+          * If `true`, the spinner's animation will be paused.
+          * @default false
+         */
+        "paused"?: boolean;
     }
     interface VocablyLanguage {
         "onConfirm"?: (event: VocablyLanguageCustomEvent<{
@@ -927,6 +1001,14 @@ declare namespace LocalJSX {
           * @default []
          */
         "existingTargetLanguages"?: GoogleLanguage[];
+        /**
+          * @default { state: 'none' }
+         */
+        "explanation"?: ComponentExplanationState;
+        /**
+          * @default 0
+         */
+        "explanationAnimationDelay"?: number;
         "extensionPlatform"?: {
     name: string;
     url: string;
@@ -996,6 +1078,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "vocably-add-card-hint": VocablyAddCardHint;
+        "vocably-animated-content-wrapper": VocablyAnimatedContentWrapper;
         "vocably-button": VocablyButton;
         "vocably-card-counter": VocablyCardCounter;
         "vocably-card-counter-explanation": VocablyCardCounterExplanation;
@@ -1021,6 +1104,7 @@ declare namespace LocalJSX {
         "vocably-icon-tag-edit": VocablyIconTagEdit;
         "vocably-icon-volume-medium": VocablyIconVolumeMedium;
         "vocably-icon-window-close": VocablyIconWindowClose;
+        "vocably-inline-loader": VocablyInlineLoader;
         "vocably-language": VocablyLanguage;
         "vocably-language-selector": VocablyLanguageSelector;
         "vocably-logo": VocablyLogo;
@@ -1043,6 +1127,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "vocably-add-card-hint": LocalJSX.VocablyAddCardHint & JSXBase.HTMLAttributes<HTMLVocablyAddCardHintElement>;
+            "vocably-animated-content-wrapper": LocalJSX.VocablyAnimatedContentWrapper & JSXBase.HTMLAttributes<HTMLVocablyAnimatedContentWrapperElement>;
             "vocably-button": LocalJSX.VocablyButton & JSXBase.HTMLAttributes<HTMLVocablyButtonElement>;
             "vocably-card-counter": LocalJSX.VocablyCardCounter & JSXBase.HTMLAttributes<HTMLVocablyCardCounterElement>;
             "vocably-card-counter-explanation": LocalJSX.VocablyCardCounterExplanation & JSXBase.HTMLAttributes<HTMLVocablyCardCounterExplanationElement>;
@@ -1068,6 +1153,7 @@ declare module "@stencil/core" {
             "vocably-icon-tag-edit": LocalJSX.VocablyIconTagEdit & JSXBase.HTMLAttributes<HTMLVocablyIconTagEditElement>;
             "vocably-icon-volume-medium": LocalJSX.VocablyIconVolumeMedium & JSXBase.HTMLAttributes<HTMLVocablyIconVolumeMediumElement>;
             "vocably-icon-window-close": LocalJSX.VocablyIconWindowClose & JSXBase.HTMLAttributes<HTMLVocablyIconWindowCloseElement>;
+            "vocably-inline-loader": LocalJSX.VocablyInlineLoader & JSXBase.HTMLAttributes<HTMLVocablyInlineLoaderElement>;
             "vocably-language": LocalJSX.VocablyLanguage & JSXBase.HTMLAttributes<HTMLVocablyLanguageElement>;
             "vocably-language-selector": LocalJSX.VocablyLanguageSelector & JSXBase.HTMLAttributes<HTMLVocablyLanguageSelectorElement>;
             "vocably-logo": LocalJSX.VocablyLogo & JSXBase.HTMLAttributes<HTMLVocablyLogoElement>;

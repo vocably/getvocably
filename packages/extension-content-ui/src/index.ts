@@ -243,6 +243,7 @@ simpletonTranslation.existingSourceLanguages = ['en', 'nl'];
 simpletonTranslation.result = simpletonTranslationResult;
 simpletonTranslation.canCongratulate = true;
 simpletonTranslation.askForRating = true;
+simpletonTranslation.explanation = { state: 'loading' };
 simpletonTranslation.extensionPlatform = {
   name: 'Chrome Web Store',
   url: 'https://chrome.google.com/webstore/detail/vocably/baocigmmhhdemijfjnjdidbkfgpgogmb',
@@ -259,6 +260,7 @@ paywallTranslation.existingSourceLanguages = ['en', 'nl'];
 paywallTranslation.result = simpletonTranslationResult;
 paywallTranslation.canCongratulate = true;
 paywallTranslation.askForRating = true;
+paywallTranslation.explanation = { state: 'loading' };
 paywallTranslation.extensionPlatform = {
   name: 'Chrome Web Store',
   url: 'https://chrome.google.com/webstore/detail/vocably/baocigmmhhdemijfjnjdidbkfgpgogmb',

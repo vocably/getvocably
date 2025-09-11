@@ -73,11 +73,53 @@ registerContentScript({
             result.value.translation.sourceLanguage = payload.sourceLanguage;
           }
 
+          // @ts-ignore
+          result.value.translation.source = payload.source;
+
           result.value.tags = tags;
           result.value.lastAdded = new Date().getTime();
 
           resolve(result);
         }, parseInt((document.getElementById('delay') as HTMLInputElement).value));
+      });
+    },
+    explain: (payload) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (payload.source.split(' ').length === 1) {
+            resolve({
+              success: true,
+              value: {
+                sourceLanguage: payload.sourceLanguage,
+                targetLanguage: payload.targetLanguage,
+                explanation: '',
+              },
+            });
+          }
+
+          resolve({
+            success: true,
+            value: {
+              sourceLanguage: payload.sourceLanguage,
+              targetLanguage: payload.targetLanguage,
+              explanation:
+                'Для правильного понимания этого предложения обратите внимание на следующие моменты:\n' +
+                '\n' +
+                '1. **Грамматическая структура**: \n' +
+                '   - "Alice was beginning" - это конструкция в прошедшем продолженном времени (Past Continuous), указывающая на действие, которое началось в прошлом и продолжалось в тот момент.\n' +
+                '   - "to get very tired" - инфинитивная конструкция, указывающая на процесс становления уставшей.\n' +
+                '\n' +
+                '2. **Смысловые акценты**:\n' +
+                '   - "beginning to get" - подчеркивает начало процесса усталости, а не его завершение.\n' +
+                '   - "very tired" - усиливает степень усталости, показывая, что это не просто легкая усталость.\n' +
+                '\n' +
+                '3. **Контекст**:\n' +
+                '   - "of sitting" - указывает причину усталости, то есть усталость вызвана длительным сидением.\n' +
+                '\n' +
+                'Понимание этих аспектов поможет правильно интерпретировать предложение.',
+            },
+          });
+        }, 4000);
       });
     },
     addCard: (payload) =>
@@ -347,7 +389,7 @@ registerContentScript({
   },
   contentScript: {
     askForRatingEnabled: true,
-    displayMobileLookupButton: true,
+    displayMobileLookupButton: false,
     allowFirstTranslationCongratulation: true,
     webPaymentLink: 'http://localhost:8030/subscribe',
     premiumCtaSuffix: ' (from $2.50/month)',

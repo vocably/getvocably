@@ -30,6 +30,10 @@ $section-margin: 8px;
   margin-top: 12px;
 }
 
+.vocably-pt-12 {
+  padding-top: 12px;
+}
+
 .vocably-mb-12 {
   margin-bottom: 12px;
 }
@@ -125,9 +129,17 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
   $input-padding-x;
 
 .explanation-frame {
+  margin-left: -$input-padding-x;
+}
+
+.explanation-frame-visible {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.explanation-frame-content {
   border: $internal-border;
   border-radius: $v-border-radius;
-  margin-left: -$input-padding-x;
   padding: $container-padding;
 }
 

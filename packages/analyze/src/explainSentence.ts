@@ -5,16 +5,7 @@ import {
   languageList,
   Result,
 } from '@vocably/model';
-import { isSafeObject, trimLanguage } from '@vocably/sulna';
-import { isString } from 'lodash-es';
-
-export type AiExplanation = {
-  explanation: string;
-};
-
-const isAiExplanation = (variable: any): variable is AiExplanation => {
-  return isSafeObject(variable) && isString(variable['explanation']);
-};
+import { trimLanguage } from '@vocably/sulna';
 
 export const explainSentence = async ({
   targetLanguage,
@@ -53,16 +44,12 @@ export const explainSentence = async ({
     return responseResult;
   }
 
-  if (!isAiExplanation(responseResult.value)) {
-    return responseResult;
-  }
-
   return {
     success: true,
     value: {
       sourceLanguage,
       targetLanguage,
-      explanation: responseResult.value.explanation,
+      explanation: responseResult.value,
     },
   };
 };

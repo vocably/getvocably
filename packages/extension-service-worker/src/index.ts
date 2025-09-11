@@ -3,6 +3,7 @@ import {
   analyze,
   configureApi,
   deleteLanguageDeck,
+  explain,
   loadLanguageDeck,
   playSound,
   postOnboardingAction,
@@ -18,6 +19,7 @@ import {
   onCleanUpRequest,
   onDeleteTag,
   onDetachTag,
+  onExplainRequest,
   onGetAudioPronunciation,
   onGetInternalProxyLanuage,
   onGetInternalSourceLanguage,
@@ -250,6 +252,11 @@ export const registerServiceWorker = (
 
   let updateMetadataTimeout: ReturnType<typeof setTimeout> | undefined =
     undefined;
+
+  onExplainRequest(async (sendResponse, payload) => {
+    const explainResult = await explain(payload);
+    return sendResponse(explainResult);
+  });
 
   onAnalyzeRequest(async (sendResponse, payload) => {
     if (payload.sourceLanguage) {

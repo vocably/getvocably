@@ -42,6 +42,22 @@ import { sortLanguages } from './sortLanguages';
 
 const mdConverter = new showdown.Converter();
 
+export type ComponentExplanationState =
+  | {
+      state: 'none';
+    }
+  | {
+      state: 'loading';
+    }
+  | {
+      state: 'loaded';
+      value: string;
+    }
+  | {
+      state: 'error';
+      error: string;
+    };
+
 @Component({
   tag: 'vocably-translation',
   styleUrl: 'translation.scss',
@@ -89,6 +105,8 @@ export class VocablyTranslation {
   @Prop() maxCards: number | 'unlimited' = 'unlimited';
   @Prop() paymentLink: string = '';
   @Prop() premiumCtaSuffix: string = '';
+  @Prop() explanation: ComponentExplanationState = { state: 'none' };
+  @Prop() explanationAnimationDelay = 0;
 
   @Event() ratingInteraction: EventEmitter<RateInteractionPayload>;
 
@@ -378,10 +396,6 @@ export class VocablyTranslation {
       this.result.success &&
       isDirectNecessary(this.result.value);
 
-    const explanation =
-      (this.result && this.result.success && this.result.value.explanation) ??
-      '';
-
     const canAdd =
       this.maxCards === 'unlimited' ||
       !this.paymentLink ||
@@ -393,19 +407,6 @@ export class VocablyTranslation {
         !isToday(this.result.value.lastAdded));
 
     const isOkayToAskForRating = this.askForRating && canAdd;
-    // const totalCards =
-    //   (this.result &&
-    //     this.result.success &&
-    //     this.result.value.collectionLength) ||
-    //   0;
-
-    // const collectionLength =
-    //   (this.result &&
-    //     this.result.success &&
-    //     this.result.value.collectionLength) ||
-    //   0;
-    // const canShowCardsCounter =
-    //   collectionLength && this.maxCards !== 'unlimited';
 
     return (
       <Host data-test="translation-container">
@@ -462,21 +463,6 @@ export class VocablyTranslation {
                         {this.phrase}
                       </span>{' '}
                       means <i>{this.result.value.translation.target}</i>
-                    </div>
-                  )}
-                  {explanation && (
-                    <div class="vocably-mb-12 explanation-frame">
-                      <vocably-icon-ai
-                        style={{
-                          marginTop: '1px',
-                          float: 'left',
-                          marginRight: '8px',
-                        }}
-                      ></vocably-icon-ai>{' '}
-                      <div
-                        class="explanation"
-                        innerHTML={mdConverter.makeHtml(explanation)}
-                      ></div>
                     </div>
                   )}
                   <div
@@ -767,6 +753,46 @@ export class VocablyTranslation {
                       ))}
                     </div>
                   </div>
+                  <vocably-animated-content-wrapper
+                    delay={this.explanationAnimationDelay}
+                    class="explanation-frame"
+                  >
+                    {this.explanation.state !== 'none' && (
+                      <div class="vocably-pt-12">
+                        <div class="explanation-frame-content">
+                          <div
+                            style={{
+                              marginRight: '8px',
+                              float:
+                                this.explanation.state === 'loaded' ||
+                                this.explanation.state === 'error'
+                                  ? 'left'
+                                  : 'none',
+                            }}
+                          >
+                            <vocably-icon-ai
+                              style={{ verticalAlign: 'middle' }}
+                            ></vocably-icon-ai>
+                            {this.explanation.state === 'loading' && (
+                              <vocably-inline-loader
+                                style={{ marginLeft: '8px' }}
+                              ></vocably-inline-loader>
+                            )}
+                          </div>{' '}
+                          {this.explanation.state === 'error' &&
+                            this.explanation.error}
+                          {this.explanation.state === 'loaded' && (
+                            <div
+                              class="explanation"
+                              innerHTML={mdConverter.makeHtml(
+                                this.explanation.value
+                              )}
+                            ></div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </vocably-animated-content-wrapper>
                   {isOkayToAskForRating && (
                     <div
                       class="vocably-rate-container"
