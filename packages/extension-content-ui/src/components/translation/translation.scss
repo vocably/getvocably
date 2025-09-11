@@ -153,6 +153,11 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
       margin-bottom: 0;
     }
   }
+
+  ol,
+  ul {
+    padding-inline-start: 1.2em;
+  }
 }
 
 .vocably-cards {

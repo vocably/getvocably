@@ -422,7 +422,7 @@ export class VocablyTranslation {
               }}
             >
               <vocably-spinner></vocably-spinner>
-              <div>...ChatGPT</div>
+              <div style={{ fontSize: '13px' }}>...ChatGPT</div>
             </div>
           )}
           {this.result && this.result.success === false && (
@@ -760,37 +760,22 @@ export class VocablyTranslation {
                     {this.explanation.state !== 'none' && (
                       <div class="vocably-pt-12">
                         <div class="explanation-frame-content">
-                          <div
-                            style={{
-                              marginRight: '8px',
-                              float:
-                                this.explanation.state === 'loaded' ||
-                                this.explanation.state === 'error'
-                                  ? 'left'
-                                  : 'none',
-                            }}
-                          >
-                            <vocably-icon-ai
-                              style={{ verticalAlign: 'middle' }}
-                            ></vocably-icon-ai>
-                            {this.explanation.state === 'loading' && (
-                              <Fragment>
-                                <span
-                                  style={{
-                                    display: 'inline-block',
-                                    marginLeft: '8px',
-                                    verticalAlign: 'middle',
-                                    fontSize: '13px',
-                                  }}
-                                >
-                                  Requesting ChatGPT
-                                </span>
-                                <vocably-inline-loader
-                                  style={{ marginLeft: '8px' }}
-                                ></vocably-inline-loader>
-                              </Fragment>
-                            )}
-                          </div>{' '}
+                          {this.explanation.state === 'loading' && (
+                            <Fragment>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  verticalAlign: 'middle',
+                                  fontSize: '13px',
+                                }}
+                              >
+                                Requesting extra info from ChatGPT
+                              </span>
+                              <vocably-inline-loader
+                                style={{ marginLeft: '8px' }}
+                              ></vocably-inline-loader>
+                            </Fragment>
+                          )}
                           {this.explanation.state === 'error' &&
                             this.explanation.error}
                           {this.explanation.state === 'loaded' && (
