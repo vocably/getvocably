@@ -68,6 +68,7 @@ jobs:
 workflows:
   version: 2
   bumpNewVersion:
+    max_auto_reruns: 3
     jobs:
       - bumpNewVersion:
           <<: *main_only
