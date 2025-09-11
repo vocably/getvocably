@@ -67,7 +67,7 @@ export class VocablyCardTranslation {
             }
           }}
         >
-          {this.card.data.translation}{' '}
+          {this.card.data.translation}&nbsp;{''}
           <button class="translation-icon-button">
             <vocably-icon-edit></vocably-icon-edit>
           </button>

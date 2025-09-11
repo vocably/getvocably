@@ -140,7 +140,7 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
 .explanation-frame-content {
   border: $internal-border;
   border-radius: $v-border-radius;
-  padding: $container-padding;
+  padding: $input-padding-x;
 }
 
 .explanation {
