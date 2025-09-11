@@ -67,7 +67,7 @@ const prodConfig = {
 };
 
 const devConfig = {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   plugins: [new WatchTimerPlugin(basename(__dirname))],
 };
 
