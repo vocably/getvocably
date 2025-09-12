@@ -116,7 +116,10 @@ export const setContents = async ({
           }, 50);
         }
 
-        const source = translationResult.value.translation.source;
+        const source =
+          translationResult.value.cards.length === 1
+            ? translationResult.value.cards[0].data.source
+            : translationResult.value.translation.source;
 
         translation.explanation = { state: 'loading' };
         if (source.trim().split(' ').length === 1) {

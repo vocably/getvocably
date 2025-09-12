@@ -144,11 +144,16 @@ export class HomePageComponent implements OnInit {
         this.explanationAnimationDelay = 2000;
       }
 
+      const source =
+        analyzeResult.value.cards.length === 1
+          ? analyzeResult.value.cards[0].data.source
+          : analyzeResult.value.translation.source;
+
       environment
         .explain({
           sourceLanguage: analyzeResult.value.translation.sourceLanguage,
           targetLanguage: analyzeResult.value.translation.targetLanguage,
-          source: analyzeResult.value.translation.source,
+          source: source,
         })
         .then((explanationResult) => {
           if (explanationResult.success === false) {
