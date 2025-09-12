@@ -1,6 +1,7 @@
 @import '../../styles/component';
 $input-padding-x: 14px;
 $input-padding-y: 10px;
+$hint-screen-max-width: 600px;
 
 :host {
   @include base-font();
@@ -25,8 +26,10 @@ $input-padding-y: 10px;
   font-size: $base-font-size * 0.9 !important;
   pointer-events: none;
   padding-right: 4px;
+}
 
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: $hint-screen-max-width) {
+  .shrink-small .hint {
     display: none;
   }
 }
@@ -37,8 +40,10 @@ $input-padding-y: 10px;
 
   padding-left: calc(var(--hint-width) + #{$input-padding-x}) !important;
   font-weight: bold;
+}
 
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: $hint-screen-max-width) {
+  .shrink-small .vocably-input-select {
     font-weight: normal;
   }
 }

@@ -8,7 +8,7 @@ $input-padding: 12px;
 }
 
 .direction {
-  $size: 48px;
+  $size: 40px;
 
   box-sizing: border-box;
   display: flex;
@@ -36,33 +36,12 @@ $input-padding: 12px;
   }
 }
 
-select {
-  color: $v-light-color-body;
-  padding: $input-padding;
-  border: 0.5px solid $v-light-color-border;
-  border-radius: $v-border-radius;
-  background-color: $v-light-color-contrast;
-  outline: none;
-  height: auto;
-  line-height: inherit;
-  box-shadow: none;
-  box-sizing: border-box;
+.language {
   width: 100%;
-  appearance: none;
-  background: $v-light-color-contrast
-    url('data:image/svg+xml;utf8,<svg width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 1 5 6 1 1" stroke="rgb(109, 109, 109)" stroke-width=".5" stroke-miterlimit="10" stroke-linecap="round"/></svg>')
-    no-repeat;
-  background-position: right $input-padding top 50%;
-  cursor: pointer;
-  transition: background-color 0.25s ease-in-out;
-
-  &:hover {
-    background-color: $v-light-color-hover-bg;
-  }
 }
 
 .search-input {
-  $height: 48px;
+  $height: 40px;
   $border: 0.5px solid $v-light-color-border;
 
   position: relative;
@@ -138,4 +117,9 @@ select {
       }
     }
   }
+}
+
+.hint-container {
+  margin-left: $input-padding;
+  font-size: 0.9rem;
 }

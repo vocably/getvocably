@@ -48,7 +48,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
 
   sourceLanguage = 'en';
-  targetLanguage = detectTargetLanguage();
+  targetLanguage: string = detectTargetLanguage();
   isReversed: boolean = false;
   searchText: string = '';
 
@@ -137,9 +137,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
       )} ${targetLanguageName} word or phrase here. ${sourceLanguageName} cards will be created.`;
     }
 
-    return `Enter ${article(
-      sourceLanguageName
-    )} ${sourceLanguageName} word or phrase here.`;
+    return `Enter any word or phrase here.`;
   }
 
   sourceLanguageChange() {
@@ -150,10 +148,6 @@ export class SearchFormComponent implements OnInit, OnDestroy {
         this.languagePairs[this.sourceLanguage].currentTargetLanguage;
     }
 
-    this.change();
-  }
-
-  targetLanguageChange() {
     this.change();
   }
 
@@ -176,5 +170,51 @@ export class SearchFormComponent implements OnInit, OnDestroy {
       sourceLanguage: this.sourceLanguage,
       targetLanguage: this.targetLanguage,
     });
+  }
+
+  getSourceLanguageGroups(): any {
+    const availableLanguages = [
+      'Available Languages',
+      this.availableSourceLanguages.map(
+        (lng) => [lng, this.languageName(lng)] as const
+      ),
+    ] as const;
+
+    if (this.preferredSourceLanguages.length === 0) {
+      return [availableLanguages];
+    }
+
+    return [
+      [
+        'Preferred Langauges',
+        this.preferredSourceLanguages.map(
+          (lng) => [lng, this.languageName(lng)] as const
+        ),
+      ],
+      availableLanguages,
+    ];
+  }
+
+  getTargetLanguageGroups(): any {
+    const availableLanguages = [
+      'Available Languages',
+      this.availableTargetLanguages.map(
+        (lng) => [lng, this.languageName(lng)] as const
+      ),
+    ] as const;
+
+    if (this.preferredTargetLanguages.length === 0) {
+      return [availableLanguages];
+    }
+
+    return [
+      [
+        'Preferred Langauges',
+        this.preferredTargetLanguages.map(
+          (lng) => [lng, this.languageName(lng)] as const
+        ),
+      ],
+      availableLanguages,
+    ];
   }
 }

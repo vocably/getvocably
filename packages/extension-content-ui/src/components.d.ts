@@ -67,6 +67,21 @@ export namespace Components {
     interface VocablyFirstTranslationCongratulation {
         "card": TranslationCard;
     }
+    interface VocablyHintSelector {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        "hint": string;
+        "optionGroups": Array<
+    [groupLabel: string, options: Array<[value: string, label: string]>]
+  >;
+        /**
+          * @default false
+         */
+        "shrinkSmall": boolean;
+        "value": string;
+    }
     interface VocablyIconAdd {
     }
     interface VocablyIconAi {
@@ -114,15 +129,6 @@ export namespace Components {
         "sourceLanguage": string;
         "targetLanguage": string;
         "waiting": boolean;
-    }
-    interface VocablyLanguageSelector {
-        /**
-          * @default false
-         */
-        "disabled": boolean;
-        "hint": string;
-        "languages": Array<[code: string, name: string]>;
-        "value": string;
     }
     interface VocablyLogo {
     }
@@ -303,13 +309,13 @@ export interface VocablyCloseButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyCloseButtonElement;
 }
+export interface VocablyHintSelectorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVocablyHintSelectorElement;
+}
 export interface VocablyLanguageCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyLanguageElement;
-}
-export interface VocablyLanguageSelectorCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLVocablyLanguageSelectorElement;
 }
 export interface VocablyPopupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -447,6 +453,23 @@ declare global {
         prototype: HTMLVocablyFirstTranslationCongratulationElement;
         new (): HTMLVocablyFirstTranslationCongratulationElement;
     };
+    interface HTMLVocablyHintSelectorElementEventMap {
+        "choose": string;
+    }
+    interface HTMLVocablyHintSelectorElement extends Components.VocablyHintSelector, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVocablyHintSelectorElementEventMap>(type: K, listener: (this: HTMLVocablyHintSelectorElement, ev: VocablyHintSelectorCustomEvent<HTMLVocablyHintSelectorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVocablyHintSelectorElementEventMap>(type: K, listener: (this: HTMLVocablyHintSelectorElement, ev: VocablyHintSelectorCustomEvent<HTMLVocablyHintSelectorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVocablyHintSelectorElement: {
+        prototype: HTMLVocablyHintSelectorElement;
+        new (): HTMLVocablyHintSelectorElement;
+    };
     interface HTMLVocablyIconAddElement extends Components.VocablyIconAdd, HTMLStencilElement {
     }
     var HTMLVocablyIconAddElement: {
@@ -568,23 +591,6 @@ declare global {
     var HTMLVocablyLanguageElement: {
         prototype: HTMLVocablyLanguageElement;
         new (): HTMLVocablyLanguageElement;
-    };
-    interface HTMLVocablyLanguageSelectorElementEventMap {
-        "choose": string;
-    }
-    interface HTMLVocablyLanguageSelectorElement extends Components.VocablyLanguageSelector, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLVocablyLanguageSelectorElementEventMap>(type: K, listener: (this: HTMLVocablyLanguageSelectorElement, ev: VocablyLanguageSelectorCustomEvent<HTMLVocablyLanguageSelectorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLVocablyLanguageSelectorElementEventMap>(type: K, listener: (this: HTMLVocablyLanguageSelectorElement, ev: VocablyLanguageSelectorCustomEvent<HTMLVocablyLanguageSelectorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLVocablyLanguageSelectorElement: {
-        prototype: HTMLVocablyLanguageSelectorElement;
-        new (): HTMLVocablyLanguageSelectorElement;
     };
     interface HTMLVocablyLogoElement extends Components.VocablyLogo, HTMLStencilElement {
     }
@@ -747,6 +753,7 @@ declare global {
         "vocably-card-translation": HTMLVocablyCardTranslationElement;
         "vocably-close-button": HTMLVocablyCloseButtonElement;
         "vocably-first-translation-congratulation": HTMLVocablyFirstTranslationCongratulationElement;
+        "vocably-hint-selector": HTMLVocablyHintSelectorElement;
         "vocably-icon-add": HTMLVocablyIconAddElement;
         "vocably-icon-ai": HTMLVocablyIconAiElement;
         "vocably-icon-arrow-right": HTMLVocablyIconArrowRightElement;
@@ -765,7 +772,6 @@ declare global {
         "vocably-icon-window-close": HTMLVocablyIconWindowCloseElement;
         "vocably-inline-loader": HTMLVocablyInlineLoaderElement;
         "vocably-language": HTMLVocablyLanguageElement;
-        "vocably-language-selector": HTMLVocablyLanguageSelectorElement;
         "vocably-logo": HTMLVocablyLogoElement;
         "vocably-mobile-button": HTMLVocablyMobileButtonElement;
         "vocably-overlay": HTMLVocablyOverlayElement;
@@ -844,6 +850,22 @@ declare namespace LocalJSX {
     interface VocablyFirstTranslationCongratulation {
         "card"?: TranslationCard;
     }
+    interface VocablyHintSelector {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        "hint"?: string;
+        "onChoose"?: (event: VocablyHintSelectorCustomEvent<string>) => void;
+        "optionGroups"?: Array<
+    [groupLabel: string, options: Array<[value: string, label: string]>]
+  >;
+        /**
+          * @default false
+         */
+        "shrinkSmall"?: boolean;
+        "value"?: string;
+    }
     interface VocablyIconAdd {
     }
     interface VocablyIconAi {
@@ -895,16 +917,6 @@ declare namespace LocalJSX {
         "sourceLanguage"?: string;
         "targetLanguage"?: string;
         "waiting"?: boolean;
-    }
-    interface VocablyLanguageSelector {
-        /**
-          * @default false
-         */
-        "disabled"?: boolean;
-        "hint"?: string;
-        "languages"?: Array<[code: string, name: string]>;
-        "onChoose"?: (event: VocablyLanguageSelectorCustomEvent<string>) => void;
-        "value"?: string;
     }
     interface VocablyLogo {
     }
@@ -1088,6 +1100,7 @@ declare namespace LocalJSX {
         "vocably-card-translation": VocablyCardTranslation;
         "vocably-close-button": VocablyCloseButton;
         "vocably-first-translation-congratulation": VocablyFirstTranslationCongratulation;
+        "vocably-hint-selector": VocablyHintSelector;
         "vocably-icon-add": VocablyIconAdd;
         "vocably-icon-ai": VocablyIconAi;
         "vocably-icon-arrow-right": VocablyIconArrowRight;
@@ -1106,7 +1119,6 @@ declare namespace LocalJSX {
         "vocably-icon-window-close": VocablyIconWindowClose;
         "vocably-inline-loader": VocablyInlineLoader;
         "vocably-language": VocablyLanguage;
-        "vocably-language-selector": VocablyLanguageSelector;
         "vocably-logo": VocablyLogo;
         "vocably-mobile-button": VocablyMobileButton;
         "vocably-overlay": VocablyOverlay;
@@ -1137,6 +1149,7 @@ declare module "@stencil/core" {
             "vocably-card-translation": LocalJSX.VocablyCardTranslation & JSXBase.HTMLAttributes<HTMLVocablyCardTranslationElement>;
             "vocably-close-button": LocalJSX.VocablyCloseButton & JSXBase.HTMLAttributes<HTMLVocablyCloseButtonElement>;
             "vocably-first-translation-congratulation": LocalJSX.VocablyFirstTranslationCongratulation & JSXBase.HTMLAttributes<HTMLVocablyFirstTranslationCongratulationElement>;
+            "vocably-hint-selector": LocalJSX.VocablyHintSelector & JSXBase.HTMLAttributes<HTMLVocablyHintSelectorElement>;
             "vocably-icon-add": LocalJSX.VocablyIconAdd & JSXBase.HTMLAttributes<HTMLVocablyIconAddElement>;
             "vocably-icon-ai": LocalJSX.VocablyIconAi & JSXBase.HTMLAttributes<HTMLVocablyIconAiElement>;
             "vocably-icon-arrow-right": LocalJSX.VocablyIconArrowRight & JSXBase.HTMLAttributes<HTMLVocablyIconArrowRightElement>;
@@ -1155,7 +1168,6 @@ declare module "@stencil/core" {
             "vocably-icon-window-close": LocalJSX.VocablyIconWindowClose & JSXBase.HTMLAttributes<HTMLVocablyIconWindowCloseElement>;
             "vocably-inline-loader": LocalJSX.VocablyInlineLoader & JSXBase.HTMLAttributes<HTMLVocablyInlineLoaderElement>;
             "vocably-language": LocalJSX.VocablyLanguage & JSXBase.HTMLAttributes<HTMLVocablyLanguageElement>;
-            "vocably-language-selector": LocalJSX.VocablyLanguageSelector & JSXBase.HTMLAttributes<HTMLVocablyLanguageSelectorElement>;
             "vocably-logo": LocalJSX.VocablyLogo & JSXBase.HTMLAttributes<HTMLVocablyLogoElement>;
             "vocably-mobile-button": LocalJSX.VocablyMobileButton & JSXBase.HTMLAttributes<HTMLVocablyMobileButtonElement>;
             "vocably-overlay": LocalJSX.VocablyOverlay & JSXBase.HTMLAttributes<HTMLVocablyOverlayElement>;

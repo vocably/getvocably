@@ -4,32 +4,13 @@
   (submit)="$event.preventDefault(); submit()"
 >
   <div class="preset mb-0_5">
-    <select
+    <vocably-hint-selector
       class="language"
-      name="sourceLanguage"
-      [(ngModel)]="sourceLanguage"
-      (change)="sourceLanguageChange()"
-    >
-      <optgroup
-        label="Your Languages"
-        *ngIf="preferredSourceLanguages.length > 0"
-      >
-        <option
-          *ngFor="let language of preferredSourceLanguages"
-          [value]="language"
-        >
-          {{ languageName(language) }}
-        </option>
-      </optgroup>
-      <optgroup label="Available Languages">
-        <option
-          *ngFor="let language of availableSourceLanguages"
-          [value]="language"
-        >
-          {{ languageName(language) }}
-        </option>
-      </optgroup>
-    </select>
+      hint="I study"
+      [value]="sourceLanguage"
+      (choose)="sourceLanguage = $event.detail; sourceLanguageChange()"
+      [optionGroups]="getSourceLanguageGroups()"
+    ></vocably-hint-selector>
     <div>
       <button
         type="button"
@@ -40,32 +21,13 @@
         <mat-icon class="icon">arrow_forward</mat-icon>
       </button>
     </div>
-    <select
+    <vocably-hint-selector
       class="language"
-      name="targetLanguage"
-      [(ngModel)]="targetLanguage"
-      (change)="change()"
-    >
-      <optgroup
-        label="Your Languages"
-        *ngIf="preferredTargetLanguages.length > 0"
-      >
-        <option
-          *ngFor="let language of preferredTargetLanguages"
-          [value]="language"
-        >
-          {{ languageName(language) }}
-        </option>
-      </optgroup>
-      <optgroup label="Available Languages">
-        <option
-          *ngFor="let language of availableTargetLanguages"
-          [value]="language"
-        >
-          {{ languageName(language) }}
-        </option>
-      </optgroup>
-    </select>
+      hint="I speak"
+      [value]="targetLanguage"
+      (choose)="targetLanguage = $event.detail; change()"
+      [optionGroups]="getTargetLanguageGroups()"
+    ></vocably-hint-selector>
   </div>
   <div class="search-input">
     <input
@@ -104,19 +66,22 @@
         }
       }
     </style>
-    <ng-container *ngIf="!isReversed">
-      Want to search for {{ languageName(sourceLanguage) }} cards in
-      {{ languageName(targetLanguage) }}? Just click the arrow button
-      <mat-icon class="reverse-search-hint-icon" (click)="isReversed = true"
-        >arrow_forward</mat-icon
-      >
-    </ng-container>
-    <ng-container *ngIf="isReversed">
-      Click
-      <mat-icon class="reverse-search-hint-icon" (click)="isReversed = false"
-        >arrow_back</mat-icon
-      >
-      button to search for cards in {{ languageName(sourceLanguage) }}.
-    </ng-container>
+    <div class="hint-container">
+      <ng-container *ngIf="!isReversed">
+        For the improved search of {{ languageName(sourceLanguage) }} words in
+        {{ languageName(targetLanguage) }} click the
+        <mat-icon class="reverse-search-hint-icon" (click)="isReversed = true"
+          >arrow_forward</mat-icon
+        >
+        button.
+      </ng-container>
+      <ng-container *ngIf="isReversed">
+        Click
+        <mat-icon class="reverse-search-hint-icon" (click)="isReversed = false"
+          >arrow_back</mat-icon
+        >
+        button to search for cards in {{ languageName(sourceLanguage) }}.
+      </ng-container>
+    </div>
   </div>
 </form>

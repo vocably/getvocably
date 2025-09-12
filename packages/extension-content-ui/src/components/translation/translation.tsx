@@ -367,27 +367,39 @@ export class VocablyTranslation {
 
   render() {
     const sourceLanguageSelector = this.result && this.result.success && (
-      <vocably-language-selector
+      <vocably-hint-selector
         hint={'I study'}
+        shrinkSmall={true}
         disabled={this.loading || this.disabled}
         onChoose={(event) => this.changeSourceLanguage.emit(event.detail)}
         value={this.sourceLanguage}
-        languages={Object.entries(languageList).sort(
-          sortLanguages(this.existingSourceLanguages)
-        )}
-      ></vocably-language-selector>
+        optionGroups={[
+          [
+            '',
+            Object.entries(languageList).sort(
+              sortLanguages(this.existingSourceLanguages)
+            ),
+          ],
+        ]}
+      ></vocably-hint-selector>
     );
 
     const targetLanguageSelector = this.result && this.result.success && (
-      <vocably-language-selector
+      <vocably-hint-selector
         hint={'I speak'}
+        shrinkSmall={true}
         disabled={this.loading || this.disabled}
         onChoose={(event) => this.changeTargetLanguage.emit(event.detail)}
         value={this.targetLanguage}
-        languages={Object.entries(languageList).sort(
-          sortLanguages(this.existingTargetLanguages)
-        )}
-      ></vocably-language-selector>
+        optionGroups={[
+          [
+            '',
+            Object.entries(languageList).sort(
+              sortLanguages(this.existingTargetLanguages)
+            ),
+          ],
+        ]}
+      ></vocably-hint-selector>
     );
 
     const showChatGpt =

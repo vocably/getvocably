@@ -3,19 +3,23 @@ import {
   Element,
   Event,
   EventEmitter,
+  Fragment,
   h,
   Prop,
 } from '@stencil/core';
 
 @Component({
-  tag: 'vocably-language-selector',
-  styleUrl: 'language-selector.scss',
+  tag: 'vocably-hint-selector',
+  styleUrl: 'hint-selector.scss',
   shadow: true,
 })
 export class VocablyLanguageSelector {
   @Element() el: HTMLElement;
 
-  @Prop() languages: Array<[code: string, name: string]>;
+  @Prop() shrinkSmall = false;
+  @Prop() optionGroups: Array<
+    [groupLabel: string, options: Array<[value: string, label: string]>]
+  >;
   @Prop() value: string;
   @Prop() hint: string;
   @Prop() disabled = false;
@@ -61,7 +65,12 @@ export class VocablyLanguageSelector {
 
   render() {
     return (
-      <div class={'wrapper'}>
+      <div
+        class={{
+          wrapper: true,
+          'shrink-small': this.shrinkSmall,
+        }}
+      >
         <select
           class="vocably-input-select"
           disabled={this.disabled}
@@ -69,10 +78,27 @@ export class VocablyLanguageSelector {
             this.choose.emit((event.target as HTMLSelectElement).value)
           }
         >
-          {this.languages.map(([code, name]) => (
-            <option selected={this.value === code} value={code}>
-              {name}
-            </option>
+          {this.optionGroups.map(([groupLabel, options]) => (
+            <Fragment>
+              {groupLabel !== '' && (
+                <optgroup label={groupLabel}>
+                  {options.map(([value, label]) => (
+                    <option value={value} selected={value === this.value}>
+                      {label}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+              {groupLabel === '' && (
+                <Fragment>
+                  {options.map(([value, label]) => (
+                    <option value={value} selected={value === this.value}>
+                      {label}
+                    </option>
+                  ))}
+                </Fragment>
+              )}
+            </Fragment>
           ))}
         </select>
         <span class={'hint'} ref={(el) => (this.hintElement = el)}>
