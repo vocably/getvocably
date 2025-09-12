@@ -58,6 +58,8 @@
       *ngIf="searchResult"
       style="margin-top: 0.5rem"
       class="search-result"
+      [explanation]="explanationState"
+      [explanationAnimationDelay]="explanationAnimationDelay"
       [askForRating]="this.askForRating"
       [extensionPlatform]="extensionPlatform"
       (ratingInteraction)="saveAskForRating($event)"

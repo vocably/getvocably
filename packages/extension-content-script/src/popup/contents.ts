@@ -140,7 +140,7 @@ export const setContents = async ({
             } else {
               translation.explanation = {
                 state: 'error',
-                error: 'Unable to load explanation.',
+                error: 'Unable to load AI explanation.',
               };
             }
           });

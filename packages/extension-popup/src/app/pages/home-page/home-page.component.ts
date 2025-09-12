@@ -42,6 +42,11 @@ export class HomePageComponent implements OnInit {
 
   searchValues: SearchValues | null = null;
 
+  explanationState: any = {
+    state: 'none',
+  };
+  explanationAnimationDelay = 0;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -126,6 +131,45 @@ export class HomePageComponent implements OnInit {
         })
         .then((result) => {
           this.askForRating = result;
+        });
+
+      this.explanationState = {
+        state: 'loading',
+      };
+
+      if (
+        analyzeResult.value.translation.sourceLanguage.trim().split(' ')
+          .length === 1
+      ) {
+        this.explanationAnimationDelay = 2000;
+      }
+
+      environment
+        .explain({
+          sourceLanguage: analyzeResult.value.translation.sourceLanguage,
+          targetLanguage: analyzeResult.value.translation.targetLanguage,
+          source: analyzeResult.value.translation.source,
+        })
+        .then((explanationResult) => {
+          if (explanationResult.success === false) {
+            this.explanationState = {
+              state: 'error',
+              error: 'Unable to load AI explanation.',
+            };
+            return;
+          }
+
+          if (explanationResult.value.explanation.trim() === '') {
+            this.explanationState = {
+              state: 'none',
+            };
+            return;
+          }
+
+          this.explanationState = {
+            state: 'loaded',
+            value: explanationResult.value.explanation,
+          };
         });
     }
 

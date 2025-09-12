@@ -5,6 +5,7 @@ import {
   attachTag,
   deleteTag,
   detachTag,
+  explain,
   ExtensionSettings,
   getAudioPronunciation,
   getInternalSourceLanguage,
@@ -111,6 +112,32 @@ const mockAnalyze: typeof analyze = async () => {
       explanation: 'Explanation example',
       collectionLength: 49,
       lastAdded: new Date().getTime(),
+    },
+  };
+};
+
+const mockExplain: typeof explain = async (payload) => {
+  await timeout(3000);
+  return {
+    success: true,
+    value: {
+      sourceLanguage: payload.sourceLanguage,
+      targetLanguage: payload.targetLanguage,
+      explanation:
+        'Для правильного понимания этого предложения обратите внимание на следующие моменты:\n' +
+        '\n' +
+        '1. **Грамматическая структура**: \n' +
+        '   - "Alice was beginning" - это конструкция в прошедшем продолженном времени (Past Continuous), указывающая на действие, которое началось в прошлом и продолжалось в тот момент.\n' +
+        '   - "to get very tired" - инфинитивная конструкция, указывающая на процесс становления уставшей.\n' +
+        '\n' +
+        '2. **Смысловые акценты**:\n' +
+        '   - "beginning to get" - подчеркивает начало процесса усталости, а не его завершение.\n' +
+        '   - "very tired" - усиливает степень усталости, показывая, что это не просто легкая усталость.\n' +
+        '\n' +
+        '3. **Контекст**:\n' +
+        '   - "of sitting" - указывает причину усталости, то есть усталость вызвана длительным сидением.\n' +
+        '\n' +
+        'Понимание этих аспектов поможет правильно интерпретировать предложение.',
     },
   };
 };
@@ -278,6 +305,7 @@ const getMaxCardsMock: typeof getMaxCards = async () => {
 export const environment = merge(environmentLocal, {
   production: false,
   analyze: mockAnalyze,
+  explain: mockExplain,
   addCard: mockAddCard,
   removeCard: mockRemoveCard,
   attachTag: mockAttachTag,
