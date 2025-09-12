@@ -158,6 +158,10 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
   ul {
     padding-inline-start: 1.2em;
   }
+
+  strong {
+    font-weight: bold;
+  }
 }
 
 .vocably-cards {
