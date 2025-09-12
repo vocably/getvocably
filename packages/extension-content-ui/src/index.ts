@@ -33,6 +33,30 @@ const simpletonTranslationResult: Result<TranslationCards> = {
   },
 };
 
+const longCard = JSON.parse(
+  JSON.stringify(simpletonTranslationResult.value.cards[0])
+);
+
+longCard.data.source =
+  'Zo verdeeld als de reacties op zijn uitspraken waren tijdens\n' +
+  '                zijn leven, zo uiteenlopend zijn ook de reacties op de\n' +
+  '                gewelddadige dood van de Amerikaanse politiek activist en\n' +
+  '                invloedrijk mediapersoonlijkheid Charlie Kirk. Naast de\n' +
+  '                gebruikelijke oproepen tot kalmte, verdraagzaamheid en gebed,\n' +
+  '                zijn er ook mensen die zich afvragen of Kirk het er niet naar\n' +
+  '                gemaakt heeft. En er zijn aansporingen af te rekenen met zijn\n' +
+  '                politieke vijanden, allemaal nog voordat er ook maar een dader\n' +
+  '                is gearresteerd of een motief bekend is. ';
+
+console.log(longCard);
+
+// @ts-ignore
+document.getElementById('congrats').card = longCard;
+
+// @ts-ignore
+document.getElementById('congrats-short').card =
+  simpletonTranslationResult.value.cards[0];
+
 const successfulTranslationResult: Result<TranslationCards> = {
   success: true,
   value: {

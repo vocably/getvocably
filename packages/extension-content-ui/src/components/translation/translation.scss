@@ -293,6 +293,8 @@ vocably-play-sound {
 }
 
 .vocably-added-congratulation-content {
+  padding-top: $input-padding-x - $input-padding-y; // Add a bit of padding for beauty
+  padding-bottom: $input-padding-x - $input-padding-y;
   border-bottom: $internal-border;
 }
 
