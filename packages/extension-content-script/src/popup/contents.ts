@@ -122,7 +122,10 @@ export const setContents = async ({
             : translationResult.value.translation.source;
 
         translation.explanation = { state: 'loading' };
-        if (source.trim().split(' ').length === 1) {
+        if (
+          translationResult.value.translation.source.trim().split(' ')
+            .length === 1
+        ) {
           translation.explanationAnimationDelay = 2000;
         }
 

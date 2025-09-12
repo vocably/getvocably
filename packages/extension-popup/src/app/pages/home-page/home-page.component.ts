@@ -138,8 +138,7 @@ export class HomePageComponent implements OnInit {
       };
 
       if (
-        analyzeResult.value.translation.sourceLanguage.trim().split(' ')
-          .length === 1
+        analyzeResult.value.translation.source.trim().split(' ').length === 1
       ) {
         this.explanationAnimationDelay = 2000;
       } else {
