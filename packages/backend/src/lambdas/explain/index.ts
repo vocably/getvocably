@@ -1,4 +1,5 @@
 import { configureAnalyzer, explainSentence } from '@vocably/analyze';
+import { trimArticle } from '@vocably/sulna';
 import {
   type APIGatewayProxyEvent,
   type APIGatewayProxyResult,
@@ -25,7 +26,10 @@ export const explain = async (
     of(event).pipe(
       map(extractPayload),
       mergeMap((payload) => {
-        const source = payload.source.trim();
+        const source = trimArticle(
+          payload.sourceLanguage,
+          payload.source.trim()
+        ).source;
 
         if (source.length === 0 || source.split(' ').length === 1) {
           return Promise.resolve({
