@@ -1,10 +1,12 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   GoogleLanguage,
@@ -38,6 +40,8 @@ const article = (phrase: string) => {
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent implements OnInit, OnDestroy {
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+
   @Input() isSearching = false;
   @Input() value: SearchValues | null = null;
   @Input() hideHint: boolean = false;
@@ -90,6 +94,10 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     this.availableTargetLanguages = allLanguages.filter(
       (l) => !this.preferredTargetLanguages.includes(l)
     );
+
+    setTimeout(() => {
+      this.searchInput.nativeElement.focus();
+    }, 500);
   }
 
   ngOnDestroy(): void {

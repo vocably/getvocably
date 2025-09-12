@@ -3,7 +3,7 @@
   autocomplete="off"
   (submit)="$event.preventDefault(); submit()"
 >
-  <div class="preset mb-0_5">
+  <div class="preset" style="margin-bottom: 12px">
     <vocably-hint-selector
       class="language"
       hint="I study"
@@ -31,6 +31,7 @@
   </div>
   <div class="search-input">
     <input
+      #searchInput
       autocomplete="off"
       aria-haspopup="false"
       autocapitalize="off"
@@ -52,7 +53,7 @@
       >
     </button>
   </div>
-  <div *ngIf="!hideHint" style="margin-top: 1rem" class="muted">
+  <div *ngIf="!hideHint" style="margin-top: 12px" class="muted">
     <style>
       .reverse-search-hint-icon {
         vertical-align: middle;
