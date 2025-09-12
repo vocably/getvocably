@@ -142,6 +142,8 @@ export class HomePageComponent implements OnInit {
           .length === 1
       ) {
         this.explanationAnimationDelay = 2000;
+      } else {
+        this.explanationAnimationDelay = 0;
       }
 
       const source =
