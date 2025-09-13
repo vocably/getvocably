@@ -5,7 +5,7 @@ export const LexicalaLanguages = [
   'br',
   'cs',
   'de',
-  'dk',
+  'da',
   'el',
   'en',
   'es',
@@ -35,10 +35,6 @@ export const languageToLexicalaLanguage = (
 ): LexicalaLanguage | null => {
   if (language === 'zh-TW') {
     return 'tw';
-  }
-
-  if (language === 'da') {
-    return 'dk';
   }
 
   return (

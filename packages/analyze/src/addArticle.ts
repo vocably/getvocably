@@ -36,7 +36,7 @@ const languageArticles: Partial<
     neuter: 'et ',
     fallback: '',
   },
-  dk: {
+  da: {
     common: 'en ',
     neuter: 'et ',
     fallback: '',
