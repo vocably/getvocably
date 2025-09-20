@@ -17,21 +17,30 @@ console.log('Received users', inspect(users, { depth: null }));
 
 const sub = users.Users[0].Attributes.find((attr) => attr.Name === 'sub').Value;
 
+let userCardCollections = [];
+
 try {
-  const userCardCollections = JSON.parse(
+  userCardCollections = JSON.parse(
     (
       await execute(
         `aws s3api list-objects --bucket ${process.env.DECKS_BUCKET} --prefix "${sub}/"`
       )
     ).stdout
-  );
-
-  console.log(
-    'Cards collections',
-    inspect(userCardCollections, { depth: null })
-  );
+  ).Contents;
 } catch (error) {
   console.error(error);
+}
+
+for (const userCardCollection of userCardCollections) {
+  const cardCollection = JSON.parse(
+    (
+      await execute(
+        `aws s3 cp s3://vocably-prod-cards/${userCardCollection.Key} -`
+      )
+    ).stdout || '""'
+  );
+
+  console.log(userCardCollection.Key, cardCollection.cards.length);
 }
 
 try {
@@ -46,23 +55,6 @@ try {
   console.log('User metadata', inspect(userMetadata, { depth: null }));
 } catch (error) {
   console.log("Can't read user metadata.", error.toString());
-}
-
-try {
-  const userCardCollections = JSON.parse(
-    (
-      await execute(
-        `aws s3api list-objects --bucket ${process.env.DECKS_BUCKET} --prefix "${sub}/"`
-      )
-    ).stdout
-  );
-
-  console.log(
-    'Cards collections',
-    inspect(userCardCollections, { depth: null })
-  );
-} catch (error) {
-  console.log("Can't read user cards collection", error.toString());
 }
 
 try {
