@@ -1105,7 +1105,25 @@ PODS:
     - React-Core
   - RNReactNativeSharedGroupPreferences (1.1.24):
     - React
-  - RNReanimated (3.9.0):
+  - RNReanimated (3.16.7):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated (= 3.16.7)
+    - RNReanimated/worklets (= 3.16.7)
+  - RNReanimated/reanimated (3.16.7):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+    - RNReanimated/reanimated/apple (= 3.16.7)
+  - RNReanimated/reanimated/apple (3.16.7):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - ReactCommon/turbomodule/core
+  - RNReanimated/worklets (3.16.7):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1450,7 +1468,7 @@ SPEC CHECKSUMS:
   RNPaywalls: d1e64a04817678ec72a1f4766e800830e63d5ddb
   RNPurchases: 5633b8493fde5c2bcc5fe3edae46e8f141e419fc
   RNReactNativeSharedGroupPreferences: 29092869fc2e40d5baca5e15d82fa5c24a668977
-  RNReanimated: e4276a6afc57c02056daa5ea1afb41a5ec497d9b
+  RNReanimated: c076386897b52fb541afa8fffe08ded731d50211
   RNScreens: 134a7511b12b8eb440b87aac21e36a71295d6024
   RNSentry: c5f873ff713a98d91c551f792bff61df522645e0
   RNShareMenu: cb9dac548c8bf147d06f0bf07296ad51ea9f5fc3
