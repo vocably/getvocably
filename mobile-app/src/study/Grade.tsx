@@ -1,4 +1,4 @@
-import { CardItem } from '@vocably/model';
+import { CardItem, StudyFlowType } from '@vocably/model';
 import { SrsScore } from '@vocably/srs';
 import React, { FC } from 'react';
 import { ArrangeByLetters } from './ArrangeByLetters';
@@ -9,8 +9,7 @@ import { SwipeGrade } from './SwipeGrade';
 
 type Props = {
   autoPlay: boolean;
-  isMultiChoiceEnabled: boolean;
-  preferMultiChoiceEnabled: boolean;
+  studySteps: StudyFlowType[];
   card: CardItem;
   onGrade: (score: SrsScore) => void;
   existingCards: CardItem[];
@@ -19,16 +18,14 @@ type Props = {
 
 export const Grade: FC<Props> = ({
   card,
-  isMultiChoiceEnabled,
-  preferMultiChoiceEnabled,
+  studySteps,
   existingCards,
   autoPlay,
   onGrade,
   prerenderedCards,
 }) => {
   const { immediateStep } = craftTheStrategy({
-    isMultiChoiceEnabled,
-    preferMultiChoiceEnabled,
+    studySteps,
     card,
     allCards: existingCards,
     prerenderedCards,

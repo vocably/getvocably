@@ -1,4 +1,4 @@
-import { CardItem, StudyStrategy } from '@vocably/model';
+import { CardItem, StudyFlowType, StudyStrategy } from '@vocably/model';
 import { spreadStrategy } from '@vocably/srs/dist/esm/spreadStrategy';
 import { getMultiChoice } from './getMultiChoice';
 import { isSuitableForArrangingByLetters } from './isSuitableForArrangingByLetters';
@@ -33,8 +33,7 @@ type ImmediateStep =
   | ArrangeByLetters;
 
 type Options = {
-  isMultiChoiceEnabled: boolean;
-  preferMultiChoiceEnabled: boolean;
+  studySteps: StudyFlowType[];
   card: CardItem;
   allCards: CardItem[];
   prerenderedCards: CardItem[];
@@ -46,93 +45,72 @@ type ReturnType = {
 };
 
 export const craftTheStrategy = ({
-  isMultiChoiceEnabled,
-  preferMultiChoiceEnabled,
+  studySteps,
   card,
   allCards,
   prerenderedCards,
 }: Options): ReturnType => {
-  // @ts-ignore
-  const swipeStrategy: StudyStrategy = [
-    { step: 'sf', allowedFailures: null },
-    { step: 'ab', allowedFailures: null },
-    { step: 'sb', allowedFailures: 0 },
-  ].filter((strategy) => {
-    if (strategy.step === 'ab' && !isSuitableForArrangingByLetters(card)) {
+  const multiChoiceItems =
+    getMultiChoice(card, allCards) ?? getMultiChoice(card, prerenderedCards);
+
+  const filteredSteps = studySteps.filter((item) => {
+    if (item.type === 'arrange' && !isSuitableForArrangingByLetters(card)) {
+      return false;
+    }
+
+    if (
+      item.type === 'multichoice' &&
+      !card.data.translation &&
+      !card.data.definition
+    ) {
+      return false;
+    }
+
+    if (item.type !== 'multichoice') {
+      return true;
+    }
+
+    if (multiChoiceItems === null) {
       return false;
     }
 
     return true;
   });
 
-  if (
-    !isMultiChoiceEnabled ||
-    (!card.data.translation && !card.data.definition)
-  ) {
+  const swipeStrategy: StudyStrategy = [
+    { step: 'sf', allowedFailures: null },
+    { step: 'sb', allowedFailures: null },
+  ];
+
+  if (filteredSteps.length === 0) {
     const { currentState } = spreadStrategy(card.data.state, swipeStrategy);
     return {
       strategy: swipeStrategy,
       immediateStep: {
         step:
-          currentState.s === 'sf' ||
-          currentState.s === 'sb' ||
-          currentState.s === 'ab'
+          currentState.s === 'sf' || currentState.s === 'sb'
             ? currentState.s
             : 'sf',
-      },
-    };
-  }
-
-  const multiChoiceItems =
-    getMultiChoice(card, allCards) ?? getMultiChoice(card, prerenderedCards);
-
-  if (multiChoiceItems === null) {
-    const { currentState } = spreadStrategy(card.data.state, swipeStrategy);
-    return {
-      strategy: swipeStrategy,
-      immediateStep: {
-        step:
-          currentState.s === 'sf' ||
-          currentState.s === 'sb' ||
-          currentState.s === 'ab'
-            ? currentState.s
-            : 'sf',
-      },
-    };
-  }
-
-  if (preferMultiChoiceEnabled) {
-    const strategy: StudyStrategy = [
-      { step: 'mf', allowedFailures: null },
-      { step: 'mb', allowedFailures: null },
-    ];
-
-    const { currentState } = spreadStrategy(card.data.state, strategy);
-    return {
-      strategy,
-      immediateStep: {
-        step:
-          currentState.s === 'mf' || currentState.s === 'mb'
-            ? currentState.s
-            : 'mf',
-        multiChoice: multiChoiceItems,
       },
     };
   }
 
   // @ts-ignore
-  const strategy: StudyStrategy = [
-    { step: 'mf', allowedFailures: null },
-    { step: 'sf', allowedFailures: 0 },
-    { step: 'mb', allowedFailures: null },
-    { step: 'ab', allowedFailures: null },
-    { step: 'sb', allowedFailures: 0 },
-  ].filter((strategy) => {
-    if (strategy.step === 'ab' && !isSuitableForArrangingByLetters(card)) {
-      return false;
+  const strategy: StudyStrategy = filteredSteps.map((item) => {
+    switch (item.id) {
+      case 'mf':
+        return { step: 'mf', allowedFailures: null };
+      case 'sf':
+        return { step: 'sf', allowedFailures: null };
+      case 'mb':
+        return { step: 'mb', allowedFailures: null };
+      case 'ab':
+        return { step: 'ab', allowedFailures: null };
+      case 'sb':
+        return { step: 'sb', allowedFailures: null };
+      default:
+        return { step: 'sf', allowedFailures: null };
     }
-
-    return true;
   });
 
   const { currentState } = spreadStrategy(card.data.state, strategy);
