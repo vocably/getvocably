@@ -21,7 +21,31 @@ export const StudySteps: FC<Props> = ({ style }) => {
   const presentPaywall = usePresentPaywall();
   const theme = useTheme();
   const { userMetadata, updateUserMetadata } = useContext(UserMetadataContext);
-  const [sortingIsEnabled, setSortingEnabled] = useState(true);
+  const [changeIsEnabled, setChangeIsEnabled] = useState(true);
+
+  const studyFlow = userMetadata.studyFlow ?? defaultStudyFlow;
+
+  const toggleStep = (id: string) => (isEnabled: boolean) => {
+    if (!changeIsEnabled) {
+      return;
+    }
+
+    const item = studyFlow.find((item) => item.id === id);
+
+    if (!item) {
+      return;
+    }
+
+    setChangeIsEnabled(false);
+
+    item.enabled = isEnabled;
+
+    updateUserMetadata({
+      studyFlow: studyFlow,
+    }).finally(() => {
+      setChangeIsEnabled(true);
+    });
+  };
 
   const renderItem = useCallback<SortableGridRenderItem<StudyFlowType>>(
     ({ item }) => {
@@ -63,7 +87,11 @@ export const StudySteps: FC<Props> = ({ style }) => {
                 alignItems: 'center',
               }}
             >
-              <Switch value={isEnabled} disabled={needsPremium && !isPremium} />
+              <Switch
+                value={isEnabled}
+                disabled={needsPremium && !isPremium}
+                onValueChange={toggleStep(item.id)}
+              />
               <View
                 style={{
                   flexWrap: 'wrap',
@@ -93,13 +121,11 @@ export const StudySteps: FC<Props> = ({ style }) => {
     [isPremium, presentPaywall]
   );
 
-  const studyFlow = userMetadata.studyFlow ?? defaultStudyFlow;
-
   const onDragEnd: SortableGridDragEndCallback<StudyFlowType> = ({ data }) => {
-    setSortingEnabled(false);
+    setChangeIsEnabled(false);
     updateUserMetadata({
       studyFlow: data,
-    }).finally(() => setSortingEnabled(true));
+    }).finally(() => setChangeIsEnabled(true));
   };
 
   return (
@@ -124,7 +150,7 @@ export const StudySteps: FC<Props> = ({ style }) => {
         rowGap={8}
         customHandle={true}
         onDragEnd={onDragEnd}
-        sortEnabled={sortingIsEnabled}
+        sortEnabled={changeIsEnabled}
       />
     </View>
   );
