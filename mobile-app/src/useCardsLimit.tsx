@@ -1,50 +1,13 @@
 import { UserStaticMetadata } from '@vocably/model';
-import { get } from 'lodash-es';
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext, AuthStatus } from './auth/AuthContext';
-import {
-  CustomerInfoContext,
-  CustomerInfoStatus,
-} from './CustomerInfoContainer';
+import { usePremium } from './usePremium';
 import { UserMetadataContext } from './UserMetadataContainer';
-
-const isPremium = (
-  authStatus: AuthStatus,
-  customerInfoStatus: CustomerInfoStatus
-): boolean => {
-  if (
-    authStatus.status === 'logged-in' &&
-    (
-      get(
-        authStatus.session,
-        'tokens.accessToken.payload.cognito:groups',
-        []
-      ) as string[]
-    ).includes('paid')
-  ) {
-    return true;
-  }
-
-  if (
-    customerInfoStatus.status === 'loaded' &&
-    get(
-      customerInfoStatus.customerInformation,
-      'entitlements.active.premium',
-      false
-    )
-  ) {
-    return true;
-  }
-
-  return false;
-};
 
 const getCardsLimit = (
   userStaticMetadata: UserStaticMetadata,
-  authStatus: AuthStatus,
-  customerInfoStatus: CustomerInfoStatus
+  isPremium: boolean
 ): number | 'unlimited' => {
-  if (isPremium(authStatus, customerInfoStatus)) {
+  if (isPremium) {
     return 'unlimited';
   }
 
@@ -52,24 +15,21 @@ const getCardsLimit = (
 };
 
 export const useCardsLimit = (): number | 'unlimited' => {
-  const customerInfoStatus = useContext(CustomerInfoContext);
-  const authStatus = useContext(AuthContext);
+  const isPremium = usePremium();
   const { userStaticMetadata } = useContext(UserMetadataContext);
 
   const [cardsLimit, setCardsLimit] = useState<number | 'unlimited'>(
-    getCardsLimit(userStaticMetadata, authStatus, customerInfoStatus)
+    getCardsLimit(userStaticMetadata, isPremium)
   );
 
   useEffect(() => {
-    if (isPremium(authStatus, customerInfoStatus)) {
+    if (isPremium) {
       setCardsLimit('unlimited');
       return;
     }
 
-    setCardsLimit(
-      getCardsLimit(userStaticMetadata, authStatus, customerInfoStatus)
-    );
-  }, [userStaticMetadata, authStatus, customerInfoStatus]);
+    setCardsLimit(getCardsLimit(userStaticMetadata, isPremium));
+  }, [userStaticMetadata, isPremium]);
 
   return cardsLimit;
 };

@@ -9,17 +9,12 @@ import { CustomSurface } from '../ui/CustomSurface';
 import { ListSwitch } from '../ui/ListSwitch';
 import { ScreenTitle } from '../ui/ScreenTitle';
 import { useAsync } from '../useAsync';
+import { usePremium } from '../usePremium';
+import { usePresentPaywall } from '../usePresentPaywall';
+import { StudySteps } from './StudySteps';
 
-const MULTI_CHOICE_ENABLED_KEY = 'isMultiChoiceEnabled';
 const RANDOMIZER_ENABLED_KEY = 'isRandomizerEnabled';
 const MAXIMUM_CARDS_PER_SESSION_KEY = 'maximumCardsPerSession';
-const PREFER_MULTI_CHOICE = 'preferMultiChoiceOptions';
-
-export const getMultiChoiceEnabled = () =>
-  getItem(MULTI_CHOICE_ENABLED_KEY).then((res) => res !== 'false');
-
-const setMultiChoiceEnabled = (isEnabled: boolean) =>
-  setItem(MULTI_CHOICE_ENABLED_KEY, isEnabled ? 'true' : 'false');
 
 export const getRandomizerEnabled = () =>
   getItem(RANDOMIZER_ENABLED_KEY).then((res) => res === 'true');
@@ -33,21 +28,13 @@ export const getMaximumCardsPerSession = () =>
 export const setMaximumCardsPerSession = (cardsPerSession: number) =>
   setItem(MAXIMUM_CARDS_PER_SESSION_KEY, cardsPerSession.toString());
 
-export const getPreferMultiChoiceEnabled = () =>
-  getItem(PREFER_MULTI_CHOICE).then((res) => res === 'true');
-
-const setPreferMultiChoiceEnabled = (preferMultiCHoice: boolean) =>
-  setItem(PREFER_MULTI_CHOICE, preferMultiCHoice ? 'true' : 'false');
-
 type Props = {};
 
 export const StudySettingsScreen: FC<Props> = () => {
   const theme = useTheme();
 
-  const [isMultiChoiceEnabledResult, mutateMultiChoiceEnabled] = useAsync(
-    getMultiChoiceEnabled,
-    setMultiChoiceEnabled
-  );
+  const isPremium = usePremium();
+  const presentPaywall = usePresentPaywall();
 
   const [isRandomizerEnabled, mutateIsRandomizerEnabled] = useAsync(
     getRandomizerEnabled,
@@ -59,18 +46,6 @@ export const StudySettingsScreen: FC<Props> = () => {
     setMaximumCardsPerSession
   );
 
-  const [preferMultiChoiceResult, mutatePreferMultiChoice] = useAsync(
-    getPreferMultiChoiceEnabled,
-    setPreferMultiChoiceEnabled
-  );
-
-  const onMultiChoiceChange = async () => {
-    if (isMultiChoiceEnabledResult.status !== 'loaded') {
-      return;
-    }
-    await mutateMultiChoiceEnabled(!isMultiChoiceEnabledResult.value);
-  };
-
   const onRandomizerEnabledChange = async () => {
     if (isRandomizerEnabled.status !== 'loaded') {
       return;
@@ -79,75 +54,12 @@ export const StudySettingsScreen: FC<Props> = () => {
     await mutateIsRandomizerEnabled(!isRandomizerEnabled.value);
   };
 
-  const onPreferMultiChoiceChange = async () => {
-    if (preferMultiChoiceResult.status !== 'loaded') {
-      return;
-    }
-    await mutatePreferMultiChoice(!preferMultiChoiceResult.value);
-  };
-
   const fontScale = Math.max(1, PixelRatio.getFontScale());
-
   return (
     <CustomScrollView>
       <ScreenTitle icon="school-outline" title="Study settings" />
 
-      {isMultiChoiceEnabledResult.status === 'loaded' &&
-        preferMultiChoiceResult.status === 'loaded' && (
-          <>
-            <CustomSurface style={{ marginBottom: 8 }}>
-              <ListSwitch
-                title="Use multiple-choice questions"
-                value={isMultiChoiceEnabledResult.value}
-                onChange={onMultiChoiceChange}
-              />
-            </CustomSurface>
-
-            <View
-              style={{
-                paddingLeft: 8,
-                paddingRight: 8,
-                width: '100%',
-                gap: 8,
-                marginBottom: 32,
-              }}
-            >
-              <Text>
-                The multiple-choice questions are only visible when you have
-                enough cards.
-              </Text>
-              <Text>
-                The more cards you have in your collection, the better your
-                multiple-choice options will be.
-              </Text>
-            </View>
-
-            {isMultiChoiceEnabledResult.value && (
-              <>
-                <CustomSurface style={{ marginBottom: 8 }}>
-                  <ListSwitch
-                    title="Multiple-choice only"
-                    value={preferMultiChoiceResult.value}
-                    onChange={onPreferMultiChoiceChange}
-                  />
-                </CustomSurface>
-                <View
-                  style={{
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    width: '100%',
-                    gap: 8,
-                    marginBottom: 32,
-                  }}
-                >
-                  <Text>
-                    Vocably will only show multiple-choice question if possible.
-                  </Text>
-                </View>
-              </>
-            )}
-          </>
-        )}
+      <StudySteps style={{ marginBottom: 32 }} />
 
       <CustomSurface
         style={{

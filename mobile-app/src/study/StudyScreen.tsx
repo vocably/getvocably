@@ -17,12 +17,11 @@ import { Loader } from '../loaders/Loader';
 import { useNumberOfStudySessions } from '../RequestFeedback/useNumberOfStudySessions';
 import {
   getMaximumCardsPerSession,
-  getMultiChoiceEnabled,
-  getPreferMultiChoiceEnabled,
   getRandomizerEnabled,
 } from '../Settings/StudySettingsScreen';
 import { ScreenLayout } from '../ui/ScreenLayout';
 import { useAsync } from '../useAsync';
+import { useStudySteps } from '../useStudySteps';
 import { useCardsAnsweredToday } from './cardsAnsweredToday';
 import { Completed } from './Completed';
 import { craftTheStrategy } from './craftTheStrategy';
@@ -47,6 +46,8 @@ export const StudyScreen: Props = ({ route, navigation }) => {
     saveAutoPlayToStorage
   );
 
+  const studySteps = useStudySteps();
+
   const {
     status: loadDeckStatus,
     update,
@@ -56,11 +57,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
     autoReload: false,
   });
 
-  const [isMultiChoiceEnabledResult] = useAsync(getMultiChoiceEnabled);
   const [isRandomizerEnabledResult] = useAsync(getRandomizerEnabled);
-  const [preferMultiChoiceEnabledResult] = useAsync(
-    getPreferMultiChoiceEnabled
-  );
   const [maximumCardsPerSessionResult] = useAsync(getMaximumCardsPerSession);
 
   const [cards, setCards] = useState<CardItem[]>();
@@ -79,8 +76,6 @@ export const StudyScreen: Props = ({ route, navigation }) => {
 
   const [streakHasShownToday, setStreakHasShown] = useStreakHasBeenShown();
   const studyStatsResult = useStudyStats();
-
-  console.log('study stats result', studyStatsResult);
 
   useEffect(() => {
     if (
@@ -182,16 +177,8 @@ export const StudyScreen: Props = ({ route, navigation }) => {
       return;
     }
 
-    if (
-      isMultiChoiceEnabledResult.status !== 'loaded' ||
-      preferMultiChoiceEnabledResult.status !== 'loaded'
-    ) {
-      return;
-    }
-
     const { strategy } = craftTheStrategy({
-      isMultiChoiceEnabled: isMultiChoiceEnabledResult.value,
-      preferMultiChoiceEnabled: preferMultiChoiceEnabledResult.value,
+      studySteps: studySteps,
       card: cards[0],
       allCards,
       prerenderedCards: translationLanguage
@@ -260,8 +247,6 @@ export const StudyScreen: Props = ({ route, navigation }) => {
   useEffect(() => {
     if (
       isRandomizerEnabledResult.status !== 'loaded' ||
-      isMultiChoiceEnabledResult.status !== 'loaded' ||
-      preferMultiChoiceEnabledResult.status !== 'loaded' ||
       maximumCardsPerSessionResult.status !== 'loaded'
     ) {
       return;
@@ -269,29 +254,19 @@ export const StudyScreen: Props = ({ route, navigation }) => {
 
     posthog.capture('study_started', {
       isRandomizerEnabled: isRandomizerEnabledResult.value,
-      isMultiChoiceEnabled: isMultiChoiceEnabledResult.value,
-      preferMultiChoiceEnabled: preferMultiChoiceEnabledResult.value,
       maximumCardsPerSession: maximumCardsPerSessionResult.value,
       language,
     });
-  }, [
-    posthog,
-    isRandomizerEnabledResult,
-    isMultiChoiceEnabledResult,
-    preferMultiChoiceEnabledResult,
-    maximumCardsPerSessionResult,
-  ]);
+  }, [posthog, isRandomizerEnabledResult, maximumCardsPerSessionResult]);
 
   const insets = useSafeAreaInsets();
 
   if (
     loadDeckStatus === 'loading' ||
     cards === undefined ||
-    isMultiChoiceEnabledResult.status !== 'loaded' ||
     isRandomizerEnabledResult.status !== 'loaded' ||
     autoPlayResult.status !== 'loaded' ||
     maximumCardsPerSessionResult.status !== 'loaded' ||
-    preferMultiChoiceEnabledResult.status !== 'loaded' ||
     studyStatsResult.status !== 'loaded' ||
     streakHasShownToday.status !== 'loaded'
   ) {
@@ -374,14 +349,11 @@ export const StudyScreen: Props = ({ route, navigation }) => {
               .map((card) => (
                 <Grade
                   key={card.id}
-                  isMultiChoiceEnabled={isMultiChoiceEnabledResult.value}
-                  preferMultiChoiceEnabled={
-                    preferMultiChoiceEnabledResult.value
-                  }
                   card={card}
                   onGrade={onGrade}
                   autoPlay={autoPlayResult.value}
                   existingCards={allCards}
+                  studySteps={studySteps}
                   prerenderedCards={
                     translationLanguage
                       ? getPredefinedMultiChoiceOptions(

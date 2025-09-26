@@ -13,7 +13,7 @@ import {
 import {
   createContext,
   FC,
-  ReactNode,
+  PropsWithChildren,
   useCallback,
   useEffect,
   useState,
@@ -37,11 +37,11 @@ export const UserMetadataContext = createContext<UserMetadataContextValues>({
   refresh: () => Promise.resolve(),
 });
 
-type UserMetadataContainer = FC<{
-  children: ReactNode;
-}>;
+type Props = {};
 
-export const UserMetadataContainer: UserMetadataContainer = ({ children }) => {
+export const UserMetadataContainer: FC<PropsWithChildren<Props>> = ({
+  children,
+}) => {
   const [userMetadata, setUserMetadata] = useState<UserMetadata | null>(null);
   const [userStaticMetadata, setUserStaticMetadata] =
     useState<UserStaticMetadata | null>(null);

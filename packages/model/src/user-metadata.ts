@@ -1,3 +1,5 @@
+import { StudyFlowType } from './study-flow';
+
 export type Platform =
   | 'ios'
   | 'android'
@@ -25,12 +27,14 @@ export type UserMetadata = {
   onboardingFlow: OnboardingFlow;
   rate: Record<Platform, RateResponse | undefined>;
   usageStats: UsageStats;
+  studyFlow?: StudyFlowType[];
 };
 
 export type PartialUserMetadata = {
   rate?: Partial<UserMetadata['rate']>;
   onboardingFlow?: Partial<UserMetadata['onboardingFlow']>;
   usageStats?: Partial<UserMetadata['usageStats']>;
+  studyFlow?: UserMetadata['studyFlow'];
 };
 
 export const defaultUserMetadata: UserMetadata = {
