@@ -5,6 +5,7 @@ import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
 import { PaymentSuccessModal } from './PaymentSuccessModal';
+import { PreviewArrangeModal } from './Settings/PreviewArrangeModal';
 import { StudyScreen } from './study/StudyScreen';
 import { TabsNavigator } from './TabsNavigator';
 import { WelcomeScreen } from './Welcome/WelcomeScreen';
@@ -51,6 +52,14 @@ export const RootModalStack = () => {
           name={'Feedback'}
           component={FeedbackModal}
           options={{ headerShown: false, presentation: 'modal' }}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            presentation: 'modal',
+          }}
+          name="PreviewArrange"
+          component={PreviewArrangeModal}
         />
       </Stack.Group>
     </Stack.Navigator>

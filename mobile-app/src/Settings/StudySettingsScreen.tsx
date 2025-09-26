@@ -8,8 +8,6 @@ import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListSwitch } from '../ui/ListSwitch';
 import { useAsync } from '../useAsync';
-import { usePremium } from '../usePremium';
-import { usePresentPaywall } from '../usePresentPaywall';
 import { StudySteps } from './StudySteps';
 
 const RANDOMIZER_ENABLED_KEY = 'isRandomizerEnabled';
@@ -31,9 +29,6 @@ type Props = {};
 
 export const StudySettingsScreen: FC<Props> = () => {
   const theme = useTheme();
-
-  const isPremium = usePremium();
-  const presentPaywall = usePresentPaywall();
 
   const [isRandomizerEnabled, mutateIsRandomizerEnabled] = useAsync(
     getRandomizerEnabled,

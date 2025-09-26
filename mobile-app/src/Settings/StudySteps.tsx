@@ -1,5 +1,8 @@
-import { StudyFlowType } from '@vocably/model';
-import { FC, useCallback, useContext, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { CardItem, StudyFlowType } from '@vocably/model';
+import { shuffle } from 'lodash-es';
+import { usePostHog } from 'posthog-react-native';
+import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { Button, Switch, Text, useTheme } from 'react-native-paper';
 import Sortable, {
@@ -8,6 +11,8 @@ import Sortable, {
 } from 'react-native-sortables';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { defaultStudyFlow, getDefaultValues } from '../defaultStudyFlow';
+import { useSelectedDeck } from '../languageDeck/useSelectedDeck';
+import { isSuitableForArrangingByLetters } from '../study/isSuitableForArrangingByLetters';
 import { usePremium } from '../usePremium';
 import { usePresentPaywall } from '../usePresentPaywall';
 import { UserMetadataContext } from '../UserMetadataContainer';
@@ -22,8 +27,29 @@ export const StudySteps: FC<Props> = ({ style }) => {
   const theme = useTheme();
   const { userMetadata, updateUserMetadata } = useContext(UserMetadataContext);
   const [changeIsEnabled, setChangeIsEnabled] = useState(true);
+  const navigation = useNavigation();
+  const posthog = usePostHog();
 
   const studyFlow = userMetadata.studyFlow ?? defaultStudyFlow;
+
+  const {
+    deck: { cards },
+  } = useSelectedDeck({
+    autoReload: false,
+  });
+
+  const [arrangePreviewCard, setArrangePreviewCard] = useState<CardItem>();
+
+  useEffect(() => {
+    const selectedCard = shuffle(cards).find(isSuitableForArrangingByLetters);
+    if (selectedCard) {
+      setArrangePreviewCard(selectedCard);
+    }
+  }, [cards]);
+
+  useEffect(() => {
+    posthog.capture('studyStepsShown');
+  }, []);
 
   const toggleStep = (id: string) => (isEnabled: boolean) => {
     if (!changeIsEnabled) {
@@ -104,15 +130,47 @@ export const StudySteps: FC<Props> = ({ style }) => {
               </View>
             </View>
             {needsPremium && !isPremium && (
-              <>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    alignItems: 'center',
+                    paddingLeft: 12,
+                    marginBottom: 4,
+                  }}
+                >
+                  <Icon
+                    name="lock"
+                    size={16}
+                    color={theme.colors.onBackground}
+                  />
+                  <Text style={{ fontSize: 16 }}>
+                    Available to premium users
+                  </Text>
+                </View>
+                {arrangePreviewCard && (
+                  <Button
+                    style={{ alignSelf: 'flex-start' }}
+                    icon={'eye-outline'}
+                    onPress={() => {
+                      posthog.capture('arrangePreviewClicked');
+                      navigation.navigate('PreviewArrange', {
+                        card: arrangePreviewCard,
+                      });
+                    }}
+                  >
+                    See how it works
+                  </Button>
+                )}
                 <Button
                   style={{ alignSelf: 'flex-start' }}
-                  icon={'lock'}
+                  icon={'crown'}
                   onPress={() => presentPaywall()}
                 >
                   Upgrade to premium
                 </Button>
-              </>
+              </View>
             )}
           </View>
         </View>
