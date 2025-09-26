@@ -101,15 +101,15 @@ export const craftTheStrategy = ({
       case 'mf':
         return { step: 'mf', allowedFailures: null };
       case 'sf':
-        return { step: 'sf', allowedFailures: null };
+        return { step: 'sf', allowedFailures: 0 };
       case 'mb':
         return { step: 'mb', allowedFailures: null };
       case 'ab':
         return { step: 'ab', allowedFailures: null };
       case 'sb':
-        return { step: 'sb', allowedFailures: null };
+        return { step: 'sb', allowedFailures: 0 };
       default:
-        return { step: 'sf', allowedFailures: null };
+        return { step: 'sf', allowedFailures: 0 };
     }
   });
 

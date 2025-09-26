@@ -91,11 +91,22 @@ export const grade = (
     nextEFactor =
       item.eFactor + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02));
   } else {
-    nextInterval = 1;
-    nextRepetition = 0;
+    // The only way to set score 1 is by swiping left.
+    // Personally, I absolutely hate when the card gets fully reset because of that
+    // That's why I almost never swipe left. Lets' make swiping left not to reset
+    // the entire study flow. Instead, act as score 3
+    // Before:
+    // nextInterval = 1;
+    // nextRepetition = 0;
+    // dueDate = buildDueDate(1);
+    // nextEFactor =
+    //   item.eFactor + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02));
+
+    nextInterval = item.interval;
+    nextRepetition = item.repetition;
     dueDate = buildDueDate(1);
-    nextEFactor =
-      item.eFactor + (0.1 - (5 - score) * (0.08 + (5 - score) * 0.02));
+
+    nextEFactor = item.eFactor + (0.1 - (5 - 3) * (0.08 + (5 - 3) * 0.02));
   }
 
   if (nextEFactor < 1.3) nextEFactor = 1.3;
