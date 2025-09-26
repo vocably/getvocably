@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DeckStack } from './DeckStack';
 import { LookUpScreen } from './LookUpScreen';
 import { SettingsStack } from './Settings/SettingsStack';
-import { StudySettingsScreen } from './Settings/StudySettingsScreen';
 import { TipsStack } from './Tips/TipsStack';
 import { useWelcomeRequired } from './useWelcomeRequired';
 
@@ -45,13 +44,6 @@ export const TabsNavigator: FC<Props> = ({ navigation }) => {
           shadowRadius: 3,
         }}
       >
-        <Tabs.Screen
-          options={{
-            title: 'Study Settings',
-          }}
-          name="StudySettings1"
-          component={StudySettingsScreen}
-        />
         <Tabs.Screen
           name="DeckScreen"
           options={{
