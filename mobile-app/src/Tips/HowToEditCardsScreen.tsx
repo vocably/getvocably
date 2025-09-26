@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CustomScrollView } from '../ui/CustomScrollView';
-import { ScreenTitle } from '../ui/ScreenTitle';
 
 const styles = StyleSheet.create({
   text: {
@@ -16,7 +15,6 @@ type Props = {};
 export const HowToEditCardsScreen: FC<Props> = () => {
   return (
     <CustomScrollView>
-      <ScreenTitle icon="pencil-outline" title="How to edit cards" />
       <View style={{ paddingHorizontal: 16 }}>
         <View style={{ display: 'flex', gap: 12 }}>
           <Text style={styles.text}>You can edit cards in two ways:</Text>

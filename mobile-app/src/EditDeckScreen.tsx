@@ -1,13 +1,13 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DeleteDeckButton } from './DeleteDeckButton';
 import { useSelectedDeck } from './languageDeck/useSelectedDeck';
 import { CustomScrollView } from './ui/CustomScrollView';
 import { CustomSurface } from './ui/CustomSurface';
 import { ListItem } from './ui/ListItem';
-import { ScreenTitle } from './ui/ScreenTitle';
 import { useCurrentLanguageName } from './useCurrentLanguageName';
 
 type Props = {
@@ -17,19 +17,29 @@ type Props = {
 export const EditDeckScreen: FC<Props> = ({ navigation }) => {
   const languageName = useCurrentLanguageName();
   const deck = useSelectedDeck({ autoReload: false });
+  const theme = useTheme();
 
   return (
     <CustomScrollView>
-      <ScreenTitle
-        icon="pencil-outline"
-        title={`${languageName} deck options`}
-        subtitle={
-          <Text>
-            {deck.deck.cards.length} card
-            {deck.deck.cards.length === 1 ? '' : 's'}
-          </Text>
-        }
-      />
+      <View
+        style={{
+          marginBottom: 32,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 8,
+          marginLeft: 8,
+        }}
+      >
+        <Icon
+          name="card-multiple-outline"
+          color={theme.colors.onBackground}
+          size={24}
+        />
+        <Text style={{ fontSize: 16 }}>
+          The deck contains {deck.deck.cards.length} card
+          {deck.deck.cards.length === 1 ? '' : 's'}
+        </Text>
+      </View>
 
       <CustomSurface style={{ marginBottom: 8 }}>
         <ListItem

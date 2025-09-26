@@ -23,12 +23,12 @@ export const DeckStack = () => {
       />
       <Stack.Screen
         name="EditDeck"
-        options={{ title: `My cards` }}
+        options={{ title: `Edit ${languageName} deck` }}
         component={EditDeckScreen}
       />
       <Stack.Screen
         name="Notifications"
-        options={{ title: `Edit ${languageName} deck` }}
+        options={{ title: `Study reminders for ${languageName}` }}
         component={NotificationsScreen}
       />
     </Stack.Navigator>

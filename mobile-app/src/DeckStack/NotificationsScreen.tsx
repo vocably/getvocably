@@ -17,7 +17,6 @@ import { notificationsIdentifyUser } from '../notificationsIdentifyUser';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
-import { ScreenTitle } from '../ui/ScreenTitle';
 import { useCurrentLanguageName } from '../useCurrentLanguageName';
 import { NotificationsAllowed } from './notifications/NotificationsAllowed';
 import { NotificationsDenied } from './notifications/NotificationsDenied';
@@ -118,8 +117,6 @@ export const NotificationsScreen: FC<Props> = () => {
 
   return (
     <CustomScrollView>
-      <ScreenTitle icon="bell-outline" title="Study reminders" />
-
       {notificationsStatus === 'loading' && (
         <InlineLoader center={false}>Checking...</InlineLoader>
       )}

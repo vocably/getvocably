@@ -37,7 +37,7 @@ export const SettingsStack: FC = () => {
         <Stack.Screen
           options={{
             header: MainMenuHeader,
-            title: 'Settings',
+            title: 'Your account',
           }}
           name="AccountMenu"
           component={AccountScreen}
@@ -46,7 +46,7 @@ export const SettingsStack: FC = () => {
         <Stack.Screen
           options={{
             header: MainMenuHeader,
-            title: 'Settings',
+            title: 'Study settings',
           }}
           name="StudySettings"
           component={StudySettingsScreen}

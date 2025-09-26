@@ -9,7 +9,6 @@ import { useTranslationPreset } from './TranslationPreset/useTranslationPreset';
 import { CustomScrollView } from './ui/CustomScrollView';
 import { FormText } from './ui/FormText';
 import { ScreenLayout } from './ui/ScreenLayout';
-import { ScreenTitle } from './ui/ScreenTitle';
 
 type Props = {
   route: Route<string, any>;
@@ -84,7 +83,10 @@ export const FeedbackModal: FC<Props> = ({ navigation, route }) => {
             onPress={navigation.goBack}
             style={{ backgroundColor: 'transparent' }}
           />
-          <Appbar.Content style={{ alignItems: 'flex-start' }} title={''} />
+          <Appbar.Content
+            style={{ alignItems: 'flex-start' }}
+            title={'Feedback'}
+          />
           <Button
             disabled={text.trim().length === 0 || isSending}
             onPress={sendFeedback}
@@ -97,7 +99,6 @@ export const FeedbackModal: FC<Props> = ({ navigation, route }) => {
       }
       content={
         <CustomScrollView automaticallyAdjustKeyboardInsets={true}>
-          <ScreenTitle icon="message-text-outline" title="Provide feedback" />
           <View style={{ gap: 16, marginBottom: 16 }}>
             <Text>
               Missing any crucial features? Have questions or want to share your

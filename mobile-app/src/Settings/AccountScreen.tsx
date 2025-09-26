@@ -2,12 +2,12 @@ import { deleteUser, signOut } from '@aws-amplify/auth';
 import { FC, useCallback } from 'react';
 import { Alert, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { clearAll } from '../asyncAppStorage';
 import { useUserEmail } from '../auth/useUserEmail';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
-import { ScreenTitle } from '../ui/ScreenTitle';
 
 type Props = {};
 
@@ -34,13 +34,21 @@ export const AccountScreen: FC<Props> = () => {
 
   return (
     <CustomScrollView>
-      <View style={{ marginBottom: 32 }}>
-        <ScreenTitle
-          icon="account-circle-outline"
-          title="Your account"
-          style={{ marginBottom: 4 }}
-          subtitle={<Text>{userEmail}</Text>}
+      <View
+        style={{
+          marginBottom: 32,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 8,
+          marginLeft: 8,
+        }}
+      >
+        <Icon
+          name="account-circle-outline"
+          color={theme.colors.onBackground}
+          size={24}
         />
+        <Text style={{ fontSize: 16 }}>{userEmail}</Text>
       </View>
 
       <CustomSurface style={{ marginBottom: 16 }}>

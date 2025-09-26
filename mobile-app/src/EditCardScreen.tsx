@@ -12,7 +12,6 @@ import { Loader } from './loaders/Loader';
 import { TagsSelector } from './TagsSelector';
 import { CustomScrollView } from './ui/CustomScrollView';
 import { CustomSurface } from './ui/CustomSurface';
-import { ScreenTitle } from './ui/ScreenTitle';
 
 export type EditCardParams = {
   card: CardItem;
@@ -149,13 +148,15 @@ export const EditCardScreen: FC<Props> = ({ route, navigation }) => {
           onPress={() => navigation.goBack()}
           style={{ backgroundColor: 'transparent' }}
         />
-        <Appbar.Content title="" />
+        <Appbar.Content
+          style={{ alignItems: 'flex-start' }}
+          title="Edit card"
+        />
         <Button loading={isUpdating} disabled={isUpdating} onPress={onUpdate}>
           Save
         </Button>
       </Appbar.Header>
       <CustomScrollView automaticallyAdjustKeyboardInsets={true}>
-        <ScreenTitle icon="pencil" title="Edit card" />
         <View style={{ gap: 16 }}>
           <View
             style={{

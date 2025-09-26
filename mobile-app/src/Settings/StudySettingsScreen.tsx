@@ -7,7 +7,6 @@ import { getItem, setItem } from '../asyncAppStorage';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListSwitch } from '../ui/ListSwitch';
-import { ScreenTitle } from '../ui/ScreenTitle';
 import { useAsync } from '../useAsync';
 import { usePremium } from '../usePremium';
 import { usePresentPaywall } from '../usePresentPaywall';
@@ -57,8 +56,6 @@ export const StudySettingsScreen: FC<Props> = () => {
   const fontScale = Math.max(1, PixelRatio.getFontScale());
   return (
     <CustomScrollView>
-      <ScreenTitle icon="school-outline" title="Study settings" />
-
       <StudySteps style={{ marginBottom: 32 }} />
 
       <CustomSurface
