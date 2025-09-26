@@ -43,49 +43,6 @@ export const TipsScreen: FC<Props> = () => {
       }}
     >
       <CustomSurface style={{ marginBottom: 32 }}>
-        {Platform.OS === 'android' && (
-          <ListItem
-            order="first"
-            title="How to translate any selected text in any app on your mobile."
-            onPress={() => {
-              posthog.capture('tip-android-translate-clicked');
-              Linking.openURL(
-                `https://app.vocably.pro/page/android-translate/${languagePreset}`
-              );
-            }}
-            leftIcon="android"
-            rightIcon="menu-right"
-          ></ListItem>
-        )}
-        {Platform.OS === 'ios' && (
-          <ListItem
-            order="first"
-            title="Translate any word on any website with Vocably iOS Safari Extension."
-            onPress={() => {
-              {
-                posthog.capture('tip-ios-translate-clicked');
-                Linking.openURL(
-                  `https://app.vocably.pro/page/ios-extension/${languagePreset}`
-                );
-              }
-            }}
-            leftIcon="apple-safari"
-            rightIcon="menu-right"
-          ></ListItem>
-        )}
-        <Divider style={{ alignSelf: 'stretch' }} />
-        <ListItem
-          order="last"
-          leftIcon="laptop"
-          title="Are you using Chrome or Safari on your computer? Try the Vocably extension."
-          onPress={() => {
-            posthog.capture('tip-desktop-extension-clicked');
-            Linking.openURL(`https://vocably.pro`);
-          }}
-        ></ListItem>
-      </CustomSurface>
-
-      <CustomSurface style={{ marginBottom: 32 }}>
         <ListItem
           order="first"
           title="How to edit cards"
@@ -128,6 +85,49 @@ export const TipsScreen: FC<Props> = () => {
           }}
           leftIcon="chart-box-outline"
           rightIcon="menu-right"
+        ></ListItem>
+      </CustomSurface>
+
+      <CustomSurface style={{ marginBottom: 32 }}>
+        {Platform.OS === 'android' && (
+          <ListItem
+            order="first"
+            title="How to translate any selected text in any app on your mobile."
+            onPress={() => {
+              posthog.capture('tip-android-translate-clicked');
+              Linking.openURL(
+                `https://app.vocably.pro/page/android-translate/${languagePreset}`
+              );
+            }}
+            leftIcon="android"
+            rightIcon="menu-right"
+          ></ListItem>
+        )}
+        {Platform.OS === 'ios' && (
+          <ListItem
+            order="first"
+            title="Translate any word on any website with Vocably iOS Safari Extension."
+            onPress={() => {
+              {
+                posthog.capture('tip-ios-translate-clicked');
+                Linking.openURL(
+                  `https://app.vocably.pro/page/ios-extension/${languagePreset}`
+                );
+              }
+            }}
+            leftIcon="apple-safari"
+            rightIcon="menu-right"
+          ></ListItem>
+        )}
+        <Divider style={{ alignSelf: 'stretch' }} />
+        <ListItem
+          order="last"
+          leftIcon="laptop"
+          title="Are you using Chrome or Safari on your computer? Try the Vocably extension."
+          onPress={() => {
+            posthog.capture('tip-desktop-extension-clicked');
+            Linking.openURL(`https://vocably.pro`);
+          }}
         ></ListItem>
       </CustomSurface>
 
