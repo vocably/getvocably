@@ -6,7 +6,7 @@ import { ScrollView, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Button, Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { CardDefinition } from '../CardDefinition';
-import { PlaySound } from '../PlaySound';
+import { PlaySound, PlaySoundRef } from '../PlaySound';
 import { CardFront } from './Card/CardFront';
 import { Displayer, DisplayerRef } from './Displayer';
 import { PADDING_VERTICAL } from './StudyScreen';
@@ -34,11 +34,17 @@ export const MultiChoice: FC<Props> = ({
   const [correct, setCorrect] = useState<string>('');
   const [playSoundIconVisible, setPlaySoundIconVisible] = useState(false);
   const displayerRef = useRef<DisplayerRef>(null);
+  const playSoundRef = useRef<PlaySoundRef | null>(null);
   const [correctVisible, setCorrectVisible] = useState(false);
 
   const answers = useMemo(() => shuffle([...alternatives, card]), []);
 
-  const closeAndGrade = (score: SrsScore) => {
+  const closeAndGrade = async (score: SrsScore) => {
+    if (autoPlay && playSoundRef.current) {
+      setPlaySoundIconVisible(true);
+      await playSoundRef.current.play().catch(() => null);
+    }
+
     if (displayerRef.current) {
       displayerRef.current.hide().then(() => {
         onGrade(score);
@@ -195,6 +201,7 @@ export const MultiChoice: FC<Props> = ({
                     {card.id === answerCard.id && direction === 'back' && (
                       <PlaySound
                         size={24} // size is needed for the translateY
+                        ref={(el) => (playSoundRef.current = el)}
                         style={{
                           position: 'absolute',
                           left: 0,
