@@ -11,14 +11,22 @@ export const HowToViewStudyStatisticsScreen: FC<Props> = () => {
   const theme = useTheme();
   const navigation = useNavigation();
 
+  const navigateToStudySettings = async () => {
+    navigation.navigate('Settings');
+    setTimeout(() => {
+      navigation.navigate('StudySettings');
+    }, 200);
+  };
+
   return (
     <CustomScrollView>
       <View style={{ gap: 8, marginBottom: 32, paddingHorizontal: 16 }}>
         <Text style={{ fontSize: 18 }}>
-          The <Text style={{ fontWeight: 'bold' }}>Study Plan</Text> provides an
-          overview of the cards scheduled for today, upcoming days, and those
-          that have expired and need review. This helps you stay on track, catch
-          up on overdue cards, and approach your learning more strategically.
+          The <Text style={{ fontWeight: 'bold' }}>Study Plan</Text> is enabled
+          by default and provides an overview of the cards scheduled for today,
+          upcoming days, and those that have expired and need review. This helps
+          you stay on track, catch up on overdue cards, and approach your
+          learning more strategically.
         </Text>
 
         <Text style={{ fontSize: 18 }}>
@@ -39,7 +47,7 @@ export const HowToViewStudyStatisticsScreen: FC<Props> = () => {
           is not available when cards for study are selected randomly. To
           disable the random card selection, go to{' '}
           <Text
-            onPress={() => navigation.navigate('StudySettings')}
+            onPress={navigateToStudySettings}
             style={{ color: theme.colors.primary }}
           >
             <Icon name={'school-outline'} size={24} />

@@ -31,7 +31,7 @@ type Props = {
   savingTagsInProgress?: boolean;
   onTagsChange?: (tags: TagItem[]) => Promise<any>;
   allowCopy?: boolean;
-  aiButton: 'dimmed' | 'bright' | 'none';
+  aiButton?: 'dimmed' | 'bright' | 'none';
 };
 
 const textTransform = [{ translateY: Platform.OS === 'android' ? 6 : 3 }];

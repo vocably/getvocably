@@ -116,13 +116,12 @@ type Section = {
   title: string;
   data: CardItem[];
   all: CardItem[];
-  isFirst: boolean;
   id: string;
 };
 
 const STATS_VIEW_ENABLED_KEY = 'isStatsViewEnabled';
 export const getStatsViewEnabled = () =>
-  AsyncStorage.getItem(STATS_VIEW_ENABLED_KEY).then((res) => res === 'true');
+  AsyncStorage.getItem(STATS_VIEW_ENABLED_KEY).then((res) => res !== 'false');
 
 const storeStatsViewEnabled = (isEnabled: boolean) =>
   AsyncStorage.setItem(STATS_VIEW_ENABLED_KEY, isEnabled ? 'true' : 'false');
@@ -231,7 +230,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
 
   const plan = useMemo(() => studyPlan(new Date(), cards), [cards]);
   const [collapsedSections, setCollapsedSections] = useState<string[]>([
-    'today',
     'expired',
     'notStarted',
     'tomorrow',
@@ -244,42 +242,33 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
         title: 'Planned for today',
         data: collapsedSections.includes('today') ? [] : plan.today,
         all: plan.today,
-        isFirst: false,
         id: 'today',
       },
       {
         title: 'To catch up',
         data: collapsedSections.includes('expired') ? [] : plan.expired,
         all: plan.expired,
-        isFirst: false,
         id: 'expired',
       },
       {
         title: 'Never studied',
         data: collapsedSections.includes('notStarted') ? [] : plan.notStarted,
         all: plan.notStarted,
-        isFirst: false,
         id: 'notStarted',
       },
       {
         title: 'Tomorrow',
         data: collapsedSections.includes('tomorrow') ? [] : plan.tomorrow,
         all: plan.tomorrow,
-        isFirst: false,
         id: 'tomorrow',
       },
       {
         title: 'Planned',
         data: collapsedSections.includes('future') ? [] : plan.future,
         all: plan.future,
-        isFirst: false,
         id: 'future',
       },
     ].filter((item) => item.all.length > 0);
-
-    if (result.length > 0) {
-      result[0].isFirst = true;
-    }
 
     return result;
   }, [plan, collapsedSections]);
