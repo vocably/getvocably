@@ -1,7 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Divider, Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DeleteDeckButton } from './DeleteDeckButton';
 import { useSelectedDeck } from './languageDeck/useSelectedDeck';
@@ -43,10 +43,24 @@ export const EditDeckScreen: FC<Props> = ({ navigation }) => {
 
       <CustomSurface style={{ marginBottom: 8 }}>
         <ListItem
+          title="Study settings"
+          onPress={() => {
+            navigation.navigate('Settings');
+            setTimeout(() => {
+              navigation.navigate('StudySettings');
+            }, 200);
+          }}
+          leftIcon="school-outline"
+          rightIcon="menu-right"
+          order="first"
+        ></ListItem>
+        <Divider />
+        <ListItem
           title="Study reminders"
           onPress={() => navigation.navigate('Notifications')}
           leftIcon="bell-outline"
           rightIcon="menu-right"
+          order="last"
         ></ListItem>
       </CustomSurface>
       <View style={{ paddingHorizontal: 16, marginBottom: 32, gap: 8 }}>
