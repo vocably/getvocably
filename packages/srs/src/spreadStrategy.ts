@@ -11,14 +11,19 @@ export const spreadStrategy = (
   cardState: SrsItemState | undefined,
   strategy: StudyStrategy
 ): ReturnValue => {
-  const state = cardState ?? {
+  let state = cardState ?? {
     s: strategy[0].step,
     f: 0,
   };
 
   let currentStepIndex = strategy.findIndex((step) => step.step === state.s);
+
   if (currentStepIndex === -1) {
     currentStepIndex = 0;
+    state = {
+      s: strategy[currentStepIndex].step,
+      f: 0,
+    };
   }
 
   let nextStepIndex = currentStepIndex + 1;
