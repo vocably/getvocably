@@ -4,12 +4,12 @@ index 9557fdb..da35999 100644
 +++ b/node_modules/react-native-share-menu/android/build.gradle
 @@ -1,7 +1,7 @@
  apply plugin: 'com.android.library'
- 
+
  android {
 -    compileSdkVersion 29
 +    compileSdkVersion 30
      buildToolsVersion "29.0.2"
- 
+
      defaultConfig {
 diff --git a/node_modules/react-native-share-menu/android/build/.transforms/01334f1c5c97950447ed7767618c1402/results.bin b/node_modules/react-native-share-menu/android/build/.transforms/01334f1c5c97950447ed7767618c1402/results.bin
 new file mode 100644
@@ -256,7 +256,7 @@ index 09abd7b..4f5b735 100644
 @@ -58,7 +58,18 @@ public class ShareMenuModule extends ReactContextBaseJavaModule implements Activ
      WritableMap data = Arguments.createMap();
      data.putString(MIME_TYPE_KEY, type);
- 
+
 -    if (Intent.ACTION_SEND.equals(action)) {
 +    if (Intent.ACTION_PROCESS_TEXT.equals(action)) {
 +      if ("text/plain".equals(type)) {
@@ -276,7 +276,7 @@ index 09abd7b..4f5b735 100644
 @@ -92,19 +103,6 @@ public class ShareMenuModule extends ReactContextBaseJavaModule implements Activ
        return;
      }
- 
+
 -    // If this isn't the root activity then make sure it is
 -    if (!currentActivity.isTaskRoot()) {
 -      Intent newIntent = new Intent(currentActivity.getIntent());
@@ -291,16 +291,16 @@ index 09abd7b..4f5b735 100644
 -    }
 -
      Intent intent = currentActivity.getIntent();
-     
+
      ReadableMap shared = extractShared(intent);
 @@ -136,6 +134,7 @@ public class ShareMenuModule extends ReactContextBaseJavaModule implements Activ
- 
+
      if ("text/plain".equals(type)) {
        intent.removeExtra(Intent.EXTRA_TEXT);
 +      intent.removeExtra(Intent.EXTRA_PROCESS_TEXT);
        return;
      }
- 
+
 @@ -163,4 +162,13 @@ public class ShareMenuModule extends ReactContextBaseJavaModule implements Activ
      // Update intent in case the user calls `getSharedText` again
      currentActivity.setIntent(intent);
@@ -322,8 +322,9 @@ index f42bce6..2eecb56 100644
 @@ -13,7 +13,7 @@ class ReactShareViewController: ShareViewController, RCTBridgeDelegate, ReactSha
    func sourceURL(for bridge: RCTBridge!) -> URL! {
  #if DEBUG
-     return RCTBundleURLProvider.sharedSettings()?
+-    return RCTBundleURLProvider.sharedSettings()?
 -      .jsBundleURL(forBundleRoot: "index.share", fallbackResource: nil)
++    return RCTBundleURLProvider.sharedSettings()
 +      .jsBundleURL(forBundleRoot: "index")
  #else
      return Bundle.main.url(forResource: "main", withExtension: "jsbundle")
@@ -336,7 +337,7 @@ index f42bce6..2eecb56 100644
 +      moduleName: "VocablyProShare",
        initialProperties: nil
      )
- 
+
 -    rootView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
 -    backgroundColorSetup: if let backgroundColorConfig = Bundle.main.infoDictionary?[REACT_SHARE_VIEW_BACKGROUND_COLOR_KEY] as? [String:Any] {
 -      if let transparent = backgroundColorConfig[COLOR_TRANSPARENT_KEY] as? Bool, transparent {
@@ -352,6 +353,6 @@ index f42bce6..2eecb56 100644
 -      rootView.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
 -    }
 +    rootView.backgroundColor = UIColor.systemBackground
- 
+
      self.view = rootView
- 
+
