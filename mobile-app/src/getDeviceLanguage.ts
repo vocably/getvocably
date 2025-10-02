@@ -1,12 +1,9 @@
 import { GoogleLanguage, isGoogleLanguage } from '@vocably/model';
-import { NativeModules, Platform } from 'react-native';
+import * as RNLocalize from 'react-native-localize';
 
 export const getDeviceLanguage = (): GoogleLanguage | undefined => {
-  const deviceLocale =
-    Platform.OS === 'ios'
-      ? NativeModules.SettingsManager.settings.AppleLanguages[0] ||
-        NativeModules.SettingsManager.settings.AppleLocale
-      : NativeModules.I18nManager.localeIdentifier;
+  const [first] = RNLocalize.getLocales();
+  const deviceLocale = first?.languageTag ?? 'en-US';
 
   const deviceLanguage = deviceLocale.substring(0, 2);
 
