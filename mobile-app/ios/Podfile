@@ -48,26 +48,3 @@ target 'VocablyPro' do
   end
 end
 
-target 'VocablyProShare' do
-  use_react_native!
-
-  pod 'RNShareMenu', :path => '../node_modules/react-native-share-menu'
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
-  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
-  pod 'RNReactNativeSharedGroupPreferences', :path => '../node_modules/react-native-shared-group-preferences'
-  pod 'RNScreens', :path => '../node_modules/react-native-screens'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-  pod 'RNSound', :path => '../node_modules/react-native-sound'
-  pod 'react-native-get-random-values', :path => '../node_modules/react-native-get-random-values'
-  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
-  pod 'AmplifyRTNPushNotification', :path => '../node_modules/@aws-amplify/rtn-push-notification'
-  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
-  pod 'RNPurchases', :path => '../node_modules/react-native-purchases'
-  pod 'RNPaywalls', :path => '../node_modules/react-native-purchases-ui'
-  pod 'RNCClipboard', :path => '../node_modules/@react-native-clipboard/clipboard'
-  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
-  pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
-
-  # Manually link packages here to keep your extension bundle size minimal
-end

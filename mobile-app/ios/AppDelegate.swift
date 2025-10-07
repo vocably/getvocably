@@ -3,7 +3,6 @@ import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
 import AmplifyRTNPushNotification
-import RNShareMenu
 
 @main
 class AppDelegate: RCTAppDelegate {
@@ -18,9 +17,9 @@ class AppDelegate: RCTAppDelegate {
   override func application(_ app: UIApplication,
                               open url: URL,
                               options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    let handledByShareMenu = ShareMenuManager.application(app, open: url, options: options)
+
     let handledByLinkingManager = RCTLinkingManager.application(app, open: url, options: options)
-    return handledByShareMenu || handledByLinkingManager
+    return handledByLinkingManager
   }
 
   override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
