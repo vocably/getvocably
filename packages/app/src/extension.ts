@@ -3,8 +3,11 @@ import { environment } from './environments/environment';
 
 export const canExtensionBeInstalled = isIOSSafari || isMacSafari || isChrome;
 
+const iosSafariExtensionId =
+  localStorage.getItem('ios-extension-id') ?? environment.iosSafariExtensionId;
+
 export const extensionId = isIOSSafari
-  ? environment.iosSafariExtensionId
+  ? iosSafariExtensionId
   : isMacSafari
   ? environment.safariExtensionId
   : environment.chromeExtensionId;
