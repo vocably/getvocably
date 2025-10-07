@@ -7,13 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* VocablyProTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* VocablyProTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-VocablyPro.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-VocablyPro.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		155278D97C0F3A647EA1325B /* libPods-VocablyProShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6502FE66FD4E7EA2BA7FF0 /* libPods-VocablyProShare.a */; };
 		3231777E2BDD2A4D00F1CEB6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3231777D2BDD2A4D00F1CEB6 /* PrivacyInfo.xcprivacy */; };
+		323ABBD12E900D1500E86E85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323ABBD02E900D1500E86E85 /* AppDelegate.swift */; };
 		3282EC552BA1A1D100B37D07 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282EC542BA1A1D100B37D07 /* SafariWebExtensionHandler.swift */; };
 		3282EC582BA1A1D100B37D07 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 3282EC572BA1A1D100B37D07 /* _locales */; };
 		3282EC5A2BA1A1D100B37D07 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 3282EC592BA1A1D100B37D07 /* images */; };
@@ -22,36 +19,16 @@
 		32AEC3AE2DDF169F0028CB88 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32AEC3AD2DDF169F0028CB88 /* StoreKit.framework */; };
 		32C3B8372BA65FB5009AC5D1 /* service-worker.js in Resources */ = {isa = PBXBuildFile; fileRef = 32C3B8352BA65FB5009AC5D1 /* service-worker.js */; };
 		32C3B8382BA65FB5009AC5D1 /* content-script.js in Resources */ = {isa = PBXBuildFile; fileRef = 32C3B8362BA65FB5009AC5D1 /* content-script.js */; };
-		7699B88040F8A987B510C191 /* libPods-VocablyPro-VocablyProTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-VocablyPro-VocablyProTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		BF7172472BE3A29C0096F153 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = BF7172462BE3A29C0096F153 /* Base */; };
-		BF71724B2BE3A29C0096F153 /* VocablyProShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BF7172412BE3A29C0096F153 /* VocablyProShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		BF7172502BE3A3360096F153 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF71724F2BE3A3360096F153 /* ShareViewController.swift */; };
-		BF7172562BE3B03B0096F153 /* ReactShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7172552BE3B03B0096F153 /* ReactShareViewController.swift */; };
-		BFFE78A62C196EBD007B2C13 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFFE78A52C196EBD007B2C13 /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = VocablyPro;
-		};
 		3282EC682BA1A1D100B37D07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3282EC512BA1A1D100B37D07;
 			remoteInfo = "Vocably for Safari";
-		};
-		BF7172492BE3A29C0096F153 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BF7172402BE3A29C0096F153;
-			remoteInfo = VocablyProShare;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -63,7 +40,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				3282EC6A2BA1A1D100B37D07 /* Vocably for Safari.appex in Embed Foundation Extensions */,
-				BF71724B2BE3A29C0096F153 /* VocablyProShare.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,17 +47,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* VocablyProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VocablyProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* VocablyProTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VocablyProTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* VocablyPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VocablyPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = VocablyPro/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = VocablyPro/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VocablyPro/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VocablyPro/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = VocablyPro/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-VocablyPro-VocablyProTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VocablyPro-VocablyProTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3231777D2BDD2A4D00F1CEB6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		323ABBD02E900D1500E86E85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		323ABBD22E900D2700E86E85 /* VocablyPro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VocablyPro-Bridging-Header.h"; sourceTree = "<group>"; };
 		3282EC522BA1A1D100B37D07 /* Vocably for Safari.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Vocably for Safari.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3282EC542BA1A1D100B37D07 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		3282EC572BA1A1D100B37D07 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
@@ -95,19 +66,10 @@
 		32C3B8362BA65FB5009AC5D1 /* content-script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "content-script.js"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-VocablyPro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyPro.debug.xcconfig"; path = "Target Support Files/Pods-VocablyPro/Pods-VocablyPro.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-VocablyPro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyPro.release.xcconfig"; path = "Target Support Files/Pods-VocablyPro/Pods-VocablyPro.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-VocablyPro-VocablyProTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyPro-VocablyProTests.debug.xcconfig"; path = "Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-VocablyPro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VocablyPro.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		64F5115E573F08A5888A3442 /* Pods-VocablyProShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyProShare.release.xcconfig"; path = "Target Support Files/Pods-VocablyProShare/Pods-VocablyProShare.release.xcconfig"; sourceTree = "<group>"; };
 		6FAD930B4CD0DDA75665E76B /* Pods-VocablyProShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyProShare.debug.xcconfig"; path = "Target Support Files/Pods-VocablyProShare/Pods-VocablyProShare.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = VocablyPro/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-VocablyPro-VocablyProTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VocablyPro-VocablyProTests.release.xcconfig"; path = "Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests.release.xcconfig"; sourceTree = "<group>"; };
-		BF7172412BE3A29C0096F153 /* VocablyProShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VocablyProShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF7172462BE3A29C0096F153 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		BF7172482BE3A29C0096F153 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BF71724F2BE3A3360096F153 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ShareViewController.swift"; sourceTree = "<group>"; };
-		BF7172512BE3A4080096F153 /* VocablyProShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VocablyProShare.entitlements; sourceTree = "<group>"; };
-		BF7172522BE3AFBC0096F153 /* VocablyProShare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VocablyProShare-Bridging-Header.h"; sourceTree = "<group>"; };
-		BF7172552BE3B03B0096F153 /* ReactShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactShareViewController.swift; path = "../../node_modules/react-native-share-menu/ios/ReactShareViewController.swift"; sourceTree = "<group>"; };
 		BF7172582BE4D8F10096F153 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
 		BF7172592BE4D8F10096F153 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		BF71725A2BE4D8F10096F153 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -127,20 +89,11 @@
 		BF7172682BE4D8F10096F153 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		BF7172692BE4D8F10096F153 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		BF71726A2BE4D8F10096F153 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		BFFE78A52C196EBD007B2C13 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE6502FE66FD4E7EA2BA7FF0 /* libPods-VocablyProShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VocablyProShare.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00E356EB1AD99517003FC87E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7699B88040F8A987B510C191 /* libPods-VocablyPro-VocablyProTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,45 +110,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF71723E2BE3A29C0096F153 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				155278D97C0F3A647EA1325B /* libPods-VocablyProShare.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* VocablyProTests */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F21AD99517003FC87E /* VocablyProTests.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
-			);
-			path = VocablyProTests;
-			sourceTree = "<group>";
-		};
-		00E356F01AD99517003FC87E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F11AD99517003FC87E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* VocablyPro */ = {
 			isa = PBXGroup;
 			children = (
+				323ABBD02E900D1500E86E85 /* AppDelegate.swift */,
 				3282EC6F2BA2696A00B37D07 /* VocablyPro.entitlements */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
 				3231777D2BDD2A4D00F1CEB6 /* PrivacyInfo.xcprivacy */,
+				323ABBD22E900D2700E86E85 /* VocablyPro-Bridging-Header.h */,
 			);
 			name = VocablyPro;
 			sourceTree = "<group>";
@@ -206,7 +133,6 @@
 				32AEC3AD2DDF169F0028CB88 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-VocablyPro.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-VocablyPro-VocablyProTests.a */,
 				EE6502FE66FD4E7EA2BA7FF0 /* libPods-VocablyProShare.a */,
 			);
 			name = Frameworks;
@@ -248,9 +174,7 @@
 				BF71726B2BE4D8F10096F153 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* VocablyPro */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* VocablyProTests */,
 				3282EC532BA1A1D100B37D07 /* Vocably for Safari */,
-				BF7172422BE3A29C0096F153 /* VocablyProShare */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -264,9 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* VocablyPro.app */,
-				00E356EE1AD99517003FC87E /* VocablyProTests.xctest */,
 				3282EC522BA1A1D100B37D07 /* Vocably for Safari.appex */,
-				BF7172412BE3A29C0096F153 /* VocablyProShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -276,26 +198,10 @@
 			children = (
 				3B4392A12AC88292D35C810B /* Pods-VocablyPro.debug.xcconfig */,
 				5709B34CF0A7D63546082F79 /* Pods-VocablyPro.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-VocablyPro-VocablyProTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-VocablyPro-VocablyProTests.release.xcconfig */,
 				6FAD930B4CD0DDA75665E76B /* Pods-VocablyProShare.debug.xcconfig */,
 				64F5115E573F08A5888A3442 /* Pods-VocablyProShare.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		BF7172422BE3A29C0096F153 /* VocablyProShare */ = {
-			isa = PBXGroup;
-			children = (
-				BF7172552BE3B03B0096F153 /* ReactShareViewController.swift */,
-				BF7172512BE3A4080096F153 /* VocablyProShare.entitlements */,
-				BF71724F2BE3A3360096F153 /* ShareViewController.swift */,
-				BF7172452BE3A29C0096F153 /* MainInterface.storyboard */,
-				BF7172482BE3A29C0096F153 /* Info.plist */,
-				BF7172522BE3AFBC0096F153 /* VocablyProShare-Bridging-Header.h */,
-				BFFE78A52C196EBD007B2C13 /* Media.xcassets */,
-			);
-			path = VocablyProShare;
 			sourceTree = "<group>";
 		};
 		BF71726B2BE4D8F10096F153 /* Fonts */ = {
@@ -328,27 +234,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* VocablyProTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "VocablyProTests" */;
-			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
-				00E356EA1AD99517003FC87E /* Sources */,
-				00E356EB1AD99517003FC87E /* Frameworks */,
-				00E356EC1AD99517003FC87E /* Resources */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
-				2A2D49DC3FD8A66578E43998 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				00E356F51AD99517003FC87E /* PBXTargetDependency */,
-			);
-			name = VocablyProTests;
-			productName = VocablyProTests;
-			productReference = 00E356EE1AD99517003FC87E /* VocablyProTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		13B07F861A680F5B00A75B9A /* VocablyPro */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VocablyPro" */;
@@ -367,7 +252,6 @@
 			);
 			dependencies = (
 				3282EC692BA1A1D100B37D07 /* PBXTargetDependency */,
-				BF71724A2BE3A29C0096F153 /* PBXTargetDependency */,
 			);
 			name = VocablyPro;
 			productName = VocablyPro;
@@ -391,26 +275,6 @@
 			productReference = 3282EC522BA1A1D100B37D07 /* Vocably for Safari.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		BF7172402BE3A29C0096F153 /* VocablyProShare */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BF71724E2BE3A29C0096F153 /* Build configuration list for PBXNativeTarget "VocablyProShare" */;
-			buildPhases = (
-				F003DE2007E9BFFE831AF12A /* [CP] Check Pods Manifest.lock */,
-				BF71723D2BE3A29C0096F153 /* Sources */,
-				BF71723E2BE3A29C0096F153 /* Frameworks */,
-				BF71723F2BE3A29C0096F153 /* Resources */,
-				BF7172572BE3B0D50096F153 /* Bundle React Native code and images */,
-				EB9A7BF2AC00D54CF07543C1 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = VocablyProShare;
-			productName = VocablyProShare;
-			productReference = BF7172412BE3A29C0096F153 /* VocablyProShare.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -420,19 +284,11 @@
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1640;
 					};
 					3282EC512BA1A1D100B37D07 = {
 						CreatedOnToolsVersion = 15.3;
-					};
-					BF7172402BE3A29C0096F153 = {
-						CreatedOnToolsVersion = 15.3;
-						LastSwiftMigration = 1530;
 					};
 				};
 			};
@@ -450,21 +306,12 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* VocablyPro */,
-				00E356ED1AD99517003FC87E /* VocablyProTests */,
 				3282EC512BA1A1D100B37D07 /* Vocably for Safari */,
-				BF7172402BE3A29C0096F153 /* VocablyProShare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		00E356EC1AD99517003FC87E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -487,15 +334,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF71723F2BE3A29C0096F153 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFE78A62C196EBD007B2C13 /* Media.xcassets in Resources */,
-				BF7172472BE3A29C0096F153 /* Base in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -513,24 +351,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT \\\"/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode.sh $REACT_NATIVE_XCODE\\\"\"\n";
-		};
-		2A2D49DC3FD8A66578E43998 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT \\\"/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode.sh $REACT_NATIVE_XCODE\\\"\"\n";
 		};
 		33F299A4CB9982BA7460643C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -562,48 +383,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode-debug-files.sh\n";
-		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VocablyPro-VocablyProTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BF7172572BE3B0D50096F153 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/xcode.env.local",
-			);
-			name = "Bundle React Native code and images";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -644,79 +423,14 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VocablyPro/Pods-VocablyPro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EB9A7BF2AC00D54CF07543C1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyProShare/Pods-VocablyProShare-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyProShare/Pods-VocablyProShare-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VocablyProShare/Pods-VocablyProShare-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F003DE2007E9BFFE831AF12A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VocablyProShare-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VocablyPro-VocablyProTests/Pods-VocablyPro-VocablyProTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		00E356EA1AD99517003FC87E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00E356F31AD99517003FC87E /* VocablyProTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				323ABBD12E900D1500E86E85 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,109 +442,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BF71723D2BE3A29C0096F153 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BF7172562BE3B03B0096F153 /* ReactShareViewController.swift in Sources */,
-				BF7172502BE3A3360096F153 /* ShareViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* VocablyPro */;
-			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-		};
 		3282EC692BA1A1D100B37D07 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3282EC512BA1A1D100B37D07 /* Vocably for Safari */;
 			targetProxy = 3282EC682BA1A1D100B37D07 /* PBXContainerItemProxy */;
 		};
-		BF71724A2BE3A29C0096F153 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BF7172402BE3A29C0096F153 /* VocablyProShare */;
-			targetProxy = BF7172492BE3A29C0096F153 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		BF7172452BE3A29C0096F153 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BF7172462BE3A29C0096F153 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		00E356F61AD99517003FC87E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-VocablyPro-VocablyProTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = VocablyProTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = pro.vocably.app;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VocablyPro.app/VocablyPro";
-			};
-			name = Debug;
-		};
-		00E356F71AD99517003FC87E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-VocablyPro-VocablyProTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = VocablyProTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-					"$(inherited)",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = pro.vocably.app;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VocablyPro.app/VocablyPro";
-			};
-			name = Release;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-VocablyPro.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VocablyPro/VocablyPro.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 170;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
 				ENABLE_BITCODE = NO;
@@ -852,6 +484,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "VocablyPro-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -863,13 +496,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-VocablyPro.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VocablyPro/VocablyPro.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 170;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
 				INFOPLIST_FILE = VocablyPro/Info.plist;
@@ -890,6 +522,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "VocablyPro-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -909,7 +542,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Vocably for Safari/Vocably for Safari.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 170;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
@@ -919,7 +552,7 @@
 				INFOPLIST_FILE = "Vocably for Safari/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Vocably for Safari";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -960,7 +593,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 167;
+				CURRENT_PROJECT_VERSION = 170;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
@@ -970,7 +603,7 @@
 				INFOPLIST_FILE = "Vocably for Safari/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Vocably for Safari";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -999,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1026,6 +660,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -1044,7 +679,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -1063,6 +700,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1070,6 +708,7 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -1078,6 +717,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1105,6 +745,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -1116,7 +757,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -1134,6 +777,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1146,121 +790,9 @@
 			};
 			name = Release;
 		};
-		BF71724C2BE3A29C0096F153 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6FAD930B4CD0DDA75665E76B /* Pods-VocablyProShare.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = VocablyProShare/VocablyProShare.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 167;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VocablyProShare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Translate with Vocably";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.23;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = pro.vocably.app.VocablyProShare;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore pro.vocably.app.VocablyProShare";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VocablyProShare/VocablyProShare-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		BF71724D2BE3A29C0096F153 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64F5115E573F08A5888A3442 /* Pods-VocablyProShare.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = VocablyProShare/VocablyProShare.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 167;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 789D8NRAM6;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VocablyProShare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Translate with Vocably";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.23;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = pro.vocably.app.VocablyProShare;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore pro.vocably.app.VocablyProShare";
-				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "VocablyProShare/VocablyProShare-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "VocablyProTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				00E356F61AD99517003FC87E /* Debug */,
-				00E356F71AD99517003FC87E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "VocablyPro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1284,15 +816,6 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BF71724E2BE3A29C0096F153 /* Build configuration list for PBXNativeTarget "VocablyProShare" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BF71724C2BE3A29C0096F153 /* Debug */,
-				BF71724D2BE3A29C0096F153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
