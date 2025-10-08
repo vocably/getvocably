@@ -4,7 +4,7 @@ import { shuffle } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { Button, Switch, Text, useTheme } from 'react-native-paper';
+import { Button, Text, useTheme } from 'react-native-paper';
 import Sortable, {
   SortableGridDragEndCallback,
   SortableGridRenderItem,
@@ -13,9 +13,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { defaultStudyFlow, getDefaultValues } from '../defaultStudyFlow';
 import { useSelectedDeck } from '../languageDeck/useSelectedDeck';
 import { isSuitableForArrangingByLetters } from '../study/isSuitableForArrangingByLetters';
+import { CustomSurface } from '../ui/CustomSurface';
 import { usePremium } from '../usePremium';
 import { usePresentPaywall } from '../usePresentPaywall';
 import { UserMetadataContext } from '../UserMetadataContainer';
+import { StudyStepSwitch } from './StudyStepSwitch';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -81,12 +83,11 @@ export const StudySteps: FC<Props> = ({ style }) => {
       const isEnabled = item.enabled && (!needsPremium || isPremium);
 
       return (
-        <View
+        <CustomSurface
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             gap: 8,
-            backgroundColor: theme.colors.elevation.level4,
             paddingHorizontal: 8,
             paddingVertical: 12,
             borderRadius: 8,
@@ -113,9 +114,10 @@ export const StudySteps: FC<Props> = ({ style }) => {
                 alignItems: 'center',
               }}
             >
-              <Switch
+              <StudyStepSwitch
                 value={isEnabled}
                 disabled={needsPremium && !isPremium}
+                readonly={!changeIsEnabled}
                 onValueChange={toggleStep(item.id)}
               />
               <View
@@ -173,7 +175,7 @@ export const StudySteps: FC<Props> = ({ style }) => {
               </View>
             )}
           </View>
-        </View>
+        </CustomSurface>
       );
     },
     [isPremium, presentPaywall]
@@ -205,6 +207,7 @@ export const StudySteps: FC<Props> = ({ style }) => {
         columns={1}
         data={studyFlow}
         renderItem={renderItem}
+        keyExtractor={(item) => item.id}
         rowGap={8}
         customHandle={true}
         onDragEnd={onDragEnd}
