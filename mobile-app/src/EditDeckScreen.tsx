@@ -45,10 +45,9 @@ export const EditDeckScreen: FC<Props> = ({ navigation }) => {
         <ListItem
           title="Study settings"
           onPress={() => {
-            navigation.navigate('Settings');
-            setTimeout(() => {
-              navigation.navigate('StudySettings');
-            }, 200);
+            navigation.navigate('Settings', {
+              screen: 'StudySettings',
+            });
           }}
           leftIcon="school-outline"
           rightIcon="menu-right"

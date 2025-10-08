@@ -48,6 +48,12 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
     setCustomerInfoRefreshing(false);
   };
 
+  const goToStudyReminders = () => {
+    navigation.navigate('DeckScreen', {
+      screen: 'Notifications',
+    });
+  };
+
   // @ts-ignore
   return (
     <CustomScrollView
@@ -86,7 +92,7 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
             <ListItem
               leftIcon="bell-outline"
               title="Study reminders"
-              onPress={() => navigation.navigate('Notifications')}
+              onPress={goToStudyReminders}
             />
           </CustomSurface>
           <View style={{ paddingHorizontal: 16, marginBottom: 32, gap: 8 }}>
