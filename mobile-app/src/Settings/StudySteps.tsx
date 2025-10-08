@@ -92,7 +92,6 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
             gap: 8,
             paddingHorizontal: 8,
             paddingVertical: 12,
-            borderRadius: 8,
           }}
         >
           <Sortable.Handle

@@ -154,6 +154,7 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
     fontWeight: 'bold',
     width: 32 * fontScale,
     textAlign: 'center',
+    color: theme.colors.secondary,
   };
 
   const response: Array<number | false> = lettersRef.current.map((_, index) => {
@@ -229,7 +230,9 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
                   letterStyle,
                   {
                     opacity: indexOrFalse !== false ? 1 : 0,
-                    color: isCorrect ? theme.colors.onPrimary : undefined,
+                    color: isCorrect
+                      ? theme.colors.onPrimary
+                      : theme.colors.secondary,
                   },
                 ]}
               >
@@ -241,7 +244,7 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
           ))}
         </Animated.View>
         <Surface
-          elevation={4}
+          elevation={2}
           mode="flat"
           style={{
             alignSelf: 'center',
@@ -263,7 +266,9 @@ export const ArrangeByLetters: FC<Props> = ({ card, onGrade }) => {
               style={[
                 letterContainerStyle,
                 {
+                  borderColor: theme.colors.onSurface,
                   opacity: indexOrFalse !== false ? 1 : 0,
+                  backgroundColor: theme.colors.elevation.level4,
                 },
               ]}
               onPress={() => {
