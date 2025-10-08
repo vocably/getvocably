@@ -6,7 +6,6 @@ import { FC, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Keyboard,
-  Platform,
   ScrollView,
   TouchableWithoutFeedback,
   View,
@@ -334,7 +333,7 @@ export const LookUpScreen: FC<Props> = ({
                               padding: 4,
                               transform: [
                                 {
-                                  translateY: Platform.OS === 'android' ? 7 : 5,
+                                  translateY: 7,
                                 },
                               ],
                             }}
@@ -381,7 +380,7 @@ export const LookUpScreen: FC<Props> = ({
                               padding: 4,
                               transform: [
                                 {
-                                  translateY: Platform.OS === 'android' ? 7 : 5,
+                                  translateY: 7,
                                 },
                               ],
                             }}

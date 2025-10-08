@@ -1,6 +1,6 @@
 import { CardItem, isGoogleTTSLanguage } from '@vocably/model';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { PixelRatio, Platform, View } from 'react-native';
+import { PixelRatio, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { CardExample } from '../../CardExample';
 import { PlaySound } from '../../PlaySound';
@@ -64,10 +64,7 @@ export const CardFront: FC<Props> = ({ card, autoPlay }) => {
                 style={{
                   transform: [
                     {
-                      translateY:
-                        Platform.OS === 'android'
-                          ? 4 * fontScale
-                          : -1.3 * Math.ceil(fontScale) * Math.floor(fontScale),
+                      translateY: 4 * fontScale,
                     },
                   ],
                 }}

@@ -4,7 +4,6 @@ import { Card, isGoogleTTSLanguage, TagItem } from '@vocably/model';
 import React, { FC, useState } from 'react';
 import {
   PixelRatio,
-  Platform,
   Pressable,
   StyleProp,
   View,
@@ -34,7 +33,7 @@ type Props = {
   aiButton?: 'dimmed' | 'bright' | 'none';
 };
 
-const textTransform = [{ translateY: Platform.OS === 'android' ? 6 : 3 }];
+const textTransform = [{ translateY: 6 }];
 const lineHeight = 24;
 
 export const CardListItem: FC<Props> = ({
@@ -82,9 +81,7 @@ export const CardListItem: FC<Props> = ({
                   language={card.language}
                   size={22}
                   style={{
-                    transform: [
-                      { translateY: Platform.OS === 'android' ? 4 : 1 },
-                    ],
+                    transform: [{ translateY: 4 }],
                   }}
                 />{' '}
               </>
@@ -108,9 +105,7 @@ export const CardListItem: FC<Props> = ({
                   }}
                   style={({ pressed }) => ({
                     opacity: pressed ? 0.4 : 1,
-                    transform: [
-                      { translateY: Platform.OS === 'android' ? 3 : 0 },
-                    ],
+                    transform: [{ translateY: 3 }],
                   })}
                 >
                   <Icon
@@ -135,9 +130,7 @@ export const CardListItem: FC<Props> = ({
                   }}
                   style={({ pressed }) => ({
                     opacity: pressed ? 0.4 : 1,
-                    transform: [
-                      { translateY: Platform.OS === 'android' ? 3 : 0 },
-                    ],
+                    transform: [{ translateY: 3 }],
                   })}
                 >
                   <Icon
