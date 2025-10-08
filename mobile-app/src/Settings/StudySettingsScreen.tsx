@@ -2,9 +2,11 @@ import { Slider } from '@miblanchard/react-native-slider';
 import { FC } from 'react';
 import { Linking, PixelRatio, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import Animated, { useAnimatedRef } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getItem, setItem } from '../asyncAppStorage';
-import { CustomScrollView } from '../ui/CustomScrollView';
+import { mainPadding } from '../styles';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListSwitch } from '../ui/ListSwitch';
 import { useAsync } from '../useAsync';
@@ -29,6 +31,7 @@ type Props = {};
 
 export const StudySettingsScreen: FC<Props> = () => {
   const theme = useTheme();
+  const scrollableRef = useAnimatedRef<Animated.ScrollView>();
 
   const [isRandomizerEnabled, mutateIsRandomizerEnabled] = useAsync(
     getRandomizerEnabled,
@@ -48,10 +51,20 @@ export const StudySettingsScreen: FC<Props> = () => {
     await mutateIsRandomizerEnabled(!isRandomizerEnabled.value);
   };
 
+  const insets = useSafeAreaInsets();
+
   const fontScale = Math.max(1, PixelRatio.getFontScale());
   return (
-    <CustomScrollView>
-      <StudySteps style={{ marginBottom: 32 }} />
+    <Animated.ScrollView
+      ref={scrollableRef}
+      contentContainerStyle={{
+        paddingTop: mainPadding,
+        paddingBottom: insets.bottom + mainPadding,
+        paddingLeft: insets.left + mainPadding,
+        paddingRight: insets.right + mainPadding,
+      }}
+    >
+      <StudySteps style={{ marginBottom: 32 }} scrollableRef={scrollableRef} />
 
       <CustomSurface
         style={{
@@ -135,6 +148,6 @@ export const StudySettingsScreen: FC<Props> = () => {
           </Text>
         </Text>
       </View>
-    </CustomScrollView>
+    </Animated.ScrollView>
   );
 };

@@ -5,6 +5,7 @@ import { usePostHog } from 'posthog-react-native';
 import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
+import { AnimatedRef } from 'react-native-reanimated';
 import Sortable, {
   SortableGridDragEndCallback,
   SortableGridRenderItem,
@@ -21,9 +22,10 @@ import { StudyStepSwitch } from './StudyStepSwitch';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
+  scrollableRef: AnimatedRef<any>;
 };
 
-export const StudySteps: FC<Props> = ({ style }) => {
+export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
   const isPremium = usePremium();
   const presentPaywall = usePresentPaywall();
   const theme = useTheme();
@@ -212,6 +214,7 @@ export const StudySteps: FC<Props> = ({ style }) => {
         customHandle={true}
         onDragEnd={onDragEnd}
         sortEnabled={changeIsEnabled}
+        scrollableRef={scrollableRef}
       />
     </View>
   );
