@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { CardItem, StudyFlowType } from '@vocably/model';
-import { shuffle } from 'lodash-es';
+import { CardItem, GoogleLanguage, StudyFlowType } from '@vocably/model';
+import { first, get, shuffle } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import { AnimatedRef } from 'react-native-reanimated';
 import Sortable, {
   SortableGridDragEndCallback,
@@ -13,12 +13,24 @@ import Sortable, {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { defaultStudyFlow, getDefaultValues } from '../defaultStudyFlow';
 import { useSelectedDeck } from '../languageDeck/useSelectedDeck';
+import { ImmediateStep } from '../study/craftTheStrategy';
+import { getMultiChoice } from '../study/getMultiChoice';
+import { getPredefinedMultiChoiceOptions } from '../study/getPredefinedMultiChoiceOptions';
 import { isSuitableForArrangingByLetters } from '../study/isSuitableForArrangingByLetters';
+import { useTranslationLanguage } from '../study/useTranslationLanguage';
 import { CustomSurface } from '../ui/CustomSurface';
+import { PressableScale } from '../ui/PressableScale';
 import { usePremium } from '../usePremium';
 import { usePresentPaywall } from '../usePresentPaywall';
 import { UserMetadataContext } from '../UserMetadataContainer';
 import { StudyStepSwitch } from './StudyStepSwitch';
+
+type PreviewStep = {
+  card: CardItem;
+  step: ImmediateStep;
+};
+
+type PreviewOptions = Record<string, PreviewStep>;
 
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -37,19 +49,82 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
   const studyFlow = userMetadata.studyFlow ?? defaultStudyFlow;
 
   const {
-    deck: { cards },
+    deck: { language, cards },
   } = useSelectedDeck({
     autoReload: false,
   });
+  const translationLanguage = useTranslationLanguage(
+    language as GoogleLanguage
+  );
 
-  const [arrangePreviewCard, setArrangePreviewCard] = useState<CardItem>();
+  const [previewOptions, setPreviewOptions] = useState<PreviewOptions>({});
 
   useEffect(() => {
-    const selectedCard = shuffle(cards).find(isSuitableForArrangingByLetters);
-    if (selectedCard) {
-      setArrangePreviewCard(selectedCard);
+    const prerenderedCards = translationLanguage
+      ? getPredefinedMultiChoiceOptions(
+          language as GoogleLanguage,
+          translationLanguage
+        )
+      : [];
+
+    const abCard = shuffle(cards).find(isSuitableForArrangingByLetters);
+    const previewOptions: PreviewOptions = {};
+    if (abCard) {
+      previewOptions.ab = {
+        card: abCard,
+        step: {
+          step: 'ab',
+        },
+      };
     }
-  }, [cards]);
+
+    const swipeCard = first(shuffle(cards)) ?? first(prerenderedCards);
+
+    if (swipeCard) {
+      previewOptions.sf = {
+        card: swipeCard,
+        step: {
+          step: 'sf',
+        },
+      };
+
+      previewOptions.sb = {
+        card: swipeCard,
+        step: {
+          step: 'sb',
+        },
+      };
+    }
+
+    for (let card of [...shuffle(cards), ...prerenderedCards]) {
+      const multiChoice =
+        getMultiChoice(card, cards) ?? getMultiChoice(card, prerenderedCards);
+
+      if (multiChoice === null) {
+        continue;
+      }
+
+      previewOptions['mf'] = {
+        card,
+        step: {
+          step: 'mf',
+          multiChoice,
+        },
+      };
+
+      previewOptions['mb'] = {
+        card,
+        step: {
+          step: 'mb',
+          multiChoice,
+        },
+      };
+
+      break;
+    }
+
+    setPreviewOptions(previewOptions);
+  }, [cards, translationLanguage, language]);
 
   useEffect(() => {
     posthog.capture('studyStepsShown');
@@ -83,6 +158,7 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
       const defaultValues = getDefaultValues(item.id);
 
       const isEnabled = item.enabled && (!needsPremium || isPremium);
+      const previewStep = get(previewOptions, item.id);
 
       return (
         <CustomSurface
@@ -123,58 +199,83 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
               />
               <View
                 style={{
-                  flexWrap: 'wrap',
-                  flexDirection: 'row',
+                  gap: 8,
+                  flexDirection: 'column',
                   flex: 1,
                   flexShrink: 1,
                 }}
               >
-                <Text>{defaultValues.name}</Text>
-              </View>
-            </View>
-            {needsPremium && !isPremium && (
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    gap: 10,
-                    alignItems: 'center',
-                    paddingLeft: 12,
-                    marginBottom: 4,
-                  }}
-                >
-                  <Icon
-                    name="lock"
-                    size={16}
-                    color={theme.colors.onBackground}
-                  />
-                  <Text style={{ fontSize: 16 }}>
-                    Available to premium users
-                  </Text>
+                <View>
+                  <Text>{defaultValues.name}</Text>
                 </View>
-                {arrangePreviewCard && (
-                  <Button
-                    style={{ alignSelf: 'flex-start' }}
-                    icon={'eye-outline'}
+                {previewStep && (
+                  <PressableScale
+                    style={{
+                      alignSelf: 'flex-start',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
                     onPress={() => {
                       posthog.capture('arrangePreviewClicked');
-                      navigation.navigate('PreviewArrange', {
-                        card: arrangePreviewCard,
+                      navigation.navigate('PreviewStudyStepModal', {
+                        card: previewStep.card,
+                        step: previewStep.step,
                       });
                     }}
                   >
-                    See how it works
-                  </Button>
+                    <Icon
+                      name="eye-outline"
+                      color={theme.colors.primary}
+                      size={16}
+                    />
+                    <Text style={{ fontSize: 16, color: theme.colors.primary }}>
+                      Preview
+                    </Text>
+                  </PressableScale>
                 )}
-                <Button
-                  style={{ alignSelf: 'flex-start' }}
-                  icon={'crown'}
-                  onPress={() => presentPaywall()}
-                >
-                  Upgrade to premium
-                </Button>
+                {needsPremium && !isPremium && (
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        gap: 8,
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Icon
+                        name="lock"
+                        size={16}
+                        color={theme.colors.onBackground}
+                      />
+                      <Text style={{ fontSize: 16 }}>
+                        Available to premium users
+                      </Text>
+                    </View>
+                    <PressableScale
+                      style={{
+                        alignSelf: 'flex-start',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 8,
+                      }}
+                      onPress={() => presentPaywall()}
+                    >
+                      <Icon
+                        name="crown"
+                        color={theme.colors.primary}
+                        size={16}
+                      />
+                      <Text
+                        style={{ fontSize: 16, color: theme.colors.primary }}
+                      >
+                        Upgrade to Premium
+                      </Text>
+                    </PressableScale>
+                  </>
+                )}
               </View>
-            )}
+            </View>
           </View>
         </CustomSurface>
       );

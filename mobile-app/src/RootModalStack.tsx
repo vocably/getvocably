@@ -5,7 +5,7 @@ import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
 import { PaymentSuccessModal } from './PaymentSuccessModal';
-import { PreviewArrangeModal } from './Settings/PreviewArrangeModal';
+import { PreviewStudyStepModal } from './Settings/PreviewStudyStepModal';
 import { StudyScreen } from './study/StudyScreen';
 import { TabsNavigator } from './TabsNavigator';
 import { WelcomeScreen } from './Welcome/WelcomeScreen';
@@ -58,8 +58,8 @@ export const RootModalStack = () => {
             headerShown: false,
             presentation: 'modal',
           }}
-          name="PreviewArrange"
-          component={PreviewArrangeModal}
+          name="PreviewStudyStepModal"
+          component={PreviewStudyStepModal}
         />
       </Stack.Group>
     </Stack.Navigator>

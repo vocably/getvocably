@@ -25,7 +25,7 @@ type ArrangeByLetters = {
   step: 'ab';
 };
 
-type ImmediateStep =
+export type ImmediateStep =
   | SwipeFront
   | SwipeBack
   | MultiChoiceFront
