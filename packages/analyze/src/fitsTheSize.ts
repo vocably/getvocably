@@ -6,5 +6,14 @@ export const fitsTheSize =
     const sourceWordsNumber = source.split(/\W+/).length;
     const itemWordsNumber = (item.headword.text ?? '').split(/\W+/).length;
 
-    return itemWordsNumber <= sourceWordsNumber;
+    return itemWordsNumber === sourceWordsNumber;
+  };
+
+export const wordDefinitionItemFitsTheSize =
+  (source: string) =>
+  (item: string): boolean => {
+    const sourceWordsNumber = source.split(/\W+/).length;
+    const itemWordsNumber = (item ?? '').split(/\W+/).length;
+
+    return itemWordsNumber === sourceWordsNumber;
   };

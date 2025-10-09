@@ -4,6 +4,7 @@ import {
   DirectAnalyzePayload,
   Translation,
 } from '@vocably/model';
+import { wordDefinitionItemFitsTheSize } from './fitsTheSize';
 import { translateWordDictionaryItem } from './translateWordDictionaryItem';
 import { WordDictionaryResponse } from './word-dictionary';
 import { getItemDefinitions } from './wordDictionaryItemDefinitions';
@@ -20,6 +21,12 @@ export const wordDictionaryResultToAnalysisItems = ({
   payload,
   originalTranslation,
 }: Options): Promise<AnalysisItem>[] => {
+  if (
+    !wordDefinitionItemFitsTheSize(originalTranslation.source)(result.response)
+  ) {
+    return [];
+  }
+
   return Object.entries(result.meaning)
     .filter(([_, definitions]) => definitions.length > 0)
     .map(async ([partOfSpeech, wdDefinitions]) => {
