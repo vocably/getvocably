@@ -42,9 +42,11 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
 
     useImperativeHandle(ref, () => ({
       focus: () => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }, 100);
       },
     }));
 
