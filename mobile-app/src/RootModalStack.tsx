@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import { Platform } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { ChatWithCardModal } from './ChatWithCard/ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
@@ -23,6 +24,9 @@ export const RootModalStack = () => {
         screenOptions={{
           presentation: 'modal',
           headerShown: false,
+          animation: Platform.OS === 'android' ? 'fade' : undefined,
+          detachInactiveScreens: false,
+          statusBarTranslucent: true,
         }}
       >
         <Stack.Screen
@@ -54,10 +58,6 @@ export const RootModalStack = () => {
           options={{ headerShown: false, presentation: 'modal' }}
         />
         <Stack.Screen
-          options={{
-            headerShown: false,
-            presentation: 'modal',
-          }}
           name="PreviewStudyStepModal"
           component={PreviewStudyStepModal}
         />
