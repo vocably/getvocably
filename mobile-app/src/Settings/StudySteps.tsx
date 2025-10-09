@@ -67,7 +67,9 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
         )
       : [];
 
-    const abCard = shuffle(cards).find(isSuitableForArrangingByLetters);
+    const abCard = [...shuffle(cards), ...prerenderedCards].find(
+      isSuitableForArrangingByLetters
+    );
     const previewOptions: PreviewOptions = {};
     if (abCard) {
       previewOptions.ab = {
