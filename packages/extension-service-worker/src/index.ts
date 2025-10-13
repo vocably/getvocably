@@ -128,6 +128,10 @@ export const registerServiceWorker = (
     person_profiles: 'identified_only',
     persistence: 'memory',
     disable_external_dependency_loading: true,
+    capture_pageview: false,
+    autocapture: false,
+    disable_session_recording: true,
+    disable_surveys: true,
   });
 
   Auth.configure(registerServiceWorkerOptions.auth);
