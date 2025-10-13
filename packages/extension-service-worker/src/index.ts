@@ -70,7 +70,7 @@ import {
 import { buildTagMap, getLastAdded } from '@vocably/model-operations';
 import { createSrsItem } from '@vocably/srs';
 import { get, isEqual, uniq } from 'lodash-es';
-import posthog from 'posthog-js';
+import posthog from 'posthog-js/dist/module.no-external';
 import { distinctUntilChanged, Observable, switchMap, timer } from 'rxjs';
 import {
   getAskForRatingCounter,
