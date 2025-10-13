@@ -127,6 +127,7 @@ export const registerServiceWorker = (
     api_host: 'https://us.i.posthog.com',
     person_profiles: 'identified_only',
     persistence: 'memory',
+    disable_external_dependency_loading: true,
   });
 
   Auth.configure(registerServiceWorkerOptions.auth);
