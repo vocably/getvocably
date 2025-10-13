@@ -126,7 +126,7 @@ export const registerServiceWorker = (
   posthog.init('phc_vke56i7RTlBbFYHZHsoH7VhgWi2DwvKtEzusfcFemgT', {
     api_host: 'https://us.i.posthog.com',
     person_profiles: 'identified_only',
-    persistence: 'memory',
+    persistence: 'localStorage',
     disable_external_dependency_loading: true,
     capture_pageview: false,
     autocapture: false,
