@@ -3,9 +3,23 @@
   url='/pricing.html'
   navbarAlwaysMurky=true
 }}
-  {{#> text-container }}
+  <div class="container-md text-center">
     <h1 class="mb-5 text-center">Pricing</h1>
-
+    <p>The only limitation of the free plan is that when you get 300 or more cards, you can save only one card per day.</p>
+    <p>The Premium plan also unlocks an extra question type.</p>
+    <div style="text-align: center;"><video
+      autoplay
+      loop
+      muted
+      playsinline
+      style="width: 184px; height: 400px"
+    >
+      <source src="assets/arrange-by-letters/mobile.mov" type="video/quicktime" />
+      <source src="assets/arrange-by-letters/mobile.webm" type="video/webm" />
+      The video is not supported by your browser.
+    </video></div>
+  </div>
+  {{#> text-container }}
     <style>
       .features-table {
         th:not(:first-child), td:not(:first-child) {
@@ -55,7 +69,17 @@
           <td><i class="bi bi-check"></i></td>
         </tr>
         <tr>
-          <td>Share any selected word with iOS/Android app</td>
+          <td>Study all the saved flashcards in iOS/Android app</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Study multiple languages</td>
+          <td><i class="bi bi-check"></i></td>
+          <td><i class="bi bi-check"></i></td>
+        </tr>
+        <tr>
+          <td>Import and Export (as CSV file)</td>
           <td><i class="bi bi-check"></i></td>
           <td><i class="bi bi-check"></i></td>
         </tr>
@@ -70,23 +94,8 @@
           <td class="smaller-on-tiny-screens">Unlimited</td>
         </tr>
         <tr>
-          <td>Study all the saved flashcards in iOS/Android app</td>
-          <td><i class="bi bi-check"></i></td>
-          <td><i class="bi bi-check"></i></td>
-        </tr>
-        <tr>
-          <td>Study multiple languages</td>
-          <td><i class="bi bi-check"></i></td>
-          <td><i class="bi bi-check"></i></td>
-        </tr>
-        <tr>
-          <td>Mnemonics for better recall</td>
-          <td><i class="bi bi-check"></i></td>
-          <td><i class="bi bi-check"></i></td>
-        </tr>
-        <tr>
-          <td>Import and Export (as CSV file)</td>
-          <td><i class="bi bi-check"></i></td>
+          <td>Extra question type</td>
+          <td><i class="bi bi-x"></i></td>
           <td><i class="bi bi-check"></i></td>
         </tr>
         <tr>
