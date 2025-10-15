@@ -10,6 +10,7 @@ import {
   UserMetadata,
   UserStaticMetadata,
 } from '@vocably/model';
+import { retry } from '@vocably/model-operations';
 import {
   createContext,
   FC,
@@ -21,7 +22,6 @@ import {
 import { AppState } from 'react-native';
 import { Sentry } from './BetterSentry';
 import { Loader } from './loaders/Loader';
-import { retry } from './retry';
 
 type UserMetadataContextValues = {
   userMetadata: UserMetadata;
