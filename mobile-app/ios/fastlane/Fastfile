@@ -44,7 +44,8 @@ platform :ios do
     )
 
     gym(
-      export_method: ENV["FASTFILE_GYM_EXPORT_METHOD"]
+      export_method: ENV["FASTFILE_GYM_EXPORT_METHOD"],
+      scheme: "VocablyPro"
     )
   end
 
