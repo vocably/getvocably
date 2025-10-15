@@ -5,11 +5,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'remarkable, impressive, significant, noteworthy, striking',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt fænomen',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'remarkable, noteworthy, unusual',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -22,11 +22,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'to arrive',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer kl. 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til et bestemmelsessted',
+          translation: 'arrive, reach',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -40,13 +39,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'query, question, issue, matter',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'question, inquiry, topic',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -54,10 +53,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'at spørge',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'to ask',
+          ipa: '[ˈsbœːɐ̯ə]',
+          example: '* Han spurgte om vej.\n* Hun spurgte læreren.',
+          definition: '* stille spørgsmål\n* søge information',
+          translation: 'to ask, to inquire',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -69,22 +68,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'common',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'ordinary, normal, typical',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'ordinary, usual, universal, general, common',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, typical, general',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -95,11 +92,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'notable, destacable, evidente, reseñable',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'notable, llamativo, extraordinario',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -112,11 +109,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'llegar, proceder de',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer kl. 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til et bestemmelsessted',
+          translation: 'llegar, arribar',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -131,22 +127,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'spørg',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'pregunta',
+          ipa: 'ˈsbœɐ̯ˀ',
+          example: '* Spørg om vej\n* Spørg læreren',
+          definition: '* stille spørgsmål\n* søge information',
+          translation: 'preguntar, interrogar',
           partOfSpeech: 'verb',
           tags: [],
         },
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'pregunta, asunto, tema, caso',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'pregunta, cuestión, tema',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -159,23 +155,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'comunes',
+          ipa: 'ɑlˈmenˀd̥iˌliˀə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'común, normal, típico',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation:
-            'común, corriente, medio, normal, típico, universal, extendido, tradicional',
+          ipa: '[ɑlˈmenˀli]',
+          example: '* almindelig dag\n* almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, típico, general',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -186,11 +179,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'remarquable, notable, incroyable',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt fænomen',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'remarquable, étonnant, notable',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -203,11 +196,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'arriver',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer kl. 18.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'arriver, atteindre',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -221,13 +213,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'question, problème, affaire',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'question, demande, sujet',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -240,23 +232,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'courantes',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition:
+            '* normalt forekommende\n* ikke speciel\n* almindelig kendt',
+          translation: 'normal, commun, ordinaire',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation:
-            'commun, commune, ordinaire, moyen, moyenne, courant, courante, universel, universelle, général, générale, simple',
+          ipa: 'ɑlˈmenˀli',
+          example: '* almindelig dag\n* almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, typique, général',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -267,11 +257,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'bemerkenswert',
+      ipa: 'bəməːɐ̯ɡəlsəsˌvæɐ̯ˀdi',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'bemerkenswert, auffällig, ungewöhnlich',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -284,11 +273,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'ankommen',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer kl. 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'ankommen, eintreffen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -302,13 +290,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'Frage',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'Frage, Anfrage, Diskussionsthema',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -316,10 +304,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'frage',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'frage',
+          ipa: 'ˈfʁɑːwə',
+          example:
+            '* Hun stillede et vigtigt spørgsmål.\n* Der var en forespørgsel om emnet.',
+          definition: '* spørgsmål\n* forespørgsel',
+          translation: 'Frage, Anfrage',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -331,22 +320,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'gewöhnlichen',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'gewöhnlich, normal, typisch',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'gewöhnlich, normal, allgemein, häufig',
+          ipa: 'ɑlˈmenˀli',
+          example: '* almindelig dag\n* almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, typisch, generell',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -357,11 +344,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: '显著的, 引人注目的',
+      ipa: 'beˈmæɐ̯ɡəlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt fænomen',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: '显著, 引人注目',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -374,10 +361,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til stationen.',
+          definition: 'nå frem til et sted',
           translation: '到达',
           partOfSpeech: 'verb',
           tags: [],
@@ -393,23 +379,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'problem',
-          ipa: 'pʁoˈbleˀm',
-          example: 'løse et problem',
-          definition:
-            'væsentligt, uafklaret anliggende som man bør forholde sig til vha. analyse el. tankevirksomhed; fx en uløst opgave der bør løses, et ubesvaret spørgsmål der bør besvares e.l.',
-          translation: '问题',
+          ipa: 'ˈpʁʌblɛm',
+          example:
+            '* Han har et problem med bilen.\n* Problemet blev løst hurtigt.',
+          definition: '* vanskelighed\n* udfordring',
+          translation: '问题, 难题',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
         },
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: '[ˈsbœɐ̯ɡsˌmɔˀl]',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: '问题, 询问',
           partOfSpeech: 'noun',
           g: 'n',
@@ -423,22 +408,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '常见的',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: '普通, 一般',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: '普通, 一般',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: '普通, 一般, 常见',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -449,11 +432,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: '引人注目, 值得注意, 值得注意的',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: '值得注意, 引人注目',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -466,11 +448,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: '到達',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til stationen.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: '到達, 抵達',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -485,23 +466,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'problem',
-          ipa: 'pʁoˈbleˀm',
-          example: 'løse et problem',
-          definition:
-            'væsentligt, uafklaret anliggende som man bør forholde sig til vha. analyse el. tankevirksomhed; fx en uløst opgave der bør løses, et ubesvaret spørgsmål der bør besvares e.l.',
-          translation: '問題',
+          ipa: 'ˈpʁʌblɛm',
+          example:
+            '* Han har et problem med bilen.\n* Problemet blev løst hurtigt.',
+          definition: '* vanskelighed\n* udfordring',
+          translation: '問題, 挑戰',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
         },
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: '[ˈsbœɐ̯ɡsˌmɔˀl]',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: '問題, 詢問',
           partOfSpeech: 'noun',
           g: 'n',
@@ -515,21 +495,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '一般的',
+          ipa: '[alˈmenˌd̥elˀə]',
+          example:
+            '* Det er en almindelig dag.\n* Almindelige mennesker kan gøre det.',
+          definition: '* ikke speciel\n* normal',
+          translation: '普通的, 一般的',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
+          ipa: 'ɑlˈmenˀli',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
           translation: '普通, 一般',
           partOfSpeech: 'adjective',
           tags: [],
@@ -541,10 +520,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende',
       translation: '注目すべき, 目を引く',
       partOfSpeech: 'adjective',
       tags: [],
@@ -558,11 +536,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: '到着する',
+          ipa: '[ˈɑŋˌkʌmə]',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: '到着する, 目的地に着く',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -576,13 +553,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: '質問, 疑問',
+          source: 'spørgsmål',
+          ipa: '[ˈsbœɐ̯ɡsˌmɔˀl]',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: '質問, 問題',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -595,21 +570,19 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '一般的な',
+          ipa: '[alˈmenˀd̥iˌliːə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: '普通の, 一般的な',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
           translation: '普通の, 一般的な',
           partOfSpeech: 'adjective',
           tags: [],
@@ -621,11 +594,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'заметный, выдающийся, замечательный',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'заметный, выдающийся',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -638,11 +611,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'прибыть',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 18.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'прибыть, достигнуть',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -656,12 +628,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'вопрос, проблема',
           partOfSpeech: 'noun',
           g: 'n',
@@ -675,22 +646,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'обычные',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'обычный, нормальный',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'обычный, общий',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'нормальный, типичный, общий',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -701,11 +670,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'notevole, eccezionale',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* En bemærkelsesværdig præstation\n* Det var en bemærkelsesværdig dag',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'notevole, sorprendente',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -718,10 +687,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til stationen.',
+          definition: 'nå frem til et sted',
           translation: 'arrivare',
           partOfSpeech: 'verb',
           tags: [],
@@ -736,12 +704,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmøl',
+          example: '* Jeg har et spørgsmål.\n* Spørgsmålet er vigtigt.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'domanda, questione',
           partOfSpeech: 'noun',
           g: 'n',
@@ -750,10 +716,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'anmodning',
-          ipa: '-ˌmoðˀneŋ',
-          example: 'sende en anmodning om at få sagen genoptaget',
-          definition:
-            '* det at anmode nogen om noget\n* (skriftlig) meddelelse hvorved nogen anmoder om noget',
+          ipa: '[ˈanˌmoðne̝ŋ]',
+          example:
+            '* Han sendte en anmodning om hjælp.\n* Anmodningen blev afvist.',
+          definition: '* forespørgsel\n* begæring',
           translation: 'richiesta, domanda',
           partOfSpeech: 'noun',
           g: 'common',
@@ -767,22 +733,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'comuni',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'normale, comune',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'comune, normale',
+          ipa: 'ɑlˈmenˀli',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normale, tipico, generale',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -793,11 +757,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'notável, extraordinário',
+      ipa: 'bəməːɡəlsəsvæɐ̯d̥i',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'notável, extraordinário, chamativo',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -810,11 +774,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'chegar',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer kl. 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'chegar, chegar a um destino',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -828,13 +791,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'pergunta, questão',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'pergunta, questão, interrogação',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -847,10 +810,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'comuns',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* normalt forekommende\n* ikke speciel',
+          translation: 'comum, normal',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -858,11 +821,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
           language: 'da',
           source: 'almindelig',
           ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'comum, normal',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, típico, geral',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -873,11 +834,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'ملحوظ, بارز',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'ملحوظ, جدير بالملاحظة',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -890,11 +851,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'الوصول, يصل',
+          ipa: '[ˈɑŋˌkʌmə]',
+          example: '* Vi ankommer klokken 18.\n* Toget ankommer til perron 3.',
+          definition: 'nå frem til et sted',
+          translation: 'الوصول',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -908,13 +868,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'سؤال, استفسار',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'استفسار, مشكلة',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -927,22 +885,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'عادية',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'عادي, طبيعي',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
+          ipa: '[alˈmenˀli]',
           example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'عادي, شائع',
+            '* En almindelig dag\n* Almindelige mennesker\n* Almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'عادي, نموذجي, عام',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -953,11 +910,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'opmerkelijk, opvallend',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'opmerkelijk, opvallend, bijzonder',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -970,21 +927,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankommen',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'aankomen',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'da',
-          source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'aankomen',
+          ipa: 'ˈɑŋkɔmən',
+          example: '* Toget ankommer kl. 10.\n* Vi ankom til festen sent.',
+          definition: '* ankomme\n* nå frem',
+          translation: 'aankomen, aankomst',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -998,13 +944,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'vraag, probleem',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'vraag, onderwerp',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1012,11 +958,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'anmodning',
-          ipa: '-ˌmoðˀneŋ',
-          example: 'sende en anmodning om at få sagen genoptaget',
-          definition:
-            '* det at anmode nogen om noget\n* (skriftlig) meddelelse hvorved nogen anmoder om noget',
-          translation: 'verzoek, aanvraag',
+          ipa: 'ˈanˌmoðneŋ',
+          example: '* en anmodning om hjælp\n* anmodning om information',
+          definition: '* forespørgsel\n* begæring\n* opfordring',
+          translation: 'verzoek, aanvraag, oproep',
           partOfSpeech: 'noun',
           g: 'common',
           tags: [],
@@ -1029,22 +974,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'gewone',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normaal, typisch, algemeen',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'gewone, algemeen',
+          ipa: '[ɑlˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'gewone, normaal, typisch',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1055,11 +998,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: '주목할 만한, 인상적인, 놀라운',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig ændring',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: '주목할 만한, 눈에 띄는, 비범한',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1072,11 +1015,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: '도착하다',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til et bestemmelsessted',
+          translation: '도착하다, 오다',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1090,13 +1032,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Stil et spørgsmål.\n* Har du et spørgsmål?\n* Spørgsmålet er vigtigt.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: '질문, 문제',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: '질문, 문제, 토론 주제',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1109,22 +1051,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '일반적인',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* normal\n* typisk\n* generel',
+          translation: '일반적인, 보통의, 일반',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: '평범한, 일반적인, 보통의, 흔한',
+          ipa: '[ɑlˈmenˀli]',
+          example: '* almindelig dag\n* almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: '일반적인, 보통의, 일상적인',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1135,11 +1075,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'विशेष, ध्यान आकर्षित करने वाला, विशेष उल्लेखनीय',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'विशेष, ध्यान आकर्षित करने वाला',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1152,11 +1091,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'आना',
+          ipa: '[ˈɑŋˌkʌmə]',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til stationen.',
+          definition: 'nå frem til et sted',
+          translation: 'पहुंचना',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1170,12 +1108,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'प्रश्न, सवाल',
           partOfSpeech: 'noun',
           g: 'n',
@@ -1189,21 +1126,19 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'सामान्य',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'सामान्य, साधारण',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
           translation: 'सामान्य, साधारण',
           partOfSpeech: 'adjective',
           tags: [],
@@ -1215,11 +1150,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'dikkate değer, olağanüstü',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'dikkate değer, göz alıcı',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1232,11 +1166,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'varmak',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'varmak, ulaşmak',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1250,13 +1183,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'soru, mesele',
+          source: 'spørgsmål',
+          ipa: '[ˈsbœɐ̯ɡsˌmɔˀl]',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet blev besvaret.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'soru, problem',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1269,22 +1200,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'yaygın',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'normal, sıradan',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'sıradan, yaygın, genel',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'normal, sıradan',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1295,11 +1224,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'anmärkningsvärd, märklig',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* En bemærkelsesværdig præstation\n* Hun gjorde noget bemærkelsesværdigt',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'anmärkningsvärd, iögonfallande',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1312,11 +1241,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'ankomma',
+          ipa: '[ˈɑŋˌkʌmə]',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'ankomma, nå fram',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1330,13 +1258,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmøl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'fråga, spörsmål',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'fråga, problemställning',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1344,10 +1271,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'at spørge',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'att fråga',
+          ipa: '[ˈsbœːɐ̯ə]',
+          example: '* Han spurgte om vej.\n* Hun spurgte læreren.',
+          definition: '* stille spørgsmål\n* søge information',
+          translation: 'fråga, söka information',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1359,22 +1286,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'vanliga',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'vanlig, normal',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'vanlig, allmän',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'vanlig, normal',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1385,10 +1310,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemerkelsesverdig',
-      ipa: '',
-      example: '',
-      definition: '',
-      translation: 'bemerkelsesverdig',
+      ipa: 'bəməːɡəlsəsˌvæɐ̯di',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig ændring',
+      definition: '* værd at bemærke\n* usædvanlig\n* iøjnefaldende',
+      translation: 'merkelig, usædvanlig, iøjnefaldende',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1401,11 +1327,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'ankomme',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'ankomme, nå frem',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1420,10 +1345,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'spørsmål',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'spørsmål',
+          ipa: 'ˈsbœɐ̯smɔl',
+          example:
+            '* Jeg har et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
+          definition:
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'spørsmål, problemstilling, forespørsel',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -1435,22 +1362,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'vanlige',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'vanlig, normal, typisk',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'vanlig, alminnelig',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, typisk, generell',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1461,11 +1386,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: '',
+      ipa: 'bəməːɡəlsəsvæɐ̯di',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'værd at bemærke, iøjnefaldende, usædvanlig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1478,11 +1403,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: '',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'nå frem, komme til',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1496,13 +1420,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Stil et spørgsmål.\n* Det er et godt spørgsmål.\n* Hun havde mange spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: '',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'forespørgsel, problemstilling, emne til diskussion',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1515,22 +1439,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'almindelige',
+          ipa: 'ɑlˈmenˀd̥iˌliːə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* normale\n* typiske\n* almindelige',
+          translation: 'normale, typiske, almindelige',
           partOfSpeech: '',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: '',
+          ipa: '[ɑlˈmenˀli]',
+          example: '* almindelig dag\n* almindelig praksis',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, typisk, generel',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1541,11 +1463,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'huomattava, merkittävä, huomionarvoinen',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* En bemærkelsesværdig præstation\n* Hun har en bemærkelsesværdig stil',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'huomionarvoinen, silmiinpistävä',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1558,11 +1480,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'saapua',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 18.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'saapua, tulla perille',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1576,13 +1497,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'kysymys, kysymysmerkki',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'kysymys, ongelma',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1595,22 +1514,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'yleiset',
+          ipa: '[almɛnˈd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'tavallinen, normaali',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'tavallinen, yleinen',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'tavallinen, normaali',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1621,11 +1538,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'بارز، قابل توجه',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'قابل توجه, جالب توجه',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1638,11 +1554,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'رسیدن',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'رسیدن, آمدن به مقصد',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1656,13 +1571,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'پرسش، سوال',
+          source: 'spørgsmål',
+          ipa: '[ˈspɶɐ̯ɡsmɔl]',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'سوال, پرسش',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1675,22 +1588,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'معمولی',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke usædvanlig\n* normal',
+          translation: 'عادی, معمولی',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'عادی، معمولی',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'عادی, معمولی',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1701,11 +1612,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'godny uwagi, zauważalny',
+      ipa: 'bəməːɡəlsəsˌvæɐ̯ˀdi',
+      example: '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt syn',
+      definition: '* værd at bemærke\n* iøjnefaldende\n* usædvanlig',
+      translation: 'godny uwagi, rzucający się w oczy, niezwykły',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1718,11 +1628,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'przybyć',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer snart.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'przybyć, dotrzeć',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1736,13 +1645,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
+            '* Jeg har et spørgsmål.\n* Spørgsmålet blev besvaret.\n* Der opstod et spørgsmål.',
           definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'pytanie, kwestia, problem',
+            '* forespørgsel\n* problemstilling\n* emne til diskussion',
+          translation: 'pytanie, zapytanie, kwestia',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1755,22 +1664,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'powszechny',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* almindelige mennesker\n* almindelige problemer',
+          definition: '* ikke speciel\n* normal\n* typisk',
+          translation: 'zwykły, normalny, typowy',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'zwykły, powszechny',
+          ipa: '[alˈmenˀli]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normalny, typowy, ogólny',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1781,11 +1688,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'εντυπωσιακός, σημαντικός',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig forskel',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'σημαντικός, εντυπωσιακός',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1798,10 +1705,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til stationen.',
+          definition: 'nå frem til et sted',
           translation: 'φτάνω',
           partOfSpeech: 'verb',
           tags: [],
@@ -1816,13 +1722,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'ερώτηση, ζητούμενο',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'ερώτηση, πρόβλημα',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1835,22 +1740,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'συνηθισμένα',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'κανονικός, συνηθισμένος',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'κανονικός, συνηθισμένος',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'κανονικός, τυπικός, γενικός',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1861,11 +1764,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'מרשים, בולט, מְשׁוּמָשׁ',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* En bemærkelsesværdig præstation\n* Hun gjorde noget bemærkelsesværdigt',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'ראוי לציון, בולט',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1878,11 +1781,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'להגיע, לְהַגִּיעַ',
+          ipa: '[ˈɑŋˌkʌmə]',
+          example: 'Vi ankommer klokken 10.',
+          definition: 'nå frem til et sted',
+          translation: 'להגיע',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1896,13 +1798,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'שאלה, בעיה, שְׁאֵלָה',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'שאלה, בעיית שאלה',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -1910,12 +1810,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'forespørgsel',
-          ipa: 'ˈfɒːɒˌsbɶɐ̯səl',
+          ipa: 'ˈfoːɐ̯ˌspɶɐ̯ˀsl̩',
           example:
-            '* oplyse om rentesatser på forespørgsel\n* få mange forespørgsler på et produkt\n* rejse en forespørgsel',
-          definition:
-            '* spørgsmål el. anmodning som fremsættes på en høflig el. formel måde\n* henvendelse hvor en person søger oplysninger om et produkt med henblik på evt. køb\n* spørgsmål som rettes til regeringen el. en minister af et medlem af Folketinget, og som efterfølges af en debat i folketingssalen; en lignende procedure findes i Københavns Kommunes borgerrepræsentation, hvis medlemmer kan rejse forespørgsler til Magistraten',
-          translation: 'שאלה, בקשה, שְׁאֵלָה',
+            '* Jeg har en forespørgsel om produktet.\n* Forespørgslen blev sendt til kundeservice.',
+          definition: '* anmodning om information\n* spørgsmål',
+          translation: 'בקשה, שאלה',
           partOfSpeech: 'noun',
           g: 'common',
           tags: [],
@@ -1928,22 +1827,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'נפוצים',
+          ipa: 'almɛnˈd̥elˀiə',
+          example:
+            '* Det er en almindelig dag.\n* Almindelige mennesker kan gøre det.',
+          definition: '* ikke speciel\n* normal',
+          translation: 'רגיל, שגרתי',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'רגיל, שכיח',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'נורמלי, טיפוסי, כללי',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1954,11 +1852,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'น่าจดจำ, น่าสนใจ',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* et bemærkelsesværdigt fænomen',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'น่าจดจำ, โดดเด่น',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1971,11 +1869,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'มาถึง',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 18.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'มาถึง, ถึง',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1989,12 +1886,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔˀl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'คำถาม, ปัญหา',
           partOfSpeech: 'noun',
           g: 'n',
@@ -2008,22 +1904,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'ทั่วไป',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'ปกติ, ธรรมดา',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'ทั่วไป, ธรรมดา',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'ปกติ, ทั่วไป, ธรรมดา',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2034,10 +1928,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* En bemærkelsesværdig præstation\n* Hun har en bemærkelsesværdig evne',
+      definition: '* værd at bemærke\n* iøjnefaldende',
       translation: 'đáng chú ý, nổi bật',
       partOfSpeech: 'adjective',
       tags: [],
@@ -2051,11 +1945,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'đến',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'đến nơi, đến đích',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2069,12 +1962,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔˀl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Hun stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'câu hỏi, vấn đề',
           partOfSpeech: 'noun',
           g: 'n',
@@ -2088,21 +1980,19 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'thông thường',
+          ipa: '[alˈmenˀd̥iˌliːə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'thông thường, bình thường',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
+          ipa: 'ɑlˈmenˀli',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
           translation: 'thông thường, bình thường',
           partOfSpeech: 'adjective',
           tags: [],
@@ -2114,11 +2004,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'menarik, mencolok, menarik perhatian',
+      ipa: 'beˈmæɐ̯ɡəlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig ændring',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'menarik, mencolok',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2131,11 +2021,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'tiba',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 18.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'tiba, sampai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2149,12 +2038,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
           example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+            '* Han stillede et spørgsmål.\n* Spørgsmålet var svært at besvare.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'pertanyaan, masalah',
           partOfSpeech: 'noun',
           g: 'n',
@@ -2168,22 +2056,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'umum',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'biasa, normal',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'umum, biasa',
+          ipa: 'ɑlˈmenˀli',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, tipikal, umum',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2194,11 +2080,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
-      translation: 'menarik, hebat, menarik perhatian',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀd̥i',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig ændring',
+      definition: '* værd at bemærke\n* iøjnefaldende',
+      translation: 'menarik, ketara',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2211,11 +2097,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
-          translation: 'tiba',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: '* Vi ankommer klokken 10.\n* Toget ankommer til perron 3.',
+          definition: '* nå frem til et sted\n* komme til en destination',
+          translation: 'tiba, sampai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2229,12 +2114,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
+          source: 'spørgsmål',
+          ipa: 'ˈsbœɐ̯ɡsˌmɔl',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet var svært.',
+          definition: '* forespørgsel\n* problemstilling',
           translation: 'soalan, pertanyaan',
           partOfSpeech: 'noun',
           g: 'n',
@@ -2248,22 +2131,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'biasa',
+          ipa: 'almɛnˈd̥elˀiə',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'biasa, normal',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'biasa, umum',
+          ipa: '[alˈmenˀli]',
+          example: '* En almindelig dag\n* Almindelige mennesker',
+          definition: '* normal\n* typisk\n* generel',
+          translation: 'normal, tipikal, umum',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2274,10 +2155,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'da',
       source: 'bemærkelsesværdig',
-      ipa: 'beˈmæɐ̯gəlsəsˌvæɐ̯ˀdi',
-      example: '* bemærkelsesværdige resultater\n* bemærkelsesværdig fåmælt',
-      definition:
-        '* som vækker opmærksomhed og opsigt pga. sit omfang, sin karakter, sine egenskaber e.l.; som fortjener opmærksomhed\n* som afviger fra det forventelige; som falder i øjnene',
+      ipa: 'b̥əˈmæɐ̯ɡ̊əlsəsˌvæɐ̯ˀdi',
+      example:
+        '* en bemærkelsesværdig præstation\n* en bemærkelsesværdig ændring',
+      definition: '* værd at bemærke\n* iøjnefaldende',
       translation: 'помітний, значний',
       partOfSpeech: 'adjective',
       tags: [],
@@ -2291,10 +2172,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'ankomme',
-          ipa: 'ˈanˌkʌmˀə',
-          example: 'ankomme med fly',
-          definition:
-            'komme til et bestemt sted efter at have tilbagelagt en vis afstand; om person el. transportmiddel',
+          ipa: 'ˈɑŋˌkʌmə',
+          example: 'Vi ankommer kl. 10.',
+          definition: 'nå frem til et sted',
           translation: 'прибути',
           partOfSpeech: 'verb',
           tags: [],
@@ -2309,13 +2189,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       results: [
         {
           language: 'da',
-          source: 'et spørgsmål',
-          ipa: 'ˈsbɶɐ̯sˌmɔˀl',
-          example:
-            '* stille et spørgsmål til nogen\n* ignorere spørgsmålet om ulighed\n* et spørgsmål om tillid',
-          definition:
-            '* sproglig ytring som rummer et uafklaret punkt, og som man fremsætter for at få dette punkt afklaret el. belyst af modtageren gennem dennes svar; kan i skriften markeres ved et spørgsmålstegn, i grammatikken ved fx omvendt ordstilling el. et spørgende pronomen og i udtalen ved en særlig intonation\n* anliggende, forhold el. problematik som giver anledning til overvejelser, diskussion, konflikt e.l.\n* anliggende el. problematik som beror på noget bestemt, el. hvis løsning el. afklaring er afhængig af en bestemt faktor',
-          translation: 'питання, запит',
+          source: 'spørgsmål',
+          ipa: '[ˈsbœɐ̯ɡsˌmɔˀl]',
+          example: '* Han stillede et spørgsmål.\n* Spørgsmålet blev besvaret.',
+          definition: '* forespørgsel\n* problemstilling',
+          translation: 'запит, питання',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -2328,22 +2206,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'da',
           source: 'almindelige',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'звичайні',
+          ipa: '[alˈmenˌd̥elˀiə]',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'звичайний, нормальний',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'da',
           source: 'almindelig',
-          ipa: 'alˈmenˀli',
-          example:
-            '* almindeligt tøj\n* almindeligt postevand\n* almindelig valgret',
-          definition:
-            '* som ikke adskiller sig fra gennemsnittet; uden bemærkelsesværdige el. påfaldende egenskaber\n* den mest udbredte og kendte af sin slags\n* som omfatter el. vedkommer alle; som er fælles for alle',
-          translation: 'звичайний, поширений, загальний',
+          ipa: 'ɑlˈmenˀli',
+          example: '* en almindelig dag\n* almindelige mennesker',
+          definition: '* ikke speciel\n* normal',
+          translation: 'звичайний, нормальний',
           partOfSpeech: 'adjective',
           tags: [],
         },

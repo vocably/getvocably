@@ -5,10 +5,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'noteworthy, remarkable, considerable, notable',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'notable, significant, remarkable',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -21,13 +22,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+          ipa: 'ar.riˈva.re',
+          example: '* Arrivo domani.\n* È arrivato tardi.\n* Arriviamo presto.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation:
-            'to arrive, to reach, to achieve, to attain, to go as far as / to go so far as',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'arrive, reach, achieve',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -42,12 +41,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'question, request, application, claim, demand',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'the question, the inquiry, the query',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -55,13 +52,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
+          ipa: '/kwesˈtjoːne/',
           example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
+            '* La questione è complessa.\n* Affrontiamo la questione.\n* La questione è aperta.',
           definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation:
-            'question, matter, dispute, controversy, argument, quarrel',
+            '* argomento di discussione\n* problema da risolvere\n* tema di dibattito',
+          translation: 'the issue, the question, the matter',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -74,11 +70,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            "* manutenzione dell'auto\n* costi di manutenzione\n* programma di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'maintenance, service, upkeep',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: 'maintenance, upkeep, repair',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -91,9 +88,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'notable',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'notable, significativo',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -106,12 +104,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivo domani.\n* È arrivato tardi.\n* Arriviamo presto.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'llegar, alcanzar, atreverse',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'llegar, alcanzar',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -126,12 +123,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'pregunta, solicitud, demanda',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'la pregunta, el interrogante',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -139,10 +134,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'interrogativo',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'interrogativo',
+          ipa: 'interroˈɡativo',
+          example: '* tono interrogativo\n* sguardo interrogativo',
+          definition:
+            "* che esprime una domanda\n* relativo a un'interrogazione",
+          translation: 'interrogativo, de interrogación',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -154,11 +150,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjoːne/',
+          example: "* manutenzione dell'auto\n* costi di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'mantenimiento',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari',
+          translation: 'mantenimiento, cura y reparación',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -170,10 +166,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'remarquable',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'remarquable, important, significatif',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -186,10 +183,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arriver',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'arriver',
+          ipa: 'arˈrivɛre',
+          example:
+            '* arrivare a casa\n* arrivare in tempo\n* arrivare al successo',
+          definition:
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'arriver, atteindre, réussir',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -204,12 +203,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'question, demande',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'la question, la demande',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -217,12 +214,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
+          ipa: '/kwesˈsjone/',
           example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
+            '* la questione è complessa\n* affrontare la questione\n* risolvere la questione',
           definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: 'question, problème, controverse',
+            '* problema da risolvere\n* argomento di discussione\n* interrogativo',
+          translation: 'la question, le problème',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -235,11 +232,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example: "* manutenzione dell'auto\n* costi di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'entretien',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari',
+          translation: 'entretien, maintenance',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -252,9 +249,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'beachtenswert, bemerkenswert',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* rilevante',
+      translation: 'bemerkenswert, erheblich, bedeutend',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -267,12 +265,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+          ipa: '/arːiˈvare/',
+          example: '* Arrivo domani.\n* Quando arrivi?\n* È arrivato tardi.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'ankommen, erreichen, wagen',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'ankommen, erreichen, erlangen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -287,12 +284,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'Frage, Anfrage, Nachfrage',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'die Frage, die Anfrage, das Anliegen',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -300,10 +295,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: "l'interrogazione",
-          ipa: 'interrogaˈtsjone',
-          example: "Com'è andata l'interrogazione di storia?",
-          definition: 'verifica orale della preparazione di uno studente',
-          translation: 'Mündliche Prüfung, abfrage',
+          ipa: 'linteroɡatˈtsjone',
+          example:
+            "* L'interrogazione è domani.\n* Ha superato l'interrogazione.\n* L'interrogazione parlamentare è stata presentata.",
+          definition:
+            '* domanda formale\n* esame orale\n* richiesta di informazioni',
+          translation: 'die Befragung, die mündliche Prüfung, die Anfrage',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -316,11 +313,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example: '* manutenzione della macchina\n* costi di manutenzione',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'Wartung',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'Wartung, Instandhaltung',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -332,10 +329,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: '显著的, 值得注意的',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* rilevante\n* significativo',
+      translation: '显著的, 重要的, 值得注意的',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -348,12 +345,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: '到达, 达到, 敢于',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: '到达, 抵达, 取得',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -368,12 +365,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'il problema',
-          ipa: 'proˈblɛma',
+          ipa: 'il proˈblema',
           example:
-            '* problema di geometria\n* problema filosofico\n* avere problemi',
-          definition:
-            '* quesito da risolvere attraverso calcoli, sulla base di dati noti\n* questione irrisolta\n* situazione difficile da affrontare e da risolvere',
-          translation: '问题, 难题',
+            '* risolvere un problema\n* affrontare un problema\n* problema complesso',
+          definition: '* questione da risolvere\n* difficoltà\n* complicazione',
+          translation: '问题, 难题, 困难',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -381,12 +377,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
-          example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
-          definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: '问题, 争议, 争论',
+          ipa: '/la kwesˈtjoːne/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: '问题, 议题',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -399,11 +393,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: '维护',
+          ipa: '/manuˈtɛntsjoːne/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: '维护, 保养',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -416,9 +410,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: '值得注意的, 顯著的',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: '顯著, 重要, 意義深遠',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -431,12 +425,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo a casa alle 18.\n* Quando arriverai a Roma?\n* È arrivato primo in gara.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: '到達, 達到, 敢於',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: '到達, 抵達, 達成',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -451,12 +445,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'il problema',
-          ipa: 'proˈblɛma',
+          ipa: 'il proˈblema',
           example:
-            '* problema di geometria\n* problema filosofico\n* avere problemi',
-          definition:
-            '* quesito da risolvere attraverso calcoli, sulla base di dati noti\n* questione irrisolta\n* situazione difficile da affrontare e da risolvere',
-          translation: '問題, 難題',
+            '* risolvere un problema\n* affrontare un problema\n* problema complesso',
+          definition: '* questione da risolvere\n* difficoltà\n* complicazione',
+          translation: '問題, 困難, 複雜',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -464,12 +457,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
-          example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
-          definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: '問題, 爭論, 議題',
+          ipa: '/la kwesˈtjoːne/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: '問題, 議題',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -482,11 +473,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtentsjone/',
+          example:
+            "* La manutenzione dell'auto è importante.\n* Effettuare la manutenzione regolare.",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: '維護',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: '維護, 保養',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -498,10 +490,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: '著しい, 注目に値する, 顕著な, 注目すべき',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: '注目すべき, 重要な, 意味のある',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -514,13 +506,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo a casa alle 18.\n* Quando arriverai?\n* È arrivato primo alla gara.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation:
-            '到着（とうちゃく）する, 着（つ）く, やって来（く）る, 届（とど）く, 到達（とうたつ）する, 達（たっ）する, ～するに至（いた）る, ～するまでになる, 厚（あつ）かましくも～する, 到着する',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: '到着する, 場所に達する, 結果を得る',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -535,12 +526,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: '質問, 問い, 設問, 出願, 申請, 請願, 需要',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: '質問, 問い',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -548,10 +538,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: "l'interrogazione",
-          ipa: 'interrogaˈtsjone',
-          example: "Com'è andata l'interrogazione di storia?",
-          definition: 'verifica orale della preparazione di uno studente',
-          translation: '口頭試験, 質問',
+          ipa: '/interroɡatˈtsjone/',
+          example:
+            "* L'interrogazione è stata difficile.\n* Ho preparato l'interrogazione di storia.\n* L'interrogazione parlamentare è stata presentata.",
+          definition:
+            '* domanda formale\n* esame orale\n* richiesta di informazioni',
+          translation: '質問, 口頭試験, 情報の要求',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -564,11 +556,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: '点検, 管理, 維持, メンテナンス',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'メンテナンス, 保守',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -581,9 +574,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'значительный, заметный',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: 'заметный, значительный, важный',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -596,12 +589,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo a casa alle 18.\n* Quando arriverai a Roma?\n* Finalmente è arrivato il pacco.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'прибыть, достигнуть, осмелиться',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'прибыть, достигнуть, добраться',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -616,22 +609,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'доманда',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'вопрос',
+          ipa: '/doˈmanda/',
+          example:
+            '* Ho una domanda per te.\n* La domanda è stata chiara.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* istanza',
+          translation: 'вопрос, запрос, просьба',
           partOfSpeech: 'noun',
           tags: [],
         },
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
-          example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
-          definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: 'вопрос, дело, спор',
+          ipa: '/la kwesˈtjoːne/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: 'вопрос, проблема',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -644,11 +636,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'обслуживание',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'обслуживание, ремонт',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -661,9 +653,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: '',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'importante, significativo, rilevante',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -676,12 +669,13 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: '',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation:
+            'giungere a destinazione, raggiungere un luogo, conseguire un risultato',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -696,20 +690,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'question',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'question',
+          ipa: '/kwesˈtʃone/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: 'problema, argomento',
           partOfSpeech: 'noun',
           tags: [],
         },
         {
           language: 'it',
           source: 'demand',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'demand',
+          ipa: '/deˈmand/',
+          example:
+            '* La domanda di lavoro è alta.\n* Ha fatto una richiesta formale.',
+          definition: '* richiesta\n* domanda',
+          translation: 'richiesta, domanda',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -721,11 +716,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: '',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'cura, conservazione',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -738,9 +734,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'notável',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'notável, significativo, importante',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -753,12 +750,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/arːiˈvare/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo domani.\n* È arrivato tardi.\n* Arriviamo al punto.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'chegar, alcançar, ousar, ter a ousadia',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'chegar, alcançar',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -773,12 +770,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'pergunta, requerimento, pedido, demanda',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'a pergunta, a questão, o interrogativo',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -786,10 +781,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'interrogação',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'interrogation',
+          ipa: 'interroɡaˈt͡sjoːne',
+          example:
+            "* L'interrogazione è stata difficile.\n* Ha risposto bene all'interrogazione.",
+          definition: '* atto di interrogare\n* domanda\n* esame orale',
+          translation: 'interrogação, pergunta, exame oral',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -801,11 +797,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            "* manutenzione dell'auto\n* costi di manutenzione\n* servizio di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'manutenção',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: 'manutenção, conservação',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -818,9 +815,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'ملحوظ',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'ملحوظ, بارز, مهم',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -833,12 +831,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'الوصول, البلوغ, التجرؤ, يصل',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivo a casa alle 18.\n* Quando arrivi in ufficio?',
+          definition: '* giungere a destinazione\n* raggiungere un luogo',
+          translation: 'الوصول, بلوغ',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -853,12 +849,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'سؤال, طلب, عرض',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'سؤال, استفسار, استعلام',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -871,11 +866,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'صيانة',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'الصيانة, الترميم',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -888,9 +884,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'opmerkelijk',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* rilevante',
+      translation: 'opmerkelijk, belangrijk, relevant',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -903,12 +900,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: 'ar.riˈva.re',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* arrivare a casa\n* arrivare in tempo\n* arrivare al successo',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'aankomen, bereiken, durven',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'aankomen, bereiken, verwezenlijken',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -923,12 +920,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'vraag, aanvraag, vraagstuk',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'de vraag, de aanvraag, de kwestie',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -938,10 +933,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
           source: 'la richiesta',
           ipa: 'riˈkjɛsta',
           example:
-            "* richiesta di assunzione\n* C'è una forte richiesta di personale paramedico.",
+            '* fare una richiesta\n* accettare una richiesta\n* rifiutare una richiesta',
           definition:
-            '* atto verbale o scritto con cui si chiede qualcosa\n* domanda di beni o servizi',
-          translation: 'verzoek, aanvraag',
+            '* domanda formale\n* richiesta di informazioni\n* domanda di favore',
+          translation: 'verzoek, aanvraag, informatieaanvraag',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -954,11 +949,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtentsjone/',
+          example:
+            "* manutenzione dell'auto\n* costi di manutenzione\n* programma di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'onderhoud',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: 'onderhoud, onderhoudswerk',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -971,9 +967,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: '주목할 만한',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* rilevante',
+      translation: '주목할 만한, 중요한, 관련된',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -986,12 +983,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/arːiˈvare/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* arrivare a casa\n* arrivare in tempo\n* arrivare al successo',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: '도착하다, 이르다, 가다',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: '도착하다, 장소에 도달하다, 목표를 달성하다',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1006,12 +1003,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: '질문, 신청서, 수요',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: '질문, 문의, 질의',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1024,11 +1019,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            "* la manutenzione dell'auto\n* manutenzione ordinaria\n* costi di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: '유지보수',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: '유지보수, 기계 수리, 자산 관리',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1041,9 +1037,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'महत्वपूर्ण, विशेष',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'महत्वपूर्ण, विशेष, प्रमुख',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1056,12 +1053,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'पहुंचना, मिलना, आना',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivo a casa alle 18.\n* Quando arrivi in ufficio?',
+          definition: '* giungere a destinazione\n* raggiungere un luogo',
+          translation: 'पहुंचना, स्थान पर पहुंचना',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1076,12 +1071,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'प्रश्न, आवेदन, मांग',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'प्रश्न, सवाल',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1089,10 +1083,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'interrogativo',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'प्रश्नवाचक',
+          ipa: 'interroˈɡativo',
+          example: '* tono interrogativo\n* frase interrogativa',
+          definition:
+            "* che esprime una domanda\n* relativo a un'interrogazione",
+          translation: 'प्रश्नात्मक, सवाल से संबंधित',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1104,11 +1099,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'रखरखाव',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'रखरखाव, सुधार',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1121,9 +1117,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'dikkate değer, önemli',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* importante\n* significativo',
+      translation: 'önemli, kayda değer, anlamlı',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1136,12 +1132,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'varmak, ulaşmak, gelmek',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'varmak, ulaşmak, sonuç elde etmek',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1156,12 +1152,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'soru, talep, istek',
+            '* Ho una domanda per te.\n* La domanda è semplice.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'soru, talep',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1174,11 +1169,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'bakım',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'bakım, onarım',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1191,9 +1186,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'anmärkningsvärd',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: 'anmärkningsvärd, betydande, viktig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1206,12 +1201,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'anlända, nå, våga, ankomma',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivo domani.\n* Quando arrivi?',
+          definition: '* giungere a destinazione\n* raggiungere un luogo',
+          translation: 'anlända, nå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1226,12 +1219,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'fråga, ansökan, efterfrågan',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'fråga, begäran',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1241,10 +1233,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
           source: 'la richiesta',
           ipa: 'riˈkjɛsta',
           example:
-            "* richiesta di assunzione\n* C'è una forte richiesta di personale paramedico.",
-          definition:
-            '* atto verbale o scritto con cui si chiede qualcosa\n* domanda di beni o servizi',
-          translation: 'begäran, förfrågan',
+            '* Ho fatto una richiesta di informazioni.\n* La richiesta è stata accettata.\n* Ricevono molte richieste ogni giorno.',
+          definition: '* domanda\n* sollecitazione\n* pretesa',
+          translation: 'begäran, förfrågan, ansökan',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1257,11 +1248,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'underhåll',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'underhåll, vård',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1273,10 +1265,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'betydelig, bemerkelsesverdig',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'betydelig, merkverdig, viktig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1289,13 +1282,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/arːiˈvare/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo domani.\n* È arrivato tardi.\n* Arriviamo in tempo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation:
-            'å ankomme, å komme frem, å oppnå, å nå, å rekke, å våge, å gå til ytterligheter, å få seg til',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'ankomme, nå, oppnå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1310,12 +1302,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'spørsmål, forespørsel, søknad, krav, etterspørsel',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'spørsmål, forespørsel, interrogativ',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1323,12 +1313,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: "l'interrogativo",
-          ipa: 'interrogaˈtivo',
-          example:
-            '* Sono molti gli interrogativi sulla sua morte.\n* Il futuro è un interrogativo unico.',
-          definition:
-            "* elemento d'incertezza, che genera perplessità\n* cosa misteriosa",
-          translation: 'spørsmål, tvil, perpleksitet, mysterium, gåte',
+          ipa: 'interroˈɡativo',
+          example: "* L'interrogativo rimane.\n* Un interrogativo importante.",
+          definition: '* domanda\n* quesito\n* dubbio',
+          translation: 'spørsmål, interrogativ',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1341,11 +1329,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example: "* manutenzione dell'auto\n* costi di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'vedlikehold',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari',
+          translation: 'vedlikehold, reparasjon',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1357,10 +1345,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'bemærkelsesværdig',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'bemærkelsesværdig, betydningsfuld, vigtig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1373,12 +1362,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* arrivare a casa\n* arrivare in tempo\n* arrivare al successo',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'ankomme, nå, vove',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'ankomme, nå, opnå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1393,12 +1382,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
+            '* fare una domanda\n* rispondere alla domanda\n* domanda di lavoro',
           definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'spørgsmål, anmodning, efterspørgsel',
+            '* richiesta di informazioni\n* quesito\n* richiesta di qualcosa',
+          translation: 'spørgsmål, anmodning',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1406,12 +1395,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: "l'interrogativo",
-          ipa: 'interrogaˈtivo',
-          example:
-            '* Sono molti gli interrogativi sulla sua morte.\n* Il futuro è un interrogativo unico.',
-          definition:
-            "* elemento d'incertezza, che genera perplessità\n* cosa misteriosa",
-          translation: 'spørgsmål, mysterium',
+          ipa: 'interroˈɡativo',
+          example: "* L'interrogativo rimane.\n* Un interrogativo importante.",
+          definition: '* domanda\n* quesito\n* dubbio',
+          translation: 'spørgsmål, interrogativ',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1424,11 +1411,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            "* manutenzione dell'auto\n* costi di manutenzione\n* programma di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'vedligeholdelse',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: 'vedligeholdelse, reparation',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1441,9 +1429,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'merkittävä',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: 'huomattava, merkittävä, tärkeä',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1456,12 +1444,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivo a casa alle 18.\n* Quando arriverai?\n* È arrivato primo in gara.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'saapua, saavuttaa, uskallus',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'saapua, päästä perille, saavuttaa',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1476,12 +1464,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'kysymys, hakemus, tarjous',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'kysymys, pyyntö, kysely',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1489,12 +1476,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
-          example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
-          definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: 'kysymys, asia, riita',
+          ipa: '/la kwesˈtjoːne/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: 'kysymys, ongelma',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1507,11 +1492,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/la manuˈtentsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'huolto',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'huolto, ylläpito',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1524,9 +1510,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'قابل توجه',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* significativo\n* importante',
+      translation: 'قابل توجه, معنی دار, مهم',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1539,12 +1525,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'جرأت داشتن، دست یافتن به، رسیدن',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivare in tempo.\n* Arrivare al successo.',
+          definition: '* giungere a destinazione\n* raggiungere un obiettivo',
+          translation: 'رسیدن, دستیابی به هدف',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1559,12 +1543,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
+            '* Ho una domanda per te.\n* La domanda è difficile.\n* Rispondi alla domanda.',
           definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'تقاضا، درخواست، سوال',
+            '* richiesta di informazioni\n* quesito da risolvere\n* richiesta di qualcosa',
+          translation: 'سوال, درخواست, پرسش',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1572,12 +1556,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la questione',
-          ipa: 'kwesˈtjone',
-          example:
-            '* una questione giuridica\n* questione di metodo\n* venire a questione',
-          definition:
-            '* argomento da esaminare con cura\n* contrasto di interessi o di idee\n* scontro verbale',
-          translation: 'بحث، مسئله، موضوع',
+          ipa: '/kwesˈtjoːne/',
+          example: '* La questione è complessa.\n* Affrontiamo la questione.',
+          definition: '* problema da risolvere\n* argomento di discussione',
+          translation: 'مسئله, موضوع بحث',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1590,11 +1572,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'نگهداری',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'نگهداری, تعمیر و نگهداری',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1606,10 +1589,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'znaczący, godny uwagi',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'znaczący, ważny, istotny',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1622,12 +1606,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* arrivare a casa\n* arrivare in tempo\n* arrivare al successo',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'przybyć, osiągnąć, mieć czelność',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un obiettivo',
+          translation: 'przybyć, dotrzeć, osiągnąć',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1642,12 +1626,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'pytanie, wniosek, popyt',
+          ipa: '/doˈmanda/',
+          example: '* fare una domanda\n* rispondere alla domanda',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'pytanie, zapytanie, interrogacja',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1660,11 +1642,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            "* manutenzione dell'auto\n* costi di manutenzione\n* servizio di manutenzione",
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'konserwacja',
+            '* azione di mantenere in buono stato\n* cura e riparazione di macchinari\n* conservazione di un bene',
+          translation: 'utrzymanie, konserwacja',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1677,9 +1660,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'σημαντικός',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'σημαντικός, αξιοσημείωτος',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1692,12 +1676,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            "* Sono arrivato a casa.\n* L'autobus arriva alle 8.\n* Arrivare al successo.",
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'φτάνω, καταφθάνω, αποφασίζω',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'φτάνω, καταφθάνω, επιτυγχάνω',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1712,12 +1696,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'ερώτηση, αίτηση, ζήτηση',
+            '* La domanda è chiara.\n* Ho una domanda per te.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'η ερώτηση, το ερώτημα, η αίτηση',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1730,11 +1713,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'συντήρηση',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'συντήρηση, επισκευή',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1747,9 +1731,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'בולט, בּוֹלֵט',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* significativo',
+      translation: 'בולט, חשוב, משמעותי',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1762,12 +1747,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'להגיע, לשוב, להעיז, לְהַגִּיעַ',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'להגיע, לשוב, להשיג',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1782,12 +1767,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
+            '* Ho una domanda per te.\n* La domanda è stata chiara.\n* Rispondi alla domanda.',
           definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'שאלה, בקשה, דרישה, שָׁאֵלָה',
+            '* richiesta di informazioni\n* quesito\n* richiesta formale',
+          translation: 'שאלה, בקשה',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1797,10 +1782,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
           source: 'la richiesta',
           ipa: 'riˈkjɛsta',
           example:
-            "* richiesta di assunzione\n* C'è una forte richiesta di personale paramedico.",
-          definition:
-            '* atto verbale o scritto con cui si chiede qualcosa\n* domanda di beni o servizi',
-          translation: 'בקשה, שאלה, בַּקָּשָׁה',
+            '* Ho fatto una richiesta di aiuto.\n* La richiesta è stata accettata.\n* Ricevuto una richiesta urgente.',
+          definition: '* domanda\n* sollecitazione\n* pretesa',
+          translation: 'בקשה, דרישה',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1813,11 +1797,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
           definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'תחזוקה',
+            '* cura e riparazione di qualcosa\n* conservazione in buono stato',
+          translation: 'תחזוקה, שימור',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1830,9 +1815,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'น่าพิจารณา, น่าทึ่ง',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* importante\n* significativo',
+      translation: 'สำคัญ, มีความหมาย, น่าจดจำ',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1845,12 +1830,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'มาถึง, ไปถึง, ถึง',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'มาถึง, ไปถึง, บรรลุ',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1865,12 +1850,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
+            '* Ho una domanda per te.\n* La domanda è difficile.\n* Rispondi alla domanda.',
           definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'คำถาม, คำร้อง, ความต้องการ',
+            '* richiesta di informazioni\n* quesito da risolvere\n* richiesta di qualcosa',
+          translation: 'คำถาม, คำขอ',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1883,11 +1868,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'การบำรุงรักษา',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'การบำรุงรักษา, การดูแลรักษา',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1900,9 +1885,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'đáng chú ý',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition: '* degno di nota\n* importante\n* rilevante',
+      translation: 'đáng chú ý, quan trọng, nổi bật',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1915,12 +1900,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            "* Sono arrivato a casa.\n* L'autobus arriva alle 8.\n* Arrivare al successo.",
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'đến nơi, đạt được, dám làm',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'đến nơi, đạt được, đến',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1935,12 +1920,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
-          example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'câu hỏi, đơn xin, nhu cầu',
+          ipa: '/doˈmanda/',
+          example: '* Ho una domanda per te.\n* La domanda è difficile.',
+          definition: '* richiesta di informazioni\n* quesito da risolvere',
+          translation: 'câu hỏi, yêu cầu',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1953,11 +1936,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'bảo trì',
+          ipa: '/manuˈtɛntsjoːne/',
+          example:
+            "* La manutenzione dell'auto è essenziale.\n* Richiede manutenzione regolare.",
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'bảo trì, bảo dưỡng',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1970,9 +1953,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'signifikan, menonjol',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* importante\n* significativo',
+      translation: 'penting, signifikan, perlu dicatat',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1985,12 +1968,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
+          ipa: '/ar.riˈva.re/',
           example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
+            '* Arrivare in tempo.\n* Arrivare a casa.\n* Arrivare al successo.',
           definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'tiba, mencapai, berani',
+            '* giungere a destinazione\n* raggiungere un luogo\n* conseguire un risultato',
+          translation: 'tiba, sampai, mencapai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2005,12 +1988,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
+            '* Ho una domanda per te.\n* La domanda è difficile.\n* Ha fatto una domanda al professore.',
           definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'pertanyaan, permohonan, permintaan',
+            '* richiesta di informazioni\n* quesito da risolvere\n* richiesta formale',
+          translation: 'pertanyaan, permintaan, soal',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2023,11 +2006,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'perawatan',
+          ipa: '/manuˈtentsjone/',
+          example:
+            "* La manutenzione dell'auto è essenziale.\n* Richiede manutenzione regolare.",
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'perawatan, pemeliharaan',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2039,10 +2022,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'it',
       source: 'notevole',
-      ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'ketara',
+      ipa: 'noˈtɛvole',
+      example: '* un risultato notevole\n* un progresso notevole',
+      definition:
+        '* che merita attenzione\n* di grande importanza\n* rilevante',
+      translation: 'penting, signifikan',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2055,12 +2039,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'tiba, sampai, mencapai',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivo a casa alle 18.\n* Quando arrivi in ufficio?',
+          definition: '* giungere a destinazione\n* raggiungere un luogo',
+          translation: 'tiba, sampai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2075,12 +2057,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la domanda',
-          ipa: 'doˈmanda',
+          ipa: '/doˈmanda/',
           example:
-            "* fare una domanda\n* domanda in carta bollata\n* la domanda supera l'offerta",
-          definition:
-            '* frase con cui si chiede qualcosa a qualcuno\n* richiesta formale scritta a un ufficio o autorità\n* quantità di un bene richiesta sul mercato',
-          translation: 'soalan, permohonan, permintaan',
+            '* Ho una domanda per te.\n* La domanda è semplice.\n* Rispondi alla domanda.',
+          definition: '* richiesta di informazioni\n* quesito\n* interrogativo',
+          translation: 'soalan, permintaan',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2093,11 +2074,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'penyelenggaraan',
+          ipa: '/manuˈtɛntsjone/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'penyelenggaraan, pemeliharaan',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2110,9 +2091,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
       language: 'it',
       source: 'notevole',
       ipa: 'noˈtevole',
-      example: 'una notevole somma di denaro',
-      definition: 'meritevole di considerazione',
-      translation: 'значний',
+      example: '* un risultato notevole\n* un miglioramento notevole',
+      definition: '* degno di nota\n* importante\n* significativo',
+      translation: 'значний, важливий, помітний',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2125,12 +2106,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'arrivare',
-          ipa: 'arriˈvare',
-          example:
-            "* arrivare al successo\n* L'acqua mi arriva al petto.\n* arrivare a mentire",
-          definition:
-            '* giungere a destinazione o a una meta\n* raggiungere una certa misura, a un determinato livello\n* avere la sfrontatezza di fare qualcosa',
-          translation: 'прибути, досягти, наважитися, приїхати',
+          ipa: '/ar.riˈva.re/',
+          example: '* Arrivare in tempo.\n* Arrivare al successo.',
+          definition: '* giungere a destinazione\n* raggiungere un obiettivo',
+          translation: 'прибути, досягти',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2145,10 +2124,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'доманда',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'питання',
+          ipa: '/doˈmanda/',
+          example:
+            '* Ho una domanda per te.\n* La domanda è semplice.\n* Rispondi alla domanda.',
+          definition:
+            '* richiesta di informazioni\n* quesito\n* interrogazione',
+          translation: 'запит, питання, інтерrogація',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -2160,11 +2141,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'it',
           source: 'la manutenzione',
-          ipa: 'manutenˈtsjone',
-          example: 'fare manutenzione alla caldaia',
-          definition:
-            'operazioni per mantenere in buono stato e funzionante un impianto, un edificio e sim.',
-          translation: 'обслуговування',
+          ipa: '/manuˈtɛntsjoːne/',
+          example:
+            '* La manutenzione della macchina è essenziale.\n* Richiede manutenzione regolare.',
+          definition: '* cura e riparazione\n* conservazione in buono stato',
+          translation: 'обслуговування, утримання в хорошому стані',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],

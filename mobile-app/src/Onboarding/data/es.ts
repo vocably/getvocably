@@ -5,12 +5,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'outstanding, distinguished, remarkable, notable',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una persona notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'noteworthy, remarkable, important',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -23,23 +21,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation:
-            'to arrive, to come, to become, to reach, to come/go up/down to, to manage, to mean something, to say something, to get through to',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'to go round',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'arrive, reach, achieve',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -54,11 +40,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'question',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'the question, the inquiry',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -66,12 +52,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la cuestión',
-          ipa: "kwes'tjon",
-          example:
-            '* La cuestión era difícil de solucionar.\n* Es una cuestión muy difícil de resolver.',
-          definition:
-            '* pregunta incluida en un cuestionario\n* asunto o tema de interés general o polémico',
-          translation: 'question',
+          ipa: 'kwesˈtjon',
+          example: '* La cuestión es compleja.\n* Abordaron la cuestión.',
+          definition: '* asunto que se debate\n* problema que se plantea',
+          translation: 'issue, question',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -84,12 +68,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* hacer la tarea\n* terminar la tarea\n* tarea de matemáticas',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'task, job, homework',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'homework, assignment',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -101,12 +85,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: '',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* un cambio notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'digno de atención, destacado, importante',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -119,26 +101,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: '',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'alcanzar, arribar, conseguir',
           partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'la llegada',
-          ipa: "ʎe'γaða",
-          example:
-            '* Esperamos la llegada de los huéspedes.\n* Cruzó la llegada y se desplomó.',
-          definition:
-            '* acción de alcanzar el término de un desplazamiento\n* meta de una carrera',
-          translation: '',
-          partOfSpeech: 'noun',
-          g: 'f',
           tags: [],
         },
       ],
@@ -152,20 +120,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'question',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'question',
+          ipa: '/kuˈsjon/',
+          example: '* La cuestión es complicada.\n* Esa es la cuestión.',
+          definition:
+            '* asunto que se debate\n* pregunta que se hace para obtener información',
+          translation: 'cuestión, pregunta',
           partOfSpeech: 'noun',
           tags: [],
         },
         {
           language: 'es',
           source: 'ask',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'ask',
+          ipa: 'ask',
+          example: '* ask una pregunta\n* ask por ayuda\n* ask el camino',
+          definition:
+            '* solicitar información\n* formular una pregunta\n* pedir algo',
+          translation: 'preguntar, solicitar, pedir',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -177,12 +147,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+          ipa: 'la taˈɾea',
+          example: '* hacer la tarea\n* terminar la tarea',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: '',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'trabajo asignado, deber escolar, actividad a realizar',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -194,12 +163,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'remarquable, notable',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una persona notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'remarquable, notable, important',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -212,22 +179,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'arriver, atteindre',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: "s'approcher",
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'arriver, atteindre, réussir',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -242,11 +198,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'question, interrogation',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: "la question, l'interrogation",
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -254,12 +210,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la cuestión',
-          ipa: "kwes'tjon",
-          example:
-            '* La cuestión era difícil de solucionar.\n* Es una cuestión muy difícil de resolver.',
-          definition:
-            '* pregunta incluida en un cuestionario\n* asunto o tema de interés general o polémico',
-          translation: 'question, sujet',
+          ipa: 'kwesˈtjon',
+          example: '* la cuestión es compleja\n* cuestión de tiempo',
+          definition: '* asunto que se debate\n* problema que se plantea',
+          translation: 'la question, le problème',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -272,12 +226,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* hacer la tarea\n* terminar la tarea\n* tarea de matemáticas',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'tâche, devoir',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'le devoir, la tâche',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -289,12 +243,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'bedeutend, auffällig, wahrnehmbar, bemerkenswert',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* un cambio notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'bemerkenswert, herausragend, wichtig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -307,22 +259,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'ankommen, eintrafen, erreichen',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'hingehen',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'ankommen, erreichen, gelangen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -337,11 +278,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Responder a la pregunta\n* Hacer una pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'Frage, Aufgabe',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'die Frage',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -349,12 +290,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: 'el inteɾoˈɣante',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
+            '* El interrogante sobre su paradero\n* Planteó un interrogante importante',
           definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'Frage, Unklarheit, Fragezeichen',
+            '* Pregunta que se hace para obtener información\n* Duda o cuestión que no se ha resuelto',
+          translation: 'die Frage, das Rätsel',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -367,12 +308,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* hacer la tarea\n* terminar la tarea\n* tarea de matemáticas',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'Aufgabe, Arbeit',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'die Aufgabe, die Hausaufgabe',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -384,12 +325,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: '显著, 卓越, 可察觉, 显著的',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: '显著的, 重要的, 突出的',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -402,22 +341,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: '到达, 出现, 达到',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: '到达',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: '到达, 达到',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -432,11 +359,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
-          definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: '问题, 考试题',
+          ipa: '/la pɾeˈɣunta/',
+          example:
+            '* La pregunta fue clara.\n* Respondió a la pregunta.\n* Esa pregunta es difícil.',
+          definition: '* Interrogación\n* Cuestión\n* Consulta',
+          translation: '问题, 询问',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -444,11 +371,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el problema',
-          ipa: "pɾo'βlema",
+          ipa: '/el pɾoˈβlema/',
           example:
-            '* plantear un problema\n* Resuelvan estos problemas como deberes.\n* Tiene problemas económicos.',
+            '* El problema es complejo.\n* Resolver el problema es urgente.',
           definition:
-            '* cuestión difícil que se intenta resolver o explicar\n* ejercicio consistente en encontrar un dato desconocido a partir de otros conocidos\n* conjunto de circunstancias que dificultan alcanzar un fin',
+            '* cuestión que requiere solución\n* dificultad o inconveniente',
           translation: '问题, 难题',
           partOfSpeech: 'noun',
           g: 'm',
@@ -462,12 +389,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: '任务, 作业',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: '作业, 任务',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -479,12 +404,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: '顯著, 卓越, 明顯, 著名的',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: '顯著, 重要',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -497,22 +420,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: '到達, 出現, 達成',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: '到達',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: '到達, 達成',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -527,11 +438,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el problema',
-          ipa: "pɾo'βlema",
-          example:
-            '* plantear un problema\n* Resuelvan estos problemas como deberes.\n* Tiene problemas económicos.',
+          ipa: '/el pɾoˈβlema/',
+          example: '* El problema es complejo\n* Resolver el problema',
           definition:
-            '* cuestión difícil que se intenta resolver o explicar\n* ejercicio consistente en encontrar un dato desconocido a partir de otros conocidos\n* conjunto de circunstancias que dificultan alcanzar un fin',
+            '* Cuestión que se trata de aclarar\n* Dificultad que se presenta',
           translation: '問題, 困難',
           partOfSpeech: 'noun',
           g: 'm',
@@ -540,11 +450,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la cuestión',
-          ipa: "kwes'tjon",
+          ipa: '/la kwesˈtjon/',
           example:
-            '* La cuestión era difícil de solucionar.\n* Es una cuestión muy difícil de resolver.',
-          definition:
-            '* pregunta incluida en un cuestionario\n* asunto o tema de interés general o polémico',
+            '* La cuestión es complicada.\n* Abordaron la cuestión en la reunión.',
+          definition: '* asunto que se debate\n* problema a resolver',
           translation: '問題, 議題',
           partOfSpeech: 'noun',
           g: 'f',
@@ -558,12 +467,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: '工作, 任務',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: '作業, 功課',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -575,13 +482,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation:
-        '注目（ちゅうもく）に値（あたい）する, 高名（こうめい）な, 目（め）を見張（みは）る, 注目すべき',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: '注目すべき, 目立つ, 重要な',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -594,23 +498,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation:
-            '着（つ）く, 到達（とうちゃく）する、来（く）る, 到達（とうたつ）する, 到達（とうたつ）する、来（く）る, ～するに至（いた）る, 到達（とうたつ）する、並（なら）ぶ, 響（ひび）く, 到着する',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: '近（ちか）づく、寄（よ）る',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: '到着する, 達成する',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -625,12 +516,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation:
-            '質問（しつもん） 、問（と）い, 問題（もんだい） 、質問（しつもん）',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: '質問, クエスチョン',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -638,12 +528,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: '/el inteɾoˈɣante/',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: '疑問, 質問',
+            '* El interrogante sigue sin respuesta.\n* Planteó un interrogante interesante.',
+          definition: '* Pregunta\n* Duda',
+          translation: '質問, 疑問',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -656,13 +545,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation:
-            '仕事（しごと）、作業（さぎょう）, 仕事（しごと）、宿題（しゅくだい）、課題（かだい）, タスク',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: '宿題, 課題',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -674,12 +560,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'заметный, выдающийся, значительный',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'заметный, выдающийся, важный',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -692,22 +576,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'прибыть, достигнуть, наступить, приходить',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'подойти',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegar a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'прибыть, достигнуть',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -722,11 +594,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'вопрос, задание',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: 'вопрос, задача',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -734,12 +606,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: '/el inteɾoˈɣante/',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
+            '* El interrogante sobre su paradero sigue sin respuesta\n* Planteó un interrogante difícil de resolver',
           definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'вопрос, неизвестность',
+            '* Pregunta que se hace para obtener información\n* Duda o cuestión que no se ha resuelto',
+          translation: 'вопрос, неопределенность',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -752,12 +624,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'задача, работа',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'задание, школьное задание',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -769,12 +639,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'notevole, significativo',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'notevole, importante',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -787,22 +655,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'arrivare, giungere',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'arrivare',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a la estación.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'arrivare, raggiungere',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -817,11 +673,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara.\n* Respondió a la pregunta.',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'domanda, quesito',
+            '* Interrogación para obtener información\n* Cuestión planteada para discusión',
+          translation: 'la domanda, il quesito',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -829,12 +685,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la demanda',
-          ipa: "de'manða",
+          ipa: '/la deˈmanda/',
           example:
-            '* Convocaron una huelga en demanda de mejoras salariales.\n* demandas estructurales\n* El candidato respondió a las demandas del auditorio.',
+            '* La demanda de productos aumentó.\n* Presentaron una demanda en el juzgado.',
           definition:
-            '* petición o solicitud de reclamo\n* necesidad de alguna cosa o derivada de ella\n* pedido de información',
-          translation: 'richiesta, domanda, reclamo',
+            '* Petición formal\n* Cantidad solicitada\n* Requerimiento judicial',
+          translation: 'richiesta, domanda, azione legale',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -847,12 +703,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'compito, lavoro',
+          ipa: 'la taˈɾea',
+          example: '* Tengo tarea de matemáticas.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'il compito, il lavoro assegnato',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -864,10 +718,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notável',
-      ipa: '',
-      example: '',
-      definition: '',
-      translation: 'notável',
+      ipa: 'noˈtaβel',
+      example: '* un logro notável\n* una persona notável',
+      definition: '* digno de atención\n* sobresaliente\n* destacado',
+      translation: 'notável, sobresaliente, destacado',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -880,22 +734,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'chegar, alcançar, impressionar',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'aproximar-se',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'chegar, alcançar, conseguir',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -910,11 +753,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'pergunta',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'a pergunta, a questão',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -927,12 +770,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+          ipa: 'la taˈɾea',
+          example: '* hacer la tarea\n* terminar la tarea',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'tarefa',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'a tarefa, dever de casa',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -944,12 +786,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'بارز, ملحوظ',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'ملحوظ, بارز, مهم',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -962,22 +802,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
+          ipa: '/ʎeˈɣaɾ/',
           example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+            '* Llegó a casa tarde\n* Llegamos al acuerdo\n* Llegar a la cima',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'الوصول, تحقيق الهدف, يصل',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'الوصول',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'الوصول, القدوم, تحقيق الهدف',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -992,11 +822,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'سؤال, اختبار',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: 'السؤال, استفسار',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1009,12 +839,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'مهمة, وظيفة',
+          ipa: 'la taˈɾea',
+          example: '* Tengo mucha tarea hoy.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'الواجب, المهمة',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1026,12 +854,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'opmerkelijk, vooraanstaand, opvallend',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una persona notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'opmerkelijk, uitzonderlijk, belangrijk',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1044,23 +870,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation:
-            'aankomen, aanbreken, worden, reiken, blijven, bereiken, indruk maken',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'langskomen',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'aankomen, bereiken, halen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1075,11 +889,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Responder la pregunta\n* Hacer una pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'vraag, examenvraag',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'de vraag',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1087,12 +901,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la solicitud',
-          ipa: "soliθi'tuð",
+          ipa: 'la soliθiˈtud',
           example:
-            '* ¿Has presentado la solicitud para la oposición?\n* Nos ayudó con mucha solicitud.\n* No he recibido respuesta a mi solicitud de beca.',
+            '* Enviar la solicitud\n* Completar la solicitud\n* Revisar la solicitud',
           definition:
-            '* documento en el que se hace una petición formal\n* cualidad de quien tiende a servir y a satisfacer a los demás\n* acción de solicitar',
-          translation: 'verzoekschrift, welwillendheid, verzoek, aanvraag',
+            '* Petición formal\n* Demanda de algo\n* Documento para pedir algo',
+          translation: 'aanvraag, verzoek',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1105,12 +919,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* Hice la tarea.\n* La tarea es difícil.\n* Terminé la tarea.',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'taak, huiswerk',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'de taak, huiswerk',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1122,12 +936,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: '주목할 만한, 눈에 띄는',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* un cambio notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: '주목할 만한, 두드러진, 중요한',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1140,22 +952,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: '도착하다, 발생하다, 목표에 도달하다',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: '가다',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: '도착하다, 목적지에 도착하다, 목표를 달성하다',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1170,11 +971,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: '질문, 문제',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: '질문, 물음',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1182,12 +983,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
-          example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: '질문, 의문',
+          ipa: 'el inteɾoˈɣante',
+          example: '* El interrogante es claro.\n* Resolvió el interrogante.',
+          definition: '* pregunta\n* duda\n* cuestión',
+          translation: '질문, 의문, 문제',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1200,12 +999,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* hacer la tarea\n* terminar la tarea\n* tarea de matemáticas',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: '작업, 과제',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: '과제, 숙제',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1217,12 +1016,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'महत्वपूर्ण, विशिष्ट, प्रमुख',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'महत्वपूर्ण, विशिष्ट, ध्यान देने योग्य',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1235,22 +1032,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'पहुंचना, आना, प्राप्त करना',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'पहुंचना',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegaron a un acuerdo.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'पहुंचना, लक्ष्य प्राप्त करना',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1265,10 +1050,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
           translation: 'प्रश्न, सवाल',
           partOfSpeech: 'noun',
           g: 'f',
@@ -1277,12 +1062,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: 'el inteɾoˈɣante',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'प्रश्न, सवाल',
+            '* El interrogante sobre su paradero sigue sin respuesta.\n* Hay un gran interrogante en el proyecto.',
+          definition: '* pregunta\n* duda\n* cuestión',
+          translation: 'प्रश्न, संदेह, मामला',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1295,12 +1079,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'कार्य, काम',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'कार्य, होमवर्क',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1312,12 +1094,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'önemli, dikkate değer, belirgin',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'dikkate değer, öne çıkan, önemli',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1330,22 +1110,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
           translation: 'varmak, ulaşmak',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'yaklaşmak',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1360,11 +1128,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'soru, sınav sorusu',
+            '* Interrogación para obtener información\n* Cuestión planteada para ser resuelta',
+          translation: 'soru',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1372,12 +1140,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: 'el inteɾoˈɣante',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'soru, belirsizlik',
+            '* El interrogante sobre su paradero sigue sin respuesta.\n* Hay un gran interrogante en el proyecto.',
+          definition: '* pregunta\n* duda\n* cuestión',
+          translation: 'soru, şüphe, mesele',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1390,12 +1157,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'görev, ödev',
+          ipa: 'la taˈɾea',
+          example: '* Tengo mucha tarea hoy.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'ödev, görev',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1407,12 +1172,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'uppseendeväckande, framstående, påtaglig, anmärkningsvärd',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable\n* Un cambio notable en el clima',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'anmärkningsvärd, framträdande, viktig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1425,22 +1188,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'anlända, komma, bli, nå, överleva, nå fram',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'komma förbi',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegar a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'anlända, nå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1455,11 +1206,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'fråga, förfrågan, uppgift',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: 'frågan, frågeställning',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1467,12 +1218,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: '/el inteɾoˈɣante/',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'fråga, interrogation, frågetecken',
+            '* El interrogante sobre su paradero sigue sin respuesta.\n* Planteó un interrogante importante en la reunión.',
+          definition: '* Pregunta\n* Duda',
+          translation: 'fråga, tvivel',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1485,12 +1235,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'uppgift, arbete, åtagande, läxa',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'uppgift, skoluppgift',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1502,12 +1250,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'bemerkelsesverdig, anerkjent, merkbar/-t, notabel',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una persona notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'merkverdig, fremragende, viktig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1520,23 +1266,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation:
-            'ankomme, komme (om tid), bli, oppnå, rekke opp til, oppnå, nå, treffe',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'komme seg til et sted',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'ankomme, nå, oppnå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1551,11 +1285,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'spørsmål',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'spørsmål, forespørsel',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1563,12 +1297,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: 'el inteɾoˈɣante',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'spørsmål, interrogasjon',
+            '* El interrogante sigue sin respuesta.\n* Planteó un interrogante interesante.',
+          definition: '* pregunta\n* duda\n* cuestión',
+          translation: 'spørsmål, tvil, problem',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1581,12 +1314,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'lekse, oppgave',
+          ipa: 'la taˈɾea',
+          example: '* Hacer la tarea\n* Entregar la tarea',
+          definition: '* Trabajo asignado para realizar\n* Deberes escolares',
+          translation: 'oppgave, lekser',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1598,12 +1329,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'bemærkelsesværdig, markant',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una persona notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'bemærkelsesværdig, fremtrædende, vigtig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1616,22 +1345,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'ankomme, nå, komme til',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'komme hen',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'ankomme, nå, opnå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1646,11 +1364,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Responder la pregunta\n* Hacer una pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'spørgsmål, opgave',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'spørgsmål, interrogation',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1658,12 +1376,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: 'el inteɾoˈɣante',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
+            '* El interrogante sigue sin respuesta\n* Planteó un interrogante importante',
           definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'spørgsmål, interrogation',
+            '* Pregunta que se hace para obtener información\n* Duda o cuestión que no se ha resuelto',
+          translation: 'spørgsmål, usikkerhed',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -1676,12 +1394,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* Hice la tarea.\n* La tarea es difícil.\n* Terminé la tarea.',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'opgave, arbejde',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'opgave, skolearbejde',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1693,12 +1411,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'merkittävä, huomattava',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una mejora notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'huomattava, merkittävä, erityinen',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1711,22 +1427,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'saapua, tapahtua, saavuttaa',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'saapua',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'saapua, saavuttaa',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1741,11 +1445,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'kysymys, kysymykset',
+            '* Interrogación para obtener información\n* Cuestión planteada',
+          translation: 'kysymys, kysymysmerkki',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1758,12 +1462,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'tehtävä, työ',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'tehtävä, koulujuttu',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1775,12 +1477,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'بارز، قابل توجه',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una mejora notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'قابل توجه, برجسته, مهم',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1793,22 +1493,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
+          ipa: '/ʎeˈɣaɾ/',
           example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+            '* Llegó a casa tarde.\n* Llegó a ser médico.\n* La primavera llega en marzo.',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'دستیابی، آمدن، رسیدن',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'رسیدن',
+            '* arribar a un lugar\n* alcanzar un objetivo\n* ocurrir en un momento',
+          translation: 'رسیدن, دستیابی, رخ دادن',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1823,11 +1513,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'پرسش، سوال',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: 'سوال, پرسش',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1840,12 +1530,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'وظیفه، کار',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'وظیفه, کار مدرسه',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1857,12 +1545,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'znaczący, wybitny, widoczny',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* un cambio notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'znaczący, wybitny, ważny',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1875,22 +1561,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa\n* Llegamos tarde\n* Llegar a un acuerdo',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'przybyć, zdarzyć się, osiągnąć',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'przybyć',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'przybyć, dotrzeć, osiągnąć',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1905,11 +1580,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* Hizo una pregunta\n* La pregunta es difícil',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'pytanie, zadanie egzaminacyjne',
+            '* Interrogación que se hace para obtener información\n* Cuestión que se plantea para ser resuelta',
+          translation: 'pytanie, zapytanie',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1922,12 +1597,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
+            '* hacer la tarea\n* terminar la tarea\n* tarea de matemáticas',
           definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'zadanie, praca',
+            '* trabajo asignado\n* deber escolar\n* actividad a realizar',
+          translation: 'zadanie, praca domowa, obowiązek szkolny',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1939,12 +1614,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'σημαντικός, εξαιρετικός, αντιληπτός',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una mejora notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'σημαντικός, εξαιρετικός',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1957,22 +1630,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
+          ipa: '/ʎeˈɣaɾ/',
           example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+            '* Llegó a casa tarde.\n* Llegó a ser médico.\n* La primavera llega en marzo.',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'φτάνω, καταφθάνω',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'φτάνω',
+            '* arribar a un lugar\n* alcanzar un objetivo\n* ocurrir en un momento',
+          translation: 'φτάνω, καταφθάνω, συμβαίνω',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1987,11 +1650,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
-          definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'ερώτηση, εξεταστική δραστηριότητα',
+          ipa: '/la pɾeˈɣunta/',
+          example:
+            '* La pregunta fue clara.\n* Respondió a la pregunta.\n* Esa pregunta es difícil.',
+          definition: '* Interrogación\n* Cuestión\n* Consulta',
+          translation: 'η ερώτηση, το ερώτημα',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2004,12 +1667,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'εργασία, καθήκον',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'εργασία, σχολική εργασία',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2021,12 +1682,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'בולט, ניכר',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una mejora notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'בולט, חשוב',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2039,22 +1698,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
+          ipa: '/ʎeˈɣaɾ/',
           example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+            '* Llegó a casa tarde\n* Llegamos al acuerdo\n* Llegar a la meta',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'להגיע, להשיג, לְהַגִּיעַ',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'להגיע',
+            '* Alcanzar un lugar\n* Arribar a un destino\n* Conseguir un objetivo',
+          translation: 'להגיע, לצאת לדרך',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2069,11 +1718,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'שאלה, שאלת מבחן',
+            '* Interrogación para obtener información\n* Cuestión planteada para ser resuelta',
+          translation: 'שאלה, שאלת מידע',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2081,12 +1730,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la consulta',
-          ipa: "kon'sulta",
+          ipa: 'la konˈsulta',
           example:
-            '* ¿Desea hacer alguna otra consulta?\n* Debo realizar una consulta en la biblioteca.\n* Fui a una consulta médica por mis dolores de cabeza.',
+            '* Tengo una consulta con el médico.\n* La consulta fue rápida.\n* Necesito hacer una consulta sobre el tema.',
           definition:
-            '* opinión o parecer que se pide a alguien\n* búsqueda de información\n* revisión que realiza un médico a un enfermo',
-          translation: 'ייעוץ, שאלה, בדיקה רפואית, יָעֳץ',
+            '* acción de consultar\n* reunión para deliberar\n* oficina de un médico',
+          translation: 'התייעצות, פגישה, מרפאה',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2099,12 +1748,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'משימה, מטלה',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'המשימה, שיעורי בית',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2116,12 +1763,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'เด่น, สำคัญ, เห็นได้, ที่น่าจดจำ',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'น่าจดจำ, เด่น, สำคัญ',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2134,22 +1779,12 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
+          ipa: '/ʎeˈɣaɾ/',
           example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
+            '* Llegó a casa tarde.\n* Llegó a ser médico.\n* El invierno llegó.',
           definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'มาถึง, เกิดขึ้น, บรรลุเป้าหมาย',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'ไปถึง',
+            '* arribar a un lugar\n* alcanzar un objetivo\n* ocurrir en el tiempo',
+          translation: 'มาถึง, บรรลุ, เกิดขึ้น',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2164,11 +1799,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
-          definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'คำถาม, ข้อสอบ',
+          ipa: '/la pɾeˈɣunta/',
+          example:
+            '* La pregunta fue clara.\n* Respondió a la pregunta.\n* Esa pregunta es difícil.',
+          definition: '* Interrogación\n* Cuestión\n* Consulta',
+          translation: 'คำถาม, ข้อสงสัย, การสอบถาม',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2181,12 +1816,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'งาน, การบ้าน',
+          ipa: 'la taˈɾea',
+          example: '* Tengo mucha tarea hoy.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'การบ้าน, งานที่มอบหมาย',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2198,11 +1831,9 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado',
       translation: 'nổi bật, đáng chú ý',
       partOfSpeech: 'adjective',
       tags: [],
@@ -2216,22 +1847,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'đến, xuất hiện, đạt được',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'đến',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'đến, đạt được',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2246,11 +1865,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara\n* Respondió a la pregunta',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'câu hỏi, bài kiểm tra',
+            '* Interrogación para obtener información\n* Cuestión que se plantea',
+          translation: 'câu hỏi, thắc mắc',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2263,12 +1882,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'nhiệm vụ, công việc',
+          ipa: 'la taˈɾea',
+          example: '* Tengo tarea de matemáticas.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'bài tập, nhiệm vụ học',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2280,12 +1897,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'terkenal, menonjol, signifikan',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'menonjol, penting',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2298,22 +1913,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'tiba, muncul, mencapai, datang',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'mendekat',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegaron a un acuerdo.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'tiba, mencapai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2328,11 +1931,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
+          ipa: '/la pɾeˈɣunta/',
+          example: '* La pregunta fue clara.\n* Respondió a la pregunta.',
           definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'pertanyaan, soal',
+            '* Interrogación para obtener información\n* Cuestión planteada para resolver',
+          translation: 'pertanyaan, tanya',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2345,12 +1948,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'tugas, pekerjaan',
+            '* Tengo mucha tarea para mañana.\n* La tarea es sobre matemáticas.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'tugas, pekerjaan sekolah',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2362,12 +1964,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'terkemuka, menonjol, ketara, terkenal',
+      ipa: 'noˈtaβle',
+      example: '* Un logro notable.\n* Un cambio notable en el clima.',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'ketara, terkemuka, penting',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2380,22 +1980,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: 'tiba, sampai, mencapai',
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'mendekati',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegaron a un acuerdo.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'tiba, mencapai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2410,11 +1998,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
-          definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'soalan, item ujian',
+          ipa: '/la pɾeˈɣunta/',
+          example:
+            '* La pregunta fue clara.\n* Respondió a la pregunta.\n* Esa pregunta es difícil.',
+          definition: '* Interrogación\n* Cuestión\n* Consulta',
+          translation: 'soalan, pertanyaan',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2427,12 +2015,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
+          ipa: 'la taˈɾea',
           example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'tugas, kerja',
+            '* Tengo mucha tarea para mañana.\n* La tarea es importante para el aprendizaje.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'kerja rumah, tugas sekolah',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2444,12 +2031,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'es',
       source: 'notable',
-      ipa: "no'taβle",
-      example:
-        '* comportamiento notable\n* un científico notable\n* Es notable el crecimiento de tu hijo.',
-      definition:
-        '* que se destaca del resto por su importancia o interés\n* que se destaca en una profesión o ámbito determinado\n* que puede ser percibido',
-      translation: 'значний, помітний',
+      ipa: 'noˈtaβle',
+      example: '* un logro notable\n* una mejora notable',
+      definition: '* digno de atención\n* destacado\n* importante',
+      translation: 'значний, помітний, важливий',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2462,22 +2047,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'llegar',
-          ipa: "ʎe'γaɾ",
-          example:
-            '* Llegamos al puerto a mediodía.\n* Llegó el día de la boda.\n* Esta chica llegará lejos.',
-          definition:
-            '* pasar a estar en el término de un desplazamiento o trayectoria\n* producirse o aparecer un suceso o circunstancia\n* alcanzar un objetivo determinado, en especial profesional',
-          translation: "прибути, з'явитися, досягти, приходити",
-          partOfSpeech: 'verb',
-          tags: [],
-        },
-        {
-          language: 'es',
-          source: 'llegarse',
-          ipa: "ʎe'γaɾse",
-          example: 'Llégate a por el periódico.',
-          definition: 'ir hasta un lugar que está próximo',
-          translation: 'підходити',
+          ipa: '/ʎeˈɣaɾ/',
+          example: '* Llegó a casa tarde.\n* Llegó a ser médico.',
+          definition: '* arribar a un lugar\n* alcanzar un objetivo',
+          translation: 'прибути, досягти',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2492,11 +2065,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la pregunta',
-          ipa: "pɾe'γunta",
-          example: '* hacer una pregunta\n* un examen con diez preguntas',
-          definition:
-            '* enunciado interrogativo que se emite con intención de obtener una información\n* cada una de las actividades de un examen',
-          translation: 'питання, завдання',
+          ipa: '/la pɾeˈɣunta/',
+          example:
+            '* La pregunta fue clara.\n* Respondió a la pregunta.\n* Hizo una pregunta difícil.',
+          definition: '* Interrogación\n* Cuestión\n* Consulta',
+          translation: 'питання, запит',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2504,12 +2077,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'el interrogante',
-          ipa: "intero'γante",
+          ipa: '/el inteɾoˈɣante/',
           example:
-            '* El orador respondió a los interrogantes del público una vez terminada la conferencia.\n* Su espíritu estaba lleno de interrogantes de índole religiosa.',
-          definition:
-            '* enunciado emitido con intenciones de obtener una información de su receptor\n* cuestión desconocida que genera dudas',
-          translation: 'питання, запит',
+            '* El interrogante sigue sin respuesta.\n* Planteó un interrogante interesante.',
+          definition: '* Pregunta\n* Duda',
+          translation: 'питання, сумнів',
           partOfSpeech: 'noun',
           g: 'm',
           tags: [],
@@ -2522,12 +2094,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'es',
           source: 'la tarea',
-          ipa: "ta'ɾea",
-          example:
-            '* una tarea monótona\n* Debes hacer la tarea antes de acostarte.',
-          definition:
-            '* trabajo o labor que realiza una persona\n* trabajo que debe terminarse en un tiempo determinado',
-          translation: 'завдання, робота',
+          ipa: 'la taˈɾea',
+          example: '* Tengo que hacer la tarea.\n* La tarea es para mañana.',
+          definition: '* trabajo asignado\n* deber escolar',
+          translation: 'завдання, домашнє завдання',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],

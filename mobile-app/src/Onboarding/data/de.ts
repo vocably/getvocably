@@ -5,12 +5,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'remarkable, notable',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'remarkable, noteworthy, significant',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -23,12 +22,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'to arrive, to come',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'arrive, reach, get to',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -43,11 +40,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'question, matter, issue, topic',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'question, inquiry, issue',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -55,11 +52,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'inquiry, request, question',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Erkundigung\n* Gesuch',
+          translation: 'inquiry, request',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -72,20 +68,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'most frequently',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* am häufigsten geschehen',
+          translation: 'most frequent, most often',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'frequent, common',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufig gesehen\n* häufig verwendet',
+          definition: '* oft vorkommend\n* wiederholt\n* regelmäßig',
+          translation: 'frequent, often, regularly',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -96,12 +93,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'notable, destacable',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'notable, digno de mención, destacable',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -114,12 +110,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'llegar, molestar',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'llegar, alcanzar, arribar',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -134,10 +128,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
           translation: 'pregunta, cuestión',
           partOfSpeech: 'noun',
           g: 'f',
@@ -146,11 +140,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'pregunta escrita, consulta',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Gesuch\n* Erkundigung',
+          translation: 'consulta, solicitud, pregunta',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -163,20 +156,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'más frecuentes',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* die häufigsten Fragen\n* häufigsten verwendet\n* die häufigsten Ursachen',
+          definition: '* am meisten vorkommend\n* sehr oft\n* regelmäßig',
+          translation: 'más frecuente, muy a menudo, regularmente',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'frecuente',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'frecuente, habitual, repetido',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -187,11 +181,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtlich\n* auffällig\n* erwähnenswert',
       translation: 'remarquable, notable',
       partOfSpeech: 'adjective',
       tags: [],
@@ -205,12 +198,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'arriver, importuner',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'arriver, atteindre',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -225,11 +216,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'question, problème',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'la question, demande, sujet',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -237,10 +228,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'Fragen',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'questions',
+          ipa: 'ˈfraːɡən',
+          example: '* eine Frage stellen\n* Fragen beantworten',
+          definition: '* Anfrage\n* Erkundigung\n* Problemstellung',
+          translation: 'question, demande, problématique',
           partOfSpeech: 'noun',
           tags: [],
         },
@@ -252,20 +243,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'le plus fréquent',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* die häufigsten Fragen\n* häufigsten Fehler\n* häufigsten Ursachen',
+          definition: '* am meisten vorkommend\n* sehr oft\n* in großer Zahl',
+          translation: 'le plus fréquent, très souvent, en grand nombre',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'fréquent',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'fréquent, régulier, répété',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -276,12 +268,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: '',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'beachtenswert, auffällig, erwähnenswert',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -294,12 +285,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'eintreffen, gelangen, erreichen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -314,20 +303,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'question',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'question',
+          ipa: 'ˈkʋɛst͡si̯oːn',
+          example: '* eine schwierige Frage\n* die Frage der Zeit',
+          definition: '* Frage\n* Angelegenheit\n* Problem',
+          translation: 'Frage, Angelegenheit, Problem',
           partOfSpeech: 'noun',
           tags: [],
         },
         {
           language: 'de',
           source: 'to ask',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'to ask',
+          ipa: 'ˈfʁaːɡən',
+          example:
+            '* Ich frage nach dem Weg.\n* Er fragt, ob du kommst.\n* Sie fragt nach dem Preis.',
+          definition:
+            '* eine Frage stellen\n* um Auskunft bitten\n* sich erkundigen',
+          translation: 'fragen, eine Frage stellen, sich erkundigen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -339,20 +330,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'häufigsten',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Die häufigsten Fragen\n* häufigsten Symptome\n* häufigsten Fehler',
+          definition: '* am meisten vorkommend\n* sehr oft\n* in der Regel',
+          translation: 'am meisten vorkommend, sehr oft, in der Regel',
           partOfSpeech: '',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'oft vorkommend, regelmäßig, wiederholt',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -363,12 +355,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: '显著的, 值得注意的',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig',
+      translation: '值得注意的, 显著的',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -381,12 +372,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '到达, 打扰',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir sind pünktlich angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: '到达, 抵达',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -401,11 +390,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: '问题, 询问',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: '问题, 主题',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -413,11 +402,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'das Problem',
-          ipa: 'proˈbleːm',
-          example: '* ein Problem lösen\n* Problemmüll',
-          definition:
-            '* komplizierte Aufgabe, schwierige Frage o. Ä.\n* etwas, das unangenehm ist, stört',
-          translation: '问题, 难题',
+          ipa: 'pʁoˈbleːm',
+          example:
+            '* Das Problem ist gelöst.\n* Wir haben ein Problem.\n* Ein technisches Problem trat auf.',
+          definition: '* schwierige Aufgabe\n* Störung\n* Frage',
+          translation: '问题, 难题, 困扰',
           partOfSpeech: 'noun',
           g: 'n',
           tags: [],
@@ -430,20 +419,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '最常见的',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Das ist die häufigste Frage.\n* Er besucht uns am häufigsten.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: '最常见的, 非常频繁的',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '频繁',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: '频繁, 常见',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -454,12 +444,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: '值得注意的, 引人注目的',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich',
+      translation: '引人注目, 值得注意',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -472,12 +461,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '到達, 打擾',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: '到達, 抵達, 達到',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -492,11 +480,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: '問題, 詢問',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: '問題, 主題',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -504,10 +492,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'das Problem',
-          ipa: 'proˈbleːm',
-          example: '* ein Problem lösen\n* Problemmüll',
-          definition:
-            '* komplizierte Aufgabe, schwierige Frage o. Ä.\n* etwas, das unangenehm ist, stört',
+          ipa: 'das pʁoˈbleːm',
+          example:
+            '* Das Problem ist gelöst.\n* Wir haben ein Problem.\n* Ein technisches Problem trat auf.',
+          definition: '* schwierige Aufgabe\n* Störung\n* Frage',
           translation: '問題, 困難',
           partOfSpeech: 'noun',
           g: 'n',
@@ -521,20 +509,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '最常見的',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Das ist die häufigste Frage.\n* Er besucht uns am häufigsten.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: '最常見, 非常常',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '常見',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: '常見, 經常',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -545,13 +534,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation:
-        '著（いちじる）しい, 注目（ちゅうもく）に値（あたい）する, 注目すべき',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Mut war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich',
+      translation: '注目すべき, 顕著な',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -564,12 +551,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈʔanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '着（つ）く, 面倒（めんどう）をかける, 到着する',
+            '* Der Zug kommt an.\n* Wir sind pünktlich angekommen.\n* Wann kommst du an?',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: '到着する, 着く, 達する',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -584,11 +570,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: '質問（しつもん）, 問題（もんだい）',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: '質問, 問題, テーマ',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -596,12 +582,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation:
-            '問（と）い合（あ）わせ, 質問状（しつもんじょう）, 問い合わせ',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* Eine Anfrage stellen\n* Auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Erkundigung\n* Gesuch',
+          translation: '問い合わせ, リクエスト',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -614,20 +598,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '最も頻繁に',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: '最も頻繁に, 非常に多く',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '度重（たびかさ）なる',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example:
+            '* Er besucht häufig seine Großeltern.\n* Häufige Fragen werden beantwortet.',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: '頻繁な, よくある',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -638,12 +624,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'замечательный, выдающийся',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'заметный, значительный, достойный упоминания',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -656,12 +641,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'прибывать, доставать',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir sind pünktlich angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'прибывать, достигать, приходить',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -676,11 +659,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'вопрос, проблема',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'вопрос, запрос',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -693,20 +676,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'наиболее часто',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'чаще всего, очень часто',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'часто',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'часто, регулярно, повторно',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -717,12 +701,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'notevole, significativo',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* außergewöhnlich\n* beachtlich',
+      translation: 'notevole, eccezionale',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -735,12 +718,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'arrivare, rivolgersi',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Er kam pünktlich an.',
+          definition: '* eintreffen\n* gelangen',
+          translation: 'arrivare, giungere',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -755,10 +736,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
           translation: 'domanda, questione',
           partOfSpeech: 'noun',
           g: 'f',
@@ -767,11 +748,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'interrogazione, richiesta',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Erkundigung\n* Gesuch',
+          translation: 'richiesta, domanda, inquiry',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -784,20 +764,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'più frequenti',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Das ist die häufigste Frage.\n* Er besucht uns am häufigsten.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'più frequente, molto spesso',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'frequente',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'frequente, spesso',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -808,12 +789,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'notável',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtlich\n* auffallend\n* erwähnenswert',
+      translation: 'notável, digno de nota',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -826,12 +806,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'chegar, vir',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'chegar, chegar a, alcançar',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -846,11 +824,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'pergunta, questão',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* Fragen haben',
+          definition: '* Anfrage\n* Problemstellung\n* Untersuchung',
+          translation: 'a pergunta, a questão, a indagação',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -863,20 +841,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'mais frequentes',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* die häufigsten Fragen\n* häufigsten Fehler\n* häufigsten Ursachen',
+          definition: '* am meisten vorkommend\n* sehr oft\n* gewöhnlich',
+          translation: 'mais frequente, muito frequente, comum',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'frequente',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'frequente, comum, regular',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -887,13 +866,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation:
-        '‎مُتَمَيِّزٌ‎, ‎‏ مُمَيَّزٌ ‏‎, مَلْحُوظٌ, ‎جَدِيرٌ بِالذِّكْرِ‎, ‎جَدِيرٌ بِالْمُلَاحَظَةِ‎, ملحوظ',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Mut ist bemerkenswert.',
+      definition: '* außergewöhnlich\n* beachtlich',
+      translation: 'ملحوظ, استثنائي',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -906,13 +883,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈʔanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation:
-            '‎وَصَلَ‎, ‎قَدِمَ‎, ‎أَثْقَلَ عَلَى‎, ‎ضَايَقَ‎, ‎أَزْعَجَ‎, يصل',
+            '* Der Zug kommt um 10 Uhr an.\n* Es kommt auf die Details an.\n* Er kam pünktlich an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'يصل, يبلغ, يأتي',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -927,11 +902,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: '‎سُؤَالٌ‎, ‎مَسْأَلَةٌ‎, ‎قَضِيَّةٌ‎, سؤال',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'سؤال, استفسار, موضوع',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -944,20 +919,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'الأكثر شيوعًا',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example: '* Die häufigsten Fragen\n* Die häufigsten Fehler',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'الأكثر شيوعًا, كثيرًا ما',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '‎مُتَكَرِّرٌ‎',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'متكرر, غالباً',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -968,12 +943,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'opmerkelijk',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'opmerkelijk, noemenswaardig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -986,12 +960,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'aankomen, een verzoek',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'aankomen, bereiken, gelangen',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1006,11 +978,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'vraag, vraagstuk',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'de vraag, de kwestie, het onderwerp',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1018,11 +990,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: '(aan)vraag, interpellatie, aanvraag',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Ersuchen um etwas\n* Antrag',
+          translation: 'de aanvraag, het verzoek, de vraag',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1035,20 +1006,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'meest voorkomende',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* die häufigsten Fragen\n* häufigsten Fehler\n* häufigsten Ursachen',
+          definition: '* am meisten vorkommend\n* sehr oft\n* gewöhnlich',
+          translation: 'meest voorkomende, zeer vaak, gewoonlijk',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'veelvuldig',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'vaak, regelmatig, herhaaldelijk',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1059,12 +1031,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: '주목할 만한, 눈에 띄는',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtlich\n* auffällig\n* erwähnenswert',
+      translation: '주목할 만한, 눈에 띄는, 언급할 만한',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1077,12 +1048,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '도착하다, 접근하다',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: '도착하다, 이르다, 도달하다',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1097,11 +1066,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: '질문, 문제',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: '질문, 문제, 주제',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1114,20 +1083,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: '가장 자주',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: '가장 자주, 매우 자주',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: '자주',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: '자주, 빈번한',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1138,12 +1108,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'महत्वपूर्ण, ध्यान देने योग्य',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* beachtenswert\n* auffällig',
+      translation: 'महत्वपूर्ण, विशेष',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1156,12 +1125,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'पहुंचना, बात करना, आना',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'पहुंचना, आना',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1176,10 +1144,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
           translation: 'प्रश्न, सवाल',
           partOfSpeech: 'noun',
           g: 'f',
@@ -1188,11 +1156,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
+          ipa: 'ˈanˌfʁaːɡə',
           example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'प्रश्न, अनुरोध',
+            '* Die Anfrage wurde beantwortet.\n* Er stellte eine Anfrage.',
+          definition: '* Bitte um Auskunft\n* Erkundigung',
+          translation: 'अनुरोध, पूछताछ',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1205,20 +1173,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'सबसे सामान्य',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Das ist die häufigste Frage.\n* Er besucht uns am häufigsten.',
+          definition: '* am meisten vorkommend\n* am häufigsten',
+          translation: 'अधिकतम, सबसे सामान्य',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'अक्सर',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example:
+            '* Er besucht häufig seine Großeltern.\n* Häufige Fragen werden beantwortet.',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'अक्सर, नियमित',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1229,12 +1199,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'önemli, dikkate şayan, kayda değer, mühim, dikkate değer',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'dikkate değer, kayda değer, önemli',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1247,12 +1216,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈʔanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'gelmek, varmak, ulaşmak',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'varmak, ulaşmak, gelmek',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1267,11 +1235,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'soru, sual, konu, mesele',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* Fragen beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'soru, talep, konu',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1284,20 +1252,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'en sık',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'en sık, çok sık',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'sık, yaygın',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'sık, yaygın, tekrar',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1308,12 +1277,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'anmärkningsvärd, beaktansvärd, betydelsefull',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'anmärkningsvärd, uppseendeväckande, värt att nämna',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1326,13 +1294,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation:
-            'komma, komma fram, anlända, komma dragande, komma och störa, ankomma',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Er kam pünktlich an.',
+          definition: '* eintreffen\n* gelangen',
+          translation: 'ankomma, nå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1347,11 +1312,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'fråga, problem',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'fråga, problemställning, ämne',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1359,12 +1324,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'fragen',
-          ipa: 'ˈfraːgən',
-          example:
-            '* Ich frage ihn mal, ob er Zeit hat.\n* Ich frage mich, wie lange das noch dauert.',
-          definition:
-            '* sich mit einer Frage an jemanden wenden\n* sich über etwas Gedanken machen',
-          translation: 'fråga, fråga sig',
+          ipa: 'ˈfraːɡn̩',
+          example: '* Ich frage nach dem Weg.\n* Er fragt, ob du kommst.',
+          definition: '* eine Auskunft erbitten\n* eine Frage stellen',
+          translation: 'fråga, ställa en fråga',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1376,20 +1339,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'oftast',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'oftast, mest vanligt',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'ofta förekommande, vanlig',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'vanlig, ofta',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1400,12 +1364,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'betydningsfull, bemerkelsesverdig, påfallende',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'bemerkelsesverdig, oppmerksomhetsskapende, verdig å nevne',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1418,12 +1381,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: '(an)komme, nå fram, komme her, ankomme',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'ankomme, nå, oppnå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1438,11 +1399,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'spørsmål',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'spørsmål, forespørsel, tema',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1455,20 +1416,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'hyppigst',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'hyppigst, mest vanlig',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'hyppig, ofte forekommende, utbredt',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'hyppig, ofte, regelmessig',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1479,12 +1441,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'bemærkelsesværdig, interessant',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig\n* erwähnenswert',
+      translation: 'bemærkelsesværdig, iøjnefaldende, nævneværdig',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1497,12 +1458,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'ankomme, henvende sig',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'ankomme, nå',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1517,11 +1476,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'spørgsmål, problem',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'spørgsmål, anmodning, problemstilling',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1529,11 +1488,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'forespørgsel',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Erkundigung\n* Gesuch',
+          translation: 'forespørgsel, anmodning',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1546,20 +1504,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'hyppigst',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'hyppigst, meget ofte',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'hyppig',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'hyppig, ofte, gentaget',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1570,12 +1529,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'huomattava, merkittävä, huomionarvoinen',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtenswert\n* auffällig',
+      translation: 'huomionarvoinen, erityinen',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1588,12 +1546,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'saapua, lähestyä',
+            '* Der Zug kommt an.\n* Er kam pünktlich an.\n* Wann kommst du an?',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'saapua, päästä, saavuttaa',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1608,11 +1565,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'kysymys, asia',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'kysymys, aihe',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1625,20 +1582,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'yleisimmät',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example: '* Die häufigsten Fragen\n* Die häufigsten Fehler',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'yleisin, hyvin usein',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'usein',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example:
+            '* Er besucht häufig seine Großeltern.\n* Häufige Fragen werden beantwortet.',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'usein, säännöllinen',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1649,12 +1607,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'جالب، قابل توجه',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'قابل توجه, قابل ذکر, بارز',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1667,12 +1624,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'مزاحم شدن، رسیدن',
+            '* Der Zug kommt an.\n* Er kam pünktlich an.\n* Wann kommst du an?',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'رسیدن, وارد شدن, دست یافتن',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1687,11 +1643,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'پرسش، سوال',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'سوال, پرسش',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1704,20 +1660,20 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'بیشترین',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example: '* Die häufigsten Fragen\n* Die häufigsten Fehler',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'بیشترین, بسیار زیاد',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'مکرر',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'مکرر, اغلب',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1728,12 +1684,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'godny uwagi, zauważalny',
+        '* eine bemerkenswerte Leistung\n* ein bemerkenswerter Unterschied',
+      definition: '* beachtlich\n* auffällig\n* erwähnenswert',
+      translation: 'znaczący, godny uwagi, wybitny',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1746,12 +1701,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'przybyć, natarczywie zwracać się',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'przybyć, dotrzeć, osiągnąć',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1766,11 +1719,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'pytanie, kwestia',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'pytanie, zapytanie, problem',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1783,20 +1736,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'najczęściej',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'najczęściej, bardzo często',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'częsty',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'częsty, często występujący, regularny',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1807,12 +1761,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'εντυπωσιακός, σημαντικός',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'εντυπωσιακό, σημαντικό, αξιοσημείωτο',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1825,12 +1778,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'φτάνω, ενοχλώ',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'φτάνω, καταφθάνω, φθάνω',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1845,10 +1797,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
           translation: 'ερώτηση, θέμα',
           partOfSpeech: 'noun',
           g: 'f',
@@ -1862,20 +1814,22 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'συχνότερα',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'συχνότερα, πολύ συχνά',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'συχνός',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example:
+            '* Er besucht häufig seine Großeltern.\n* Häufige Fragen werden beantwortet.',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'συχνός, τακτικός',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1886,12 +1840,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'מרשים, ש值得 לציין, ראוי לציון',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'בולט, ראוי לציון, משמעותי',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1904,12 +1857,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'להגיע, להטריד',
+          ipa: 'ˈanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Wir sind pünktlich angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'להגיע, לנחות, לצאת',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -1924,11 +1875,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'שאלה, נושא',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'שאלה, בעיה',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1936,11 +1887,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Anfrage',
-          ipa: 'ˈanfraːgə',
-          example:
-            '* Zu ihrer Anfrage teilen wir Ihnen mit, dass ...\n* eine parlamentarische Anfrage',
-          definition: 'schriftliche Frage von Abgeordneten an die Regierung',
-          translation: 'שאלה, בקשה',
+          ipa: 'ˈanˌfʁaːɡə',
+          example: '* eine Anfrage stellen\n* auf eine Anfrage antworten',
+          definition: '* Bitte um Auskunft\n* Erkundigung\n* Gesuch',
+          translation: 'בקשה, שאלה',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -1953,20 +1903,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'הנפוצים ביותר',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Das ist die häufigste Frage.\n* Er besucht uns am häufigsten.',
+          definition: '* am meisten vorkommend\n* am häufigsten',
+          translation: 'הנפוץ ביותר, הכי נפוץ',
           partOfSpeech: 'adjective',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'תדיר',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'תדיר, לעיתים קרובות',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -1977,12 +1928,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'น่าทึ่ง, น่าสนใจ, น่าจดจำ',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Mut war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich',
+      translation: 'น่าจดจำ, น่าพิจารณา',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -1995,12 +1945,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈʔanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'มาถึง, เข้าหา',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Er kam pünktlich an.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'มาถึง, ไปถึง, ถึง',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2015,11 +1964,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'คำถาม, ปัญหา',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'คำถาม, ปัญหา, หัวข้อ',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2032,20 +1981,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'บ่อยที่สุด',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'บ่อยที่สุด, บ่อยมาก',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'บ่อย',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'บ่อย, เป็นประจำ',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2056,12 +2006,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'đáng chú ý, nổi bật',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'đáng chú ý, nổi bật, đáng kể',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2074,12 +2023,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
-          example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'đến nơi, gây phiền',
+          ipa: 'ˈʔanˌkɔmən',
+          example: '* Der Zug kommt an.\n* Er kam pünktlich an.',
+          definition: '* eintreffen\n* gelangen',
+          translation: 'đến nơi, đến',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2094,11 +2041,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'câu hỏi, vấn đề',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'câu hỏi, vấn đề, chủ đề',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2111,20 +2058,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'thường xuyên nhất',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'thường xuyên nhất, rất thường',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'thường xuyên',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'thường xuyên, hay xảy ra',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2135,12 +2083,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'menarik, patut dicatat',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* beachtenswert\n* auffällig',
+      translation: 'menarik, patut diperhatikan',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2153,12 +2100,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'tiba, mengganggu',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'tiba, sampai, mencapai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2173,11 +2119,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'pertanyaan, masalah',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'pertanyaan, tanya',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2190,20 +2136,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'paling sering',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'paling sering, sangat sering',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'sering',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'sering, biasa, berulang',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2214,12 +2161,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'menarik, hebat',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'menarik, patut diperhatikan, perlu disebut',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2232,12 +2178,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'tiba, datang',
+            '* Der Zug kommt an.\n* Er kam pünktlich an.\n* Wann kommen wir an?',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'tiba, sampai, mencapai',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2252,10 +2197,10 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* die Frage beantworten\n* eine schwierige Frage',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
           translation: 'soalan, pertanyaan',
           partOfSpeech: 'noun',
           g: 'f',
@@ -2269,20 +2214,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'paling sering',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'paling kerap, sangat sering',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'sering',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche\n* häufige Fehler',
+          definition: '* oft vorkommend\n* regelmäßig\n* wiederholt',
+          translation: 'sering, kerap, berulang',
           partOfSpeech: 'adjective',
           tags: [],
         },
@@ -2293,12 +2239,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
     welcomeScreenCard: {
       language: 'de',
       source: 'bemerkenswert',
-      ipa: 'bəˈmɛrkənsveːɐt',
+      ipa: 'bəˈmɛʁkənzˌvɛʁt',
       example:
-        '* bemerkenswerte Fortschritte machen\n* Das ist nur insofern bemerkenswert, als ...',
-      definition:
-        '* in positiver Weise auffallend\n* so interessant, dass man sich darüber äußert',
-      translation: 'помітний, значний',
+        '* Das ist eine bemerkenswerte Leistung.\n* Sein Verhalten war bemerkenswert.',
+      definition: '* auffällig\n* beachtlich\n* erwähnenswert',
+      translation: 'помітний, значний, вартий уваги',
       partOfSpeech: 'adjective',
       tags: [],
     },
@@ -2311,12 +2256,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'ankommen',
-          ipa: 'ˈankɔmən',
+          ipa: 'ˈʔanˌkɔmən',
           example:
-            '* Wann kommt der Zug an?\n* Komm mir dann aber nicht an und bitte um mehr Geld.',
-          definition:
-            '* das Ziel eines Weges, einer Fahrt erreichen\n* sich an jemanden wenden und ihn belästigen',
-          translation: 'прибути, набридати',
+            '* Der Zug kommt an.\n* Wir kommen um 18 Uhr an.\n* Das Paket ist angekommen.',
+          definition: '* eintreffen\n* gelangen\n* erreichen',
+          translation: 'прибути, достигнути, досягти',
           partOfSpeech: 'verb',
           tags: [],
         },
@@ -2331,11 +2275,11 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'die Frage',
-          ipa: 'ˈfraːgə',
-          example: '* Prüfungsfrage\n* eine Frage anschneiden',
-          definition:
-            '* sprachliche Äußerung, mit der man um Informationen bittet\n* ein Problem, eine Angelegenheit oder ein Thema, mit dem man sich beschäftigt',
-          translation: 'питання, запит',
+          ipa: 'ˈfʁaːɡə',
+          example:
+            '* eine Frage stellen\n* eine schwierige Frage\n* Fragen beantworten',
+          definition: '* Anfrage\n* Problemstellung\n* Thema',
+          translation: 'запит, проблема, тема',
           partOfSpeech: 'noun',
           g: 'f',
           tags: [],
@@ -2348,20 +2292,21 @@ export const onboardingCollection: MobileOnboardingDataCollection = {
         {
           language: 'de',
           source: 'häufigsten',
-          ipa: '',
-          example: '',
-          definition: '',
-          translation: 'найчастіше',
+          ipa: 'ˈhɔɪ̯fɪçstən',
+          example:
+            '* Er besucht uns am häufigsten.\n* Das ist die häufigste Frage.',
+          definition: '* am meisten vorkommend\n* sehr oft',
+          translation: 'найчастіше, дуже часто',
           partOfSpeech: 'adverb',
           tags: [],
         },
         {
           language: 'de',
           source: 'häufig',
-          ipa: 'ˈhɔyfɪç',
-          example: 'ein häufiger Fehler',
-          definition: 'oft auftretend',
-          translation: 'частий',
+          ipa: 'ˈhɔɪ̯fɪç',
+          example: '* häufige Fragen\n* häufige Besuche',
+          definition: '* oft vorkommend\n* regelmäßig',
+          translation: 'частий, регулярний',
           partOfSpeech: 'adjective',
           tags: [],
         },
