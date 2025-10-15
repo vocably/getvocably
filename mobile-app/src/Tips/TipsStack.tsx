@@ -38,7 +38,7 @@ export const TipsStack: FC = () => {
       />
       <Stack.Screen
         name="HowToImportAndExport"
-        options={{ title: `Import/export` }}
+        options={{}}
         component={HowToImportAndExportScreen}
       />
       <Stack.Screen

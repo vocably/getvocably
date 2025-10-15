@@ -1,6 +1,6 @@
+import { LexicalaLanguage } from '@vocably/model';
 import { isFunction } from 'lodash-es';
 import { Headword } from './lexicala';
-import { LexicalaLanguage } from './lexicala/lexicalaLanguageMapper';
 import { vowels } from './vowels';
 
 type ArticleRules = {

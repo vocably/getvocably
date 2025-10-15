@@ -1,8 +1,8 @@
 import { Result, Translation } from '@vocably/model';
+import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { extractItemTranslation } from '../extractTranslation/extractItemTranslation';
 import { googleTranslate } from '../googleTranslate';
 import { LexicalaSearchResultItem } from '../lexicala';
-import { languageToLexicalaLanguage } from '../lexicala/lexicalaLanguageMapper';
 import { JapaneseHeadwords } from './extractJapaneseHeadwords';
 
 type Payload = {

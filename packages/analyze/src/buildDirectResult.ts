@@ -6,6 +6,7 @@ import {
   Result,
   Translation,
 } from '@vocably/model';
+import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { trimArticle } from '@vocably/sulna';
 import { buildDirectResultLegacy } from './buildDirectResultLegacy';
 import { combineItems } from './combineItems';
@@ -13,7 +14,6 @@ import { filterOutByPartOfSpeech } from './filterOutByPartOfSpeech';
 import { fitsTheSize } from './fitsTheSize';
 import { getWords } from './isOneWord';
 import { lexicala, LexicalaOverriddenParams } from './lexicala';
-import { languageToLexicalaLanguage } from './lexicala/lexicalaLanguageMapper';
 import { lexicalaSearchResultToAnalysisItem } from './lexicala/lexicalaSearchResultToAnalysisItem';
 import { normalizeHeadword } from './lexicala/normalizeHeadword';
 import { lexicalaItemHasDefinitionOrCanBeTranslated } from './lexicalaItemHasDefinitionOrCanBeTranslated';

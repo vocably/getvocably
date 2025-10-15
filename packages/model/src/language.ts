@@ -327,6 +327,36 @@ const NLPLanguages = [
   'zu',
 ] as const;
 
+export const LexicalaLanguages = [
+  'ar',
+  'br',
+  'cs',
+  'de',
+  'da',
+  'el',
+  'en',
+  'es',
+  'fr',
+  'he',
+  'hi',
+  'it',
+  'ja',
+  'ko',
+  'la',
+  'nl',
+  'no',
+  'pl',
+  'pt',
+  'ru',
+  'sv',
+  'th',
+  'tr',
+  'tw',
+  'zh',
+] as const;
+
+export type LexicalaLanguage = typeof LexicalaLanguages[number];
+
 export type NLPLanguage = typeof NLPLanguages[number];
 
 const GoogleNLPLanguageMap: Partial<Record<GoogleLanguage, NLPLanguage>> = {

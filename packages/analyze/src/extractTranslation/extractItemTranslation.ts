@@ -1,5 +1,5 @@
+import { LexicalaLanguage } from '@vocably/model';
 import { LexicalaSearchResultItem, LexicalaTranslation } from '../lexicala';
-import { LexicalaLanguage } from '../lexicala/lexicalaLanguageMapper';
 
 export const extractItemTranslation = (
   item: Pick<LexicalaSearchResultItem, 'senses'>,

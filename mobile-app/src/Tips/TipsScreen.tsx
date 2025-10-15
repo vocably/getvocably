@@ -1,9 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
+import { isGoogleLanguage } from '@vocably/model';
+import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { usePostHog } from 'posthog-react-native';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Linking, Platform, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LanguagesContext } from '../languages/LanguagesContainer';
 import { useTranslationPreset } from '../TranslationPreset/useTranslationPreset';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
@@ -17,6 +20,12 @@ export const TipsScreen: FC<Props> = () => {
   const posthog = usePostHog();
 
   const translationPreset = useTranslationPreset();
+
+  const { languages } = useContext(LanguagesContext);
+
+  const isExportAvailable = languages.some(
+    (lng) => isGoogleLanguage(lng) && languageToLexicalaLanguage(lng) === null
+  );
 
   if (translationPreset.status !== 'known') {
     return <></>;
@@ -45,7 +54,7 @@ export const TipsScreen: FC<Props> = () => {
       <CustomSurface style={{ marginBottom: 32 }}>
         <ListItem
           order="first"
-          title="How to edit cards"
+          title="Edit cards"
           onPress={() => {
             navigation.navigate('HowToEditCards');
             posthog.capture('tip-edit-card-clicked');
@@ -56,7 +65,7 @@ export const TipsScreen: FC<Props> = () => {
         <Divider style={{ alignSelf: 'stretch' }} />
         <ListItem
           order="middle"
-          title="How to group cards (in folders)"
+          title="Group cards (in folders)"
           onPress={() => {
             navigation.navigate('HowToGroupCards');
             posthog.capture('tip-group-cards-clicked');
@@ -67,18 +76,20 @@ export const TipsScreen: FC<Props> = () => {
         <Divider style={{ alignSelf: 'stretch' }} />
         <ListItem
           order="middle"
-          title="How to import and export"
+          title={isExportAvailable ? 'Import and export' : 'Import from CSV'}
           onPress={() => {
             navigation.navigate('HowToImportAndExport');
             posthog.capture('tip-import-export-clicked');
           }}
-          leftIcon="swap-vertical"
+          leftIcon={
+            isExportAvailable ? 'swap-vertical' : 'file-delimited-outline'
+          }
           rightIcon="menu-right"
         ></ListItem>
         <Divider style={{ alignSelf: 'stretch' }} />
         <ListItem
           order="last"
-          title="How to view study plan"
+          title="Study plan"
           onPress={() => {
             navigation.navigate('HowToViewStudyStatistics');
             posthog.capture('tip-view-stats-clicked');
