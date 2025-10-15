@@ -25,12 +25,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Widerstandsfähigkeit',
-      ipa: 'ˈviːdɐʃtanʦfɛːɪçkait',
-      example: 'die Widerstandsfähigkeit eines Materials testen',
+      ipa: '',
+      example: '',
       definition: '',
       translation: 'устойчивость',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -44,14 +43,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Schwelle',
-      ipa: 'ˈʃvɛlə',
-      example:
-        '* die Braut über die Schwelle tragen\n* Schwellen legen\n* Die Hemmschwelle, so etwas zu tun, ist hoch.',
-      definition:
-        '* Abschluss einer Türöffnung am Fußboden\n* eines der Stücke Holz oder Beton, auf denen die Schienen liegen\n* äußerstes Maß von etwas',
-      translation: 'порог, рельсовая подушка, предел',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'порог, пороговая доска, граница',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -65,13 +61,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Anordnung',
-      ipa: 'ˈan|ɔrdnʊŋ',
-      example:
-        '* eine gefällige Anordnung der Blumen in Vasen\n* eine Anordnung befolgen',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'распоряжение',
+      translation: 'распоряжение, порядок',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -85,12 +79,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Auswirkung',
-      ipa: 'ˈausvɪrkʊŋ',
-      example: 'Diese Substanz könnte Auswirkungen auf die Gesundheit haben.',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'влияние',
+      translation: 'влияние, последствие',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -104,14 +97,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'das Ergebnis',
-      ipa: 'ɛɐˈgeːpnɪs',
-      example:
-        '* Das Ergebnis zu Aufgabe 2 lautet 32.\n* ein gutes Wahlergebnis erzielen\n* Zu welchem Ergebnis ist der Ausschuss gekommen?',
-      definition:
-        '* Die Zahl, die man bekommt, wenn man etwas berechnet\n* Folge eines Ereignisses / einer Handlung\n* das, was beim Nachdenken herauskommt',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'результат, итог',
       partOfSpeech: 'noun',
-      g: 'n',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -125,11 +115,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'anerkennen',
-      ipa: 'ˈan|ɛɐkɛnən',
-      example:
-        '* anerkennende Worte\n* Wird mein Führerschein in den USA anerkannt?\n* Du musst anerkennen, dass er sich bemüht hat.',
-      definition:
-        '* positiv beurteilen\n* offiziell als gültig akzeptieren\n* respektieren oder akzeptieren',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'признавать, признавать официально, уважать',
       partOfSpeech: 'verb',
       tags: [],
@@ -145,11 +133,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'halten',
-      ipa: 'ˈhaltən',
-      example:
-        '* Er hielt sich den Kopf vor Schmerzen.\n* die Arme gestreckt halten\n* Der Reifen hält die Luft nicht mehr.',
-      definition:
-        '* mit der Hand o. Ä. fassen und nicht loslassen\n* in eine Position bringen und in dieser Position lassen\n* bewirken, dass etwas an einer Stelle bleibt',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'держать, удерживать, сохранять',
       partOfSpeech: 'verb',
       tags: [],
@@ -165,11 +151,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'widmen',
-      ipa: 'ˈvɪtmən',
-      example:
-        '* Er hat seinen ersten Roman seiner Mutter gewidmet.\n* sein Leben dem Kampf gegen die Armut widmen',
-      definition:
-        '* jemandem als Ausdruck der Verbundenheit etwas symbolisch schenken\n* ausschließlich für jemanden / etwas verwenden',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'посвящать, уделять',
       partOfSpeech: 'verb',
       tags: [],
@@ -185,10 +169,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'rechtfertigen',
-      ipa: 'ˈrɛçtfɛrtɪgən',
+      ipa: '',
       example: '',
       definition: '',
-      translation: 'оправдывать',
+      translation: 'оправдывать, обосновывать',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -203,12 +187,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Vernachlässigung',
-      ipa: 'fɛɐˈnaːxlɛsɪgʊŋ',
-      example: 'die Vernachlässigung seiner Pflichten',
+      ipa: '',
+      example: '',
       definition: '',
       translation: 'пренебрежение',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -222,10 +205,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'überreden',
-      ipa: 'yːbɐˈreːdən',
-      example: 'Er ließ sich zum Kauf des Autos überreden.',
-      definition:
-        'so lange mit jemandem sprechen, bis er nachgibt und etwas tut',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'уговорить',
       partOfSpeech: 'verb',
       tags: [],
@@ -241,8 +223,8 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'schrittweise',
-      ipa: 'ˈʃrɪtvaizə',
-      example: 'etwas wird schrittweise eingeführt / geändert',
+      ipa: '',
+      example: '',
       definition: '',
       translation: 'постепенно',
       partOfSpeech: 'adverb',
@@ -262,7 +244,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
       ipa: '',
       example: '',
       definition: '',
-      translation: 'имплицитный',
+      translation: 'неявный',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -313,12 +295,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'rund',
-      ipa: 'rʊnt',
-      example:
-        '* runde und eckige Bausteine\n* Im fünften Monat wird ihr Bauch allmählich rund.\n* ein Tisch mit runden Kanten',
-      definition:
-        '* mit einem Kreis als Grundform\n* mit viel Fleisch, gewölbt\n* nicht kantig',
-      translation: 'круглый, пухлый, гладкий',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'круглый, округлый',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -333,12 +313,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'ausreichend',
-      ipa: 'ˈausraiçənt',
-      example:
-        '* in ausreichender Zahl / Menge vorhanden sein\n* ein Ausreichend bekommen',
-      definition:
-        '* so, dass es nicht zu wenig ist\n* relativ schlechte Note an deutschen Schulen, mit der man eine Prüfung aber noch bestanden hat',
-      translation: 'достаточный, удовлетворительный, достаточно',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'достаточно, удовлетворительно',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -353,11 +331,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'hartnäckig',
-      ipa: 'ˈhartnɛkɪç',
-      example:
-        '* trotz hartnäckiger Versuche nichts erreichen\n* Er hat eine sehr hartnäckige Akne.',
-      definition:
-        '* ein Ziel oder Verhalten mit Ausdauer verfolgend\n* lang anhaltend, nicht wegzubekommen',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'упорный, настойчивый',
       partOfSpeech: 'adjective',
       tags: [],
@@ -373,10 +349,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'umfassend',
-      ipa: 'ʊmˈfasənt',
-      example:
-        '* umfassende Kenntnisse in einem Gebiet haben\n* ein umfassendes Geständnis ablegen',
-      definition: '* sehr vieles beinhaltend, erfassend\n* vollständig',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'всеобъемлющий, полный',
       partOfSpeech: 'adjective',
       tags: [],
@@ -392,8 +367,8 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'entzückend',
-      ipa: 'ɛntˈʦʏkənt',
-      example: 'Was für ein entzückendes Mädchen / Kleid!',
+      ipa: '',
+      example: '',
       definition: '',
       translation: 'очаровательный',
       partOfSpeech: 'adjective',
@@ -410,11 +385,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'zurückhaltend',
-      ipa: 'ʦuˈrʏkhaltənt',
-      example:
-        '* eine zurückhaltende Schülerin\n* eine zurückhaltende Wachstumsprognose',
-      definition:
-        '* ruhig und unauffällig, sich nicht um Aufmerksamkeit bemühend\n* wenig intensiv, emotional oder ausgeprägt',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'сдержанный, скромный',
       partOfSpeech: 'adjective',
       tags: [],
@@ -430,10 +403,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'widerwillig',
-      ipa: 'ˈviːdɐvɪlɪç',
-      example: 'ein widerwilliges Zugeständnis',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'неохотно',
+      translation: 'неохотно, сопротивляясь',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -448,11 +421,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'bedeutsam',
-      ipa: "bə'dɔytzaːm",
-      example:
-        '* eine bedeutsame Entwicklung / Leistung\n* Sie warf ihm einen bedeutsamen Blick zu.',
-      definition: '* bedeutend\n* ohne Worte Informationen gebend',
-      translation: 'значительный, значимый',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'значительный, существенный',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,

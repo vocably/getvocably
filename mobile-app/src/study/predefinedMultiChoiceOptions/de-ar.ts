@@ -7,12 +7,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Integrität',
-      ipa: 'ɪntegriˈtɛːt',
-      example: 'Ihre Integrität steht außer Zweifel.',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'نزاهة',
+      translation: 'النزاهة',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -26,12 +25,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Widerstandsfähigkeit',
-      ipa: 'ˈviːdɐʃtanʦfɛːɪçkait',
-      example: 'die Widerstandsfähigkeit eines Materials testen',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'مقاومة',
+      translation: 'المرونة, القدرة على المقاومة',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -45,14 +43,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Schwelle',
-      ipa: 'ˈʃvɛlə',
-      example:
-        '* die Braut über die Schwelle tragen\n* Schwellen legen\n* Die Hemmschwelle, so etwas zu tun, ist hoch.',
-      definition:
-        '* Abschluss einer Türöffnung am Fußboden\n* eines der Stücke Holz oder Beton, auf denen die Schienen liegen\n* äußerstes Maß von etwas',
-      translation: '‎عَتَبَةٌ‎, ‎عَارِضَةٌ‎, ‎حَدٌّ‎, ‎مُسْتَوَى‎, عتبة',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'عتبة, حد, مستوى',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -66,14 +61,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Anordnung',
-      ipa: 'ˈan|ɔrdnʊŋ',
-      example:
-        '* eine gefällige Anordnung der Blumen in Vasen\n* eine Anordnung befolgen',
+      ipa: '',
+      example: '',
       definition: '',
-      translation:
-        '‎تَنْسِيقٌ‎, ‎تَنْظِيمٌ‎, ‎تَرْتِيبٌ‎, ‎أَمْرٌ‎, ‎مَرْسُومٌ‎, ترتيب',
+      translation: 'التوجيه, الترتيب',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -87,12 +79,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Auswirkung',
-      ipa: 'ˈausvɪrkʊŋ',
-      example: 'Diese Substanz könnte Auswirkungen auf die Gesundheit haben.',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: '‎تَأْثِيرٌ‎, ‎نَتِيجَةٌ‎, أثر',
+      translation: 'التأثير, النتيجة',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -106,15 +97,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'das Ergebnis',
-      ipa: 'ɛɐˈgeːpnɪs',
-      example:
-        '* Das Ergebnis zu Aufgabe 2 lautet 32.\n* ein gutes Wahlergebnis erzielen\n* Zu welchem Ergebnis ist der Ausschuss gekommen?',
-      definition:
-        '* Die Zahl, die man bekommt, wenn man etwas berechnet\n* Folge eines Ereignisses / einer Handlung\n* das, was beim Nachdenken herauskommt',
-      translation:
-        '‎نَاتِجٌ‎, ‎حَاصِلٌ‎, ‎نَتِيجَةٌ‎, ‎خُلَاصَةٌ‎, ‎اِسْتِنْتَاجٌ‎, نتيجة',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'النتيجة, النتائج',
       partOfSpeech: 'noun',
-      g: 'n',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -128,13 +115,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'anerkennen',
-      ipa: 'ˈan|ɛɐkɛnən',
-      example:
-        '* anerkennende Worte\n* Wird mein Führerschein in den USA anerkannt?\n* Du musst anerkennen, dass er sich bemüht hat.',
-      definition:
-        '* positiv beurteilen\n* offiziell als gültig akzeptieren\n* respektieren oder akzeptieren',
-      translation:
-        '‎قَدَّرَ‎, ‎اِسْتَحْسَنَ‎, ‎أَقَرَّ‎, ‎اِعْتَمَدَ‎, ‎بِـ‎ اِعْتَرَفَ, يُعترف',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'يُقَدِّر, يُعَتَبَر, يُحترم',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -149,13 +133,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'halten',
-      ipa: 'ˈhaltən',
-      example:
-        '* Er hielt sich den Kopf vor Schmerzen.\n* die Arme gestreckt halten\n* Der Reifen hält die Luft nicht mehr.',
-      definition:
-        '* mit der Hand o. Ä. fassen und nicht loslassen\n* in eine Position bringen und in dieser Position lassen\n* bewirken, dass etwas an einer Stelle bleibt',
-      translation:
-        '‎أَمْسَكَ‎, ‎حَمَلَ‎, ‎أَبْقَى‎, ‎ثَبَّتَ‎, ‎سَنَدَ‎, ‎‏ حَمَلَهُ عَلَى الْاِسْتِمْرَارِ‎, ‎‏ حَرِصَ عَلَى‏‎, ‎حَافَظَ عَلَى‎, اِلْتَزَمَ بِـ, ‎حَافَظَ‎, ‎أَبْقَى ‏‎, اِحْتَفَظَ بِـ, ‎ظَلَّ عَلَى حَالِتِهِ الجَّيِّدَةِ‎, ‎‏ دَامَ ‏‎, ‎‏ اِسْتَمَرَّ ‏‎, ‎‏ صَمَدَ ‏‎, ‎تَحَمَّلَ‎, ‎تَمَاسَكَ‎, ‎صَدَّ‎, ‎آَوَى‎, ‎حَاضَرَ‎, ‎أَلْقَى مُحَاضَرَةً/دَرْسًا/..‏‎, ‎‏ تَوَقَّفَ‎, يمسك',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'يمسك, يحتفظ, يمنع',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -170,12 +151,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'widmen',
-      ipa: 'ˈvɪtmən',
-      example:
-        '* Er hat seinen ersten Roman seiner Mutter gewidmet.\n* sein Leben dem Kampf gegen die Armut widmen',
-      definition:
-        '* jemandem als Ausdruck der Verbundenheit etwas symbolisch schenken\n* ausschließlich für jemanden / etwas verwenden',
-      translation: '‎أَهْدَى‎, ‎خَصَّصَ‎, ‎أَوْقَفَ‎, يكرّس',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'تكريس, إهداء',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -190,10 +169,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'rechtfertigen',
-      ipa: 'ˈrɛçtfɛrtɪgən',
+      ipa: '',
       example: '',
       definition: '',
-      translation: 'يبرر',
+      translation: 'تبرير, يبرر',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -208,12 +187,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'die Vernachlässigung',
-      ipa: 'fɛɐˈnaːxlɛsɪgʊŋ',
-      example: 'die Vernachlässigung seiner Pflichten',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: '‎اِهْمَالٌ, ‎تَقْصِيرٌ‎, ‎تَفْرِيطٌ‎, إهمال',
+      translation: 'الإهمال',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -227,11 +205,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'überreden',
-      ipa: 'yːbɐˈreːdən',
-      example: 'Er ließ sich zum Kauf des Autos überreden.',
-      definition:
-        'so lange mit jemandem sprechen, bis er nachgibt und etwas tut',
-      translation: '‎أَقْنَعَ‎, ‎غَلَبَ بِالحُجَّةِ‎, إقناع',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'إقناع',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -246,10 +223,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'schrittweise',
-      ipa: 'ˈʃrɪtvaizə',
-      example: 'etwas wird schrittweise eingeführt / geändert',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: '‎تَدْرِيجِيًّا‎, خطوة بخطوة',
+      translation: 'تدريجياً',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -264,10 +241,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'implizit',
-      ipa: 'ɪmpliˈʦiːt',
+      ipa: '',
       example: '',
-      definition:
-        'in einer Äußerung indirekt enthalten, aber nicht ausdrücklich gesagt',
+      definition: '',
       translation: 'ضمني',
       partOfSpeech: 'adjective',
       tags: [],
@@ -301,10 +277,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'sofort',
-      ipa: 'zoˈfɔrt',
-      example: '* Soforthilfe\n* Einen Moment, ich komme sofort!',
-      definition: '* ohne Pause oder Verzögerung\n* in ganz kurzer Zeit',
-      translation: '‎فَوْرًا‎, ‎فِي الْحَالِ‎, ‎بَعْدَ قَلِيلٍ‎, فوراً',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'فوراً, على الفور',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -319,13 +295,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'rund',
-      ipa: 'rʊnt',
-      example:
-        '* runde und eckige Bausteine\n* Im fünften Monat wird ihr Bauch allmählich rund.\n* ein Tisch mit runden Kanten',
-      definition:
-        '* mit einem Kreis als Grundform\n* mit viel Fleisch, gewölbt\n* nicht kantig',
-      translation:
-        '‎مُسْتَدِيرٌ‎, ‎دَائِرِيٌّ‎, ‎مُمْتَلِئٌ‎, ‎مُكْتَنِزٌ‎, ‎غَيْرُ حَادِّ الزَّوَايَا‎, ‎ذُو أَطْرَافٍ دَائِريَّةٍ‎, ‎تَقْرِيبِيٌّ‎, مدور',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'مدور, مستدير',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -340,12 +313,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'ausreichend',
-      ipa: 'ˈausraiçənt',
-      example:
-        '* in ausreichender Zahl / Menge vorhanden sein\n* ein Ausreichend bekommen',
-      definition:
-        '* so, dass es nicht zu wenig ist\n* relativ schlechte Note an deutschen Schulen, mit der man eine Prüfung aber noch bestanden hat',
-      translation: '‎كَافٍ‎, ‎وَافِرٌ‎, ‎مَقْبُولٌ‎, كافٍ',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'كافٍ, مقبول',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -360,13 +331,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'hartnäckig',
-      ipa: 'ˈhartnɛkɪç',
-      example:
-        '* trotz hartnäckiger Versuche nichts erreichen\n* Er hat eine sehr hartnäckige Akne.',
-      definition:
-        '* ein Ziel oder Verhalten mit Ausdauer verfolgend\n* lang anhaltend, nicht wegzubekommen',
-      translation:
-        '‎مَثَابِرٌ‎, ‎عَنِيدٌ‎, ‎دَؤُوبٌ‎, ‎مُزْمِنٌ‎, ‎مُلَازِمٌ‎, ‎مُسْتَعْصٍ‎, عنيد',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'مُثابر, عنيد',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -381,11 +349,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'umfassend',
-      ipa: 'ʊmˈfasənt',
-      example:
-        '* umfassende Kenntnisse in einem Gebiet haben\n* ein umfassendes Geständnis ablegen',
-      definition: '* sehr vieles beinhaltend, erfassend\n* vollständig',
-      translation: '‎شَامِلٌ‎, ‎وَاسِعٌ‎, ‎كَامِلٌ‎, ‎تَامٌّ‎, شامل',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'شامل, كامل',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -400,10 +367,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'entzückend',
-      ipa: 'ɛntˈʦʏkənt',
-      example: 'Was für ein entzückendes Mädchen / Kleid!',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: '‎لَطِيفٌ‎, ‎حُلْوٌ‎, رائع',
+      translation: 'رائع, مذهل',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -418,13 +385,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'zurückhaltend',
-      ipa: 'ʦuˈrʏkhaltənt',
-      example:
-        '* eine zurückhaltende Schülerin\n* eine zurückhaltende Wachstumsprognose',
-      definition:
-        '* ruhig und unauffällig, sich nicht um Aufmerksamkeit bemühend\n* wenig intensiv, emotional oder ausgeprägt',
-      translation:
-        '‎مُتَحَفِّظٌ‎, ‎هَادِئٌ‎, ‎كَتُومٌ‎, ‎مُعْتَدِلٌ‎, ‎مُنْضَبِطٌ‎, ‎مُتَوَسِّطٌ‎, متحفظ',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'متحفظ, خجول',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -439,10 +403,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'widerwillig',
-      ipa: 'ˈviːdɐvɪlɪç',
-      example: 'ein widerwilliges Zugeständnis',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: '‎مُرْغَمٌ‎, ‎مُكْرَهٌ‎, ‎كَارِهٌ‎, مُتَكَبِّد',
+      translation: 'ممانع, مقاوم',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -457,11 +421,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'de',
       source: 'bedeutsam',
-      ipa: "bə'dɔytzaːm",
-      example:
-        '* eine bedeutsame Entwicklung / Leistung\n* Sie warf ihm einen bedeutsamen Blick zu.',
-      definition: '* bedeutend\n* ohne Worte Informationen gebend',
-      translation: 'ذو دلالة, مهم',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'مهم, ذو دلالة',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,

@@ -7,13 +7,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: "l'integrità",
-      ipa: 'integriˈta',
-      example: "* integrità fisica\n* esempio d'integrità",
-      definition:
-        '* stato di ciò che è fisicamente intero, intatto, incolume\n* condizione di chi è moralmente integro',
-      translation: '완전성, 청렴, 무결성',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '완전성, 청렴',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -30,7 +28,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
       ipa: '',
       example: '',
       definition: '',
-      translation: '회복력',
+      translation: '회복력, 탄력성',
       partOfSpeech: 'noun',
       tags: [],
       interval: 0,
@@ -45,14 +43,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'la soglia',
-      ipa: 'ˈsɔʎa',
-      example:
-        "* varcare la soglia\n* L'autunno è alle soglie.\n* soglia di udibilità",
-      definition:
-        '* parte inferiore del vano della porta e la porta stessa\n* momento iniziale di un fenomeno o evento\n* il valore minimo perché una grandezza risulti apprezzabile',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '문턱, 시작점, 임계값',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -66,14 +61,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'la disposizione',
-      ipa: 'dispoziˈtsjone',
-      example:
-        '* per disposizione di legge\n* disposizione delle truppe\n* essere nella disposizione adatta',
-      definition:
-        "* decisione presa da chi ha l'autorità per farlo\n* sistemazione secondo un criterio\n* stato d'animo",
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '결정, 배치, 기분',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -87,12 +79,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'la ripercussione',
-      ipa: 'riperkusˈsjone',
-      example: 'Il terrorismo ha avuto ripercussioni sul turismo.',
-      definition: 'effetto negativo',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '영향, 부작용',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -106,14 +97,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'il risultato',
-      ipa: 'risulˈtato',
-      example:
-        '* il risultato di un esame\n* Questo è il risultato di tanti anni di odio.\n* risultato finale',
-      definition:
-        '* esito conclusivo\n* ciò che consegue\n* punteggio di una partita',
-      translation: '결과, 성적',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '결과, 점수',
       partOfSpeech: 'noun',
-      g: 'm',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -127,11 +115,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'riconoscere',
-      ipa: 'rikoˈnoʃere',
-      example:
-        "* L'ho riconosciuto dalla voce.\n* riconoscere il vero dal falso\n* Ha riconosciuto d'aver sbagliato.",
-      definition:
-        '* identificare cosa o persona nota\n* percepire la differenza\n* dare atto',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '인식하다, 구별하다, 인정하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -147,11 +133,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'considerare',
-      ipa: 'konsideˈrare',
-      example:
-        '* considerare i pro e i contro\n* Considera che una volta eravamo poveri.\n* Tutti lo considerano un comico.',
-      definition:
-        '* esaminare attentamente\n* tenere presente, tenere in conto\n* ritenere che qualcosa o qualcuno sia in un certo modo',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '고려하다, 검토하다, 생각하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -167,11 +151,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'dedicare',
-      ipa: 'dediˈkare',
-      example:
-        '* chiesa dedicata alla Madonna\n* dedicare un libro alla propria figlia\n* piazza dedicata ai caduti',
-      definition:
-        "* consacrare a una divinità\n* offrire un'opera artistica in segno di omaggio a qualcuno\n* chiamare con il nome di qualcuno in sua memoria",
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '헌신하다, 바치다, 명명하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -187,11 +169,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'giustificare',
-      ipa: 'dʒustifiˈkare',
-      example:
-        '* il fine giustifica i mezzi\n* giustificare una spesa\n* Nulla può giustificare la sua cattiveria.',
-      definition:
-        '* rendere legittimo\n* rendere conto o ragione di qualcosa, eventualmente con documentazione\n* rendere ammissibile',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '정당화하다, 설명하다, 허용하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -207,9 +187,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'trascurare',
-      ipa: 'traskuˈrare',
-      example: '* trascurare la casa\n* trascurare un particolare importante',
-      definition: '* non prendersi cura\n* non tenere conto',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '무시하다, 소홀히 하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -225,9 +205,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'persuadere',
-      ipa: 'perswaˈdere',
-      example: "L'ho persuaso a non partire.",
-      definition: 'indurre qualcuno a fare o a credere qualcosa',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '설득하다',
       partOfSpeech: 'verb',
       tags: [],
@@ -243,7 +223,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'gradualmente',
-      ipa: 'gradwalˈmente',
+      ipa: '',
       example: '',
       definition: '',
       translation: '점진적으로',
@@ -261,7 +241,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'implicitamente',
-      ipa: 'implitʃitaˈmente',
+      ipa: '',
       example: '',
       definition: '',
       translation: '암묵적으로',
@@ -297,10 +277,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'prontamente',
-      ipa: 'prontaˈmente',
-      example: 'Ha risposto prontamente a tutte le domande.',
-      definition: 'in maniera rapida e risoluta',
-      translation: '신속하게, 즉시',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '신속하게',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -315,9 +295,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'incirca',
-      ipa: 'allinˈtʃirka',
-      example: "Mancano all'incirca due settimane al suo arrivo.",
-      definition: 'più o meno, a occhio e croce',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '대략',
       partOfSpeech: 'adverb',
       tags: [],
@@ -333,7 +313,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'sufficientemente',
-      ipa: 'suffitʃɛnteˈmente',
+      ipa: '',
       example: '',
       definition: '',
       translation: '충분히',
@@ -351,9 +331,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'persistente',
-      ipa: 'persisˈtɛnte',
-      example: 'un dolore persistente',
-      definition: 'che continua',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '지속적인',
       partOfSpeech: 'adjective',
       tags: [],
@@ -369,11 +349,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'completo',
-      ipa: 'komˈplɛto',
-      example:
-        '* teatro completo\n* lista completa\n* Ho completa fiducia in te.',
-      definition:
-        '* senza posti liberi, occupato interamente\n* che non è privo di alcuna delle sue parti\n* a livello massimo',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '완전한, 전체의, 최고의',
       partOfSpeech: 'adjective',
       tags: [],
@@ -389,11 +367,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'delizioso',
-      ipa: 'deliˈtsjoso',
-      example:
-        '* Ha preparato una cena deliziosa.\n* ragazza deliziosa\n* Abbiamo trascorso una deliziosa serata.',
-      definition:
-        '* dal sapore delicato e gradevole\n* dai modi gentili, graziosi\n* che suscita piacere',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '맛있는, 아름다운, 즐거운',
       partOfSpeech: 'adjective',
       tags: [],
@@ -409,9 +385,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'cauto',
-      ipa: 'ˈkauto',
-      example: 'essere cauto nelle spese',
-      definition: 'che agisce con prudenza',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '신중한',
       partOfSpeech: 'adjective',
       tags: [],
@@ -427,9 +403,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'riluttante',
-      ipa: "rilut'tante",
-      example: "Si è mostrato riluttante ad accettare l'incarico.",
-      definition: 'poco propenso',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '주저하는',
       partOfSpeech: 'adjective',
       tags: [],
@@ -445,10 +421,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'it',
       source: 'significativo',
-      ipa: 'siɲifikaˈtivo',
-      example: '* gesto significativo\n* un dato significativo',
-      definition:
-        '* che esprime molto bene qualcosa\n* che ha particolare importanza',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '의미 있는, 중요한',
       partOfSpeech: 'adjective',
       tags: [],

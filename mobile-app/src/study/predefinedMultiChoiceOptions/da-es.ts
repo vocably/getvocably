@@ -7,14 +7,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'en integritet',
-      ipa: 'entəgʁiˈteˀd',
-      example:
-        '* den personlige integritet\n* territorial integritet\n* folketingsmedlemmernes personlige integritet',
-      definition:
-        '* (abstrakt) rum der omgiver nogen og adskiller vedkommende fra omgivelserne, beskytter mod krænkelser osv.\n* et lands ret til at være en uindskrænket, ukrænkelig helhed\n* en persons evne og vilje til at handle selvstændigt, ærligt og redeligt uden uvedkommende el. upassende hensyntagen til nogen el. noget',
-      translation: 'integridad, integridad nacional',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'integridad, honorabilidad',
       partOfSpeech: 'noun',
-      g: 'common',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -28,12 +25,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'en modstandsdygtighed',
-      ipa: 'ˈmoðsdans-',
+      ipa: '',
       example: '',
       definition: '',
-      translation: 'resiliencia',
+      translation: 'una resistencia',
       partOfSpeech: 'noun',
-      g: 'common',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -47,12 +43,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'en tærskel',
-      ipa: 'ˈtæɐ̯sgəl',
-      example: 'træde (ind) over tærsklen',
+      ipa: '',
+      example: '',
       definition: '',
-      translation: 'umbral',
+      translation: 'un umbral',
       partOfSpeech: 'noun',
-      g: 'common',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -85,11 +80,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
       language: 'da',
       source: 'en eftervirkning',
       ipa: '',
-      example: 'psykiske eftervirkninger',
+      example: '',
       definition: '',
-      translation: 'efecto secundario',
+      translation: 'una secuela',
       partOfSpeech: 'noun',
-      g: 'common',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -103,14 +97,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'et resultat',
-      ipa: 'ʁεsulˈtæˀd',
-      example: '* det endelige resultat\n* opnå resultater',
-      definition:
-        '* udfald, følge el. virkning af en proces, et forløb, en indsats e.l.\n* sejr, gevinst el. anden form for positivt udfald af en kamp el. en målrettet indsats\n* samlet over- el. underskud af en økonomisk virksomhed, opgjort i et regnskab som forskellen mellem omkostninger og indtægter',
-      translation:
-        'resultado, consecuencia, producto, desenlace, solución, balance',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'resultado, ganancia, balance',
       partOfSpeech: 'noun',
-      g: 'n',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -124,13 +115,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'anerkende',
-      ipa: 'ˈanʌˌkεnˀə',
-      example:
-        '* almindeligt anerkendt\n* officielt anerkendt\n* anerkende republikken Rusland som selvstændig stat',
-      definition:
-        '* erkende som sandt el. berettiget\n* godkende formelt; acceptere som værende juridisk gyldigt; om offentlig myndighed\n* erklære sin folkeretlige accept af en ny stat; om stat el. international organisation',
-      translation:
-        'reconocer, admitir, aceptar, aprobar, validar, convalidar, reconocimiento, apreciar, valorar, acuse de recibo, confirmar',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'reconocer, aceptar',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -145,11 +133,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'overveje',
-      ipa: '-ˌvɑjˀə',
-      example: 'overveje situationen',
-      definition:
-        'tænke over noget el. tænke på at gøre noget idet man vurderer hvad der taler for og imod',
-      translation: 'sopesar, reflexionar, considerar',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'considerar',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -164,13 +151,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'hellig',
-      ipa: 'ˈhεli',
-      example:
-        '* hellige skrifter\n* hellig pligt\n* i demokratiets hellige navn',
-      definition:
-        '* som er forbundet med det guddommelige el. indeholder guddommelig kraft, og som derfor behandles med religiøs ærefrygt\n* som har krav på ærbødighed pga. sin betydningsfuldhed, skønhed e.l.\n* som står urokkeligt fast, er uopnåelig el. ukrænkelig',
-      translation:
-        'sagrado, consagrado, bendito, santo, sacro, divino, bienaventurado, fariseo, intocable',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'sagrado, santa, inviolable',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -185,11 +169,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'retfærdiggøre',
-      ipa: '-ˌgɶˀʌ',
-      example: 'retfærdiggøre en beslutning',
-      definition:
-        'berettigevise at noget er retfærdigt, rigtigt el. berettiget',
-      translation: 'legitimar, justificar, legalizar',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'justificar',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -204,12 +187,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'forsømme',
-      ipa: 'fʌˈsœmˀə',
-      example: '* indhente det forsømte\n* forsømte børn\n* forsømme skolen',
-      definition:
-        '* undlade at gøre noget som man bør gøre\n* undlade at tage sig af, passe el. pleje ordentligt\n* udeblive fra undervisning, arbejde e.l.; undlade at deltage i',
-      translation:
-        'descuidar, desatender, faltar, abandonar, postergar, ausentarse, no presentarse, no comparecer, malgastar, desperdiciar, despilfarrar',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'negar, descuidar, omitir',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -224,11 +205,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'overtale',
-      ipa: '-ˌtæˀlə',
-      example: 'forsøge/prøve at overtale nogen',
-      definition:
-        'få nogen til (modstræbende) at gøre noget bestemt vha. indtrængende ord, argumenter, løfter e.l.',
-      translation: 'convencer, persuadir',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'persuadir',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -243,9 +223,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'gradvis',
-      ipa: 'ˈgʁɑðˌviˀs',
-      example: 'gradvis udvikling',
-      definition: 'som foregår lidt efter lidt el. trinvis',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: 'gradual',
       partOfSpeech: 'adjective',
       tags: [],
@@ -261,7 +241,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'implicit',
-      ipa: 'ˈempliˌsid',
+      ipa: '',
       example: '',
       definition: '',
       translation: 'implícito',
@@ -279,11 +259,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'især',
-      ipa: 'iˈsεˀɐ̯',
-      example: 'især skandinaver',
-      definition:
-        'bruges for at fremhæve det som har særlig betydning, el. det som udsagnet særlig gælder',
-      translation: 'especialmente, particularmente, sobre todo',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'especialmente',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -298,10 +277,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'prompte',
-      ipa: 'ˈpʁʌmdə',
-      example: 'en prompte reaktion',
-      definition: 'øjeblikkelig; omgående',
-      translation: 'momentáneo, instantáneo',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'inmediato, pronto',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -316,13 +295,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'nogenlunde',
-      ipa: 'ˈnoːənˈlɔnə',
-      example:
-        '* Vejret var nogenlunde på deres førdselsdag.\n* være nogenlunde sikker på at\n* nogenlunde samtidig',
-      definition:
-        '* ikke perfekt, men heller ikke utilfredsstillende; ret god når man tager omstændighederne i betragtning\n* i en (efter omstændighederne) tilstrækkelig el. tilfredsstillende grad; ret godt\n* omtrent; næsten',
-      translation:
-        'ampliamente, razonablemente, más o menos, poco más o menos, de manera razonable, casi',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'razonable, más o menos',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -337,11 +313,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'tilstrækkelig',
-      ipa: 'teˈsdʁagəli',
-      example: 'i tilstrækkelig grad',
-      definition:
-        'af et omfang el. en kvalitet der er stor nok til at opfylde et bestemt behov, krav, ønske e.l.',
-      translation: 'suficiente, bastante, harto',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'suficiente',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -356,11 +331,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'vedvarende',
-      ipa: '-ˌvɑˀɑnə',
-      example: 'Vandkraft er vedvarende energi.',
-      definition:
-        'som består til stadighed; fx om uudtømmelige energiformer som solenergi og vindenergi',
-      translation: 'contínuo, duradero, perdurable, sostenible',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'sostenible',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -375,11 +349,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'omfattende',
-      ipa: '-ˌfadənə',
-      example: 'omfattende undersøgelser',
-      definition:
-        'som har et stort omfang el. kræver meget arbejde og mange resurser',
-      translation: 'extenso, amplio, vasto, extensivo',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'extenso, amplio',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -394,12 +367,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'dejlig',
-      ipa: 'ˈdɑjli',
-      example: '* dejligt vejr\n* dejlig lejlighed\n* dejlig middag',
-      definition:
-        '* som giver anledning til stor begejstring, glæde el. tilfredshed\n* bekvem og praktisk mht. indretning, udstyr e.l.; fx om bolig el. køretøj\n* som gør et overordentlig positivt indtryk på sanserne; æstetisk tiltalende',
-      translation:
-        'delicioso, agradable, encantador, cómodo, práctico, maravilloso, adorable, atractivo, hermoso',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'hermoso, agradable, encantador',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -414,13 +385,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'forsigtig',
-      ipa: 'fʌˈsegdi',
-      example:
-        '* forsigtige skridt\n* gå forsigtig til værks\n* forsigtig optimisme',
-      definition:
-        '* omhyggelig og påpasselig i sine bevægelser for at undgå at skade el. ødelægge noget\n* som stilfærdigt holder sig tilbage og nødig handler el. udtaler sig uoverlagt\n* ikke på nogen måde overdreven el. overvældende; om handling, udtalelse e.l.',
-      translation:
-        'cuidadoso, moderado, mesurado, cauteloso, con cuidado, controlado',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'cauteloso, prudente',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -435,10 +403,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'modstræbende',
-      ipa: '-ˌsdʁεˀbənə',
+      ipa: '',
       example: '',
       definition: '',
-      translation: 'reacio',
+      translation: 'reacio, resistente',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -453,12 +421,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'da',
       source: 'væsentlig',
-      ipa: 'ˈvεˀsənli',
-      example: '* spille en væsentlig rolle\n* væsenlig(t) dyrere',
-      definition:
-        '* som udgør el. vedrører en tings inderste og egentlige væsen, og som derfor er yderst vigtig\n* meget; betydelig',
-      translation:
-        'fundamental, esencial, central, mucho, significativo, importante',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'esencial, significativo',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,

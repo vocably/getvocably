@@ -7,12 +7,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'la integridad',
-      ipa: "inteγɾi'ðað",
-      example: 'Denota integridad en todos sus actos.',
-      definition: 'cualidad de quien tiene entereza moral',
-      translation: '公明（こうめい）正大（せいだい）さ, 誠実',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '誠実',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -29,7 +28,7 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
       ipa: '',
       example: '',
       definition: '',
-      translation: 'レジリエンス',
+      translation: 'レジリエンス, 復元力',
       partOfSpeech: 'noun',
       tags: [],
       interval: 0,
@@ -44,13 +43,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'el límite',
-      ipa: "'limite",
-      example: '* los límites de un territorio\n* límite de velocidad',
-      definition:
-        '* línea real o imaginaria que separa dos cosas\n* punto o grado que no puede superarse',
-      translation: '境界（きょうかい）, 限界（げんかい）',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '限界, 境界',
       partOfSpeech: 'noun',
-      g: 'm',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -64,15 +61,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'la disposición',
-      ipa: "disposi'θjon",
-      example:
-        '* El general eligió una buena disposición de las defensas.\n* Las empleadas han tenido una excelente disposición todo el tiempo.\n* tener una mala disposición física',
-      definition:
-        '* modo de estar colocadas cosas o personas\n* cualidad que se tiene para hacer algo\n* estado de ánimo o de salud',
-      translation:
-        '態度（たいど）、姿勢（しせい）, 素質（そしつ）, 気分（きぶん）、機嫌（きげん）、体調（たいちょう）, 指令（しれい）、命令（めいれい）, 配置（はいち）',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '配置, 気質, 状態',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -86,14 +79,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'la repercusión',
-      ipa: "repeɾku'sjon",
-      example:
-        '* El acto tuvo repercusión en todo el globo.\n* El libro logró repercusión por su temática.',
-      definition:
-        '* influencia de algo en un asunto\n* difusión pública de algo',
-      translation: '影響, 反響',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '影響, 波及効果',
       partOfSpeech: 'noun',
-      g: 'f',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -107,14 +97,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'el resultado',
-      ipa: "resul'taðo",
-      example:
-        '* Sus éxitos son el resultado del trabajo bien hecho.\n* Estos zapatos me han dado muy mal resultado.',
-      definition:
-        '* efecto y consecuencia de una cosa\n* rendimiento que da una cosa',
-      translation: '結果（けっか）, 性能（せいのう）',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '結果, 成果',
       partOfSpeech: 'noun',
-      g: 'm',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -128,13 +115,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'reconocer',
-      ipa: "rekono'θeɾ",
-      example:
-        '* Reconocí a mi primo en medio de la multitud.\n* reconocer el terreno\n* La acusada reconoce que vio a la víctima aquella noche.',
-      definition:
-        '* determinar la identidad de una persona entre otras\n* considerar cuidadosamente una cosa o persona\n* admitir algo que se había negado',
-      translation:
-        '見分（みわ）ける、識別（しきべつ）する、見（み）つける, 調（しら）べる、調査（ちょうさ）する、検討（けんとう）する, 認（みと）める、認知（にんち）する, 感謝（かんしゃ）する、謝意（しゃい）を表明（ひょうめい）する, 承認（しょうにん）する、認定（にんてい）する、認（みと）める, 認知（にんち）する, 認識する',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '認識する, 考慮する, 認める',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -149,13 +133,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'considerar',
-      ipa: "konsiðe'ɾaɾ",
-      example:
-        '* Considero que es mejor no comprar ahora.\n* Consideraré todas las calificaciones.\n* Considero que debes aceptar el trabajo.',
-      definition:
-        '* reflexionar minuciosamente sobre algo\n* tener en cuenta una cosa\n* realizar una crítica o juzgar',
-      translation:
-        'よく考（かんが）える、検討（けんとう）する, 考慮（こうりょ）に入（い）れる, 思（おも）う、判断（はんだん）する, 大切（だいせつ）にする、一目置（いちもくお）く, 考慮する',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '考慮する, 検討する, 評価する',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -170,11 +151,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'dedicar',
-      ipa: "deði'kaɾ",
-      example:
-        '* Este templo está dedicado a Júpiter.\n* Dedicó su último libro a sus hijos.\n* El dinero recaudado se dedicará a la restauración del edificio.',
-      definition:
-        '* consagrar al culto religioso o profano\n* ofrecer algo a una persona como muestra de agradecimiento, cariño, etc.\n* emplear algo a un uso determinado',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '捧げる, 献身する, 使う',
       partOfSpeech: 'verb',
       tags: [],
@@ -190,13 +169,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'justificar',
-      ipa: "xustifi'kaɾ",
-      example:
-        '* ¿El fin justifica los medios?\n* Justificó su denuncia con informes de espías.\n* justificar una línea a la derecha',
-      definition:
-        '* hacer una cosa que otra sea adecuada u oportuna\n* demostrar algo con razones convincentes\n* ajustar la alineación de un texto',
-      translation:
-        '正当化（せいとうか）する, 証明（しょうめい）する, インデントをつける, 正当化する',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '正当化する, 証明する, 整列する',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -211,15 +187,11 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'el descuido',
-      ipa: "des'kwiðo",
-      example:
-        '* Hiciste mal el trabajo por puro descuido.\n* Bastó un descuido para que se perdiera la niña.\n* El descuido de su aspecto mostraba su estado de ánimo.',
-      definition:
-        '* falta de atención de algo bajo la propia responsabilidad\n* falta de atención momentánea\n* falta de aseo o desaliño en la persona',
-      translation:
-        '気（き）の緩（ゆる）み、油断（ゆだん）, 不注意, 不精（ぶしょう）、だらしなさ',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '不注意, 怠慢, 無頓着',
       partOfSpeech: 'noun',
-      g: 'm',
       tags: [],
       interval: 0,
       repetition: 0,
@@ -233,10 +205,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'persuadir',
-      ipa: "peɾswa'ðiɾ",
-      example: 'Me persuadieron de que era mejor rechazar el encargo.',
-      definition: 'convencer con argumentos a alguien de algo',
-      translation: '説得（せっとく）する, 説得する',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '説得する',
       partOfSpeech: 'verb',
       tags: [],
       interval: 0,
@@ -251,10 +223,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'gradualmente',
-      ipa: "graðwal'meNte",
-      example:
-        'La ola de calor se va extendiendo gradualmente por todas las provincias.',
-      definition: 'de manera paulatina, constante hacia un término final',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '徐々に',
       partOfSpeech: 'adverb',
       tags: [],
@@ -270,12 +241,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'implícitamente',
-      ipa: "im'pliθitamente",
-      example:
-        'Si bien el mensaje fue claro y contundente, implícitamente también nos explicaba los motivos de su decisón con su tono y sus gestos.',
-      definition:
-        'de forma indirecta, supuesta o sobreentendida, al mismo tiempo que algo que se expresa abiertamente',
-      translation: '暗黙的に, 暗黙のうちに',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '暗黙的に',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -290,10 +259,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'notablemente',
-      ipa: "notaβle'meNte",
-      example: 'Su labor al frente de la empresa fue notablemente reconocida.',
-      definition:
-        'de manera destacada, que se percibe con claridad y denota contundencia',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '顕著に',
       partOfSpeech: 'adverb',
       tags: [],
@@ -309,12 +277,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'inmediatamente',
-      ipa: "inmeðjata'mente",
-      example:
-        '* Me llamaron inmediatamente después de ocurrido el hecho.\n* La orden deberá cumplirse inmediatamente.',
-      definition:
-        '* con la mayor rapidez\n* en el momento y sin que medie tiempo u otra cosa',
-      translation: 'すぐに, ただちに',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'すぐに, 即座に',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -329,12 +295,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'apenas',
-      ipa: 'aˈpenas',
-      example:
-        '* En la oscuridad apenas se veía el sendero.\n* Apenas hemos vendido unas diez revistas.',
-      definition:
-        '* indica que la acción casi no sucede o no se nota\n* expresa una cantidad pequeña y aproximada',
-      translation: 'ほとんど～しない, ごく僅（わず）かな, ほとんど～ない',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: 'ほとんどない, わずかに',
       partOfSpeech: 'adverb',
       tags: [],
       interval: 0,
@@ -349,9 +313,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'suficientemente',
-      ipa: "sufiθjente'mente",
-      example: 'Comieron suficientemente.',
-      definition: 'en un grado o medida adecuados',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '十分に',
       partOfSpeech: 'adverb',
       tags: [],
@@ -367,12 +331,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'persistente',
-      ipa: "peɾsis'tente",
-      example: '* ideas persistentes\n* lluvia persistente',
-      definition:
-        '* que tiene firmeza y constancia\n* que tiene una duración prolongada',
-      translation:
-        'しつこい、持続（じぞく）する, しつこい、長（なが）い, 持続的な',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '持続的な, しつこい',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -387,11 +349,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'integral',
-      ipa: "inte'γɾal",
-      example: '* una educación integral\n* arroz integral\n* pan integral',
-      definition:
-        '* que comprende todos los aspectos o partes necesarias para estar completo\n* cuyo grano no ha sido desprovisto de su cáscara\n* que es elaborado con harina de cereal con cáscara',
-      translation: '完全（かんぜん）な, 全粒（ぜんりゅう）の, 全体的な',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '全体的な, 全粒の',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -406,10 +367,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'encantador',
-      ipa: "enkanta'ðoɾ",
-      example: 'una niña encantadora',
-      definition: 'que deja muy buena impresión por ser muy agradable',
-      translation: '魅力的（みりょくてき）な、愛（あい）くるしい, 魅力的な',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '魅力的な, 素敵な',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -424,11 +385,9 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'precavido',
-      ipa: "pɾeka'βiðo",
-      example:
-        '* Debes ser precavido y no andar de noche por las calles.\n* Mi padre es muy precavido cuando organiza un viaje.\n* Avanzaban por la jungla con paso precavido.',
-      definition:
-        '* que actúa con precaución\n* que piensa y dispone las cosas con antelación\n* que implica precaución',
+      ipa: '',
+      example: '',
+      definition: '',
       translation: '用心深い, 慎重な',
       partOfSpeech: 'adjective',
       tags: [],
@@ -444,10 +403,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'reacio',
-      ipa: "re'aθjo",
-      example: 'Era reacio a ver cine extranjero.',
-      definition: 'que se opone o resiste a una influencia',
-      translation: '抵抗する, 反発する',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '抵抗する',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
@@ -462,12 +421,10 @@ export const predefinedMultiChoiceOptions: CardItem[] = [
     data: {
       language: 'es',
       source: 'significativo',
-      ipa: "siγnifika'tiβo",
-      example:
-        '* recibir una significativa ayuda\n* Este poemario es el más significativo del autor.',
-      definition: '* que es importante\n* que comunica una cosa con propiedad',
-      translation:
-        '意義（いぎ）のある、大（おお）きな意味（いみ）を持（も）つ、重要（じゅうよう）な, 代表的（だいひょうてき）な, 重要な',
+      ipa: '',
+      example: '',
+      definition: '',
+      translation: '重要な, 意味のある',
       partOfSpeech: 'adjective',
       tags: [],
       interval: 0,
