@@ -94,7 +94,7 @@
               </button>
             </div>
 
-            <div>
+            <p>
               <textarea
                 #contents
                 [(ngModel)]="csv"
@@ -105,7 +105,14 @@
                 wrap="off"
                 placeholder="Paste your Google Sheets CSV data here."
               ></textarea>
-            </div>
+            </p>
+
+            <p>
+              Don't know where to start?
+              <a target="_blank" href="assets/example.csv"
+                >Download an example of CSV file</a
+              >.
+            </p>
 
             <ng-container *ngIf="csvData$ | async as csvData">
               <ng-container *ngIf="csvData.length === 0">

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { byDate, CardItem } from '@vocably/model';
+import { byDate, CardItem, languageList } from '@vocably/model';
+import { languageToLexicalaLanguage } from '@vocably/model-operations';
+import { get } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
 import { LoaderService } from '../../../components/loader.service';
 import { columnLabels } from '../../../importExport';
@@ -23,6 +25,9 @@ export class ExportPageComponent implements OnInit, OnDestroy {
 
   public fileName = '';
 
+  public isLexicalaLanguage = true;
+  public languageName: string = '';
+
   private destroy$ = new Subject();
 
   constructor(
@@ -32,6 +37,9 @@ export class ExportPageComponent implements OnInit, OnDestroy {
   ) {
     this.deckStore.deck$.pipe(takeUntil(this.destroy$)).subscribe((deck) => {
       this.cards = deck.cards.sort(byDate);
+      this.isLexicalaLanguage =
+        languageToLexicalaLanguage(deck.language) !== null;
+      this.languageName = get(languageList, deck.language, 'this language');
 
       this.fileName = `${deck.language}`;
       if (this.cards.length > 0) {
