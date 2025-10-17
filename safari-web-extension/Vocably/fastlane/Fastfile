@@ -21,7 +21,8 @@ platform :mac do
     match(
       app_identifier: ["pro.vocably.Vocably"],
       platform: "macos",
-      additional_cert_types: "mac_installer_distribution"
+      additional_cert_types: "mac_installer_distribution",
+      readonly: false
     )
   end
 
