@@ -25,7 +25,7 @@ describe('analyze words and phrases', () => {
       const result = await gptAnalyse({
         source: 'die Frage',
         partOfSpeech: 'noun',
-        sourceLanguage: 'de',
+        sourceLanguage: 'es',
       });
       console.log(result);
       expect(result.success).toBeTruthy();

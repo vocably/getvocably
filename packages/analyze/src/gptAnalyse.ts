@@ -88,6 +88,7 @@ export const gptAnalyse = async (
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
     `synonyms - list of synonyms`,
+    `gender - feminine, masculine, neuter, or other`,
   ]
     .filter((s) => !!s)
     .join('\n');
