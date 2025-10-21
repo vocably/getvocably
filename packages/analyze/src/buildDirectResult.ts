@@ -1,29 +1,15 @@
 import {
-  AnalysisItem,
   DirectAnalysis,
   DirectAnalyzePayload,
-  isSuccess,
   Result,
-  Translation,
+  ValidAnalysisItems,
 } from '@vocably/model';
-import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { trimArticle } from '@vocably/sulna';
-import { buildDirectResultLegacy } from './buildDirectResultLegacy';
-import { combineItems } from './combineItems';
-import { filterOutByPartOfSpeech } from './filterOutByPartOfSpeech';
-import { fitsTheSize } from './fitsTheSize';
-import { getWords } from './isOneWord';
-import { lexicala, LexicalaOverriddenParams } from './lexicala';
-import { lexicalaSearchResultToAnalysisItem } from './lexicala/lexicalaSearchResultToAnalysisItem';
-import { normalizeHeadword } from './lexicala/normalizeHeadword';
-import { lexicalaItemHasDefinitionOrCanBeTranslated } from './lexicalaItemHasDefinitionOrCanBeTranslated';
-import { prependTranslation } from './prependTranslation';
+import { analyseAndTranslate } from './analyseAndTranslate';
+import { isLexeme } from './isLexeme';
 import { sanitizePayload } from './sanitizePayload';
-import { sortByRelevance } from './sortByRelevance';
 import { translate } from './translate';
 import { translationToAnalysisItem } from './translationToAnalyzeItem';
-import { wordDictionary } from './word-dictionary';
-import { wordDictionaryResultToAnalysisItems } from './wordDictionaryResultToItems';
 
 type Options = {
   payload: DirectAnalyzePayload;
@@ -32,189 +18,93 @@ type Options = {
 export const buildDirectResult = async ({
   payload: rawPayload,
 }: Options): Promise<Result<DirectAnalysis>> => {
-  if (['ja', 'zh', 'zh-TW'].includes(rawPayload.sourceLanguage)) {
-    return buildDirectResultLegacy({ payload: rawPayload });
-  }
-
-  if (rawPayload.sourceLanguage === rawPayload.targetLanguage) {
-    return buildDirectResultLegacy({ payload: rawPayload });
-  }
-
   const payload = sanitizePayload(rawPayload);
 
-  // ToDo: Get rid of this
-  let explanation: string = '';
-  const translationResult = await translate(payload);
+  const payloadWithoutArticle = {
+    ...payload,
+    source: trimArticle(payload.sourceLanguage, payload.source).source,
+  };
+
+  const translationResult = await translate(payloadWithoutArticle);
   if (translationResult.success === false) {
     return translationResult;
   }
 
-  const translations = [
-    {
-      ...translationResult.value,
-      partOfSpeech:
-        translationResult.value.partOfSpeech ?? payload.partOfSpeech,
-      sourceLanguage:
-        translationResult.value.sourceLanguage ?? payload.sourceLanguage,
-    },
-  ];
-
-  const lexicalaLanguage = languageToLexicalaLanguage(payload.sourceLanguage);
-
-  const analyseTranslation = async (
-    translation: Translation
-  ): Promise<Result<AnalysisItem[]>> => {
-    if (lexicalaLanguage === null) {
-      return {
-        success: true,
-        value: [translationToAnalysisItem(translation)],
-      };
-    }
-
-    if (translation.comesFromExplanation) {
-      return {
-        success: true,
-        value: [translationToAnalysisItem(translation)],
-      };
-    }
-
-    const trimmedArticle = trimArticle(
-      translation.sourceLanguage,
-      translation.source
-    );
-
-    if (
-      translation.partOfSpeech &&
-      (translation.partOfSpeech.includes('phrase') ||
-        translation.partOfSpeech.includes('preposition'))
-    ) {
-      return {
-        success: true,
-        value: [translationToAnalysisItem(translation)],
-      };
-    }
-
-    const numberOfWords = getWords(trimmedArticle.source).length;
-    if (numberOfWords > 2) {
-      return {
-        success: true,
-        value: [translationToAnalysisItem(translation)],
-      };
-    }
-
-    let lexicalaParams: LexicalaOverriddenParams = {
-      analyzed: 'true',
-      morph: 'true',
+  if (!isLexeme(translationResult.value.partOfSpeech ?? '')) {
+    return {
+      success: true,
+      value: {
+        source: payload.source,
+        targetLanguage: payload.targetLanguage,
+        sourceLanguage: payload.sourceLanguage,
+        translation: translationResult.value,
+        items: [translationToAnalysisItem(translationResult.value)],
+      },
     };
+  }
 
-    if (numberOfWords > 1) {
-      lexicalaParams = {
-        analyzed: 'false',
-        morph: 'false',
-      };
-    }
+  const sourceAnalyse = analyseAndTranslate({
+    source: translationResult.value.source,
+    sourceLanguage: translationResult.value.sourceLanguage,
+    targetLanguage: translationResult.value.targetLanguage,
+    partOfSpeech: translationResult.value.partOfSpeech ?? '',
+  });
 
-    const results = await Promise.all([
-      lexicala(lexicalaLanguage, trimmedArticle.source, lexicalaParams),
-      lexicalaLanguage === 'en' ? wordDictionary(trimmedArticle.source) : null,
-    ]);
+  if (
+    translationResult.value.source.toLowerCase() ===
+    translationResult.value.lemma?.toLowerCase()
+  ) {
+    const sourceAnalyseResult = await sourceAnalyse;
+    const resultItems: ValidAnalysisItems = [
+      translationToAnalysisItem(translationResult.value),
+    ];
 
-    const lexicalaResult = results[0];
-
-    if (lexicalaResult.success === false || lexicalaResult.value.length === 0) {
-      if (lexicalaResult.success === false) {
-        console.error('Lexicala error', lexicalaResult);
-      }
-
-      if (results[1] === null) {
-        return {
-          success: true,
-          value: prependTranslation([], translation),
-        };
-      }
-
-      if (results[1].success === false) {
-        console.error('Word dictionary error', results[1]);
-        return {
-          success: true,
-          value: prependTranslation([], translation),
-        };
-      }
-
-      return {
-        success: true,
-        value: prependTranslation(
-          await Promise.all(
-            wordDictionaryResultToAnalysisItems({
-              result: results[1].value,
-              payload,
-              originalTranslation: translation,
-            })
-          ),
-          translation
-        ).sort(sortByRelevance(translation)),
-      };
+    if (sourceAnalyseResult.success === true) {
+      resultItems[0] = sourceAnalyseResult.value;
     }
 
     return {
       success: true,
-      value: prependTranslation(
-        (
-          await Promise.all(
-            filterOutByPartOfSpeech(
-              lexicalaResult.value
-                .map(normalizeHeadword(translation.source))
-                .filter(fitsTheSize(translation.source))
-                .filter(
-                  lexicalaItemHasDefinitionOrCanBeTranslated(translation)
-                ),
-              payload.partOfSpeech
-            ).map(lexicalaSearchResultToAnalysisItem(translation))
-          )
-        )
-          .reduce(combineItems, [])
-          .sort(sortByRelevance(translation)),
-        translation
-      ),
-    };
-  };
-
-  const analyzeItems = (await Promise.all(translations.map(analyseTranslation)))
-    .filter(isSuccess)
-    .flatMap((result) => result.value);
-
-  if (analyzeItems.length === 0) {
-    return {
-      success: false,
-      errorCode: 'FUCKING_ERROR',
-      reason: 'Unable to provide at least one sane result.',
+      value: {
+        source: payload.source,
+        targetLanguage: payload.targetLanguage,
+        sourceLanguage: payload.sourceLanguage,
+        translation: translationResult.value,
+        items: resultItems,
+      },
     };
   }
 
-  const firstTranslation = translations[0];
+  const lemmaAnalyse = analyseAndTranslate({
+    source: translationResult.value.lemma ?? '',
+    sourceLanguage: translationResult.value.sourceLanguage,
+    targetLanguage: translationResult.value.targetLanguage,
+    partOfSpeech: translationResult.value.partOfSpeech ?? '',
+  });
 
-  const directTranslation: Translation =
-    trimArticle(payload.sourceLanguage, payload.source).source.toLowerCase() ===
-    trimArticle(
-      payload.sourceLanguage,
-      firstTranslation.source
-    ).source.toLowerCase()
-      ? firstTranslation
-      : {
-          ...firstTranslation,
-          source: payload.source,
-          target: firstTranslation.source,
-        };
+  const sourceAnalyseResult = await sourceAnalyse;
+  const lemmaAnalyseResult = await lemmaAnalyse;
+
+  const resultItems: ValidAnalysisItems = [
+    translationToAnalysisItem(translationResult.value),
+  ];
+
+  if (sourceAnalyseResult.success === true) {
+    resultItems[0] = sourceAnalyseResult.value;
+  }
+
+  if (lemmaAnalyseResult.success === true) {
+    resultItems.push(lemmaAnalyseResult.value);
+  }
 
   return {
     success: true,
     value: {
       source: payload.source,
-      translation: directTranslation,
-      sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
-      explanation,
-      items: [analyzeItems[0], ...analyzeItems.slice(1)],
+      sourceLanguage: payload.sourceLanguage,
+      translation: translationResult.value,
+      items: resultItems,
     },
   };
 };

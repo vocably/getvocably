@@ -53,6 +53,7 @@ const internalAiDirectTranslate = async (
       languageList[payload.targetLanguage]
     }`,
     `- partOfSpeech`,
+    `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
     transcriptionIsNeeded
       ? `- transcript - the ${get(
           transcriptionName,
@@ -97,6 +98,7 @@ const internalAiDirectTranslate = async (
       targetLanguage: payload.targetLanguage,
       partOfSpeech: response.partOfSpeech,
       transcript: response.transcript,
+      lemma: response.lemma,
     },
   };
 };

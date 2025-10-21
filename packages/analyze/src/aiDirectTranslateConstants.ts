@@ -6,6 +6,7 @@ export type AiTranslation = {
   target: string;
   partOfSpeech: string;
   transcript?: string;
+  lemma?: string;
 };
 
 export const isAiTranslation = (value: any): value is AiTranslation => {

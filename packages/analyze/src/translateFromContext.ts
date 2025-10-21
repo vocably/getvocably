@@ -94,6 +94,7 @@ export const translateFromContext = async (
       languageList[payload.targetLanguage]
     }`,
     `- partOfSpeech`,
+    `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
     isTranscriptionNeeded
       ? `- transcript - the ${get(
           transcriptionName,

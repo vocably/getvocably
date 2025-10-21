@@ -247,7 +247,9 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items[0].translation).toHaveSomeOf('be, become, to be');
+    expect(result.value.items[0].translation).toHaveSomeOf(
+      'to be, to exist, to happen'
+    );
     expect(result.value.items[1].translation).toEqual('his');
   });
 

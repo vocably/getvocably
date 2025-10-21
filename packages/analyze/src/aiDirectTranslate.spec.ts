@@ -252,4 +252,38 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.source).toHaveSomeOf(['guys']);
   });
+
+  it('provides noun lemma', async () => {
+    const result = await aiDirectTranslate({
+      source: 'ребята',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toHaveSomeOf(['guy']);
+  });
+
+  it('provides infinitive', async () => {
+    const result = await aiDirectTranslate({
+      source: 'kwam',
+      sourceLanguage: 'nl',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toHaveSomeOf(['komen']);
+  });
 });

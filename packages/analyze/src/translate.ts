@@ -21,6 +21,7 @@ type Payload = {
   context?: string;
   partOfSpeech?: string;
   transcript?: string;
+  lemma?: string;
 };
 
 export const translate = async (

@@ -8,6 +8,7 @@ export type Translation = {
   partOfSpeech?: string;
   comesFromExplanation?: boolean;
   transcript?: string;
+  lemma?: string;
 };
 
 export type DirectAnalyzePayload = {
