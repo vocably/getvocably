@@ -18,16 +18,22 @@ export const analyseAndTranslate = async (
     return gptAnalyseResult;
   }
 
-  const translationResult = await translateDefinitions({
-    source: payload.source,
-    sourceLanguage: payload.sourceLanguage,
-    targetLanguage: payload.targetLanguage,
-    partOfSpeech: payload.partOfSpeech,
-    definitions: gptAnalyseResult.value.definitions,
-  });
+  let translation = '';
 
-  if (translationResult.success === false) {
-    return translationResult;
+  if (payload.sourceLanguage !== payload.targetLanguage) {
+    const translationResult = await translateDefinitions({
+      source: payload.source,
+      sourceLanguage: payload.sourceLanguage,
+      targetLanguage: payload.targetLanguage,
+      partOfSpeech: payload.partOfSpeech,
+      definitions: gptAnalyseResult.value.definitions,
+    });
+
+    if (translationResult.success === false) {
+      return translationResult;
+    }
+
+    translation = translationResult.value.join(', ');
   }
 
   return {
@@ -39,7 +45,7 @@ export const analyseAndTranslate = async (
         payload.partOfSpeech,
         gptAnalyseResult.value
       ),
-      translation: translationResult.value.join(', '),
+      translation: translation,
       definitions: gptAnalyseResult.value.definitions,
       examples: gptAnalyseResult.value.examples,
       partOfSpeech: payload.partOfSpeech,
