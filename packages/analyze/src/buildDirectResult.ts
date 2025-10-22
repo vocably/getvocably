@@ -137,7 +137,10 @@ export const buildDirectResult = async ({
     })
     .map(async (partOfSpeech) => {
       return analyseAndTranslate({
-        source: translationResult.value.lemma ?? '',
+        source:
+          translationResult.value.partOfSpeech === partOfSpeech
+            ? translationResult.value.lemma ?? ''
+            : translationResult.value.source,
         sourceLanguage: translationResult.value.sourceLanguage,
         targetLanguage: translationResult.value.targetLanguage,
         partOfSpeech,

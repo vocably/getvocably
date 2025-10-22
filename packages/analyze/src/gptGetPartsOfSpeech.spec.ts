@@ -45,4 +45,16 @@ describe('analyze words and phrases', () => {
     }
     expect(result.value).toEqual(['noun', 'verb']);
   });
+
+  it('verzamelde', async () => {
+    const result = await gptGetPartsOfSpeech({
+      source: 'verzamelde',
+      language: 'nl',
+    });
+    expect(result.success).toBeTruthy();
+    if (!result.success) {
+      return;
+    }
+    expect(result.value).toEqual(['verb', 'adjective']);
+  });
 });
