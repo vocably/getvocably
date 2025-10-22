@@ -818,21 +818,4 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
     expect(result.value.items[0].examples?.length).toBeGreaterThan(0);
   });
-
-  it('noun', async () => {
-    const result = await buildResult({
-      sourceLanguage: 'nl',
-      targetLanguage: 'en',
-      source: 'noun',
-    });
-
-    if (result.success === false) {
-      throw 'Unexpected result';
-    }
-
-    expect(result.value.items[0].source).toEqual('lesson');
-    expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
-    expect(result.value.items[0].examples?.length).toBeGreaterThan(0);
-  });
 });

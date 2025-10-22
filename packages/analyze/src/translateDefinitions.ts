@@ -1,4 +1,4 @@
-import { chatGptRequest, GPT_4O_MINI } from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { ChatGPTLanguage, languageList, Result } from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
 import { enrichSource } from './translateDefinitions/enrichSource';
@@ -68,7 +68,7 @@ export const translateDefinitions = async ({
       },
       { role: 'user', content: prompt },
     ],
-    model: GPT_4O_MINI,
+    model: GPT_4O,
   });
 
   if (result.success === false) {
