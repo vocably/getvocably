@@ -57,8 +57,8 @@ export type GptAnalyseResult = {
   definitions: string[];
   examples: string[];
   lemma: string;
-  transcript: string;
   synonyms: string[];
+  transcript: string;
   number: string;
   gender?: string;
 };
@@ -71,7 +71,6 @@ const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
     'definitions' in result &&
     'examples' in result &&
     'lemma' in result &&
-    'transcript' in result &&
     'synonyms' in result &&
     'number' in result &&
     isArray(result['definitions']) &&
@@ -100,7 +99,7 @@ export const gptAnalyse = async (
     `User provides a word in ${languageName} and its part of speech.`,
     `Only respond in JSON format with an object containing the following properties:`,
     isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-    `definitions - list of short definitions in ${languageName}`,
+    `definitions - list of definitions in ${languageName}`,
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
     `synonyms - list of synonyms`,
@@ -143,7 +142,7 @@ export const gptAnalyse = async (
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,
-      transcript: response.transcript.replace(/\//gm, ''),
+      transcript: (response.transcript ?? '').replace(/\//gm, ''),
       ...(genders.includes(response.gender ?? '')
         ? {
             gender: response.gender,
