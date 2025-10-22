@@ -20,12 +20,13 @@ type Payload = {
 type ContextTranslation = {
   source: string;
   target: string;
+  lemma: string;
   partOfSpeech?: string;
   transcript?: string;
 };
 
 const isContextTranslation = (o: any): o is ContextTranslation => {
-  return !(!o || !o.target || !o.source);
+  return !(!o || !o.target || !o.source || !o.lemma);
 };
 
 export const isContextPayload = (o: any): o is Payload => {
@@ -139,6 +140,7 @@ export const translateFromContext = async (
       target: response.target,
       partOfSpeech: response.partOfSpeech,
       transcript: response.transcript,
+      lemma: response.lemma,
     },
   };
 };

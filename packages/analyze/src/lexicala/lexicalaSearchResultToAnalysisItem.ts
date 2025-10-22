@@ -1,5 +1,5 @@
 import { AnalysisItem, Translation } from '@vocably/model';
-import { addArticle } from '../addArticle';
+import { addArticleLegacy } from '../addArticleLegacy';
 import { extractTranslation } from '../extractTranslation';
 import { shortenGender } from '../shortenGender';
 import { getDefinitions } from './getDefinitions';
@@ -17,7 +17,7 @@ export const lexicalaSearchResultToAnalysisItem =
       item
     );
     return {
-      source: addArticle(item.language, item.headword),
+      source: addArticleLegacy(item.language, item.headword),
       ipa: getIpa(item),
       examples: getExamples(item.senses),
       definitions: getDefinitions(item.senses),

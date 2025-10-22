@@ -1,5 +1,5 @@
 import { isChatGPTLanguage, Result, Translation } from '@vocably/model';
-import { addArticle } from '../addArticle';
+import { addArticleLegacy } from '../addArticleLegacy';
 import { joinStrings } from '../joinStrings';
 import { getDefinitions } from '../lexicala/getDefinitions';
 import { LexicalaSearchResultItemWithNormalHeadword } from '../lexicala/normalizeHeadword';
@@ -45,7 +45,7 @@ export const translateItem = async (
     source: item.headword.text ?? '',
     partOfSpeech: item.headword.pos ?? '',
     originalTranslation: translation,
-    sourceWithArticle: addArticle(item.language, item.headword),
+    sourceWithArticle: addArticleLegacy(item.language, item.headword),
   });
 
   if (translationResult.success === false) {

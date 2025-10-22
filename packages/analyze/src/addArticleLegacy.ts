@@ -1,6 +1,6 @@
-import { GoogleLanguage } from '@vocably/model';
+import { LexicalaLanguage } from '@vocably/model';
 import { isFunction } from 'lodash-es';
-import { GptAnalyseResult } from './gptAnalyse';
+import { Headword } from './lexicala';
 import { vowels } from './vowels';
 
 type ArticleRules = {
@@ -16,12 +16,12 @@ type ArticleFunction = (options: {
 }) => string;
 
 const languageArticles: Partial<
-  Record<GoogleLanguage, ArticleRules | ArticleFunction>
+  Record<LexicalaLanguage, ArticleRules | ArticleFunction>
 > = {
   nl: {
     neuter: 'het ',
-    common: 'de ',
-    fallback: '',
+    'masculine-neuter': 'de/het ',
+    fallback: 'de ',
   },
   de: {
     feminine: 'die ',
@@ -116,38 +116,34 @@ const languageArticles: Partial<
   },
 };
 
-export const addArticle = (
-  language: GoogleLanguage,
-  source: string,
-  partOfSpeech: string,
-  gptAnalysisResult: GptAnalyseResult
+export const addArticleLegacy = (
+  language: LexicalaLanguage,
+  headword: Headword
 ): string => {
-  if (
-    partOfSpeech !== 'noun' ||
-    !gptAnalysisResult.gender ||
-    gptAnalysisResult.number !== 'singular'
-  ) {
-    return source;
+  const text = headword.text ?? '';
+
+  if (headword.pos !== 'noun' || !headword.gender) {
+    return text;
   }
 
   const rules = languageArticles[language];
 
   if (rules === undefined) {
-    return source;
+    return text;
   }
 
   if (isFunction(rules)) {
     return (
       rules({
-        gender: gptAnalysisResult.gender,
-        word: source,
-        pronunciation: gptAnalysisResult.transcript,
-        number: gptAnalysisResult.number,
-      }) + source
+        gender: headword.gender,
+        word: text,
+        pronunciation: headword?.pronunciation?.value ?? '',
+        number: headword?.number ?? '',
+      }) + text
     );
   }
 
-  const article = rules[gptAnalysisResult.gender] ?? rules.fallback;
+  const article = rules[headword.gender] ?? rules.fallback;
 
-  return `${article}${source}`;
+  return `${article}${text}`;
 };

@@ -13,6 +13,7 @@ export const isLexeme = (partOfSpeech: string) => {
     'particle',
     'auxiliary verb',
     'modal verb',
+    'phrasal verb',
     'article',
   ].includes(partOfSpeech.toLowerCase());
 };

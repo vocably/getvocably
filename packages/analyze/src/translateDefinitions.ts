@@ -49,16 +49,11 @@ export const translateDefinitions = async ({
   );
 
   const prompt = [
-    `Translate the ${safeSourceLanguage} ${partOfSpeech} "${enrichSource(
+    `Give minimum translations of the ${safeSourceLanguage} ${partOfSpeech} "${enrichSource(
       safeSource,
       partOfSpeech,
       sourceLanguage
-    )}" into ${safeTargetLanguage}`,
-    `Each translation should be one word or two words in ${safeTargetLanguage} and consider the following definitions:`,
-    `[`,
-    safeDefinitions.map((def) => `  "${def}"`).join(',\n'),
-    `]`,
-    ``,
+    )}" into ${safeTargetLanguage}.`,
     `Respond in JSON, as in example: {"translations": ${JSON.stringify(
       translationsExamples
     )}`,

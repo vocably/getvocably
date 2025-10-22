@@ -1,4 +1,5 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
+import { addArticle } from './addArticle';
 import { gptAnalyse } from './gptAnalyse';
 import { translateDefinitions } from './translateDefinitions';
 
@@ -32,12 +33,18 @@ export const analyseAndTranslate = async (
   return {
     success: true,
     value: {
-      source: payload.source,
+      source: addArticle(
+        payload.sourceLanguage as GoogleLanguage,
+        payload.source,
+        payload.partOfSpeech,
+        gptAnalyseResult.value
+      ),
       translation: translationResult.value.join(', '),
       definitions: gptAnalyseResult.value.definitions,
       examples: gptAnalyseResult.value.examples,
       partOfSpeech: payload.partOfSpeech,
       ipa: gptAnalyseResult.value.transcript,
+      g: gptAnalyseResult.value.gender,
     },
   };
 };

@@ -44,7 +44,7 @@ export type AnalysisItem = {
   examples?: string[];
   translation: string;
   partOfSpeech?: string;
-  g?: string;
+  g?: string; // gender
 };
 
 export type ValidAnalysisItems = [AnalysisItem, ...AnalysisItem[]];

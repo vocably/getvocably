@@ -1,18 +1,70 @@
-import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
-import { isArray } from 'lodash-es';
+import { isArray, uniq } from 'lodash-es';
+
+const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
+  zh: 'pinyin',
+  'zh-TW': 'pinyin',
+  ja: 'romaji',
+  ko: 'hangul',
+  vi: 'vietnamese',
+  th: 'thai',
+  id: 'indonesian',
+  ms: 'malay',
+  my: 'burmese',
+};
+
+const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
+  ar: ['masculine', 'feminine'], // Arabic
+  fr: ['masculine', 'feminine'], // French
+  es: ['masculine', 'feminine'], // Spanish
+  it: ['masculine', 'feminine'], // Italian
+  pt: ['masculine', 'feminine'], // Portuguese
+  ro: ['masculine', 'feminine', 'neuter'], // Romanian
+  de: ['masculine', 'feminine', 'neuter'], // German
+  nl: ['common', 'neuter'], // Dutch
+  sv: ['common', 'neuter'], // Swedish
+  da: ['common', 'neuter'], // Danish
+  no: ['masculine', 'feminine', 'neuter'], // Norwegian
+  is: ['masculine', 'feminine', 'neuter'], // Icelandic
+  ru: ['masculine', 'feminine', 'neuter'], // Russian
+  uk: ['masculine', 'feminine', 'neuter'], // Ukrainian
+  pl: [
+    'masculine-personal',
+    'masculine-animate',
+    'masculine-inanimate',
+    'feminine',
+    'neuter',
+  ], // Polish
+  cs: ['masculine-animate', 'masculine-inanimate', 'feminine', 'neuter'], // Czech
+  sk: ['masculine-animate', 'masculine-inanimate', 'feminine', 'neuter'], // Slovak
+  sr: ['masculine', 'feminine', 'neuter'], // Serbian
+  hr: ['masculine', 'feminine', 'neuter'], // Croatian
+  bs: ['masculine', 'feminine', 'neuter'], // Bosnian
+  el: ['masculine', 'feminine', 'neuter'], // Greek
+  hi: ['masculine', 'feminine'], // Hindi
+  ta: ['masculine', 'feminine', 'neuter'], // Tamil
+  ga: ['masculine', 'feminine'], // Irish
+  gd: ['masculine', 'feminine'], // Scottish Gaelic
+  cy: ['masculine', 'feminine'], // Welsh
+  he: ['masculine', 'feminine'], // Hebrew
+  am: ['masculine', 'feminine'], // Amharic
+  sw: ['noun-class'], // Swahili (nominal classes instead of gender)
+};
 
 type PartsOfSpeechPayload = {
   source: string;
+  language: GoogleLanguage;
 };
 
-export const partsOfSpeech = async (
-  payload: PartsOfSpeechPayload
-): Promise<Result<any>> => {
+export const getPartsOfSpeech = async ({
+  source,
+  language,
+}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
   const prompt = [
     `You are a smart language dictionary`,
-    `Return a list of possible parts of speech for the provided word`,
+    `User provides a word in ${languageList[language]}. Define its possible parts of speech`,
     `Only respond in text format with each part of speech on a separate line`,
   ]
     .filter((s) => !!s)
@@ -21,9 +73,9 @@ export const partsOfSpeech = async (
   const responseResult = await chatGptRequest({
     messages: [
       { role: 'system', content: prompt },
-      { role: 'user', content: payload.source },
+      { role: 'user', content: source },
     ],
-    model: GPT_4O_MINI,
+    model: GPT_4O,
     timeoutMs: 5000,
     responseFormat: {
       type: 'text',
@@ -34,9 +86,18 @@ export const partsOfSpeech = async (
     return responseResult;
   }
 
-  const response = responseResult.value
-    .split('\n')
-    .map((s: string) => s.trim());
+  const response = uniq(
+    responseResult.value
+      .split('\n')
+      .map((s: string) => s.trim().replace(/^-/, '').trim().toLowerCase())
+      .map((pos: string) => {
+        if (/substantiv[^,]*/i.test(pos)) {
+          return 'noun';
+        }
+
+        return pos;
+      })
+  ) as string[];
 
   return {
     success: true,
@@ -44,12 +105,14 @@ export const partsOfSpeech = async (
   };
 };
 
-type GptAnalyseResult = {
+export type GptAnalyseResult = {
   definitions: string[];
   examples: string[];
   lemma: string;
   transcript: string;
   synonyms: string[];
+  number: string;
+  gender?: string;
 };
 
 const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
@@ -62,6 +125,7 @@ const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
     'lemma' in result &&
     'transcript' in result &&
     'synonyms' in result &&
+    'number' in result &&
     isArray(result['definitions']) &&
     isArray(result['examples']) &&
     isArray(result['synonyms'])
@@ -79,16 +143,21 @@ export const gptAnalyse = async (
   const isTranscriptionNeeded = payload.source.length <= 20;
   const languageName = languageList[payload.sourceLanguage];
 
+  const genders = genderLanguages[payload.sourceLanguage] ?? [];
+
+  const transcriptionType = transcriptionName[payload.sourceLanguage] ?? 'IPA';
+
   const prompt = [
     `You are a smart language dictionary.`,
     `User provides a word in ${languageName} and its part of speech.`,
     `Only respond in JSON format with an object containing the following properties:`,
-    isTranscriptionNeeded ? `transcript - IPA` : ``,
+    isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
     `definitions - list of short definitions in ${languageName}`,
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
     `synonyms - list of synonyms`,
-    `gender - feminine, masculine, neuter, or other`,
+    `number - plural or singular`,
+    genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
   ]
     .filter((s) => !!s)
     .join('\n');
@@ -120,6 +189,9 @@ export const gptAnalyse = async (
 
   return {
     success: true,
-    value: response,
+    value: {
+      ...response,
+      transcript: response.transcript.replace(/\//gm, ''),
+    },
   };
 };
