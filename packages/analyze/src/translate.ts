@@ -42,20 +42,6 @@ export const translate = async (
     };
   }
 
-  if (payload.sourceLanguage === payload.targetLanguage) {
-    return {
-      success: true,
-      value: {
-        source: payload.source,
-        target: payload.target ?? payload.source,
-        sourceLanguage: payload.sourceLanguage,
-        targetLanguage: payload.targetLanguage,
-        partOfSpeech: payload.partOfSpeech,
-        transcript: payload.transcript,
-      },
-    };
-  }
-
   if (!isChatGPTLanguage(payload.sourceLanguage)) {
     return googleTranslate(
       payload.source,

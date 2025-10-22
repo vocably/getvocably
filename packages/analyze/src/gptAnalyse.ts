@@ -138,7 +138,11 @@ export const gptAnalyse = async (
   return {
     success: true,
     value: {
-      ...response,
+      number: response.number,
+      lemma: response.lemma,
+      definitions: response.definitions,
+      examples: response.examples,
+      synonyms: response.synonyms,
       transcript: response.transcript.replace(/\//gm, ''),
       ...(genders.includes(response.gender ?? '')
         ? {

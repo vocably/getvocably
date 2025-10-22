@@ -747,8 +747,6 @@ describe('integration check for translate lambda', () => {
       source: '星期二',
     });
 
-    console.log(inspect(result));
-
     if (result.success === false) {
       throw 'Unexpected result';
     }
@@ -762,8 +760,6 @@ describe('integration check for translate lambda', () => {
       targetLanguage: 'en',
       target: 'Tuesday',
     });
-
-    console.log(inspect(result));
 
     if (result.success === false) {
       throw 'Unexpected result';
@@ -780,8 +776,6 @@ describe('integration check for translate lambda', () => {
       context: 'Привет, какое у тебя имя?',
     });
 
-    console.log(inspect(result));
-
     if (result.success === false) {
       throw 'Unexpected result';
     }
@@ -789,5 +783,39 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation.source).toEqual('имя');
     expect(result.value.translation.target).toEqual('naam');
     expect(result.value.items[0].source).toEqual('de naam');
+  });
+
+  it('properly looks up in the same language', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'en',
+      targetLanguage: 'en',
+      source: 'lesson',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items[0].source).toEqual('lesson');
+    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+    expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
+    expect(result.value.items[0].examples?.length).toBeGreaterThan(0);
+  });
+
+  it('properly looks up in the same language', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'en',
+      targetLanguage: 'en',
+      source: 'lesson',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items[0].source).toEqual('lesson');
+    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+    expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
+    expect(result.value.items[0].examples?.length).toBeGreaterThan(0);
   });
 });
