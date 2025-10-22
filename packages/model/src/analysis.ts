@@ -19,6 +19,7 @@ export type DirectAnalyzePayload = {
   partOfSpeech?: string;
   transcript?: string;
   context?: string;
+  lemma?: string;
 };
 
 export type ReverseAnalyzePayload = {

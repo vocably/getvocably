@@ -37,6 +37,7 @@ export const translate = async (
         targetLanguage: payload.targetLanguage,
         partOfSpeech: payload.partOfSpeech,
         transcript: payload.transcript,
+        lemma: payload.lemma,
       },
     };
   }

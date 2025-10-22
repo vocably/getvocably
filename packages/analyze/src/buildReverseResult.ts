@@ -1,7 +1,6 @@
 import {
   AnalysisItem,
   DirectAnalysis,
-  GoogleLanguage,
   Result,
   ReverseAnalysis,
   ReverseAnalyzePayload,
@@ -9,8 +8,7 @@ import {
   ValidAnalysisItems,
 } from '@vocably/model';
 import { trimArticle } from '@vocably/sulna';
-import { buildDirectResultLegacy } from './buildDirectResultLegacy';
-import { combineTranslations } from './combineItems';
+import { buildDirectResult } from './buildDirectResult';
 import { makeUniqueItems } from './makeUniqueItems';
 import { reverseTranslate } from './reverseTranslate';
 import { sortByTarget } from './sortByTarget';
@@ -34,20 +32,15 @@ export const buildReverseResult = async (
       async (translation): Promise<TranslationDirectResult> => {
         return {
           translation,
-          directTranslationResult: await buildDirectResultLegacy({
+          directTranslationResult: await buildDirectResult({
             payload: {
               source: translation.target,
-              target: languagesWithTarget.includes(payload.sourceLanguage)
-                ? translation.source
-                : undefined,
+              target: translation.source,
               sourceLanguage: payload.sourceLanguage,
               targetLanguage: payload.targetLanguage,
               partOfSpeech: translation.partOfSpeech,
               transcript: translation.transcript,
-            },
-            lexicalaParams: {
-              morph: 'false',
-              analyzed: 'false',
+              lemma: translation.lemma,
             },
           }),
         };
@@ -98,24 +91,7 @@ const mergeItems = (
     return [candidate, ...items];
   }
 
-  const result = items.map((item) => {
-    if (
-      itemThatIsMatchedWithTheCandidate === item &&
-      candidate.translation.toLowerCase() !== item.translation.toLowerCase()
-    ) {
-      return {
-        ...item,
-        translation: combineTranslations(
-          candidate.translation,
-          item.translation
-        ),
-      };
-    }
-
-    return item;
-  });
-
-  return [result[0], ...result.slice(1)];
+  return [items[0], ...items.slice(1)];
 };
 
 const builtTranslationItems = (
@@ -147,8 +123,3 @@ const builtTranslationItems = (
 
   return [results[0], ...results.slice(1)];
 };
-
-// We can't rely on Google Translate for these languages, thus,
-// it's better to provide the AI translation as a direct target
-// for the rest of the languages, it should be fine.
-const languagesWithTarget: GoogleLanguage[] = ['ja', 'zh', 'zh-TW', 'ko'];

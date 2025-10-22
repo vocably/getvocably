@@ -18,6 +18,7 @@ type AiTranslationVariant = {
   translation: string;
   partOfSpeech: string;
   transcript: string;
+  lemma: string;
 };
 
 type AiTranslationResult = {
@@ -44,8 +45,18 @@ export const aiReverseTranslate = async (
     '',
     `Respond in JSON, as in example: ${JSON.stringify({
       translations: [
-        { translation: 'word 1', partOfSpeech: 'noun', transcript: 'word 1' },
-        { translation: 'word 2', partOfSpeech: 'noun', transcript: 'word 2' },
+        {
+          translation: 'word 1',
+          partOfSpeech: 'noun',
+          transcript: 'word 1',
+          lemma: 'lemma or infinitive of translation',
+        },
+        {
+          translation: 'word 2',
+          partOfSpeech: 'noun',
+          transcript: 'word 2',
+          lemma: 'lemma or infinitive of translation',
+        },
       ],
     })}`,
   ].join('\n');
@@ -86,6 +97,7 @@ export const aiReverseTranslate = async (
       target: translationVariant.translation,
       partOfSpeech: translationVariant.partOfSpeech,
       transcript: translationVariant.transcript,
+      lemma: translationVariant.lemma,
     }));
 
   return {
@@ -113,7 +125,8 @@ const isTranslationVariant = (data: any): data is AiTranslationVariant => {
   return (
     isSafeObject(data) &&
     typeof data['translation'] === 'string' &&
-    typeof data['partOfSpeech'] === 'string'
+    typeof data['partOfSpeech'] === 'string' &&
+    typeof data['lemma'] === 'string'
   );
 };
 
@@ -127,6 +140,7 @@ const sanitizeTranslationVariant =
       return {
         ...translationVariant,
         translation: translationVariant.translation.replace(/to /i, ''),
+        transcript: translationVariant.translation.replace(/tu /i, ''),
       };
     }
 

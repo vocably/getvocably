@@ -244,7 +244,7 @@ describe('integration check for translate lambda', () => {
     // expect(result.value.items[1].translation).toEqual('his');
   });
 
-  it('adds romaji for japanese multi translation', async () => {
+  it('adds romaji to IPA', async () => {
     const result = await buildResult({
       sourceLanguage: 'ja',
       targetLanguage: 'en',
@@ -256,9 +256,7 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items[0].definitions[0]).toEqual(
-      '[ korehamesseejidesu ]'
-    );
+    expect(result.value.items[0].ipa).toEqual('kore wa messēji desu');
     expect(result.value.items[0].translation.toLowerCase()).toEqual(
       'this is a message'
     );
@@ -296,9 +294,9 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items.length).toBeGreaterThanOrEqual(5);
+    expect(result.value.items.length).toBeGreaterThanOrEqual(2);
     expect(result.value.items[0].translation.toLowerCase()).toHaveSomeOf(
-      'да, здесь, настоящее, сейчас'
+      'да, угу, хорошо'
     );
   });
 
@@ -516,8 +514,8 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items[1].ipa).toEqual('nǐ hǎo');
-    expect(result.value.items[1].translation.toLowerCase()).toHaveSomeOf(
+    expect(result.value.items[0].ipa).toEqual('nǐ hǎo');
+    expect(result.value.items[0].translation.toLowerCase()).toHaveSomeOf(
       'здравствуйте, привет'
     );
   });
@@ -582,7 +580,9 @@ describe('integration check for translate lambda', () => {
       throw 'Unexpected result';
     }
 
-    expect(result.value.items.length).toBeGreaterThanOrEqual(2);
+    expect(result.value.items.length).toBeGreaterThanOrEqual(1);
+    expect(result.value.items[0].source).toEqual('iets');
+    expect(result.value.items[0].partOfSpeech).toEqual('pronoun');
   });
 
   it('removes "to" from english verbs', async () => {

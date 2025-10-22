@@ -1,5 +1,5 @@
 import '@vocably/jest';
-import { getPartsOfSpeech, gptAnalyse } from './gptAnalyse';
+import { gptAnalyse } from './gptAnalyse';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -10,41 +10,19 @@ describe('analyze words and phrases', () => {
     return;
   }
 
-  describe('partsOfSpeech', () => {
-    it('returns successful result', async () => {
-      const result = await getPartsOfSpeech({
-        source: 'looked up',
-        language: 'en',
-      });
-      console.log(result);
-      expect(result.success).toBeTruthy();
+  it('returns successful result', async () => {
+    const result = await gptAnalyse({
+      source: 'die Frage',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'es',
     });
+    expect(result.success).toBeTruthy();
 
-    it('returns parts of speech for norwegian', async () => {
-      const result = await getPartsOfSpeech({
-        source: 'katt',
-        language: 'no',
-      });
-      console.log(result);
-      expect(result.success).toBeTruthy();
-    });
-  });
-
-  describe('gptAnalyse', () => {
-    it('returns successful result', async () => {
-      const result = await gptAnalyse({
-        source: 'die Frage',
-        partOfSpeech: 'noun',
-        sourceLanguage: 'es',
-      });
-      expect(result.success).toBeTruthy();
-
-      if (!result.success) {
-        return;
-      }
-      expect(result.value.gender).toEqual('feminine');
-    }, 10_000_000);
-  });
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.gender).toEqual('feminine');
+  }, 10_000_000);
 
   it('adds pronunciation', async () => {
     const result = await gptAnalyse({

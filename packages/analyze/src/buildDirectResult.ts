@@ -7,7 +7,7 @@ import {
 } from '@vocably/model';
 import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from './analyseAndTranslate';
-import { getPartsOfSpeech } from './gptAnalyse';
+import { gptGetPartsOfSpeech } from './gptGetPartsOfSpeech';
 import { isLexeme } from './isLexeme';
 import { sanitizePayload } from './sanitizePayload';
 import { translate } from './translate';
@@ -29,10 +29,15 @@ export const buildDirectResult = async ({
 
   const [translationResult, partsOfSpeechResult] = await Promise.all([
     translate(payloadWithoutArticle),
-    getPartsOfSpeech({
-      source: payloadWithoutArticle.source,
-      language: payload.sourceLanguage,
-    }),
+    payload.partOfSpeech
+      ? Promise.resolve({
+          success: true,
+          value: [payload.partOfSpeech],
+        })
+      : gptGetPartsOfSpeech({
+          source: payloadWithoutArticle.source,
+          language: payload.sourceLanguage,
+        }),
   ]);
 
   if (translationResult.success === false) {
