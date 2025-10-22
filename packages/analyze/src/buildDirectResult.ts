@@ -2,6 +2,7 @@ import {
   DirectAnalysis,
   DirectAnalyzePayload,
   Result,
+  Translation,
   ValidAnalysisItems,
 } from '@vocably/model';
 import { trimArticle } from '@vocably/sulna';
@@ -38,6 +39,21 @@ export const buildDirectResult = async ({
     return translationResult;
   }
 
+  // This is needed to output good results in the browser extension
+  // when a user looks up from a language that they don't learn
+  const directTranslation: Translation =
+    trimArticle(payload.sourceLanguage, payload.source).source.toLowerCase() ===
+    trimArticle(
+      payload.sourceLanguage,
+      translationResult.value.source
+    ).source.toLowerCase()
+      ? translationResult.value
+      : {
+          ...translationResult.value,
+          source: payload.source,
+          target: translationResult.value.source,
+        };
+
   if (
     !isLexeme(translationResult.value.partOfSpeech ?? '') ||
     !translationResult.value.lemma
@@ -48,7 +64,7 @@ export const buildDirectResult = async ({
         source: payload.source,
         targetLanguage: payload.targetLanguage,
         sourceLanguage: payload.sourceLanguage,
-        translation: translationResult.value,
+        translation: directTranslation,
         items: [translationToAnalysisItem(translationResult.value)],
       },
     };
@@ -82,7 +98,7 @@ export const buildDirectResult = async ({
         source: payload.source,
         targetLanguage: payload.targetLanguage,
         sourceLanguage: payload.sourceLanguage,
-        translation: translationResult.value,
+        translation: directTranslation,
         items: resultItems,
       },
     };
@@ -146,7 +162,7 @@ export const buildDirectResult = async ({
       source: payload.source,
       targetLanguage: payload.targetLanguage,
       sourceLanguage: payload.sourceLanguage,
-      translation: translationResult.value,
+      translation: directTranslation,
       items: resultItems,
     },
   };
