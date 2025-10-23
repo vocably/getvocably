@@ -1,7 +1,14 @@
-import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
+import { parseJson } from '@vocably/api';
+import {
+  chatGptRequest,
+  GPT_4O,
+  nodeFetchS3File,
+  nodePutS3File,
+} from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
+import { config } from './config';
 
 const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
   zh: 'pinyin',
@@ -84,7 +91,7 @@ type GptAnalysePayload = {
   partOfSpeech: string;
   sourceLanguage: GoogleLanguage;
 };
-export const gptAnalyse = async (
+export const gptAnalyseNoCache = async (
   payload: GptAnalysePayload
 ): Promise<Result<GptAnalyseResult>> => {
   const isTranscriptionNeeded = payload.source.length <= 20;
@@ -150,4 +157,43 @@ export const gptAnalyse = async (
         : {}),
     },
   };
+};
+
+export const gptAnalyse = async (
+  payload: GptAnalysePayload
+): Promise<Result<GptAnalyseResult>> => {
+  const fileName = `analyze/${payload.sourceLanguage}/${payload.source}/${payload.partOfSpeech}.json`;
+  const s3FetchResult = await nodeFetchS3File(
+    config.unitsOfSpeechBucket,
+    fileName
+  );
+
+  if (s3FetchResult.success && s3FetchResult.value !== null) {
+    const parseResult = parseJson(s3FetchResult.value);
+
+    if (parseResult.success && isGptAnalyseResult(parseResult.value)) {
+      return {
+        success: true,
+        value: parseResult.value,
+      };
+    }
+  }
+
+  const analyseResult = await gptAnalyseNoCache(payload);
+
+  if (!analyseResult.success) {
+    return analyseResult;
+  }
+
+  const putResult = await nodePutS3File(
+    config.unitsOfSpeechBucket,
+    fileName,
+    JSON.stringify(analyseResult.value)
+  );
+
+  if (!putResult.success) {
+    console.error('Failed to put the result to S3', putResult);
+  }
+
+  return analyseResult;
 };

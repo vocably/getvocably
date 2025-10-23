@@ -1,5 +1,5 @@
 import '@vocably/jest';
-import { gptAnalyse } from './gptAnalyse';
+import { gptAnalyseNoCache } from './gptAnalyse';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -11,7 +11,7 @@ describe('analyze words and phrases', () => {
   }
 
   it('returns successful result', async () => {
-    const result = await gptAnalyse({
+    const result = await gptAnalyseNoCache({
       source: 'die Frage',
       partOfSpeech: 'noun',
       sourceLanguage: 'es',
@@ -25,7 +25,7 @@ describe('analyze words and phrases', () => {
   }, 10_000_000);
 
   it('adds pronunciation', async () => {
-    const result = await gptAnalyse({
+    const result = await gptAnalyseNoCache({
       source: 'hacha',
       partOfSpeech: 'noun',
       sourceLanguage: 'es',
@@ -39,7 +39,7 @@ describe('analyze words and phrases', () => {
   }, 10_000_000);
 
   it('adds number', async () => {
-    const result = await gptAnalyse({
+    const result = await gptAnalyseNoCache({
       source: 'вши',
       partOfSpeech: 'noun',
       sourceLanguage: 'ru',
