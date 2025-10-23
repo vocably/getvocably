@@ -1,7 +1,73 @@
+resource "aws_s3_bucket" "units_of_speech" {
+  bucket = "vocably-${terraform.workspace}-units-of-speech"
+}
+
+resource "aws_s3_bucket_versioning" "units_of_speech" {
+  bucket = aws_s3_bucket.units_of_speech.bucket
+
+  versioning_configuration {
+    status = "Suspended"
+  }
+}
+
+resource "aws_iam_role" "analyze_lambda" {
+  name               = "vocably-${terraform.workspace}-analyze-lambda"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "analyze_lambda" {
+  name = "vocably-${terraform.workspace}-analyze-lambda-logs-policy"
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "DefaultLogging",
+        "Effect" : "Allow",
+        "Action" : [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource" : "*"
+      },
+      {
+        "Sid" : "UnitsOfSpeechS3",
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:*",
+        ],
+        "Resource" : [
+          aws_s3_bucket.units_of_speech.arn,
+          "${aws_s3_bucket.units_of_speech.arn}/*",
+        ]
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "analyze_lambda" {
+  role       = aws_iam_role.analyze_lambda.name
+  policy_arn = aws_iam_policy.analyze_lambda.arn
+}
+
 resource "aws_lambda_function" "analyze" {
   filename         = data.archive_file.backend_build.output_path
   function_name    = "vocably-${terraform.workspace}-analyze"
-  role             = aws_iam_role.lambda_execution.arn
+  role             = aws_iam_role.analyze_lambda.arn
   handler          = "analyze.analyze"
   source_code_hash = data.archive_file.backend_build.output_base64sha256
   runtime          = "nodejs22.x"

@@ -17,6 +17,8 @@ configureAnalyzer({
   nlpTranslationKey: process.env.NLP_TRANSLATION_KEY as string,
   nlpTranslationHost: process.env.NLP_TRANSLATION_HOST as string,
   openaiApiKey: process.env.OPENAI_API_KEY as string,
+  awsRegion: process.env.AWS_REGION as string,
+  unitsOfSpeechBucket: process.env.UNITS_OF_SPEECH_BUCKET as string,
 });
 
 export const explain = async (

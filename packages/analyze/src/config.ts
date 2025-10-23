@@ -7,6 +7,8 @@ export const config = {
   nlpTranslationKey: 'must be provided',
   nlpTranslationHost: 'must be provided',
   openaiApiKey: 'must be provided',
+  awsRegion: 'us-east-1',
+  unitsOfSpeechBucket: 'vocably-prod-units-of-speech',
 };
 
 type AnalyzerConfig = typeof config;
