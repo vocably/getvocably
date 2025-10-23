@@ -8,5 +8,7 @@ export const configureTestAnalyzer = () => {
     nlpTranslationKey: process.env.NLP_TRANSLATION_KEY ?? '',
     nlpTranslationHost: process.env.NLP_TRANSLATION_HOST ?? '',
     openaiApiKey: process.env.OPENAI_API_KEY ?? '',
+    awsRegion: process.env.AWS_REGION ?? '',
+    unitsOfSpeechBucket: process.env.UNITS_OF_SPEECH_BUCKET ?? '',
   });
 };

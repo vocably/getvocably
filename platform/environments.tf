@@ -104,6 +104,7 @@ USER_FILES_BUCKET="${aws_s3_bucket.user_files.bucket}"
 BREVO_API_KEY="${var.brevo_api_key}"
 NOTIFICATIONS_DYNAMO_TABLE="${aws_dynamodb_table.notifications.name}"
 MOBILE_APP_PINPOINT_PROJECT_ID="${aws_pinpoint_app.mobile_app.id}"
+UNITS_OF_SPEECH_BUCKET="${aws_s3_bucket.units_of_speech.bucket}"
   EOT
 }
 
