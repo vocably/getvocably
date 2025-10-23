@@ -8,7 +8,7 @@ import {
 import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from './analyseAndTranslate';
 import { gptGetPartsOfSpeech } from './gptGetPartsOfSpeech';
-import { isLexeme } from './isLexeme';
+import { isIndependentUnitOfSpeech } from './isIndependentUnitOfSpeech';
 import { sanitizePayload } from './sanitizePayload';
 import { translate } from './translate';
 import { translationToAnalysisItem } from './translationToAnalyzeItem';
@@ -60,7 +60,7 @@ export const buildDirectResult = async ({
         };
 
   if (
-    !isLexeme(translationResult.value.partOfSpeech ?? '') ||
+    !isIndependentUnitOfSpeech(translationResult.value.partOfSpeech ?? '') ||
     !translationResult.value.lemma
   ) {
     return {

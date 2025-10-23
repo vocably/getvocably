@@ -1,4 +1,4 @@
-export const isLexeme = (partOfSpeech: string) => {
+export const isIndependentUnitOfSpeech = (partOfSpeech: string) => {
   return [
     'noun',
     'verb',
