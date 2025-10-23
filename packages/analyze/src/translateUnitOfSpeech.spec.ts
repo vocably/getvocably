@@ -1,43 +1,33 @@
 import '@vocably/jest';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
-import { translateDefinitions } from './translateDefinitions';
+import { translateUnitOfSpeechNoCache } from './translateUnitOfSpeech';
 
 configureTestAnalyzer();
 
-describe('translateDefinitions', () => {
+describe('translateUnitOfSpeech', () => {
   if (process.env.TEST_SKIP_SPEC === 'true') {
     it('skip spec testing', () => {});
     return;
   }
 
   it('bank', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'bank',
       partOfSpeech: 'noun',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
-      definitions: [
-        'a financial organization that lends and keeps money',
-        'the land at the side of a river',
-        'a long mass or row of similar things',
-      ],
     });
     expect(translationResult.success).toEqual(true);
     // @ts-ignore
-    expect(translationResult.value).toEqual(['банк', 'берег', 'ряд']);
+    expect(translationResult.value).toEqual(['банк', 'берег']);
   }, 60_000);
 
   it('tailor', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'tailor',
       partOfSpeech: 'verb',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
-      definitions: [
-        'adjust to a specific need or market',
-        'style and tailor in a certain fashion',
-        'create (clothes) with cloth',
-      ],
     });
 
     console.log(translationResult);
@@ -49,36 +39,27 @@ describe('translateDefinitions', () => {
     }
 
     // @ts-ignore
-    expect(translationResult.value[0]).toEqual('подгонять');
+    expect(translationResult.value[0]).toEqual('шить');
   }, 60_000);
 
   it('de bron to en', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'bron',
       partOfSpeech: 'noun',
       sourceLanguage: 'nl',
       targetLanguage: 'en',
-      definitions: [
-        'plaats waar water uit de grond komt',
-        'plaats waar waardevolle stoffen in de grond zijn',
-        'ets waar iets uit komt of ontstaat',
-      ],
     });
     expect(translationResult.success).toEqual(true);
     // @ts-ignore
-    expect(translationResult.value).toEqual(['spring', 'source', 'origin']);
+    expect(translationResult.value[0]).toEqual('source');
   }, 60_000);
 
   it('de bron to ru', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'bron',
       partOfSpeech: 'noun',
       sourceLanguage: 'nl',
       targetLanguage: 'ru',
-      definitions: [
-        'plaats waar water uit de grond komt',
-        'plaats waar waardevolle stoffen in de grond zijn',
-      ],
     });
     expect(translationResult.success).toEqual(true);
     if (!translationResult.success) {
@@ -87,18 +68,15 @@ describe('translateDefinitions', () => {
     expect(translationResult.value.length).toEqual(2);
     // @ts-ignore
     expect(translationResult.value[0]).toEqual('источник');
-    expect(translationResult.value[1]).toHaveSomeOf(
-      'месторождение, рудник, место нахождения, место нахождения ценных веществ'
-    );
+    expect(translationResult.value[1]).toHaveSomeOf('источник, родник');
   }, 60_000);
 
   it('arrival', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'arrival',
       partOfSpeech: 'noun',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
-      definitions: ['the time of getting to a place', 'the beginning of'],
     });
     expect(translationResult.success).toEqual(true);
     if (!translationResult.success) {
@@ -106,17 +84,16 @@ describe('translateDefinitions', () => {
     }
     expect(translationResult.value.length).toEqual(2);
     // @ts-ignore
-    expect(translationResult.value[0]).toEqual('приход');
-    expect(translationResult.value[1]).toEqual('прибытие');
+    expect(translationResult.value[0]).toEqual('прибытие');
+    expect(translationResult.value[1]).toEqual('приезд');
   }, 60_000);
 
   it('bottle', async () => {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeechNoCache({
       source: 'bottle',
       partOfSpeech: 'noun',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
-      definitions: ['a container for liquids', 'the amount a bottle can hold'],
     });
     expect(translationResult.success).toEqual(true);
     if (!translationResult.success) {

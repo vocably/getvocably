@@ -192,7 +192,7 @@ export const gptAnalyse = async (
   );
 
   if (!putResult.success) {
-    console.error('Failed to put the result to S3', putResult);
+    console.error('Failed to put GPT analyse the result to S3', putResult);
   }
 
   return analyseResult;

@@ -1,7 +1,7 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
 import { addArticle } from './addArticle';
 import { gptAnalyse } from './gptAnalyse';
-import { translateDefinitions } from './translateDefinitions';
+import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 type Payload = {
   source: string;
@@ -21,12 +21,11 @@ export const analyseAndTranslate = async (
   let translation = '';
 
   if (payload.sourceLanguage !== payload.targetLanguage) {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeech({
       source: payload.source,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       partOfSpeech: payload.partOfSpeech,
-      definitions: gptAnalyseResult.value.definitions,
     });
 
     if (translationResult.success === false) {

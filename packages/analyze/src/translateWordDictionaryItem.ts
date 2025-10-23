@@ -3,8 +3,8 @@ import {
   isChatGPTLanguage,
   Translation,
 } from '@vocably/model';
-import { translateDefinitions } from './translateDefinitions';
 import { translatePartOfSpeech } from './translatePartOfSpeech';
+import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 type TranslateOptions = {
   source: string;
@@ -29,7 +29,7 @@ export const translateWordDictionaryItem = async ({
     isChatGPTLanguage(payload.sourceLanguage) &&
     isChatGPTLanguage(payload.targetLanguage)
   ) {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeech({
       // @ts-ignore
       sourceLanguage: payload.sourceLanguage,
       // @ts-ignore
