@@ -33,6 +33,7 @@ export const translateUnitOfSpeechNoCache = async ({
       sourceLanguage
     )}" into ${safeTargetLanguage}`,
     `Only respond in text format with each translation on a separate line`,
+    `Omit explanations`,
     `Sort results by commonality`,
   ].join('\n');
 
