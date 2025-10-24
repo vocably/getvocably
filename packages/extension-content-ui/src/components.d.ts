@@ -102,6 +102,8 @@ export namespace Components {
     }
     interface VocablyIconPlus {
     }
+    interface VocablyIconReload {
+    }
     interface VocablyIconRemove {
     }
     interface VocablyIconSpin {
@@ -240,6 +242,10 @@ export namespace Components {
           * @default false
          */
         "hideChatGpt": boolean;
+        /**
+          * @default false
+         */
+        "isRetrying": boolean;
         /**
           * @default null
          */
@@ -530,6 +536,12 @@ declare global {
         prototype: HTMLVocablyIconPlusElement;
         new (): HTMLVocablyIconPlusElement;
     };
+    interface HTMLVocablyIconReloadElement extends Components.VocablyIconReload, HTMLStencilElement {
+    }
+    var HTMLVocablyIconReloadElement: {
+        prototype: HTMLVocablyIconReloadElement;
+        new (): HTMLVocablyIconReloadElement;
+    };
     interface HTMLVocablyIconRemoveElement extends Components.VocablyIconRemove, HTMLStencilElement {
     }
     var HTMLVocablyIconRemoveElement: {
@@ -723,6 +735,7 @@ declare global {
         "ratingInteraction": RateInteractionPayload;
         "changeSourceLanguage": string;
         "changeTargetLanguage": string;
+        "retry": void;
         "removeCard": RemoveCardPayload;
         "addCard": AddCardPayload;
         "watchMePaying": void;
@@ -764,6 +777,7 @@ declare global {
         "vocably-icon-error": HTMLVocablyIconErrorElement;
         "vocably-icon-play-circle": HTMLVocablyIconPlayCircleElement;
         "vocably-icon-plus": HTMLVocablyIconPlusElement;
+        "vocably-icon-reload": HTMLVocablyIconReloadElement;
         "vocably-icon-remove": HTMLVocablyIconRemoveElement;
         "vocably-icon-spin": HTMLVocablyIconSpinElement;
         "vocably-icon-tag": HTMLVocablyIconTagElement;
@@ -885,6 +899,8 @@ declare namespace LocalJSX {
     interface VocablyIconPlayCircle {
     }
     interface VocablyIconPlus {
+    }
+    interface VocablyIconReload {
     }
     interface VocablyIconRemove {
     }
@@ -1032,6 +1048,10 @@ declare namespace LocalJSX {
          */
         "hideChatGpt"?: boolean;
         /**
+          * @default false
+         */
+        "isRetrying"?: boolean;
+        /**
           * @default null
          */
         "isUpdating"?: TranslationCard | null;
@@ -1048,6 +1068,7 @@ declare namespace LocalJSX {
         "onChangeTargetLanguage"?: (event: VocablyTranslationCustomEvent<string>) => void;
         "onRatingInteraction"?: (event: VocablyTranslationCustomEvent<RateInteractionPayload>) => void;
         "onRemoveCard"?: (event: VocablyTranslationCustomEvent<RemoveCardPayload>) => void;
+        "onRetry"?: (event: VocablyTranslationCustomEvent<void>) => void;
         "onWatchMePaying"?: (event: VocablyTranslationCustomEvent<void>) => void;
         /**
           * @default ''
@@ -1111,6 +1132,7 @@ declare namespace LocalJSX {
         "vocably-icon-error": VocablyIconError;
         "vocably-icon-play-circle": VocablyIconPlayCircle;
         "vocably-icon-plus": VocablyIconPlus;
+        "vocably-icon-reload": VocablyIconReload;
         "vocably-icon-remove": VocablyIconRemove;
         "vocably-icon-spin": VocablyIconSpin;
         "vocably-icon-tag": VocablyIconTag;
@@ -1160,6 +1182,7 @@ declare module "@stencil/core" {
             "vocably-icon-error": LocalJSX.VocablyIconError & JSXBase.HTMLAttributes<HTMLVocablyIconErrorElement>;
             "vocably-icon-play-circle": LocalJSX.VocablyIconPlayCircle & JSXBase.HTMLAttributes<HTMLVocablyIconPlayCircleElement>;
             "vocably-icon-plus": LocalJSX.VocablyIconPlus & JSXBase.HTMLAttributes<HTMLVocablyIconPlusElement>;
+            "vocably-icon-reload": LocalJSX.VocablyIconReload & JSXBase.HTMLAttributes<HTMLVocablyIconReloadElement>;
             "vocably-icon-remove": LocalJSX.VocablyIconRemove & JSXBase.HTMLAttributes<HTMLVocablyIconRemoveElement>;
             "vocably-icon-spin": LocalJSX.VocablyIconSpin & JSXBase.HTMLAttributes<HTMLVocablyIconSpinElement>;
             "vocably-icon-tag": LocalJSX.VocablyIconTag & JSXBase.HTMLAttributes<HTMLVocablyIconTagElement>;

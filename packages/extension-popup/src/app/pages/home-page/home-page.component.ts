@@ -35,6 +35,7 @@ export class HomePageComponent implements OnInit {
   paymentLink: string = '';
   extensionPlatform = detectExtensionPlatform();
   askForRating: boolean = false;
+  isRetrying = false;
 
   languagePairsLoaded = false;
   languagePairs: LanguagePairs = {};
@@ -89,6 +90,16 @@ export class HomePageComponent implements OnInit {
   onSearchValuesChanged(values: SearchValues) {
     localStorage.setItem(lastUsedSearchValuesKey, JSON.stringify(values));
     this.searchValues = values;
+  }
+
+  async onRetry() {
+    if (!this.searchValues) {
+      return;
+    }
+
+    this.isRetrying = true;
+    await this.onSearchFormSubmit(this.searchValues);
+    this.isRetrying = false;
   }
 
   async onSearchFormSubmit(values: SearchValues) {
