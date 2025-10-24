@@ -113,7 +113,7 @@ export const gptAnalyseNoCache = async (
     `lemma - lemma or infinitive`,
     `lemmaPos - part of speech of the lemma`,
     `synonyms - list of synonyms`,
-    `number - plural or singular`,
+    `number - plural or singular English only`,
     genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
   ]
     .filter((s) => !!s)
