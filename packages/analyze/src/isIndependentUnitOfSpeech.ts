@@ -15,5 +15,9 @@ export const isIndependentUnitOfSpeech = (partOfSpeech: string) => {
     'modal verb',
     'phrasal verb',
     'article',
+    'past participle',
+    'past tense',
+    'present participle',
+    'gerund',
   ].includes(partOfSpeech.toLowerCase());
 };
