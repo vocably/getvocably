@@ -12,8 +12,8 @@ export const gptGetPartsOfSpeech = async ({
   language,
 }: PartsOfSpeechPayload): Promise<Result<string[]>> => {
   const prompt = [
-    `You are a smart language dictionary`,
-    `User provides a word in ${languageList[language]}. Define its possible parts of speech`,
+    `You are a smart ${languageList[language]} dictionary`,
+    `User provides a word in. Define its parts of speech`,
     `Only respond in text format with each part of speech in English on a separate line`,
   ]
     .filter((s) => !!s)

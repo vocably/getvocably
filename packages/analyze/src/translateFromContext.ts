@@ -21,12 +21,13 @@ type ContextTranslation = {
   source: string;
   target: string;
   lemma: string;
+  lemmaPos: string;
   partOfSpeech?: string;
   transcript?: string;
 };
 
 const isContextTranslation = (o: any): o is ContextTranslation => {
-  return !(!o || !o.target || !o.source || !o.lemma);
+  return !(!o || !o.target || !o.source || !o.lemma || !o.lemmaPos);
 };
 
 export const isContextPayload = (o: any): o is Payload => {
@@ -96,6 +97,7 @@ export const translateFromContext = async (
     }`,
     `- partOfSpeech`,
     `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
+    `- lemmaPos - part of speech of the lemma`,
     isTranscriptionNeeded
       ? `- transcript - the ${get(
           transcriptionName,
@@ -141,6 +143,7 @@ export const translateFromContext = async (
       partOfSpeech: response.partOfSpeech,
       transcript: response.transcript,
       lemma: response.lemma,
+      lemmaPos: response.lemmaPos,
     },
   };
 };

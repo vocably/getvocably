@@ -64,6 +64,7 @@ export type GptAnalyseResult = {
   definitions: string[];
   examples: string[];
   lemma: string;
+  lemmaPos: string;
   synonyms: string[];
   transcript: string;
   number: string;
@@ -78,6 +79,7 @@ const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
     'definitions' in result &&
     'examples' in result &&
     'lemma' in result &&
+    'lemmaPos' in result &&
     'synonyms' in result &&
     'number' in result &&
     isArray(result['definitions']) &&
@@ -109,6 +111,7 @@ export const gptAnalyseNoCache = async (
     `definitions - list of definitions in ${languageName}`,
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
+    `lemmaPos - part of speech of the lemma`,
     `synonyms - list of synonyms`,
     `number - plural or singular`,
     genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
@@ -146,6 +149,7 @@ export const gptAnalyseNoCache = async (
     value: {
       number: response.number,
       lemma: response.lemma,
+      lemmaPos: response.lemmaPos,
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,

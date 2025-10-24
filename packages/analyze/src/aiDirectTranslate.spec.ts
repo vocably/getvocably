@@ -286,4 +286,22 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.lemma).toHaveSomeOf(['komen']);
   });
+
+  it('provides lemma and lemmaPos', async () => {
+    const result = await aiDirectTranslate({
+      source: 'perambulation',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toEqual('perambulate');
+    expect(result.value.lemmaPos).toEqual('verb');
+  });
 });

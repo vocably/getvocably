@@ -41,6 +41,7 @@ export const buildReverseResult = async (
               partOfSpeech: translation.partOfSpeech,
               transcript: translation.transcript,
               lemma: translation.lemma,
+              lemmaPos: translation.lemmaPos,
             },
           }),
         };

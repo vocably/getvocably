@@ -51,4 +51,19 @@ describe('analyze words and phrases', () => {
     }
     expect(result.value.number).toHaveSomeOf('plural');
   }, 10_000_000);
+
+  it('lemma pos', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'perambulation',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'en',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.lemma).toHaveSomeOf('perambulation');
+    expect(result.value.lemmaPos).toHaveSomeOf('noun');
+  }, 10_000_000);
 });

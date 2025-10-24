@@ -19,6 +19,7 @@ type AiTranslationVariant = {
   partOfSpeech: string;
   transcript: string;
   lemma: string;
+  lemmaPos: string;
 };
 
 type AiTranslationResult = {
@@ -41,24 +42,13 @@ export const aiReverseTranslate = async (
     } word/phrase`,
     `<input>${target}</input>`,
     `into ${languageList[payload.sourceLanguage]}.`,
-    `For each translation provide part of speech in English`,
-    '',
-    `Respond in JSON, as in example: ${JSON.stringify({
-      translations: [
-        {
-          translation: 'word 1',
-          partOfSpeech: 'noun',
-          transcript: 'word 1',
-          lemma: 'lemma or infinitive of translation',
-        },
-        {
-          translation: 'word 2',
-          partOfSpeech: 'noun',
-          transcript: 'word 2',
-          lemma: 'lemma or infinitive of translation',
-        },
-      ],
-    })}`,
+    `Response in JSON object with translations array. Each item:`,
+    `- translation - the translation of the word/phrase`,
+    `- partOfSpeech - the part of speech of the translation in English`,
+    `- partOfSpeech - the part of speech of the translation in English`,
+    `- transcript - IPA`,
+    `- lemma - lemma of translation`,
+    `- lemmaPos - part of speech of lemma`,
   ].join('\n');
 
   const responseResult = await chatGptRequest({
@@ -98,6 +88,7 @@ export const aiReverseTranslate = async (
       partOfSpeech: translationVariant.partOfSpeech,
       transcript: translationVariant.transcript,
       lemma: translationVariant.lemma,
+      lemmaPos: translationVariant.lemmaPos,
     }));
 
   return {
@@ -126,7 +117,8 @@ const isTranslationVariant = (data: any): data is AiTranslationVariant => {
     isSafeObject(data) &&
     typeof data['translation'] === 'string' &&
     typeof data['partOfSpeech'] === 'string' &&
-    typeof data['lemma'] === 'string'
+    typeof data['lemma'] === 'string' &&
+    typeof data['lemmaPos'] === 'string'
   );
 };
 

@@ -1,12 +1,14 @@
 import {
   DirectAnalysis,
   DirectAnalyzePayload,
+  isAiTranslation,
   Result,
   Translation,
   ValidAnalysisItems,
 } from '@vocably/model';
 import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from './analyseAndTranslate';
+import { buildDirectAnalyseBatch } from './buildDirectAnalyseBatch';
 import { gptGetPartsOfSpeech } from './gptGetPartsOfSpeech';
 import { isIndependentUnitOfSpeech } from './isIndependentUnitOfSpeech';
 import { sanitizePayload } from './sanitizePayload';
@@ -60,8 +62,8 @@ export const buildDirectResult = async ({
         };
 
   if (
-    !isIndependentUnitOfSpeech(translationResult.value.partOfSpeech ?? '') ||
-    !translationResult.value.lemma
+    !isAiTranslation(translationResult.value) ||
+    !isIndependentUnitOfSpeech(translationResult.value.partOfSpeech)
   ) {
     return {
       success: true,
@@ -75,93 +77,29 @@ export const buildDirectResult = async ({
     };
   }
 
-  const sourceAnalyse = analyseAndTranslate({
-    source: translationResult.value.source,
-    sourceLanguage: translationResult.value.sourceLanguage,
-    targetLanguage: translationResult.value.targetLanguage,
-    partOfSpeech: translationResult.value.partOfSpeech ?? '',
-  });
-
-  if (
-    translationResult.value.source.toLowerCase() ===
-      translationResult.value.lemma?.toLowerCase() &&
-    partsOfSpeechResult.success &&
-    partsOfSpeechResult.value.length === 1
-  ) {
-    const sourceAnalyseResult = await sourceAnalyse;
-    const resultItems: ValidAnalysisItems = [
-      translationToAnalysisItem(translationResult.value),
-    ];
-
-    if (sourceAnalyseResult.success === true) {
-      resultItems[0] = sourceAnalyseResult.value;
-    }
-
-    return {
-      success: true,
-      value: {
-        source: payload.source,
-        targetLanguage: payload.targetLanguage,
-        sourceLanguage: payload.sourceLanguage,
-        translation: directTranslation,
-        items: resultItems,
-      },
-    };
-  }
-
-  const lemmasRequests = (
-    partsOfSpeechResult.success
-      ? partsOfSpeechResult.value
-      : [translationResult.value.partOfSpeech ?? '']
-  )
-    .filter((partOfSpeech) => {
-      if (
-        partOfSpeech === translationResult.value.partOfSpeech &&
-        translationResult.value.source.toLowerCase() ===
-          translationResult.value.lemma?.toLowerCase()
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .sort((a, b) => {
-      if (a === translationResult.value.partOfSpeech) {
-        return -1;
-      }
-
-      if (b === translationResult.value.partOfSpeech) {
-        return 1;
-      }
-
-      return 0;
-    })
-    .map(async (partOfSpeech) => {
-      return analyseAndTranslate({
-        source:
-          translationResult.value.partOfSpeech === partOfSpeech
-            ? translationResult.value.lemma ?? ''
-            : translationResult.value.source,
-        sourceLanguage: translationResult.value.sourceLanguage,
-        targetLanguage: translationResult.value.targetLanguage,
-        partOfSpeech,
-      });
-    });
-
-  const sourceAnalyseResult = await sourceAnalyse;
-  const lemmaAnalyseResults = await Promise.all(lemmasRequests);
+  const analyseResults = await Promise.all(
+    buildDirectAnalyseBatch({
+      translation: translationResult.value,
+      partsOfSpeech: partsOfSpeechResult.success
+        ? partsOfSpeechResult.value
+        : [],
+    }).map((payload) => analyseAndTranslate(payload))
+  );
 
   const resultItems: ValidAnalysisItems = [
     translationToAnalysisItem(translationResult.value),
   ];
 
-  if (sourceAnalyseResult.success === true) {
-    resultItems[0] = sourceAnalyseResult.value;
+  if (analyseResults[0].success === true) {
+    resultItems[0] = analyseResults[0].value;
   }
 
-  lemmaAnalyseResults.forEach((lemmaAnalyseResult) => {
-    if (lemmaAnalyseResult.success === true) {
-      resultItems.push(lemmaAnalyseResult.value);
+  analyseResults.slice(1).forEach((result) => {
+    if (result.success === false) {
+      return;
     }
+
+    resultItems.push(result.value);
   });
 
   return {

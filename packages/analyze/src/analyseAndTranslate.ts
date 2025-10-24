@@ -1,9 +1,9 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
 import { addArticle } from './addArticle';
-import { gptAnalyse } from './gptAnalyse';
-import { translateUnitOfSpeech } from './translateUnitOfSpeech';
+import { gptAnalyseNoCache as gptAnalyse } from './gptAnalyse';
+import { translateUnitOfSpeechNoCache as translateUnitOfSpeech } from './translateUnitOfSpeech';
 
-type Payload = {
+export type AnalyseAndTranslatePayload = {
   source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
@@ -11,7 +11,7 @@ type Payload = {
 };
 
 export const analyseAndTranslate = async (
-  payload: Payload
+  payload: AnalyseAndTranslatePayload
 ): Promise<Result<AnalysisItem>> => {
   const gptAnalyseResult = await gptAnalyse(payload);
   if (gptAnalyseResult.success === false) {

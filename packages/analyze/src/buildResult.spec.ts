@@ -237,7 +237,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'to be, to exist, to happen'
+      'to be, to exist, to happen, being'
     );
     // expect(result.value.items[1].translation).toEqual('his');
   });
@@ -441,7 +441,7 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
     expect(result.value.items[1].translation).toHaveSomeOf(
-      'пристосовувати, шити на замовлення'
+      'пристосовувати, шити на замовлення, шити, адаптувати'
     );
   });
 

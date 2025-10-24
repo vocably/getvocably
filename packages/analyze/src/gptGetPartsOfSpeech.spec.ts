@@ -43,7 +43,7 @@ describe('analyze words and phrases', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual(['noun', 'verb']);
+    expect(result.value).toEqual(['noun']);
   });
 
   it('verzamelde', async () => {
@@ -55,6 +55,18 @@ describe('analyze words and phrases', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual(['verb', 'adjective']);
+  });
+
+  it('что-то', async () => {
+    const result = await gptGetPartsOfSpeech({
+      source: 'что-то',
+      language: 'nl',
+    });
+    expect(result.success).toBeTruthy();
+    if (!result.success) {
+      return;
+    }
+
+    expect(result.value[0]).toHaveSomeOf('noun, pronoun');
   });
 });

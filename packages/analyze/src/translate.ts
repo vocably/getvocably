@@ -22,6 +22,7 @@ type Payload = {
   partOfSpeech?: string;
   transcript?: string;
   lemma?: string;
+  lemmaPos?: string;
 };
 
 export const translate = async (
@@ -38,6 +39,7 @@ export const translate = async (
         partOfSpeech: payload.partOfSpeech,
         transcript: payload.transcript,
         lemma: payload.lemma,
+        lemmaPos: payload.lemmaPos,
       },
     };
   }
