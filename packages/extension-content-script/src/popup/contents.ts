@@ -200,6 +200,12 @@ export const setContents = async ({
       }, 10_000);
     });
 
+    translation.addEventListener('retry', async () => {
+      translation.isRetrying = true;
+      await analyze();
+      translation.isRetrying = false;
+    });
+
     // @ts-ignore
     translation.addEventListener(
       'changeTargetLanguage',

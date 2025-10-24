@@ -60,6 +60,12 @@ const mockGetInternalSourceLanguage: typeof getInternalSourceLanguage =
 const mockAnalyze: typeof analyze = async () => {
   await timeout(200);
   return {
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'This is done on purpose',
+  };
+
+  return {
     success: true,
     value: {
       cards: [

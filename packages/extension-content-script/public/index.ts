@@ -69,6 +69,11 @@ registerContentScript({
             (document.getElementById('response') as HTMLTextAreaElement).value
           );
 
+          if (result.success === false) {
+            resolve(result);
+            return;
+          }
+
           if (payload.sourceLanguage) {
             result.value.translation.sourceLanguage = payload.sourceLanguage;
           }

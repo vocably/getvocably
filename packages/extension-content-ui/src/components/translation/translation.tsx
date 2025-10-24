@@ -107,11 +107,13 @@ export class VocablyTranslation {
   @Prop() premiumCtaSuffix: string = '';
   @Prop() explanation: ComponentExplanationState = { state: 'none' };
   @Prop() explanationAnimationDelay = 0;
+  @Prop() isRetrying = false;
 
   @Event() ratingInteraction: EventEmitter<RateInteractionPayload>;
 
   @Event() changeSourceLanguage: EventEmitter<string>;
   @Event() changeTargetLanguage: EventEmitter<string>;
+  @Event() retry: EventEmitter<void>;
   @Event() removeCard: EventEmitter<RemoveCardPayload>;
   @Event() addCard: EventEmitter<AddCardPayload>;
   @Event() watchMePaying: EventEmitter<void>;
@@ -438,7 +440,37 @@ export class VocablyTranslation {
             </div>
           )}
           {this.result && this.result.success === false && (
-            <div class="vocably-error">An error has occurred.</div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}
+            >
+              <div>A (likely) ChatGPT request has resulted in an error.</div>
+              <div>
+                <button
+                  class="vocably-link-button vocably-nondecorated"
+                  onClick={() => this.retry.emit()}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                  disabled={this.isRetrying}
+                >
+                  Retry
+                  {this.isRetrying && (
+                    <vocably-inline-loader></vocably-inline-loader>
+                  )}
+                  <vocably-icon-reload
+                    style={{
+                      display: this.isRetrying ? 'none' : 'inline-block',
+                    }}
+                  ></vocably-icon-reload>
+                </button>
+              </div>
+            </div>
           )}
           {this.result && this.result.success === true && (
             <Fragment>

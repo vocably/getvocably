@@ -350,6 +350,10 @@ vocably-play-sound {
   text-decoration: underline !important;
 }
 
+.vocably-nondecorated {
+  text-decoration: none !important;
+}
+
 .vocably-text-link:hover {
   color: $v-light-color-emphasize !important;
 }
