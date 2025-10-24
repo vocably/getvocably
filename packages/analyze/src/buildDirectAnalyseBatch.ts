@@ -32,7 +32,20 @@ export const buildDirectAnalyseBatch = ({
   }
 
   partsOfSpeech
-    .filter((pos) => translation.partOfSpeech !== pos)
+    .filter((pos) => {
+      if (translation.partOfSpeech === pos) {
+        return false;
+      }
+
+      if (
+        ['phrasal verb', 'verb'].includes(pos) &&
+        ['phrasal verb', 'verb'].includes(translation.partOfSpeech)
+      ) {
+        return false;
+      }
+
+      return true;
+    })
     .forEach((pos) => {
       payloads.push({
         source: translation.source,
