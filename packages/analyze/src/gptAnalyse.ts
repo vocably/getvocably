@@ -166,7 +166,7 @@ export const gptAnalyseNoCache = async (
 export const gptAnalyse = async (
   payload: GptAnalysePayload
 ): Promise<Result<GptAnalyseResult>> => {
-  const fileName = `analyze/${payload.sourceLanguage}/${payload.source}/${payload.partOfSpeech}.json`;
+  const fileName = `analyze/${payload.sourceLanguage.toLowerCase()}/${payload.source.toLowerCase()}/${payload.partOfSpeech.toLowerCase()}.json`;
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName

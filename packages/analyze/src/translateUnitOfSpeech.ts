@@ -82,7 +82,7 @@ export const translateUnitOfSpeechNoCache = async ({
 export const translateUnitOfSpeech = async (
   payload: Payload
 ): Promise<Result<string[]>> => {
-  const fileName = `translations/${payload.sourceLanguage}/${payload.source}/${payload.partOfSpeech}/${payload.targetLanguage}.txt`;
+  const fileName = `translations/${payload.sourceLanguage.toLowerCase()}/${payload.source.toLowerCase()}/${payload.partOfSpeech.toLowerCase()}/${payload.targetLanguage.toLowerCase()}.txt`;
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName
