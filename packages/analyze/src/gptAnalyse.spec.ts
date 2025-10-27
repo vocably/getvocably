@@ -66,4 +66,18 @@ describe('analyze words and phrases', () => {
     expect(result.value.lemma).toHaveSomeOf('perambulation');
     expect(result.value.lemmaPos).toHaveSomeOf('noun');
   }, 10_000_000);
+
+  it('consider tense', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'went',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'en',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    console.log(result.value);
+  }, 10_000_000);
 });

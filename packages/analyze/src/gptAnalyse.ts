@@ -93,22 +93,28 @@ type GptAnalysePayload = {
   partOfSpeech: string;
   sourceLanguage: GoogleLanguage;
 };
-export const gptAnalyseNoCache = async (
-  payload: GptAnalysePayload
-): Promise<Result<GptAnalyseResult>> => {
-  const isTranscriptionNeeded = payload.source.length <= 20;
-  const languageName = languageList[payload.sourceLanguage];
+export const gptAnalyseNoCache = async ({
+  source,
+  partOfSpeech,
+  sourceLanguage,
+}: GptAnalysePayload): Promise<Result<GptAnalyseResult>> => {
+  const isTranscriptionNeeded = source.length <= 20;
+  const languageName = languageList[sourceLanguage];
 
-  const genders = genderLanguages[payload.sourceLanguage] ?? [];
+  const genders = genderLanguages[sourceLanguage] ?? [];
 
-  const transcriptionType = transcriptionName[payload.sourceLanguage] ?? 'IPA';
+  const transcriptionType = transcriptionName[sourceLanguage] ?? 'IPA';
 
   const prompt = [
     `You are a smart language dictionary.`,
     `User provides a word in ${languageName} and its part of speech.`,
     `Only respond in JSON format with an object containing the following properties:`,
     isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-    `definitions - list of definitions in ${languageName}`,
+    `definitions - list of definitions in ${languageName}.${
+      partOfSpeech.includes('verb')
+        ? ` Consider tense of the provided word.`
+        : ''
+    }`,
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
     `lemmaPos - part of speech of the lemma`,
@@ -122,8 +128,8 @@ export const gptAnalyseNoCache = async (
   const responseResult = await chatGptRequest({
     messages: [
       { role: 'system', content: prompt },
-      { role: 'user', content: payload.source },
-      { role: 'user', content: payload.partOfSpeech },
+      { role: 'user', content: source },
+      { role: 'user', content: partOfSpeech },
     ],
     model: GPT_4O,
     timeoutMs: 100000,
@@ -140,7 +146,7 @@ export const gptAnalyseNoCache = async (
       success: false,
       errorCode: 'FUCKING_ERROR',
       reason: 'The GPT request responded with the malformed response',
-      extra: { payload, response },
+      extra: { payload: { source, sourceLanguage, partOfSpeech }, response },
     };
   }
 
