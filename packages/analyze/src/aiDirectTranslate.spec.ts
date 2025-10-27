@@ -95,6 +95,7 @@ describe('aiDirectTranslate', () => {
       'Что-то, и что-то другое.',
       'Что-то и что-то ещё.',
       'Что-то, и что-то ещё.',
+      'Что-то и что-то еще.',
     ]);
   });
 
@@ -302,5 +303,22 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.lemma).toEqual('perambulate');
     expect(result.value.lemmaPos).toEqual('verb');
+  });
+
+  it('false friends', async () => {
+    const result = await aiDirectTranslate({
+      source: 'bad',
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+    });
+
+    expect(result.success).toBeTruthy();
+    if (!result.success) {
+      console.error(`Error`, result);
+      return;
+    }
+
+    expect(result.value.source).toEqual('bad');
+    expect(result.value.target).toEqual('bath');
   });
 });

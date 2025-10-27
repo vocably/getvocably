@@ -46,9 +46,9 @@ const internalAiDirectTranslate = async (
   const prompt = [
     `You are a smart language dictionary.`,
     `Only respond in JSON format with an object containing the following properties:`,
-    `- source - the user input translated into ${
+    `- source - the user input in ${
       languageList[payload.sourceLanguage]
-    }`,
+    } spelling fixed.`,
     `- target - the user input translated into${
       languageList[payload.targetLanguage]
     }`,
