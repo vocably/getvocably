@@ -8,7 +8,6 @@ import { ChatGPTLanguage, languageList, Result } from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
 import { uniq } from 'lodash-es';
 import { config } from './config';
-import { enrichSource } from './translateDefinitions/enrichSource';
 
 type Payload = {
   sourceLanguage: ChatGPTLanguage;
@@ -27,22 +26,20 @@ export const translateUnitOfSpeechNoCache = async ({
   const safeTargetLanguage = languageList[targetLanguage];
 
   const prompt = [
-    `Give minimum translations of the ${safeSourceLanguage} ${partOfSpeech} "${enrichSource(
-      safeSource,
-      partOfSpeech,
-      sourceLanguage
-    )}" into ${safeTargetLanguage}`,
-    `Only respond in text format with each translation on a separate line`,
-    `Omit explanations`,
-    `Sort results by commonality`,
+    `Give minimum translations of the ${safeSourceLanguage} ${partOfSpeech} "${safeSource}" into ${safeTargetLanguage}`,
+    partOfSpeech.includes('verb') ? `Consider tense of the provided word` : '',
   ].join('\n');
 
   const result = await chatGptRequest({
     messages: [
       {
         role: 'system',
-        content:
-          'You are a smart language assistant. Only respond to questions about vocabulary and translations.',
+        content: [
+          'You are a smart translator.',
+          `Only respond in text format with each translation on a separate line`,
+          `Omit explanations`,
+          `Sort results by commonality`,
+        ].join('\n'),
       },
       { role: 'user', content: prompt },
     ],

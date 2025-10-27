@@ -103,4 +103,33 @@ describe('translateUnitOfSpeech', () => {
     // @ts-ignore
     expect(translationResult.value[0]).toEqual('бутылка');
   }, 60_000);
+
+  it('past tense 01', async () => {
+    const translationResult = await translateUnitOfSpeechNoCache({
+      source: 'doet',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+    });
+    expect(translationResult.success).toEqual(true);
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(translationResult.value[0]).toEqual('does');
+  }, 60_000);
+
+  it('past tense 02', async () => {
+    const translationResult = await translateUnitOfSpeechNoCache({
+      source: 'aangekondigd',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'nl',
+      targetLanguage: 'ru',
+    });
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(translationResult.value[0]).toEqual('объявлено');
+  }, 60_000);
 });
