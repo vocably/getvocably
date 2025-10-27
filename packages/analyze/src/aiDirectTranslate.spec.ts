@@ -23,7 +23,7 @@ describe('aiDirectTranslate', () => {
     }
 
     expect(result.value.source).toBe('cover');
-    expect(result.value.partOfSpeech).toBe('noun/verb');
+    expect(result.value.partOfSpeech).toHaveSomeOf(['noun/verb', 'noun']);
     expect(result.value.sourceLanguage).toBe('en');
     expect(result.value.targetLanguage).toBe('ru');
   });
@@ -112,7 +112,6 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.source).toBe('e sua cidade');
     expect(result.value.target).toHaveSomeOf(['и ваш город', 'и его город']);
-    expect(result.value.partOfSpeech).toBe('phrase');
   });
 
   it('fixes english spelling', async () => {

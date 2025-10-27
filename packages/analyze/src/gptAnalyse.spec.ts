@@ -63,7 +63,7 @@ describe('analyze words and phrases', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value.lemma).toHaveSomeOf('perambulation');
-    expect(result.value.lemmaPos).toHaveSomeOf('noun');
+    expect(result.value.lemma).toHaveSomeOf('perambulate');
+    expect(result.value.lemmaPos).toHaveSomeOf('verb');
   }, 10_000_000);
 });

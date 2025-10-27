@@ -27,19 +27,18 @@ export const translateUnitOfSpeechNoCache = async ({
 
   const prompt = [
     `Give minimum translations of the ${safeSourceLanguage} ${partOfSpeech} "${safeSource}" into ${safeTargetLanguage}`,
+    `Only respond in text format with each translation on a separate line`,
     partOfSpeech.includes('verb') ? `Consider tense of the provided word` : '',
+    `Omit explanations`,
+    `Sort results by commonality`,
   ].join('\n');
 
   const result = await chatGptRequest({
     messages: [
       {
         role: 'system',
-        content: [
-          'You are a smart translator.',
-          `Only respond in text format with each translation on a separate line`,
-          `Omit explanations`,
-          `Sort results by commonality`,
-        ].join('\n'),
+        content:
+          'You are a smart language assistant. Only respond to questions about vocabulary and translations.',
       },
       { role: 'user', content: prompt },
     ],

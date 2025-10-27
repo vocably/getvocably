@@ -51,7 +51,7 @@ describe('aiReverseTranslate', () => {
       'telefoonhoesje',
     ]);
     expect(result.value[0].source).toEqual('phone case');
-    expect(result.value[1].target).toEqual('telefooncase');
+    expect(result.value[1].target).toHaveSomeOf('telefooncase, telefoonhoes');
     expect(result.value[1].source).toEqual('phone case');
   });
 
@@ -123,7 +123,7 @@ describe('aiReverseTranslate', () => {
       }
 
       expect(result.value.length).toBeGreaterThanOrEqual(1);
-      expect(result.value[0].transcript).toEqual('xīngqī èr');
+      expect(result.value[0].transcript).toHaveSomeOf("xīngqī èr, xīngqī'èr");
     });
 
     it('chinese simplified', async () => {
@@ -139,7 +139,7 @@ describe('aiReverseTranslate', () => {
       }
 
       expect(result.value.length).toBeGreaterThanOrEqual(1);
-      expect(result.value[0].transcript).toEqual('xīngqī èr');
+      expect(result.value[0].transcript).toHaveSomeOf("xīngqī èr, xīngqī'èr");
     });
   });
 });

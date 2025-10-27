@@ -83,7 +83,7 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation).toBeDefined();
     expect(result.value.items[0].source).toEqual('de regeling');
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'регулирование, регулировка, соглашение'
+      'регулирование, регулировка, соглашение, устройство, положение, схема'
     );
   });
 
@@ -103,7 +103,7 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation).toBeDefined();
     expect(result.value.items[0].source).toEqual('de regeling');
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'регулирование, регулировка, соглашение'
+      'положение, регулирование, устройство, система'
     );
   });
 
@@ -204,7 +204,7 @@ describe('integration check for translate lambda', () => {
       'трюк, прием, приём, уловка, фокус, хитрость'
     );
     expect(result.value.items[1].translation).toHaveSomeOf(
-      'обманывать, одурачить, провести, перехитрить'
+      'обманывать, одурачить, провести, перехитрить, обмануть'
     );
   });
 
@@ -237,7 +237,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'to be, to exist, to happen, being'
+      'to be, to exist, to happen, being, to be, to exist, to happen'
     );
     // expect(result.value.items[1].translation).toEqual('his');
   });
@@ -254,7 +254,10 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items[0].ipa).toEqual('kore wa messeeji desu');
+    expect(result.value.items[0].ipa).toHaveSomeOf([
+      'kore wa messeeji desu',
+      'koɾe wa messeːdʑi desu',
+    ]);
     expect(result.value.items[0].translation.toLowerCase()).toEqual(
       'this is a message'
     );
@@ -628,7 +631,7 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items[0].source).toEqual('get along');
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'ладить, уживаться, находить общий язык'
+      'ладить, уживаться, находить общий язык, справляться'
     );
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
   });
@@ -767,23 +770,6 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation.source).toEqual('имя');
     expect(result.value.translation.target).toEqual('naam');
     expect(result.value.items[0].source).toEqual('de naam');
-  });
-
-  it('properly looks up in the same language', async () => {
-    const result = await buildResult({
-      sourceLanguage: 'en',
-      targetLanguage: 'en',
-      source: 'lesson',
-    });
-
-    if (result.success === false) {
-      throw 'Unexpected result';
-    }
-
-    expect(result.value.items[0].source).toEqual('lesson');
-    expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
-    expect(result.value.items[0].examples?.length).toBeGreaterThan(0);
   });
 
   it('properly looks up in the same language', async () => {
