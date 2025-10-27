@@ -67,6 +67,20 @@ describe('analyze words and phrases', () => {
       return;
     }
 
-    expect(result.value[0]).toHaveSomeOf('noun, pronoun');
+    expect(result.value.length).toEqual(0);
+  });
+
+  it('bad(nl)', async () => {
+    const result = await gptGetPartsOfSpeech({
+      source: 'bad',
+      language: 'nl',
+    });
+    expect(result.success).toBeTruthy();
+    if (!result.success) {
+      return;
+    }
+
+    expect(result.value.length).toEqual(1);
+    expect(result.value[0]).toHaveSomeOf('noun');
   });
 });
