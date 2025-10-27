@@ -240,7 +240,7 @@ describe('aiDirectTranslate', () => {
 
   it('translate wrongly selected stuff', async () => {
     const result = await aiDirectTranslate({
-      source: 'ребята',
+      source: 'мыло',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
     });
@@ -250,12 +250,12 @@ describe('aiDirectTranslate', () => {
       return;
     }
 
-    expect(result.value.source).toHaveSomeOf(['guys']);
+    expect(result.value.source).toHaveSomeOf(['soap']);
   });
 
   it('provides noun lemma', async () => {
     const result = await aiDirectTranslate({
-      source: 'ребята',
+      source: 'столы',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
     });
@@ -267,7 +267,9 @@ describe('aiDirectTranslate', () => {
 
     console.log(result);
 
-    expect(result.value.lemma).toHaveSomeOf(['guy']);
+    expect(result.value.source).toHaveSomeOf('tables');
+    expect(result.value.target).toHaveSomeOf('столы');
+    expect(result.value.lemma).toHaveSomeOf(['table']);
   });
 
   it('provides infinitive', async () => {
@@ -320,5 +322,22 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.source).toEqual('bad');
     expect(result.value.target).toEqual('bath');
+  });
+
+  it('chair', async () => {
+    const result = await aiDirectTranslate({
+      source: 'chair',
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+    });
+
+    expect(result.success).toBeTruthy();
+    if (!result.success) {
+      console.error(`Error`, result);
+      return;
+    }
+
+    expect(result.value.source).toEqual('stoel');
+    expect(result.value.target).toEqual('chair');
   });
 });
