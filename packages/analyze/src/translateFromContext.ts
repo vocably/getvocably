@@ -1,4 +1,4 @@
-import { chatGptRequest, GPT_4O_MINI } from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
 import {
   ChatGPTLanguage,
   ChatGPTLanguages,
@@ -115,7 +115,7 @@ export const translateFromContext = async (
       { role: 'user', content: context },
       { role: 'user', content: source },
     ],
-    model: GPT_4O_MINI,
+    model: payload.sourceLanguage === 'en' ? GPT_4O_MINI : GPT_4O,
     timeoutMs: 5000,
   });
 
