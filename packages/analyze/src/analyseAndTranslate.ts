@@ -1,7 +1,7 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
 import { addArticle } from './addArticle';
-import { gptAnalyseNoCache as gptAnalyse } from './gptAnalyse';
-import { translateUnitOfSpeechNoCache as translateUnitOfSpeech } from './translateUnitOfSpeech';
+import { gptAnalyse } from './gptAnalyse';
+import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 export type AnalyseAndTranslatePayload = {
   source: string;
