@@ -1,5 +1,5 @@
 import '@vocably/jest';
-import { gptAnalyse, partsOfSpeech } from './gptAnalyse';
+import { gptAnalyseNoCache } from './gptAnalyse';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -10,25 +10,60 @@ describe('analyze words and phrases', () => {
     return;
   }
 
-  describe('partsOfSpeech', () => {
-    it('returns successful result', async () => {
-      const result = await partsOfSpeech({
-        source: 'looked up',
-      });
-      console.log(result);
-      expect(result.success).toBeTruthy();
+  it('returns successful result', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'die Frage',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'es',
     });
-  });
+    expect(result.success).toBeTruthy();
 
-  describe('gptAnalyse', () => {
-    it('returns successful result', async () => {
-      const result = await gptAnalyse({
-        source: 'die Frage',
-        partOfSpeech: 'noun',
-        sourceLanguage: 'de',
-      });
-      console.log(result);
-      expect(result.success).toBeTruthy();
-    }, 10_000_000);
-  });
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.gender).toEqual('feminine');
+  }, 10_000_000);
+
+  it('adds pronunciation', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'hacha',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'es',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.transcript[0]).toHaveSomeOf(['ˈ', "'"]);
+  }, 10_000_000);
+
+  it('adds number', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'вши',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'ru',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.number).toHaveSomeOf('plural');
+  }, 10_000_000);
+
+  it('lemma pos', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'perambulation',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'en',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.lemma).toHaveSomeOf('perambulate');
+    expect(result.value.lemmaPos).toHaveSomeOf('verb');
+  }, 10_000_000);
 });

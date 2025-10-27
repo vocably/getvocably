@@ -1,10 +1,10 @@
 import { isChatGPTLanguage, Result, Translation } from '@vocably/model';
-import { addArticle } from '../addArticle';
+import { addArticleLegacy } from '../addArticleLegacy';
 import { joinStrings } from '../joinStrings';
 import { getDefinitions } from '../lexicala/getDefinitions';
 import { LexicalaSearchResultItemWithNormalHeadword } from '../lexicala/normalizeHeadword';
-import { translateDefinitions } from '../translateDefinitions';
 import { translatePartOfSpeech } from '../translatePartOfSpeech';
+import { translateUnitOfSpeech } from '../translateUnitOfSpeech';
 
 export const translateItem = async (
   item: LexicalaSearchResultItemWithNormalHeadword,
@@ -23,14 +23,13 @@ export const translateItem = async (
     isChatGPTLanguage(translation.sourceLanguage) &&
     isChatGPTLanguage(translation.targetLanguage)
   ) {
-    const translationResult = await translateDefinitions({
+    const translationResult = await translateUnitOfSpeech({
       // @ts-ignore
       sourceLanguage: translation.sourceLanguage,
       // @ts-ignore
       targetLanguage: translation.targetLanguage,
       source: item.headword.text ?? '',
       partOfSpeech: item.headword.pos ?? '',
-      definitions,
     });
 
     if (translationResult.success === true) {
@@ -45,7 +44,7 @@ export const translateItem = async (
     source: item.headword.text ?? '',
     partOfSpeech: item.headword.pos ?? '',
     originalTranslation: translation,
-    sourceWithArticle: addArticle(item.language, item.headword),
+    sourceWithArticle: addArticleLegacy(item.language, item.headword),
   });
 
   if (translationResult.success === false) {

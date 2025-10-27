@@ -1,4 +1,4 @@
-import { chatGptRequest, GPT_4O_MINI } from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
 import {
   ChatGPTLanguage,
   ChatGPTLanguages,
@@ -20,12 +20,14 @@ type Payload = {
 type ContextTranslation = {
   source: string;
   target: string;
+  lemma: string;
+  lemmaPos: string;
   partOfSpeech?: string;
   transcript?: string;
 };
 
 const isContextTranslation = (o: any): o is ContextTranslation => {
-  return !(!o || !o.target || !o.source);
+  return !(!o || !o.target || !o.source || !o.lemma || !o.lemmaPos);
 };
 
 export const isContextPayload = (o: any): o is Payload => {
@@ -94,6 +96,8 @@ export const translateFromContext = async (
       languageList[payload.targetLanguage]
     }`,
     `- partOfSpeech`,
+    `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
+    `- lemmaPos - part of speech of the lemma`,
     isTranscriptionNeeded
       ? `- transcript - the ${get(
           transcriptionName,
@@ -111,7 +115,7 @@ export const translateFromContext = async (
       { role: 'user', content: context },
       { role: 'user', content: source },
     ],
-    model: GPT_4O_MINI,
+    model: payload.sourceLanguage === 'en' ? GPT_4O_MINI : GPT_4O,
     timeoutMs: 5000,
   });
 
@@ -138,6 +142,8 @@ export const translateFromContext = async (
       target: response.target,
       partOfSpeech: response.partOfSpeech,
       transcript: response.transcript,
+      lemma: response.lemma,
+      lemmaPos: response.lemmaPos,
     },
   };
 };

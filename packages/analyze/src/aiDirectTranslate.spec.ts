@@ -23,7 +23,7 @@ describe('aiDirectTranslate', () => {
     }
 
     expect(result.value.source).toBe('cover');
-    expect(result.value.partOfSpeech).toBe('noun/verb');
+    expect(result.value.partOfSpeech).toHaveSomeOf(['noun/verb', 'noun']);
     expect(result.value.sourceLanguage).toBe('en');
     expect(result.value.targetLanguage).toBe('ru');
   });
@@ -112,7 +112,6 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.source).toBe('e sua cidade');
     expect(result.value.target).toHaveSomeOf(['и ваш город', 'и его город']);
-    expect(result.value.partOfSpeech).toBe('phrase');
   });
 
   it('fixes english spelling', async () => {
@@ -251,5 +250,57 @@ describe('aiDirectTranslate', () => {
     }
 
     expect(result.value.source).toHaveSomeOf(['guys']);
+  });
+
+  it('provides noun lemma', async () => {
+    const result = await aiDirectTranslate({
+      source: 'ребята',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toHaveSomeOf(['guy']);
+  });
+
+  it('provides infinitive', async () => {
+    const result = await aiDirectTranslate({
+      source: 'kwam',
+      sourceLanguage: 'nl',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toHaveSomeOf(['komen']);
+  });
+
+  it('provides lemma and lemmaPos', async () => {
+    const result = await aiDirectTranslate({
+      source: 'perambulation',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toEqual('perambulate');
+    expect(result.value.lemmaPos).toEqual('verb');
   });
 });

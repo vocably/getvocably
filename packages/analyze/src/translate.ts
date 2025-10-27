@@ -21,6 +21,8 @@ type Payload = {
   context?: string;
   partOfSpeech?: string;
   transcript?: string;
+  lemma?: string;
+  lemmaPos?: string;
 };
 
 export const translate = async (
@@ -36,20 +38,8 @@ export const translate = async (
         targetLanguage: payload.targetLanguage,
         partOfSpeech: payload.partOfSpeech,
         transcript: payload.transcript,
-      },
-    };
-  }
-
-  if (payload.sourceLanguage === payload.targetLanguage) {
-    return {
-      success: true,
-      value: {
-        source: payload.source,
-        target: payload.target ?? payload.source,
-        sourceLanguage: payload.sourceLanguage,
-        targetLanguage: payload.targetLanguage,
-        partOfSpeech: payload.partOfSpeech,
-        transcript: payload.transcript,
+        lemma: payload.lemma,
+        lemmaPos: payload.lemmaPos,
       },
     };
   }

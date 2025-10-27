@@ -1,4 +1,6 @@
+import { google } from '@google-cloud/translate/build/protos/protos';
 import { GoogleLanguage } from './language';
+import translation = google.cloud.translation;
 
 export type Translation = {
   source: string;
@@ -8,6 +10,24 @@ export type Translation = {
   partOfSpeech?: string;
   comesFromExplanation?: boolean;
   transcript?: string;
+  lemma?: string;
+  lemmaPos?: string;
+};
+
+export type AiTranslation = Translation &
+  Required<
+    Pick<Translation, 'partOfSpeech' | 'lemma' | 'lemmaPos' | 'transcript'>
+  >;
+
+export const isAiTranslation = (
+  translation: Translation
+): translation is AiTranslation => {
+  return (
+    translation.partOfSpeech !== undefined &&
+    translation.lemma !== undefined &&
+    translation.lemmaPos !== undefined &&
+    translation.transcript !== undefined
+  );
 };
 
 export type DirectAnalyzePayload = {
@@ -18,6 +38,8 @@ export type DirectAnalyzePayload = {
   partOfSpeech?: string;
   transcript?: string;
   context?: string;
+  lemma?: string;
+  lemmaPos?: string;
 };
 
 export type ReverseAnalyzePayload = {
@@ -43,7 +65,7 @@ export type AnalysisItem = {
   examples?: string[];
   translation: string;
   partOfSpeech?: string;
-  g?: string;
+  g?: string; // gender
 };
 
 export type ValidAnalysisItems = [AnalysisItem, ...AnalysisItem[]];
