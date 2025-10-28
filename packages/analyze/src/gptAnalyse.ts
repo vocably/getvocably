@@ -4,10 +4,12 @@ import {
   GPT_4O,
   nodeFetchS3File,
   nodePutS3File,
+  OpenAiModel,
 } from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
+import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 
 const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
@@ -93,11 +95,17 @@ type GptAnalysePayload = {
   partOfSpeech: string;
   sourceLanguage: GoogleLanguage;
 };
-export const gptAnalyseNoCache = async ({
+
+type GptAnalyseChatGptBody = {
+  messages: Array<ChatCompletionMessageParam>;
+  model: OpenAiModel;
+};
+
+export const getGptAnalyseChatGptBody = ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: GptAnalysePayload): Promise<Result<GptAnalyseResult>> => {
+}: GptAnalysePayload): GptAnalyseChatGptBody => {
   const isTranscriptionNeeded = source.length <= 20;
   const languageName = languageList[sourceLanguage];
 
@@ -125,30 +133,30 @@ export const gptAnalyseNoCache = async ({
     .filter((s) => !!s)
     .join('\n');
 
-  const responseResult = await chatGptRequest({
+  return {
     messages: [
       { role: 'system', content: prompt },
       { role: 'user', content: source },
       { role: 'user', content: partOfSpeech },
     ],
     model: GPT_4O,
-    timeoutMs: 100000,
-  });
+  };
+};
 
-  if (!responseResult.success) {
-    return responseResult;
-  }
-
-  const response = responseResult.value;
-
+export const getGptAnalyseResult = (
+  sourceLanguage: GoogleLanguage,
+  response: any
+): Result<GptAnalyseResult> => {
   if (!isGptAnalyseResult(response)) {
     return {
       success: false,
       errorCode: 'FUCKING_ERROR',
       reason: 'The GPT request responded with the malformed response',
-      extra: { payload: { source, sourceLanguage, partOfSpeech }, response },
+      extra: { response },
     };
   }
+
+  const genders = genderLanguages[sourceLanguage] ?? [];
 
   return {
     success: true,
@@ -169,10 +177,39 @@ export const gptAnalyseNoCache = async ({
   };
 };
 
+export const gptAnalyseNoCache = async ({
+  source,
+  partOfSpeech,
+  sourceLanguage,
+}: GptAnalysePayload): Promise<Result<GptAnalyseResult>> => {
+  const responseResult = await chatGptRequest({
+    ...getGptAnalyseChatGptBody({ source, partOfSpeech, sourceLanguage }),
+    timeoutMs: 100000,
+  });
+
+  if (!responseResult.success) {
+    return responseResult;
+  }
+
+  return getGptAnalyseResult(sourceLanguage, responseResult.value);
+};
+
+export const getAnalyseCacheFileName = (
+  sourceLanguage: GoogleLanguage,
+  source: string,
+  partOfSpeech: string
+): string => {
+  return `analyze/${sourceLanguage.toLowerCase()}/${source.toLowerCase()}/${partOfSpeech.toLowerCase()}.json`;
+};
+
 export const gptAnalyse = async (
   payload: GptAnalysePayload
 ): Promise<Result<GptAnalyseResult>> => {
-  const fileName = `analyze/${payload.sourceLanguage.toLowerCase()}/${payload.source.toLowerCase()}/${payload.partOfSpeech.toLowerCase()}.json`;
+  const fileName = getAnalyseCacheFileName(
+    payload.sourceLanguage,
+    payload.source,
+    payload.partOfSpeech
+  );
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName

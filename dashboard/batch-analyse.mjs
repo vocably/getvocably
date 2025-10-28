@@ -1,104 +1,98 @@
+import {
+  getGptAnalyseChatGptBody,
+  parsePartsOfSpeechGptResult,
+} from '@vocably/analyze';
+import { parseJson } from '@vocably/api';
+import { isGoogleLanguage } from '@vocably/model';
 import { config } from 'dotenv-flow';
-import FormData from 'form-data';
-import { readFileSync, writeFileSync } from 'fs';
-import { createReadStream } from 'node:fs';
+import { chunk, isString } from 'lodash-es';
 import 'zx/globals';
 
 config();
 
 const BASE = 'https://api.openai.com/v1';
 
-const fileName = 'words-pos-en-10k';
-const language = 'English';
+const language = process.argv[2];
 
-const instructions = JSON.parse(
-  readFileSync(`./${fileName}.json`, 'utf8')
-).flatMap((wordNContent) => {
-  const word = wordNContent.customId;
-  const partsOfSpeech = wordNContent.content
-    .split('\n')
-    .map((part) => part.trim());
-  return partsOfSpeech.map((partOfSpeech) => {
+if (!isGoogleLanguage(language)) {
+  throw new Error(`Language ${language} is not supported`);
+}
+
+const partsOfSpeechFileId = process.argv[3];
+
+if (!partsOfSpeechFileId) {
+  throw new Error('Please provide a parts of speech file id');
+}
+
+const getFileRes = await fetch(`${BASE}/files/${partsOfSpeechFileId}/content`, {
+  method: 'GET',
+  headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+});
+if (!getFileRes.ok) throw new Error(await getFileRes.text());
+const fileContents = await getFileRes.text();
+
+const analyseBatchLines = fileContents
+  .split('\n')
+  .flatMap((batchPartsOfSpeechLine) => {
+    if (batchPartsOfSpeechLine.trim() === '') {
+      return [];
+    }
+
+    const parseResult = parseJson(batchPartsOfSpeechLine);
+
+    if (parseResult.success === false) {
+      console.error(
+        `Unable to parse line`,
+        batchPartsOfSpeechLine,
+        parseResult
+      );
+      return [];
+    }
+
+    const { custom_id: word, response } = parseResult.value;
+
+    if (response.status_code !== 200) {
+      console.error(
+        `Unable to analyse word ${word} due to erroneous response`,
+        response
+      );
+      return [];
+    }
+    const responseContent = response.body.choices[0]?.message?.content;
+
+    if (!isString(responseContent)) {
+      console.error(`Response content is not a string`, responseContent);
+      return [];
+    }
+
+    const partsOfSpeech = parsePartsOfSpeechGptResult(responseContent);
+
+    return partsOfSpeech.map((partOfSpeech) => ({
+      word,
+      partOfSpeech,
+    }));
+  })
+  .map(({ word, partOfSpeech }) => {
     return {
-      custom_id: `${word}-${partOfSpeech}`,
+      custom_id: `${word}|${partOfSpeech}`,
       method: 'POST',
       url: '/v1/chat/completions',
       body: {
-        model: 'gpt-4o',
-        messages: [
-          {
-            role: 'system',
-            content: [
-              `You are a smart language dictionary.`,
-              `User provides a word in ${language} and its part of speech.`,
-              `Only respond in JSON format with an object containing the following properties:`,
-              `transcript - IPA`,
-              `definitions - list of short definitions in ${language}`,
-              `examples - list of extremely concise examples`,
-              `lemma - lemma or infinitive`,
-              `synonyms - list of synonyms`,
-            ].join('\n'),
-          },
-          { role: 'user', content: word },
-          { role: 'user', content: partOfSpeech },
-        ],
+        ...getGptAnalyseChatGptBody({
+          source: word,
+          sourceLanguage: language,
+          partOfSpeech,
+        }),
       },
     };
   });
+
+const lines = analyseBatchLines.map((obj) => JSON.stringify(obj));
+
+const chunks = chunk(lines, 7500);
+
+chunks.forEach((chunk, index) => {
+  const analyseBatchFilename = `./batch-analyse/${language}-analyse-${index}.jsonl`;
+  const lines = chunk.map((obj) => JSON.stringify(obj)).join('\n');
+  writeFileSync(analyseBatchFilename, lines, 'utf8');
 });
-
-const lines = instructions.map((obj) => JSON.stringify(obj)).join('\n');
-writeFileSync(`${fileName}.jsonl`, lines, 'utf8');
-
-// Upload batch file
-const fd = new FormData();
-fd.append('purpose', 'batch');
-fd.append('file', createReadStream(`${fileName}.jsonl`));
-
-const uploadBatchFileRes = await fetch(`${BASE}/files`, {
-  method: 'POST',
-  headers: {
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    ...fd.getHeaders(),
-  },
-  body: fd,
-});
-if (!uploadBatchFileRes.ok) throw new Error(await res.text());
-const inputFileMetadata = await uploadBatchFileRes.json();
-
-const inputFileId = inputFileMetadata.id;
-
-// Start job
-const startJobBody = {
-  input_file_id: inputFileId,
-  endpoint: '/v1/chat/completions',
-  completion_window: '24h',
-  metadata: {},
-};
-
-const startTheJobRes = await fetch(`${BASE}/batches`, {
-  method: 'POST',
-  headers: {
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(startJobBody),
-});
-
-// If you’ve exceeded your batch rate limit ("enqueued input tokens"),
-// OpenAI responds with 4xx and a JSON error; surface it verbatim.
-if (!startTheJobRes.ok) {
-  const err = await startTheJobRes
-    .json()
-    .catch(async () => ({ error: { message: await startTheJobRes.text() } }));
-  throw new Error(err.error?.message || 'Batch create failed');
-}
-const batchInfo = await startTheJobRes.json();
-
-console.log(batchInfo);
-
-writeFileSync(
-  `${fileName}-batch.json`,
-  JSON.stringify(batchInfo, null, '\t'),
-  'utf8'
-);

@@ -34,6 +34,22 @@ export const getPartsOfSpeechGptBody = ({
   };
 };
 
+export const parsePartsOfSpeechGptResult = (result: string): string[] => {
+  return uniq(
+    result
+      .split('\n')
+      .filter((s: string) => s.length < 25)
+      .map((s: string) => s.trim().replace(/^-/, '').trim().toLowerCase())
+      .map((pos: string) => {
+        if (/substantiv[^,]*/i.test(pos)) {
+          return 'noun';
+        }
+
+        return pos;
+      })
+  ) as string[];
+};
+
 export const gptGetPartsOfSpeech = async ({
   source,
   language,
@@ -50,22 +66,8 @@ export const gptGetPartsOfSpeech = async ({
     return responseResult;
   }
 
-  const response = uniq(
-    responseResult.value
-      .split('\n')
-      .filter((s: string) => s.length < 25)
-      .map((s: string) => s.trim().replace(/^-/, '').trim().toLowerCase())
-      .map((pos: string) => {
-        if (/substantiv[^,]*/i.test(pos)) {
-          return 'noun';
-        }
-
-        return pos;
-      })
-  ) as string[];
-
   return {
     success: true,
-    value: response,
+    value: parsePartsOfSpeechGptResult(responseResult.value),
   };
 };

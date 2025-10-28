@@ -2,4 +2,12 @@ export { buildBulkAnalysisResult } from './buildBulkAnalysisResult';
 export { buildResult } from './buildResult';
 export { configureAnalyzer } from './config';
 export { explainSentence } from './explainSentence';
-export { getPartsOfSpeechGptBody } from './gptGetPartsOfSpeech';
+export {
+  getAnalyseCacheFileName,
+  getGptAnalyseChatGptBody,
+  getGptAnalyseResult,
+} from './gptAnalyse';
+export {
+  getPartsOfSpeechGptBody,
+  parsePartsOfSpeechGptResult,
+} from './gptGetPartsOfSpeech';
