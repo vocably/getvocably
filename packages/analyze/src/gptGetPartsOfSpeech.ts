@@ -1,16 +1,22 @@
-import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O, OpenAiModel } from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { uniq } from 'lodash-es';
+import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 
 type PartsOfSpeechPayload = {
   source: string;
   language: GoogleLanguage;
 };
 
-export const gptGetPartsOfSpeech = async ({
+type PartsOfSpeechChatGptBody = {
+  messages: Array<ChatCompletionMessageParam>;
+  model: OpenAiModel;
+};
+
+export const getPartsOfSpeechGptBody = ({
   source,
   language,
-}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
+}: PartsOfSpeechPayload): PartsOfSpeechChatGptBody => {
   const prompt = [
     `You are a smart ${languageList[language]} dictionary`,
     `User provides a word in ${languageList[language]}. Provide its parts of speech`,
@@ -19,12 +25,21 @@ export const gptGetPartsOfSpeech = async ({
     .filter((s) => !!s)
     .join('\n');
 
-  const responseResult = await chatGptRequest({
+  return {
     messages: [
       { role: 'system', content: prompt },
       { role: 'user', content: source },
     ],
     model: GPT_4O,
+  };
+};
+
+export const gptGetPartsOfSpeech = async ({
+  source,
+  language,
+}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
+  const responseResult = await chatGptRequest({
+    ...getPartsOfSpeechGptBody({ source, language }),
     timeoutMs: 5000,
     responseFormat: {
       type: 'text',

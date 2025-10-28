@@ -1,65 +1,63 @@
-import { exec } from 'child_process';
+import { getPartsOfSpeechGptBody } from '@vocably/analyze';
+import { isGoogleLanguage } from '@vocably/model';
 import { config } from 'dotenv-flow';
 import FormData from 'form-data';
 import { readFileSync, writeFileSync } from 'fs';
+import { uniq } from 'lodash-es';
 import { createReadStream } from 'node:fs';
-import { promisify } from 'node:util';
 import 'zx/globals';
 
 config();
 
-const execute = promisify(exec);
+const language = process.argv[2];
+
+if (!isGoogleLanguage(language)) {
+  throw new Error(`Language ${language} is not supported`);
+}
 
 const BASE = 'https://api.openai.com/v1';
 
-const fileName = 'words-en-10k';
-const language = 'English';
+const wordsFileName = `./batch-analyse/${language}-words.txt`;
 
-const wordsJsonArray = readFileSync(`./${fileName}.txt`, 'utf8')
-  .split('\n')
-  .map((rawWord) => {
-    const word = rawWord.trim();
-    return {
-      custom_id: word,
-      method: 'POST',
-      url: '/v1/chat/completions',
-      body: {
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: [
-              `You are a smart ${language} dictionary`,
-              `Return a list of possible parts of speech for the provided word`,
-              `Only respond in text format with each part of speech on a separate line`,
-            ].join('\n'),
-          },
-          { role: 'user', content: word },
-        ],
-      },
-    };
-  });
+const wordsJsonArray = uniq(
+  readFileSync(wordsFileName, 'utf8').split('\n')
+).map((rawWord) => {
+  const word = rawWord.trim();
+  return {
+    custom_id: word,
+    method: 'POST',
+    url: '/v1/chat/completions',
+    body: {
+      ...getPartsOfSpeechGptBody({
+        source: word,
+        language,
+      }),
+    },
+  };
+});
+
+const partsOfSpeechBatchFilename = `./batch-analyse/${language}-parts-of-speech-batch.jsonl`;
 
 const lines = wordsJsonArray.map((obj) => JSON.stringify(obj)).join('\n');
-writeFileSync(`${fileName}.jsonl`, lines, 'utf8');
+writeFileSync(partsOfSpeechBatchFilename, lines, 'utf8');
 
 // Upload batch file
 const fd = new FormData();
 fd.append('purpose', 'batch');
-fd.append('file', createReadStream(`${fileName}.jsonl`));
+fd.append('file', createReadStream(partsOfSpeechBatchFilename));
 
-// const uploadBatchFileRes = await fetch(`${BASE}/files`, {
-//   method: 'POST',
-//   headers: {
-//     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-//     ...fd.getHeaders(),
-//   },
-//   body: fd,
-// });
-// if (!uploadBatchFileRes.ok) throw new Error(await res.text());
-// const uploadedFile = await uploadBatchFileRes.json();
+const uploadBatchFileRes = await fetch(`${BASE}/files`, {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    ...fd.getHeaders(),
+  },
+  body: fd,
+});
+if (!uploadBatchFileRes.ok) throw new Error(await res.text());
+const uploadedFile = await uploadBatchFileRes.json();
 
-const inputFileId = 'file-8gxZikHab3Tu2RssSEZ1Ly';
+const inputFileId = uploadedFile.id;
 
 // Start job
 const startJobBody = {
@@ -91,7 +89,7 @@ const batchInfo = await startTheJobRes.json();
 console.log(batchInfo);
 
 writeFileSync(
-  `${fileName}-batch.json`,
+  `./batch-analyse/${language}-parts-of-speech-batch-info.json`,
   JSON.stringify(batchInfo, null, '\t'),
   'utf8'
 );
