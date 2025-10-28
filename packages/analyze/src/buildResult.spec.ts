@@ -11,22 +11,6 @@ describe('integration check for translate lambda', () => {
     return;
   }
 
-  it('translates texts as is when language is not supported by lexicala', async () => {
-    const result = await buildResult({
-      source: 'labas rytas',
-      sourceLanguage: 'lt',
-      targetLanguage: 'en',
-    });
-
-    expect(result.success).toBeTruthy();
-    if (result.success === false) {
-      return;
-    }
-
-    expect(result.value.source).toEqual('labas rytas');
-    expect(result.value.translation).toBeDefined();
-  });
-
   it('adds articles and takes translations from lexicala (nl)', async () => {
     const result = await buildResult({
       source: 'regeling',

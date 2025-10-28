@@ -32,22 +32,6 @@ variable "apple_sign_in_key" {
   sensitive = true
 }
 
-variable "lexicala_host" {
-  type = string
-}
-
-variable "lexicala_key" {
-  type = string
-}
-
-variable "nlp_translation_host" {
-  type = string
-}
-
-variable "nlp_translation_key" {
-  type = string
-}
-
 variable "extension_name" {
   type = string
 }

@@ -68,7 +68,7 @@ describe('integration check for translate lambda', () => {
     expect(resultBody.translation).toBeDefined();
     expect(resultBody.items[0].source).toEqual('de regeling');
     expect(resultBody.items[0].translation).toHaveSomeOf(
-      'regulation, settlement, arrangement'
+      'regulation, arrangement, scheme, settlement, adjustment'
     );
   });
 
@@ -85,10 +85,10 @@ describe('integration check for translate lambda', () => {
     expect(resultBody.source.toLowerCase()).toEqual('katzen');
     expect(resultBody.translation).toBeDefined();
     expect(resultBody.items[0].source.toLowerCase()).toEqual('katzen');
-    expect(resultBody.items[0].translation).toEqual('cats');
+    expect(resultBody.items[0].translation).toEqual('cats, felines');
 
     expect(resultBody.items[1].source).toEqual('die Katze');
-    expect(resultBody.items[1].translation).toEqual('cat');
+    expect(resultBody.items[1].translation).toEqual('cat, kitty, feline');
   });
 
   it('adds articles and takes translations from google', async () => {
@@ -103,10 +103,10 @@ describe('integration check for translate lambda', () => {
     const resultBody: Analysis = JSON.parse(result.body);
     expect(resultBody.source).toEqual('regeling');
     expect(resultBody.translation).toBeDefined();
-    expect(resultBody.items.length).toEqual(4);
+    expect(resultBody.items.length).toEqual(1);
     expect(resultBody.items[0].source).toEqual('de regeling');
     expect(resultBody.items[0].translation).toHaveSomeOf(
-      'расположение, регулирование, положение, правило'
+      'регулирование, устройство, положение, схема'
     );
   });
 
@@ -122,10 +122,10 @@ describe('integration check for translate lambda', () => {
     const resultBody: Analysis = JSON.parse(result.body);
     expect(resultBody.source).toEqual('de regeling');
     expect(resultBody.translation).toBeDefined();
-    expect(resultBody.items.length).toEqual(4);
+    expect(resultBody.items.length).toEqual(1);
     expect(resultBody.items[0].source).toEqual('de regeling');
     expect(resultBody.items[0].translation).toHaveSomeOf(
-      'регулирование, расположение, положение, правило'
+      'регулирование, устройство, положение, схема'
     );
   });
 
@@ -166,7 +166,7 @@ describe('integration check for translate lambda', () => {
     expect(resultBody.items[0].translation).toHaveSomeOf(
       'строка, правило, норма, условие, линия'
     );
-    expect(resultBody.items[1].source).toHaveSomeOf('het principe, de regel');
+    expect(resultBody.items[1].source).toHaveSomeOf('het voorschrift');
   });
 
   it('should use word dictionary', async () => {
@@ -191,7 +191,7 @@ describe('integration check for translate lambda', () => {
     expect(result.statusCode).toEqual(200);
     const resultBody: DirectAnalysis = JSON.parse(result.body);
     console.log(inspect(resultBody));
-    expect(resultBody.items.length).toEqual(1);
+    expect(resultBody.items.length).toEqual(2);
   });
 
   it('properly translates dutch to non-article languages', async () => {
@@ -217,8 +217,10 @@ describe('integration check for translate lambda', () => {
     const result = await analyze(mockEvent);
     expect(result.statusCode).toEqual(200);
     const resultBody: DirectAnalysis = JSON.parse(result.body);
-    expect(resultBody.items[0].translation).toHaveSomeOf('be, become, to be');
-    expect(resultBody.items[1].translation).toHaveSomeOf('his');
+    expect(resultBody.items[0].translation).toHaveSomeOf(
+      'be, am, is, are, was, were, been'
+    );
+    expect(resultBody.items[1].translation).toHaveSomeOf('being, existence');
   });
 
   it('provides context translation', async () => {

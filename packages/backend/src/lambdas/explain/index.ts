@@ -11,11 +11,7 @@ import { buildResponse } from '../../utils/buildResponse';
 import { extractPayload } from './extractPayload';
 
 configureAnalyzer({
-  lexicalaHost: process.env.LEXICALA_HOST as string,
-  lexicalaKey: process.env.LEXICALA_KEY as string,
   googleProjectId: process.env.GOOGLE_PROJECT_ID as string,
-  nlpTranslationKey: process.env.NLP_TRANSLATION_KEY as string,
-  nlpTranslationHost: process.env.NLP_TRANSLATION_HOST as string,
   openaiApiKey: process.env.OPENAI_API_KEY as string,
   awsRegion: process.env.AWS_REGION as string,
   unitsOfSpeechBucket: process.env.UNITS_OF_SPEECH_BUCKET as string,

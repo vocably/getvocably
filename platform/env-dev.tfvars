@@ -16,7 +16,6 @@ piwik_www_id                              = "978dc702-3c12-49e3-b80e-897d141d82a
 sentry_environment                        = "dev"
 alarm_email                               = "dev@vocably.pro"
 endtest_latest_env_suite                  = "547224"
-nlp_translation_host                      = "nlp-translation.p.rapidapi.com"
 paddle_client_side_token                  = "test_36e6911acf8912e58cde7765548"
 paddle_monthly_premium_id                 = "pri_01jyzzammkt25f6mmf8tjsxr9p"
 paddle_yearly_premium_id                  = "pri_01jz0ps01b1kcz9brm2877cbhg"
