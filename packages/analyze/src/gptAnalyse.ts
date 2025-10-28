@@ -63,6 +63,7 @@ const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
 };
 
 export type GptAnalyseResult = {
+  source: string;
   definitions: string[];
   examples: string[];
   lemma: string;
@@ -78,6 +79,7 @@ const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
     return false;
   }
   return (
+    'source' in result &&
     'definitions' in result &&
     'examples' in result &&
     'lemma' in result &&
@@ -118,6 +120,7 @@ export const getGptAnalyseChatGptBody = ({
     `User provides a word in ${languageName} and its part of speech.`,
     `Only respond in JSON format with an object containing the following properties:`,
     isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
+    `source - word provided by user. Capitalize only when appropriate.`,
     `definitions - list of definitions in ${languageName}.${
       partOfSpeech.includes('verb')
         ? ` Consider tense of the provided word.`
@@ -161,6 +164,7 @@ export const getGptAnalyseResult = (
   return {
     success: true,
     value: {
+      source: response.source,
       number: response.number,
       lemma: response.lemma,
       lemmaPos: response.lemmaPos,

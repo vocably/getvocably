@@ -66,4 +66,32 @@ describe('analyze words and phrases', () => {
     expect(result.value.lemma).toHaveSomeOf('perambulate');
     expect(result.value.lemmaPos).toHaveSomeOf('verb');
   }, 10_000_000);
+
+  it('source capitalized', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'katze',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'de',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.source).toEqual('Katze');
+  }, 10_000_000);
+
+  it('source not capitalized', async () => {
+    const result = await gptAnalyseNoCache({
+      source: 'laufen',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'de',
+    });
+    expect(result.success).toBeTruthy();
+
+    if (!result.success) {
+      return;
+    }
+    expect(result.value.source).toEqual('laufen');
+  }, 10_000_000);
 });
