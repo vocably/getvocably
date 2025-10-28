@@ -40,7 +40,7 @@ export const analyseAndTranslate = async (
     value: {
       source: addArticle(
         payload.sourceLanguage as GoogleLanguage,
-        payload.source,
+        gptAnalyseResult.value.source,
         payload.partOfSpeech,
         gptAnalyseResult.value
       ),

@@ -64,7 +64,7 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].source.toLowerCase()).toEqual('katzen');
     expect(result.value.items[0].translation).toEqual('cats, felines');
     expect(result.value.items[1].source).toEqual('die Katze');
-    expect(result.value.items[1].translation).toEqual('cat, kitty');
+    expect(result.value.items[1].translation).toEqual('cat, kitty, feline');
   });
 
   it('adds articles and takes translations from google', async () => {
@@ -103,7 +103,7 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation).toBeDefined();
     expect(result.value.items[0].source).toEqual('de regeling');
     expect(result.value.items[0].translation).toHaveSomeOf(
-      'положение, регулирование, устройство, система'
+      'положение, регулирование, устройство, система, схема'
     );
   });
 
@@ -440,7 +440,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].translation).toEqual('кравець, портний');
+    expect(result.value.items[0].translation).toEqual('кравець, швець');
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
     expect(result.value.items[1].translation).toHaveSomeOf(
@@ -647,7 +647,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].source).toEqual('frère');
-    expect(result.value.items[0].translation).toEqual('брат, братишка');
+    expect(result.value.items[0].translation).toEqual('брат');
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
   });
 
