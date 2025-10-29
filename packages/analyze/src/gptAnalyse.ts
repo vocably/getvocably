@@ -11,6 +11,7 @@ import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
+import { transformSource } from './transformSource';
 
 const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
   zh: 'pinyin',
@@ -146,10 +147,17 @@ export const getGptAnalyseChatGptBody = ({
   };
 };
 
-export const getGptAnalyseResult = (
-  sourceLanguage: GoogleLanguage,
-  response: any
-): Result<GptAnalyseResult> => {
+type GptAnalyseResultPayload = {
+  sourceLanguage: GoogleLanguage;
+  partOfSpeech: string;
+  response: any;
+};
+
+export const getGptAnalyseResult = ({
+  sourceLanguage,
+  partOfSpeech,
+  response,
+}: GptAnalyseResultPayload): Result<GptAnalyseResult> => {
   if (!isGptAnalyseResult(response)) {
     return {
       success: false,
@@ -164,7 +172,11 @@ export const getGptAnalyseResult = (
   return {
     success: true,
     value: {
-      source: response.source,
+      source: transformSource({
+        source: response.source,
+        sourceLanguage,
+        partOfSpeech,
+      }),
       number: response.number,
       lemma: response.lemma,
       lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
@@ -195,7 +207,11 @@ export const gptAnalyseNoCache = async ({
     return responseResult;
   }
 
-  return getGptAnalyseResult(sourceLanguage, responseResult.value);
+  return getGptAnalyseResult({
+    sourceLanguage,
+    partOfSpeech,
+    response: responseResult.value,
+  });
 };
 
 export const getAnalyseCacheFileName = (

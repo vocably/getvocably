@@ -72,7 +72,11 @@ fileContents.split('\n').forEach((batchAnalyseLine) => {
 
   const [word, partOfSpeech] = wordAndPos.split('|');
 
-  const analyseResult = getGptAnalyseResult(language, contentResult.value);
+  const analyseResult = getGptAnalyseResult({
+    partOfSpeech,
+    sourceLanguage: language,
+    response: contentResult.value,
+  });
 
   if (analyseResult.success === false) {
     console.error(`Unable to analyse ${wordAndPos}`, analyseResult);
@@ -87,12 +91,5 @@ fileContents.split('\n').forEach((batchAnalyseLine) => {
 
   const dir = dirname(fileName);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(
-    fileName,
-    JSON.stringify({
-      ...analyseResult.value,
-      source: word,
-    }),
-    'utf8'
-  );
+  writeFileSync(fileName, JSON.stringify(analyseResult.value), 'utf8');
 });

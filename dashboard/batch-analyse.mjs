@@ -1,5 +1,6 @@
 import {
   getGptAnalyseChatGptBody,
+  getPartsOfSpeechCacheFileName,
   parsePartsOfSpeechGptResult,
 } from '@vocably/analyze';
 import { parseJson } from '@vocably/api';
@@ -8,6 +9,7 @@ import { config } from 'dotenv-flow';
 import { mkdirSync } from 'fs';
 import { chunk, isString } from 'lodash-es';
 import { writeFileSync } from 'node:fs';
+import { dirname } from 'path';
 import 'zx/globals';
 
 config();
@@ -106,8 +108,7 @@ const lines = analyseBatchLines.map((obj) => JSON.stringify(obj));
 
 const chunks = chunk(lines, 7500);
 
-chunks.forEach((chunk, index) => {
+chunks.forEach((lines, index) => {
   const analyseBatchFilename = `./cache-batch-analyse/${language}-analyse-${index}.jsonl`;
-  const lines = chunk.map((obj) => JSON.stringify(obj)).join('\n');
-  writeFileSync(analyseBatchFilename, lines, 'utf8');
+  writeFileSync(analyseBatchFilename, lines.join('\n'), 'utf8');
 });

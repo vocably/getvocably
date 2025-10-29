@@ -14,16 +14,18 @@ if (!isGoogleLanguage(language)) {
   throw new Error(`Language ${language} is not supported`);
 }
 
-const analyseBatchFilename = process.argv[3];
+const fileName = process.argv[3];
 
-if (!analyseBatchFilename) {
+if (!fileName) {
   throw new Error('Please provide a file name');
 }
+
+const filePath = `./cache-batch-analyse/${fileName}`;
 
 // Upload batch file
 const fd = new FormData();
 fd.append('purpose', 'batch');
-fd.append('file', createReadStream(analyseBatchFilename));
+fd.append('file', createReadStream(filePath));
 
 const uploadBatchFileRes = await fetch(`${BASE}/files`, {
   method: 'POST',
