@@ -140,10 +140,10 @@ export const translateFromContext = async (
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       target: response.target,
-      partOfSpeech: response.partOfSpeech,
+      partOfSpeech: (response.partOfSpeech ?? '').toLowerCase(),
       transcript: response.transcript,
       lemma: response.lemma,
-      lemmaPos: response.lemmaPos,
+      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
     },
   };
 };

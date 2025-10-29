@@ -99,7 +99,7 @@ const internalAiDirectTranslate = async (
       partOfSpeech: response.partOfSpeech.toLowerCase(),
       transcript: response.transcript,
       lemma: response.lemma,
-      lemmaPos: response.lemmaPos,
+      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
     },
   };
 };

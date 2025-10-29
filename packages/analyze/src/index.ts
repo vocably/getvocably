@@ -8,6 +8,7 @@ export {
   getGptAnalyseResult,
 } from './gptAnalyse';
 export {
+  getPartsOfSpeechCacheFileName,
   getPartsOfSpeechGptBody,
   parsePartsOfSpeechGptResult,
 } from './gptGetPartsOfSpeech';

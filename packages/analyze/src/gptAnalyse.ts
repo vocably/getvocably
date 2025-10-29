@@ -167,7 +167,7 @@ export const getGptAnalyseResult = (
       source: response.source,
       number: response.number,
       lemma: response.lemma,
-      lemmaPos: response.lemmaPos,
+      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,

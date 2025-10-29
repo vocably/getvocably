@@ -85,10 +85,10 @@ export const aiReverseTranslate = async (
       sourceLanguage: payload.targetLanguage,
       targetLanguage: payload.sourceLanguage,
       target: translationVariant.translation,
-      partOfSpeech: translationVariant.partOfSpeech,
+      partOfSpeech: (translationVariant.partOfSpeech ?? '').toLowerCase(),
       transcript: translationVariant.transcript,
       lemma: translationVariant.lemma,
-      lemmaPos: translationVariant.lemmaPos,
+      lemmaPos: (translationVariant.lemmaPos ?? '').toLowerCase(),
     }));
 
   return {
