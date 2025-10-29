@@ -4,7 +4,7 @@ import { config } from 'dotenv-flow';
 import FormData from 'form-data';
 import { readFileSync, writeFileSync } from 'fs';
 import { uniq } from 'lodash-es';
-import { createReadStream } from 'node:fs';
+import { createReadStream, existsSync } from 'node:fs';
 import 'zx/globals';
 
 config();
@@ -19,22 +19,37 @@ const BASE = 'https://api.openai.com/v1';
 
 const wordsFileName = `./cache-batch-analyse/${language}-words.txt`;
 
-const wordsJsonArray = uniq(
-  readFileSync(wordsFileName, 'utf8').split('\n')
-).map((rawWord) => {
-  const word = rawWord.trim();
-  return {
-    custom_id: word,
-    method: 'POST',
-    url: '/v1/chat/completions',
-    body: {
-      ...getPartsOfSpeechGptBody({
-        source: word,
-        language,
-      }),
-    },
-  };
-});
+const wordsJsonArray = uniq(readFileSync(wordsFileName, 'utf8').split('\n'))
+  .filter((rawWord) => {
+    const word = rawWord.trim();
+    if (!word) {
+      return false;
+    }
+
+    if (
+      existsSync(
+        `./cache-batch-analyse/units-of-speech/parts-of-speech/${language}/${word.toLowerCase()}.txt`
+      )
+    ) {
+      return false;
+    }
+
+    return true;
+  })
+  .map((rawWord) => {
+    const word = rawWord.trim();
+    return {
+      custom_id: word,
+      method: 'POST',
+      url: '/v1/chat/completions',
+      body: {
+        ...getPartsOfSpeechGptBody({
+          source: word,
+          language,
+        }),
+      },
+    };
+  });
 
 const partsOfSpeechBatchFilename = `./cache-batch-analyse/${language}-parts-of-speech-batch.jsonl`;
 
