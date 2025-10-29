@@ -1,17 +1,17 @@
 import '@vocably/jest';
-import { gptGetPartsOfSpeech } from './gptGetPartsOfSpeech';
+import { gptGetPartsOfSpeechNoCache } from './gptGetPartsOfSpeech';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
 
-describe('analyze words and phrases', () => {
+describe('getPartsOfSpeech', () => {
   if (process.env.TEST_SKIP_SPEC === 'true') {
     it('skip spec testing', () => {});
     return;
   }
 
   it('returns successful result', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'looked up',
       language: 'en',
     });
@@ -23,7 +23,7 @@ describe('analyze words and phrases', () => {
   });
 
   it('returns parts of speech for norwegian', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'katt',
       language: 'no',
     });
@@ -35,7 +35,7 @@ describe('analyze words and phrases', () => {
   });
 
   it('returns parts of speech in English', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'regel',
       language: 'nl',
     });
@@ -47,7 +47,7 @@ describe('analyze words and phrases', () => {
   });
 
   it('verzamelde', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'verzamelde',
       language: 'nl',
     });
@@ -58,7 +58,7 @@ describe('analyze words and phrases', () => {
   });
 
   it('что-то', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'что-то',
       language: 'nl',
     });
@@ -71,7 +71,7 @@ describe('analyze words and phrases', () => {
   });
 
   it('bad(nl)', async () => {
-    const result = await gptGetPartsOfSpeech({
+    const result = await gptGetPartsOfSpeechNoCache({
       source: 'bad',
       language: 'nl',
     });

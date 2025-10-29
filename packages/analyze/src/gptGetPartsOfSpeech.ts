@@ -1,7 +1,14 @@
-import { chatGptRequest, GPT_4O, OpenAiModel } from '@vocably/lambda-shared';
+import {
+  chatGptRequest,
+  GPT_4O,
+  nodeFetchS3File,
+  nodePutS3File,
+  OpenAiModel,
+} from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { uniq } from 'lodash-es';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+import { config } from './config';
 
 type PartsOfSpeechPayload = {
   source: string;
@@ -50,7 +57,7 @@ export const parsePartsOfSpeechGptResult = (result: string): string[] => {
   ) as string[];
 };
 
-export const gptGetPartsOfSpeech = async ({
+export const gptGetPartsOfSpeechNoCache = async ({
   source,
   language,
 }: PartsOfSpeechPayload): Promise<Result<string[]>> => {
@@ -70,4 +77,57 @@ export const gptGetPartsOfSpeech = async ({
     success: true,
     value: parsePartsOfSpeechGptResult(responseResult.value),
   };
+};
+
+export const getPartsOfSpeechCacheFileName = ({
+  source,
+  language,
+}: PartsOfSpeechPayload): string => {
+  return `parts-of-speech/${language.toLowerCase()}/${source.toLowerCase()}.txt`;
+};
+
+export const gptGetPartsOfSpeech = async ({
+  source,
+  language,
+}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
+  const fileName = getPartsOfSpeechCacheFileName({ source, language });
+
+  const s3FetchResult = await nodeFetchS3File(
+    config.unitsOfSpeechBucket,
+    fileName
+  );
+
+  if (s3FetchResult.success && s3FetchResult.value !== null) {
+    const partsOfSpeech = s3FetchResult.value
+      .split('\n')
+      .filter((s) => s.length > 0);
+    return {
+      success: true,
+      value: partsOfSpeech,
+    };
+  }
+
+  const partsOfSpeechResult = await gptGetPartsOfSpeechNoCache({
+    source,
+    language,
+  });
+
+  if (!partsOfSpeechResult.success) {
+    return partsOfSpeechResult;
+  }
+
+  const putResult = await nodePutS3File(
+    config.unitsOfSpeechBucket,
+    fileName,
+    partsOfSpeechResult.value.join('\n')
+  );
+
+  if (!putResult.success) {
+    console.error(
+      'Failed to put GPT parts of speech the result to S3',
+      putResult
+    );
+  }
+
+  return partsOfSpeechResult;
 };
