@@ -5,7 +5,9 @@ import {
 import { parseJson } from '@vocably/api';
 import { isGoogleLanguage } from '@vocably/model';
 import { config } from 'dotenv-flow';
+import { mkdirSync } from 'fs';
 import { chunk, isString } from 'lodash-es';
+import { writeFileSync } from 'node:fs';
 import 'zx/globals';
 
 config();
@@ -66,6 +68,19 @@ const analyseBatchLines = fileContents
     }
 
     const partsOfSpeech = parsePartsOfSpeechGptResult(responseContent);
+
+    // Save parts of speech
+    const fileName = `./cache-batch-analyse/units-of-speech/${getPartsOfSpeechCacheFileName(
+      {
+        source: word,
+        language,
+      }
+    )}`;
+
+    const dir = dirname(fileName);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(fileName, partsOfSpeech.join('\n'), 'utf8');
+    // Eo saving of parts of speech
 
     return partsOfSpeech.map((partOfSpeech) => ({
       word,
