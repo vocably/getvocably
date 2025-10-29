@@ -17,7 +17,7 @@ if (!isGoogleLanguage(language)) {
 
 const BASE = 'https://api.openai.com/v1';
 
-const wordsFileName = `./batch-analyse/${language}-words.txt`;
+const wordsFileName = `./cache-batch-analyse/${language}-words.txt`;
 
 const wordsJsonArray = uniq(
   readFileSync(wordsFileName, 'utf8').split('\n')
@@ -36,7 +36,7 @@ const wordsJsonArray = uniq(
   };
 });
 
-const partsOfSpeechBatchFilename = `./batch-analyse/${language}-parts-of-speech-batch.jsonl`;
+const partsOfSpeechBatchFilename = `./cache-batch-analyse/${language}-parts-of-speech-batch.jsonl`;
 
 const lines = wordsJsonArray.map((obj) => JSON.stringify(obj)).join('\n');
 writeFileSync(partsOfSpeechBatchFilename, lines, 'utf8');
@@ -89,7 +89,7 @@ const batchInfo = await startTheJobRes.json();
 console.log(batchInfo);
 
 writeFileSync(
-  `./batch-analyse/${language}-parts-of-speech-batch-info.json`,
+  `./cache-batch-analyse/${language}-parts-of-speech-batch-info.json`,
   JSON.stringify(batchInfo, null, '\t'),
   'utf8'
 );

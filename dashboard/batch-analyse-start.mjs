@@ -68,7 +68,7 @@ const batchInfo = await startTheJobRes.json();
 console.log(batchInfo);
 
 writeFileSync(
-  `./batch-analyse/${language}-analyse-info.json`,
+  `./cache-batch-analyse/${language}-analyse-info.json`,
   JSON.stringify(batchInfo, null, '\t'),
   'utf8'
 );

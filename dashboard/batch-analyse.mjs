@@ -92,7 +92,7 @@ const lines = analyseBatchLines.map((obj) => JSON.stringify(obj));
 const chunks = chunk(lines, 7500);
 
 chunks.forEach((chunk, index) => {
-  const analyseBatchFilename = `./batch-analyse/${language}-analyse-${index}.jsonl`;
+  const analyseBatchFilename = `./cache-batch-analyse/${language}-analyse-${index}.jsonl`;
   const lines = chunk.map((obj) => JSON.stringify(obj)).join('\n');
   writeFileSync(analyseBatchFilename, lines, 'utf8');
 });

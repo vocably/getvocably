@@ -79,7 +79,7 @@ fileContents.split('\n').forEach((batchAnalyseLine) => {
     return;
   }
 
-  const fileName = `./batch-analyse/cache/${language}/${getAnalyseCacheFileName(
+  const fileName = `./cache-batch-analyse/units-of-speech/${getAnalyseCacheFileName(
     language,
     word,
     partOfSpeech
