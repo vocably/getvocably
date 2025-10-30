@@ -1,12 +1,8 @@
 import { inspect } from '@vocably/node-sulna';
-import { exec } from 'child_process';
 import { config } from 'dotenv-flow';
-import { promisify } from 'node:util';
 import 'zx/globals';
 
 config();
-
-const execute = promisify(exec);
 
 const BASE = 'https://api.openai.com/v1';
 

@@ -28,7 +28,7 @@ const wordsJsonArray = uniq(readFileSync(wordsFileName, 'utf8').split('\n'))
 
     if (
       existsSync(
-        `./cache-batch-analyse/units-of-speech/parts-of-speech/${language}/${word.toLowerCase()}.txt`
+        `./cache-batch-analyse/glossa/parts-of-speech/${language}/${word.toLowerCase()}.txt`
       )
     ) {
       return false;

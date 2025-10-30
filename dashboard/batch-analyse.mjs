@@ -72,7 +72,7 @@ const analyseBatchLines = fileContents
     const partsOfSpeech = parsePartsOfSpeechGptResult(responseContent);
 
     // Save parts of speech
-    const fileName = `./cache-batch-analyse/units-of-speech/${getPartsOfSpeechCacheFileName(
+    const fileName = `./cache-batch-analyse/glossa/${getPartsOfSpeechCacheFileName(
       {
         source: word,
         language,
@@ -106,7 +106,7 @@ const analyseBatchLines = fileContents
 
 const lines = analyseBatchLines.map((obj) => JSON.stringify(obj));
 
-const chunks = chunk(lines, 7500);
+const chunks = chunk(lines, 14000);
 
 chunks.forEach((lines, index) => {
   const analyseBatchFilename = `./cache-batch-analyse/${language}-analyse-${index}.jsonl`;

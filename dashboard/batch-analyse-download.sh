@@ -7,4 +7,4 @@ language="$1"
   exit 1
 }
 
-aws s3 sync s3://vocably-prod-units-of-speech/analyze/$language cache-batch-analyse/units-of-speech/analyze/$language
+aws s3 sync s3://vocably-prod-units-of-speech/analyze/$language cache-batch-analyse/glossa/analyze/$language

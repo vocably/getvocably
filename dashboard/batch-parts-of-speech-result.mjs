@@ -64,7 +64,7 @@ fileContents.split('\n').forEach((batchPartsOfSpeechLine) => {
 
   const partsOfSpeech = parsePartsOfSpeechGptResult(responseContent);
 
-  const fileName = `./cache-batch-analyse/units-of-speech/${getPartsOfSpeechCacheFileName(
+  const fileName = `./cache-batch-analyse/glossa/${getPartsOfSpeechCacheFileName(
     {
       source: word,
       language,

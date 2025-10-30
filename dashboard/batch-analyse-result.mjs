@@ -1,6 +1,7 @@
 import { getAnalyseCacheFileName, getGptAnalyseResult } from '@vocably/analyze';
 import { parseJson } from '@vocably/api';
 import { isGoogleLanguage } from '@vocably/model';
+import { inspect } from '@vocably/node-sulna';
 import { config } from 'dotenv-flow';
 import { mkdirSync } from 'fs';
 import { isString } from 'lodash-es';
@@ -18,11 +19,26 @@ if (!isGoogleLanguage(language)) {
   throw new Error(`Language ${language} is not supported`);
 }
 
-const batchAnalyseFileId = process.argv[3];
+const batchAnalyseId = process.argv[3];
 
-if (!batchAnalyseFileId) {
+if (!batchAnalyseId) {
   throw new Error('Please provide a parts of speech file id');
 }
+
+const getBatchInfoRes = await fetch(`${BASE}/batches/${batchAnalyseId}`, {
+  method: 'GET',
+  headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+});
+if (!getBatchInfoRes.ok) throw new Error(await getBatchInfoRes.text());
+const batchInfo = await getBatchInfoRes.json();
+
+console.log(`Batch info`, inspect(batchInfo));
+
+if (batchInfo.status !== 'completed') {
+  throw Error(`The batch is still in progress.`);
+}
+
+const batchAnalyseFileId = batchInfo.output_file_id;
 
 const getFileRes = await fetch(`${BASE}/files/${batchAnalyseFileId}/content`, {
   method: 'GET',
@@ -83,7 +99,7 @@ fileContents.split('\n').forEach((batchAnalyseLine) => {
     return;
   }
 
-  const fileName = `./cache-batch-analyse/units-of-speech/${getAnalyseCacheFileName(
+  const fileName = `./cache-batch-analyse/glossa/${getAnalyseCacheFileName(
     language,
     word,
     partOfSpeech
