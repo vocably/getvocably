@@ -8,16 +8,16 @@ config();
 
 const BASE = 'https://api.openai.com/v1';
 
-const language = process.argv[2];
-
-if (!isGoogleLanguage(language)) {
-  throw new Error(`Language ${language} is not supported`);
-}
-
-const fileName = process.argv[3];
+const fileName = process.argv[2];
 
 if (!fileName) {
   throw new Error('Please provide a file name');
+}
+
+const language = fileName.split('-')[0];
+
+if (!isGoogleLanguage(language)) {
+  throw new Error('The file does not contain Google Language as a first part.');
 }
 
 const filePath = `./cache-batch-analyse/${fileName}`;
