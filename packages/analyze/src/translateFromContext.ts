@@ -9,6 +9,7 @@ import {
 } from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
 import { get } from 'lodash-es';
+import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   source: string;
@@ -95,9 +96,9 @@ export const translateFromContext = async (
     `- target - the substring translated into${
       languageList[payload.targetLanguage]
     }`,
-    `- partOfSpeech`,
+    `- partOfSpeech - part of speech in English`,
     `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
-    `- lemmaPos - part of speech of the lemma`,
+    `- lemmaPos - part of speech of the lemma in English`,
     isTranscriptionNeeded
       ? `- transcript - the ${get(
           transcriptionName,
@@ -140,10 +141,10 @@ export const translateFromContext = async (
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       target: response.target,
-      partOfSpeech: (response.partOfSpeech ?? '').toLowerCase(),
+      partOfSpeech: mapPartOfSpeech(response.partOfSpeech ?? ''),
       transcript: response.transcript,
       lemma: response.lemma,
-      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
+      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
     },
   };
 };

@@ -11,6 +11,7 @@ import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
+import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 import { transformSource } from './transformSource';
 
 const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
@@ -129,7 +130,7 @@ export const getGptAnalyseChatGptBody = ({
     }`,
     `examples - list of extremely concise examples`,
     `lemma - lemma or infinitive`,
-    `lemmaPos - part of speech of the lemma`,
+    `lemmaPos - part of speech of the lemma in English`,
     `synonyms - list of synonyms`,
     `number - plural or singular English only`,
     genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
@@ -179,7 +180,7 @@ export const getGptAnalyseResult = ({
       }),
       number: response.number,
       lemma: response.lemma,
-      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
+      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,

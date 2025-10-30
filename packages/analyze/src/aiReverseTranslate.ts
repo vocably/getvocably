@@ -7,6 +7,7 @@ import {
 } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
+import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   target: string;
@@ -45,10 +46,9 @@ export const aiReverseTranslate = async (
     `Response in JSON object with translations array. Each item:`,
     `- translation - the translation of the word/phrase`,
     `- partOfSpeech - the part of speech of the translation in English`,
-    `- partOfSpeech - the part of speech of the translation in English`,
     `- transcript - IPA`,
     `- lemma - lemma of translation`,
-    `- lemmaPos - part of speech of lemma`,
+    `- lemmaPos - part of speech of lemma in English`,
   ].join('\n');
 
   const responseResult = await chatGptRequest({
@@ -85,10 +85,10 @@ export const aiReverseTranslate = async (
       sourceLanguage: payload.targetLanguage,
       targetLanguage: payload.sourceLanguage,
       target: translationVariant.translation,
-      partOfSpeech: (translationVariant.partOfSpeech ?? '').toLowerCase(),
+      partOfSpeech: mapPartOfSpeech(translationVariant.partOfSpeech ?? ''),
       transcript: translationVariant.transcript,
       lemma: translationVariant.lemma,
-      lemmaPos: (translationVariant.lemmaPos ?? '').toLowerCase(),
+      lemmaPos: mapPartOfSpeech(translationVariant.lemmaPos ?? ''),
     }));
 
   return {

@@ -289,7 +289,7 @@ describe('aiDirectTranslate', () => {
     expect(result.value.lemma).toHaveSomeOf(['komen']);
   });
 
-  it('provides lemma and lemmaPos', async () => {
+  it('provides lemma and lemmaPos for English word', async () => {
     const result = await aiDirectTranslate({
       source: 'perambulation',
       sourceLanguage: 'en',
@@ -305,6 +305,24 @@ describe('aiDirectTranslate', () => {
 
     expect(result.value.lemma).toEqual('perambulate');
     expect(result.value.lemmaPos).toEqual('verb');
+  });
+
+  it('provides lemma and lemmaPos for German word', async () => {
+    const result = await aiDirectTranslate({
+      source: 'maß',
+      sourceLanguage: 'de',
+      targetLanguage: 'ru',
+    });
+
+    if (result.success !== true) {
+      expect(result.reason).toBeFalsy();
+      return;
+    }
+
+    console.log(result);
+
+    expect(result.value.lemma).toEqual('Maß');
+    expect(result.value.lemmaPos).toEqual('noun');
   });
 
   it('false friends', async () => {

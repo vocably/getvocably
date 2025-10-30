@@ -14,6 +14,7 @@ import {
 import { get } from 'lodash-es';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
+import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   source: string;
@@ -52,9 +53,9 @@ const internalAiDirectTranslate = async (
     `- target - the user input translated into${
       languageList[payload.targetLanguage]
     }`,
-    `- partOfSpeech`,
+    `- partOfSpeech - part of speech in English`,
     `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
-    `- lemmaPos - part of speech of the lemma`,
+    `- lemmaPos - part of speech of the lemma in English`,
     transcriptionIsNeeded
       ? `- transcript - the ${get(
           transcriptionName,
@@ -96,10 +97,10 @@ const internalAiDirectTranslate = async (
       target: response.target,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
-      partOfSpeech: response.partOfSpeech.toLowerCase(),
+      partOfSpeech: mapPartOfSpeech(response.partOfSpeech),
       transcript: response.transcript,
       lemma: response.lemma,
-      lemmaPos: (response.lemmaPos ?? '').toLowerCase(),
+      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
     },
   };
 };

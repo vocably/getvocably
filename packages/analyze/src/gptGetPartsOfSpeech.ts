@@ -41,19 +41,22 @@ export const getPartsOfSpeechGptBody = ({
   };
 };
 
+export const mapPartOfSpeech = (pos: string): string => {
+  const prepared = pos.trim().replace(/^-/, '').trim().toLowerCase();
+
+  if (/substantiv[^,]*/i.test(prepared)) {
+    return 'noun';
+  }
+
+  return prepared;
+};
+
 export const parsePartsOfSpeechGptResult = (result: string): string[] => {
   return uniq(
     result
       .split('\n')
       .filter((s: string) => s.length < 25)
-      .map((s: string) => s.trim().replace(/^-/, '').trim().toLowerCase())
-      .map((pos: string) => {
-        if (/substantiv[^,]*/i.test(pos)) {
-          return 'noun';
-        }
-
-        return pos;
-      })
+      .map(mapPartOfSpeech)
   ) as string[];
 };
 

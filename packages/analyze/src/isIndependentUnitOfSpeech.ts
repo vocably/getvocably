@@ -1,6 +1,7 @@
 export const isIndependentUnitOfSpeech = (partOfSpeech: string) => {
   return [
     'noun',
+    'proper noun',
     'verb',
     'adjective',
     'adverb',
