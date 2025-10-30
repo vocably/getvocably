@@ -29,6 +29,7 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/www/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/extension-content-ui/www-dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/analyze/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/dashboard/cache-batch-analyse/glossa" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -3,7 +3,7 @@ import { parseJson } from '@vocably/api';
 import { isGoogleLanguage } from '@vocably/model';
 import { inspect } from '@vocably/node-sulna';
 import { config } from 'dotenv-flow';
-import { mkdirSync } from 'fs';
+import { mkdirSync, readFileSync } from 'fs';
 import { isString } from 'lodash-es';
 import { writeFileSync } from 'node:fs';
 import { dirname } from 'path';
@@ -19,7 +19,11 @@ if (!isGoogleLanguage(language)) {
   throw new Error(`Language ${language} is not supported`);
 }
 
-const batchAnalyseId = process.argv[3];
+const batchAnalyseInitialInfo = JSON.parse(
+  readFileSync(`./cache-batch-analyse/${language}-analyse-info.json`, 'utf8')
+);
+
+const batchAnalyseId = batchAnalyseInitialInfo.id;
 
 if (!batchAnalyseId) {
   throw new Error('Please provide a parts of speech file id');

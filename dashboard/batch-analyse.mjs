@@ -5,8 +5,9 @@ import {
 } from '@vocably/analyze';
 import { parseJson } from '@vocably/api';
 import { isGoogleLanguage } from '@vocably/model';
+import { inspect } from '@vocably/node-sulna';
 import { config } from 'dotenv-flow';
-import { mkdirSync } from 'fs';
+import { mkdirSync, readFileSync } from 'fs';
 import { chunk, isString } from 'lodash-es';
 import { writeFileSync } from 'node:fs';
 import { dirname } from 'path';
@@ -22,7 +23,30 @@ if (!isGoogleLanguage(language)) {
   throw new Error(`Language ${language} is not supported`);
 }
 
-const partsOfSpeechFileId = process.argv[3];
+const batchPartsOfSpeechInitialInfo = JSON.parse(
+  readFileSync(
+    `./cache-batch-analyse/${language}-parts-of-speech-batch-info.json`,
+    'utf8'
+  )
+);
+
+const getBatchInfoRes = await fetch(
+  `${BASE}/batches/${batchPartsOfSpeechInitialInfo.id}`,
+  {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+  }
+);
+if (!getBatchInfoRes.ok) throw new Error(await getBatchInfoRes.text());
+const batchInfo = await getBatchInfoRes.json();
+
+console.log(`Batch info`, inspect(batchInfo));
+
+if (batchInfo.status !== 'completed') {
+  throw Error(`The batch is still in progress.`);
+}
+
+const partsOfSpeechFileId = batchInfo.output_file_id;
 
 if (!partsOfSpeechFileId) {
   throw new Error('Please provide a parts of speech file id');
