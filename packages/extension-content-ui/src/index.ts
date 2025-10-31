@@ -21,7 +21,8 @@ const simpletonTranslationResult: Result<TranslationCards> = {
           source: 'gemaakt',
           ipa: "xə'mak",
           translation: 'created, done',
-          definition: '',
+          definition:
+            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
           example:
             '* Bij een gemaakte glimlach lachen onze ogen niet mee.\n* De klok is weer gemaakt.',
           partOfSpeech: 'verb',
