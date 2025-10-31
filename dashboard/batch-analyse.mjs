@@ -130,7 +130,7 @@ const analyseBatchLines = fileContents
 
 const lines = analyseBatchLines.map((obj) => JSON.stringify(obj));
 
-const chunks = chunk(lines, 14000);
+const chunks = chunk(lines, 30_000);
 
 chunks.forEach((lines, index) => {
   const analyseBatchFilename = `./cache-batch-analyse/${language}-analyse-${index}.jsonl`;
