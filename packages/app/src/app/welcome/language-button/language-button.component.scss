@@ -4,17 +4,15 @@
   --backround: var(--contrast-bg);
   --hover-background: var(--contrast-bg-hover);
   --color: var(--emphasize-color);
-  --border-color: var(--form-border-color);
 
   &.checked {
     --backround: var(--button-bg);
     --hover-background: var(--button-bg-hover);
     --color: var(--button-color);
-    --border-color: transparent;
   }
 
   padding: 1rem;
-  border: 1px solid var(--border-color);
+  border: none;
   display: block !important;
   background: var(--backround);
   width: 100%;
