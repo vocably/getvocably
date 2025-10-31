@@ -513,16 +513,6 @@ export class VocablyTranslation {
                     class="vocably-cards-container"
                     style={{ position: 'relative' }}
                   >
-                    {this.showSaveHint && canAdd && (
-                      <vocably-add-card-hint
-                        class={{
-                          'vocably-cards-save-hint': true,
-                          'vocably-cards-save-hint-hidden':
-                            this.saveCardClicked,
-                        }}
-                      ></vocably-add-card-hint>
-                    )}
-
                     <div class="vocably-cards" data-test="cards">
                       {this.result.value.cards.map((card, itemIndex) => (
                         <div data-test="card" class="vocably-card">

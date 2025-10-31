@@ -10,8 +10,6 @@ import { ComponentExplanationState } from "./components/translation/translation"
 export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
 export { ComponentExplanationState } from "./components/translation/translation";
 export namespace Components {
-    interface VocablyAddCardHint {
-    }
     interface VocablyAnimatedContentWrapper {
         /**
           * @default 0
@@ -299,10 +297,6 @@ export namespace Components {
   ) => Promise<Result<TranslationCards>>;
     }
 }
-export interface VocablyAddCardHintCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLVocablyAddCardHintElement;
-}
 export interface VocablyAnimatedContentWrapperCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyAnimatedContentWrapperElement;
@@ -348,23 +342,6 @@ export interface VocablyTranslationCustomEvent<T> extends CustomEvent<T> {
     target: HTMLVocablyTranslationElement;
 }
 declare global {
-    interface HTMLVocablyAddCardHintElementEventMap {
-        "confirm": any;
-    }
-    interface HTMLVocablyAddCardHintElement extends Components.VocablyAddCardHint, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLVocablyAddCardHintElementEventMap>(type: K, listener: (this: HTMLVocablyAddCardHintElement, ev: VocablyAddCardHintCustomEvent<HTMLVocablyAddCardHintElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLVocablyAddCardHintElementEventMap>(type: K, listener: (this: HTMLVocablyAddCardHintElement, ev: VocablyAddCardHintCustomEvent<HTMLVocablyAddCardHintElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLVocablyAddCardHintElement: {
-        prototype: HTMLVocablyAddCardHintElement;
-        new (): HTMLVocablyAddCardHintElement;
-    };
     interface HTMLVocablyAnimatedContentWrapperElementEventMap {
         "close": void;
     }
@@ -755,7 +732,6 @@ declare global {
         new (): HTMLVocablyTranslationElement;
     };
     interface HTMLElementTagNameMap {
-        "vocably-add-card-hint": HTMLVocablyAddCardHintElement;
         "vocably-animated-content-wrapper": HTMLVocablyAnimatedContentWrapperElement;
         "vocably-button": HTMLVocablyButtonElement;
         "vocably-card-counter": HTMLVocablyCardCounterElement;
@@ -802,9 +778,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface VocablyAddCardHint {
-        "onConfirm"?: (event: VocablyAddCardHintCustomEvent<any>) => void;
-    }
     interface VocablyAnimatedContentWrapper {
         /**
           * @default 0
@@ -1110,7 +1083,6 @@ declare namespace LocalJSX {
   ) => Promise<Result<TranslationCards>>;
     }
     interface IntrinsicElements {
-        "vocably-add-card-hint": VocablyAddCardHint;
         "vocably-animated-content-wrapper": VocablyAnimatedContentWrapper;
         "vocably-button": VocablyButton;
         "vocably-card-counter": VocablyCardCounter;
@@ -1160,7 +1132,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "vocably-add-card-hint": LocalJSX.VocablyAddCardHint & JSXBase.HTMLAttributes<HTMLVocablyAddCardHintElement>;
             "vocably-animated-content-wrapper": LocalJSX.VocablyAnimatedContentWrapper & JSXBase.HTMLAttributes<HTMLVocablyAnimatedContentWrapperElement>;
             "vocably-button": LocalJSX.VocablyButton & JSXBase.HTMLAttributes<HTMLVocablyButtonElement>;
             "vocably-card-counter": LocalJSX.VocablyCardCounter & JSXBase.HTMLAttributes<HTMLVocablyCardCounterElement>;
