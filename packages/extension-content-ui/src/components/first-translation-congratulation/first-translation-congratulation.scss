@@ -7,15 +7,19 @@
 
   .phone {
     width: 140px;
+    position: relative;
   }
 
   .phone-contents-wrapper {
     background-color: #fff;
+    width: 100%;
     height: 100%;
     padding: 6px;
     padding-top: 24px;
     box-sizing: border-box;
     overflow: hidden;
+    position: absolute;
+    top: 0;
   }
 
   .phone-contents {
@@ -24,6 +28,7 @@
     min-height: 100%;
     justify-content: center;
     align-items: center;
+    gap: 4px;
   }
 
   .emphasize {
@@ -55,4 +60,10 @@
 .svg {
   max-width: 100px;
   width: 100%;
+}
+
+.vocably-list {
+  list-style: outside;
+  padding: 0;
+  margin: 0 0 0 $base-font-size;
 }

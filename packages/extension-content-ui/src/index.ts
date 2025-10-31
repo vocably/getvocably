@@ -12,6 +12,7 @@ const simpletonTranslationResult: Result<TranslationCards> = {
       sourceLanguage: 'nl',
       target: 'created',
       targetLanguage: 'en',
+      partOfSpeech: 'verb',
     },
     cards: [
       {
@@ -21,7 +22,9 @@ const simpletonTranslationResult: Result<TranslationCards> = {
           ipa: "xə'mak",
           translation: 'created, done',
           definition: '',
-          partOfSpeech: '',
+          example:
+            '* Bij een gemaakte glimlach lachen onze ogen niet mee.\n* De klok is weer gemaakt.',
+          partOfSpeech: 'verb',
           g: 'n',
           tags: [],
         },
