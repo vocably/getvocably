@@ -124,7 +124,7 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
 }
 
 .explanation-frame-content {
-  background: $v-light-color-elevation-1;
+  background: $v-light-color-elevation-2;
   border: none;
   border-radius: $v-border-radius;
   padding: $input-padding-x;
@@ -151,14 +151,16 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
   }
 }
 
+$border-between-sections: 3px solid $v-light-color-body-bg;
+
 .vocably-cards {
   border-radius: $v-border-radius;
-  background-color: $v-light-color-elevation-1;
+  background-color: $v-light-color-elevation-2;
   margin-left: -$input-padding-x;
   margin-bottom: 1px;
 
   .vocably-card {
-    border-top: 0.6px solid $v-light-color-elevation-4;
+    border-top: $border-between-sections;
 
     .vocably-card-container {
       position: relative;
@@ -285,7 +287,7 @@ vocably-play-sound {
 .vocably-added-congratulation-content {
   padding-top: $input-padding-x - $input-padding-y; // Add a bit of padding for beauty
   padding-bottom: $input-padding-x - $input-padding-y;
-  border-bottom: $internal-border;
+  border-bottom: $border-between-sections;
 }
 
 .vocably-added-congratulation-content-1 {
