@@ -16,6 +16,7 @@ type Options = {
   detectedLanguage: GoogleLanguage | undefined;
   autoPlay: boolean;
   context?: string;
+  initiator?: string;
 };
 
 export type TearDown = () => void;
@@ -34,6 +35,7 @@ export const setContents = async ({
   detectedLanguage,
   context,
   autoPlay,
+  initiator,
 }: Options): Promise<TearDown> => {
   let intervalId: ReturnType<typeof setInterval> | undefined = undefined;
   let waitForPaymentIntervalId: ReturnType<typeof setInterval> | undefined =
@@ -79,7 +81,7 @@ export const setContents = async ({
           sourceLanguage,
           targetLanguage,
           context,
-          initiator: 'content-script',
+          initiator: initiator ?? 'content-script',
         }),
         api.getMaxCards(),
       ]);

@@ -68,6 +68,7 @@ const handlePlayerElement = (player: HTMLElement): (() => void) => {
               text: anchor.textContent ?? '',
               globalRect: getGlobalRect(anchor.getBoundingClientRect()),
               isTouchscreen: false,
+              initiator: 'youtube',
               context:
                 detectedLanguage && contextLanguages.includes(detectedLanguage)
                   ? getContext(anchor)

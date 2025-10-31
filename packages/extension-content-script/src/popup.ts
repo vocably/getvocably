@@ -75,6 +75,7 @@ type PopupOptions = {
   detectedLanguage?: GoogleLanguage;
   globalRect: GlobalRect;
   isTouchscreen: boolean;
+  initiator?: string;
 };
 
 export const popupAlreadyExists = (text: string) => {
@@ -98,6 +99,7 @@ export const createPopup = async (options: PopupOptions) => {
     detectedLanguage: options.detectedLanguage,
     context: options.context,
     autoPlay,
+    initiator: options.initiator,
   });
 
   const position = calculatePosition(options.globalRect, options.isTouchscreen);
