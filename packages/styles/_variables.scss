@@ -6,6 +6,12 @@ $v-border-radius: 8px;
 $v-small-font: 90%;
 
 // Light
+$v-light-color-elevation-0: rgba(0, 0, 0, 0);
+$v-light-color-elevation-1: rgba(0, 0, 0, 0.02);
+$v-light-color-elevation-2: rgba(0, 0, 0, 0.05);
+$v-light-color-elevation-3: rgba(0, 0, 0, 0.08);
+$v-light-color-elevation-4: rgba(0, 0, 0, 0.14);
+
 $v-light-color-body-bg: rgb(255, 255, 255);
 $v-light-color-hover-bg: rgba(230, 230, 230, 0.5);
 $v-light-color-active-bg: rgba(230, 230, 230, 0.2);
@@ -20,8 +26,8 @@ $v-light-color-body: #6a6a6a;
 $v-light-color-muted: #bababa;
 $v-light-color-body-rgb: 106, 106, 106;
 $v-light-color-emphasize: #000000;
-$v-light-color-contrast: #fbfbfb;
-$v-light-color-contrast-2: #fcfcfc;
+$v-light-color-contrast: $v-light-color-elevation-2;
+$v-light-color-contrast-2: $v-light-color-elevation-3;
 $v-light-color-border: #bababa;
 $v-light-color-border-muted: #e6e6e6;
 
@@ -30,11 +36,14 @@ $v-light-btn-bg: $v-light-color-primary;
 $v-light-btn-hover-bg: $v-light-color-active;
 $v-light-btn-active-bg: $v-light-color-active;
 $v-light-btn-disabled-bg: $v-light-color-muted;
-$v-light-btn-active-shadow: inset 0px 0px 15px rgba(3, 36, 108, 0.4);
-$v-light-btn-box-shadow: 0 $v-btn-shadow-v-offset $v-btn-shadow-spread
-  rgba(0, 80, 255, 0.25);
 
 // Dark
+$v-dark-color-elevation-0: rgba(186, 186, 186, 0);
+$v-dark-color-elevation-1: rgba(186, 186, 186, 0.02);
+$v-dark-color-elevation-2: rgba(186, 186, 186, 0.15);
+$v-dark-color-elevation-3: rgba(186, 186, 186, 0.3);
+$v-dark-color-elevation-4: rgba(186, 186, 186, 0.4);
+
 $v-dark-color-body-bg: rgb(37, 37, 37);
 $v-dark-color-body-bg-rgb: 37, 37, 37;
 $v-dark-color-body-bg-transparent: rgba(37, 37, 37, 0);
@@ -43,10 +52,11 @@ $v-dark-color-primary-rgb: 40, 165, 255;
 $v-dark-color-active: #0094ff;
 $v-dark-color-danger: #ff5e5e;
 $v-dark-color-body: #bababa;
+$v-dark-color-muted: #939393;
 $v-dark-color-body-rgb: 186, 186, 186;
 $v-dark-color-emphasize: #ffffff;
-$v-dark-color-contrast: #3b3b3b;
-$v-dark-color-contrast-2: #424242;
+$v-dark-color-contrast: $v-dark-color-elevation-2;
+$v-dark-color-contrast-2: $v-dark-color-elevation-3;
 $v-dark-color-border: #6a6a6a;
 $v-dark-color-border-muted: #e6e6e6;
 
@@ -54,9 +64,6 @@ $v-dark-btn-color: #ffffff;
 $v-dark-btn-bg: $v-dark-color-primary;
 $v-dark-btn-hover-bg: $v-dark-color-active;
 $v-dark-btn-active-bg: $v-dark-color-active;
-$v-dark-btn-active-shadow: inset 0px 0px 15px rgba(3, 36, 108, 0.4);
-$v-dark-btn-box-shadow: 0 $v-btn-shadow-v-offset $v-btn-shadow-spread
-  rgba(40, 165, 255, 0.4);
 
 $dark-theme: (
   primary-color: $v-dark-color-primary,
@@ -76,15 +83,14 @@ $dark-theme: (
   button-bg: $v-dark-color-primary,
   button-bg-hover: $v-dark-color-active,
   button-active-bg: $v-dark-btn-active-bg,
-  button-shadow: $v-dark-btn-box-shadow,
-  button-active-shadow: $v-dark-btn-active-shadow,
+  button-disabled-bg: $v-dark-color-muted,
   button-padding: 0.5rem 2rem,
   button-color: $v-dark-btn-color,
 
   form-border-color: $v-dark-color-border,
   form-border-color-focus: $v-dark-color-border,
-  form-background-color: $v-dark-color-contrast-2,
-  form-background-color-focus: lighten($v-dark-color-contrast-2, 5%),
+  form-background-color: $v-dark-color-elevation-2,
+  form-background-color-focus: $v-dark-color-elevation-3,
   toast-background: $v-gray-850,
   toast-button-color: $v-gray-100,
   toast-color: $v-gray-200,
@@ -111,15 +117,14 @@ $light-theme: (
   button-bg: $v-light-color-primary,
   button-bg-hover: $v-light-color-active,
   button-active-bg: $v-light-btn-active-bg,
-  button-shadow: $v-light-btn-box-shadow,
-  button-active-shadow: $v-light-btn-active-shadow,
+  button-disabled-bg: $v-light-color-muted,
   button-padding: 0.5rem 2rem,
   button-color: $v-light-btn-color,
 
   form-border-color: $v-light-color-border,
   form-border-color-focus: $v-light-color-border,
-  form-background-color: $v-light-color-contrast-2,
-  form-background-color-focus: lighten($v-light-color-contrast-2, 5%),
+  form-background-color: $v-light-color-elevation-2,
+  form-background-color-focus: $v-light-color-elevation-3,
   toast-background: $v-gray-850,
   toast-button-color: $v-gray-100,
   toast-color: $v-gray-200,

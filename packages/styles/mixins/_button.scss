@@ -5,23 +5,20 @@ button.unstyled {
   @include unstyled();
 }
 
-$button-bottom-margin: ($v-btn-shadow-spread + $v-btn-shadow-v-offset);
-
 @mixin button-pristine {
   display: inline-block;
   background: var(--button-bg);
   color: var(--button-color);
   border: none;
   font: inherit;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
-  border-radius: 2rem;
+  border-radius: 0.6rem;
   text-align: center;
   text-decoration: none;
   transition: background-color 200ms, color 200ms;
   box-shadow: var(--button-shadow);
   padding: var(--button-padding);
-  margin: 0 $v-btn-shadow-spread $button-bottom-margin;
   outline: none;
 }
 
@@ -31,7 +28,7 @@ $button-bottom-margin: ($v-btn-shadow-spread + $v-btn-shadow-v-offset);
 }
 
 @mixin button-block() {
-  width: calc(100% - #{$v-btn-shadow-spread} * 2);
+  width: 100%;
 }
 
 @mixin button-hover() {
@@ -52,18 +49,18 @@ $button-bottom-margin: ($v-btn-shadow-spread + $v-btn-shadow-v-offset);
     color: var(--button-bg);
   }
 
-  &:hover:not(disabled, .disabled),
-  &:focus:not(disabled, .disabled) {
+  &:hover:not([disabled], .disabled),
+  &:focus:not([disabled], .disabled) {
     @include button-hover();
   }
 
-  &:active:not(disabled, .disabled) {
+  &:active:not([disabled], .disabled) {
     @include button-active();
   }
 
   &[disabled],
   &.disabled {
-    filter: grayscale(80%);
+    background: var(--button-disabled-bg);
     cursor: auto;
   }
 }

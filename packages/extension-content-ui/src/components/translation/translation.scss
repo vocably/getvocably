@@ -111,20 +111,6 @@ $section-margin: 8px;
   }
 }
 
-.vocably-cards-save-hint {
-  position: absolute;
-  width: 165px;
-  top: 6px;
-  right: 40px;
-  animation: vocably-floating 3s ease-in-out infinite;
-  opacity: 1;
-  transition: opacity 200ms ease-in-out;
-}
-
-.vocably-cards-save-hint.vocably-cards-save-hint-hidden {
-  opacity: 0;
-}
-
 $container-padding: $input-padding-y $input-padding-x $input-padding-y
   $input-padding-x;
 
@@ -138,7 +124,8 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
 }
 
 .explanation-frame-content {
-  border: $internal-border;
+  background: $v-light-color-elevation-1;
+  border: none;
   border-radius: $v-border-radius;
   padding: $input-padding-x;
 }
@@ -165,14 +152,13 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
 }
 
 .vocably-cards {
-  border: $internal-border;
   border-radius: $v-border-radius;
-  background-color: $v-light-color-contrast;
+  background-color: $v-light-color-elevation-1;
   margin-left: -$input-padding-x;
   margin-bottom: 1px;
 
   .vocably-card {
-    border-top: $internal-border;
+    border-top: 0.6px solid $v-light-color-elevation-4;
 
     .vocably-card-container {
       position: relative;
@@ -359,9 +345,9 @@ vocably-play-sound {
 }
 
 .vocably-tag {
-  border: $internal-border;
+  border: none;
   border-radius: math.div($v-border-radius, 2);
-  background-color: $v-light-color-contrast;
+  background-color: $v-light-color-elevation-2;
   padding: 6px;
   display: inline-flex;
   align-items: center;

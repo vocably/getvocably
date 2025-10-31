@@ -8,12 +8,3 @@ button.unstyled {
 .button {
   @include button();
 }
-
-.align-with-button {
-  margin-bottom: $button-bottom-margin;
-}
-
-.fix-button {
-  padding-left: $v-btn-shadow-spread;
-  padding-right: $v-btn-shadow-spread;
-}
