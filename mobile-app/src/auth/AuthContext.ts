@@ -1,4 +1,3 @@
-import { AuthSession } from '@aws-amplify/auth';
 import { createContext } from 'react';
 
 export type AuthStatus =
@@ -10,7 +9,7 @@ export type AuthStatus =
     }
   | {
       status: 'logged-in';
-      session: AuthSession;
+      isPaidGroup: boolean;
       attributes: {
         sub: string;
         email: string;

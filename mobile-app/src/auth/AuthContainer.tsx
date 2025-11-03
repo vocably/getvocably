@@ -3,6 +3,7 @@ import { Result } from '@vocably/model';
 import { retry } from '@vocably/model-operations';
 import { fetchAuthSession } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
+import { get } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import { Sentry } from '../BetterSentry';
@@ -83,8 +84,14 @@ export const AuthContainer: FC<{
 
           setAuthStatus({
             status: 'logged-in',
-            session,
             attributes: attributesResult.value,
+            isPaidGroup: (
+              get(
+                session,
+                'tokens.accessToken.payload.cognito:groups',
+                []
+              ) as string[]
+            ).includes('paid'),
           });
         }),
       3,
