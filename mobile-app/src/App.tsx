@@ -20,7 +20,7 @@ configureApi({
   region: API_REGION,
   cardsBucket: API_CARDS_BUCKET,
   getJwtToken: () =>
-    fetchAuthSession().then(
+    fetchAuthSession({ forceRefresh: true }).then(
       (session) => session.tokens?.idToken?.toString() ?? ''
     ),
 });
