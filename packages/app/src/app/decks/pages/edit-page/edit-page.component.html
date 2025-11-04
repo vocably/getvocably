@@ -1,12 +1,6 @@
 <nav class="text-center mb-2 deck-menu">
   <app-back-button></app-back-button>
-  <button
-    *ngIf="!isLexicalaLanguage"
-    class="unstyled link"
-    [routerLink]="['./export']"
-  >
-    Export Deck
-  </button>
+  <button class="unstyled link" [routerLink]="['./export']">Export Deck</button>
 </nav>
 <ul class="separated unstyled mb-2">
   <li *ngFor="let card of cards">
