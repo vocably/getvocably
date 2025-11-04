@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { byDate, CardItem, languageList } from '@vocably/model';
 import { languageToLexicalaLanguage } from '@vocably/model-operations';
@@ -8,6 +9,7 @@ import { LoaderService } from '../../../components/loader.service';
 import { columnLabels } from '../../../importExport';
 import { DeckStoreService } from '../../deck-store.service';
 import { getColumns, getValue } from './getColumns';
+import { LexicalaExplanationDialogComponent } from './lexicala-explanation-dialog/lexicala-explanation-dialog.component';
 import { prepareColumn } from './prepareColumn';
 
 @Component({
@@ -27,16 +29,28 @@ export class ExportPageComponent implements OnInit, OnDestroy {
 
   public isLexicalaLanguage = true;
   public languageName: string = '';
+  public hasLexicalaItems = false;
 
   private destroy$ = new Subject();
 
   constructor(
     public deckStore: DeckStoreService,
     public loader: LoaderService,
-    protected sanitizer: DomSanitizer
+    protected sanitizer: DomSanitizer,
+    private dialog: MatDialog
   ) {
     this.deckStore.deck$.pipe(takeUntil(this.destroy$)).subscribe((deck) => {
-      this.cards = deck.cards.sort(byDate);
+      this.cards = deck.cards.sort(byDate).filter((card) => {
+        if (this.isLexicalaLanguage) {
+          // Lexicala was disabled on 27/10/2025 at 09:33:44 UTC
+          return card.created > 1761557624697;
+        }
+
+        return true;
+      });
+
+      this.hasLexicalaItems = this.cards.length < deck.cards.length;
+
       this.isLexicalaLanguage =
         languageToLexicalaLanguage(deck.language) !== null;
       this.languageName = get(languageList, deck.language, 'this language');
@@ -106,4 +120,8 @@ export class ExportPageComponent implements OnInit, OnDestroy {
     const blob = new Blob([textContents], { type: 'text/csv' });
     return this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
   };
+
+  whyCantExportLexicala() {
+    const dialogRef = this.dialog.open(LexicalaExplanationDialogComponent);
+  }
 }

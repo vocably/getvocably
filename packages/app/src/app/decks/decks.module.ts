@@ -23,6 +23,7 @@ import { DeleteConfirmationDialogComponent } from './pages/edit-page/delete-conf
 import { EditCardComponent } from './pages/edit-page/edit-card/edit-card.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { ExportPageComponent } from './pages/export-page/export-page.component';
+import { LexicalaExplanationDialogComponent } from './pages/export-page/lexicala-explanation-dialog/lexicala-explanation-dialog.component';
 import { NoDecksPageComponent } from './pages/no-decks-page/no-decks-page.component';
 import { StudyPageComponent } from './pages/study-page/study-page.component';
 import { SelectedDeckComponent } from './selected-deck/selected-deck.component';
@@ -41,6 +42,7 @@ import { SelectedDeckComponent } from './selected-deck/selected-deck.component';
     DeleteConfirmationDialogComponent,
     CardComponent,
     MobileAppEncouragerComponent,
+    LexicalaExplanationDialogComponent,
   ],
   imports: [
     CommonModule,

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { deleteLanguageDeck } from '@vocably/api';
 import { byDate, CardItem, getFullLanguageName } from '@vocably/model';
-import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { omit } from 'lodash-es';
 import { Subject, takeUntil } from 'rxjs';
 import { LoaderService } from '../../../components/loader.service';
@@ -25,8 +24,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   public updating: Record<string, CardItem> = {};
 
-  public isLexicalaLanguage = true;
-
   constructor(
     public deckStore: DeckStoreService,
     public loader: LoaderService,
@@ -37,8 +34,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.deckStore.deck$.pipe(takeUntil(this.destroy$)).subscribe((deck) => {
       this.fullLanguage = getFullLanguageName(deck.language ?? '');
       this.cards = [...deck.cards, ...this.deleted].sort(byDate);
-      this.isLexicalaLanguage =
-        languageToLexicalaLanguage(deck.language) !== null;
     });
   }
 
