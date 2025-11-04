@@ -4,16 +4,19 @@ import {
   saveLanguageDeck,
 } from '@vocably/api';
 import { LanguageDeck, Result, TagItem } from '@vocably/model';
+import { uniq } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import React, {
   createContext,
   FC,
   ReactNode,
+  useContext,
   useEffect,
   useState,
 } from 'react';
 import { AppState } from 'react-native';
 import * as asyncAppStorage from '../asyncAppStorage';
+import { AuthContext } from '../auth/AuthContext';
 import { Sentry } from '../BetterSentry';
 import { Error } from '../Error';
 import { Loader } from '../loaders/Loader';
@@ -75,6 +78,7 @@ export const LanguagesContainer: FC<Props> = ({
   children,
   refreshLanguagesOnActive = false,
 }) => {
+  const authContext = useContext(AuthContext);
   const posthog = usePostHog();
   const [listLoadingStatus, setListLoadingStatus] =
     useState<Languages['status']>('loading');
@@ -127,6 +131,12 @@ export const LanguagesContainer: FC<Props> = ({
     });
 
   const refreshLanguages = async () => {
+    if (authContext.status !== 'logged-in') {
+      setLanguages([]);
+      setListLoadingStatus('loaded');
+      return;
+    }
+
     const listResult = await listLanguages();
 
     if (listResult.success === false) {
@@ -147,6 +157,14 @@ export const LanguagesContainer: FC<Props> = ({
   };
 
   const addNewLanguage = async (language: string): Promise<Result<unknown>> => {
+    if (authContext.status !== 'logged-in') {
+      setLanguages(uniq([...languages, language]));
+      return {
+        success: true,
+        value: null,
+      };
+    }
+
     const existingLanguagesResult = await listLanguages();
     if (existingLanguagesResult.success === false) {
       return existingLanguagesResult;

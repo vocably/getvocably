@@ -6,6 +6,7 @@ import {
 import {
   defaultUserMetadata,
   defaultUserStaticMetadata,
+  mergeUserMetadata,
   PartialUserMetadata,
   UserMetadata,
   UserStaticMetadata,
@@ -16,10 +17,12 @@ import {
   FC,
   PropsWithChildren,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react';
 import { AppState } from 'react-native';
+import { AuthContext } from './auth/AuthContext';
 import { Sentry } from './BetterSentry';
 import { Loader } from './loaders/Loader';
 
@@ -46,7 +49,15 @@ export const UserMetadataContainer: FC<PropsWithChildren<Props>> = ({
   const [userStaticMetadata, setUserStaticMetadata] =
     useState<UserStaticMetadata | null>(null);
 
+  const authContext = useContext(AuthContext);
+
   const refresh = async () => {
+    if (authContext.status !== 'logged-in') {
+      setUserMetadata(defaultUserMetadata);
+      setUserStaticMetadata(defaultUserStaticMetadata);
+      return;
+    }
+
     Promise.all([
       retry(() => apiGetUserMetadata()),
       retry(() => apiGetUserStaticMetadata()),
@@ -77,7 +88,7 @@ export const UserMetadataContainer: FC<PropsWithChildren<Props>> = ({
 
   useEffect(() => {
     refresh();
-  }, []);
+  }, [authContext.status]);
 
   useEffect(() => {
     const onAppChangeListener = AppState.addEventListener(
@@ -102,13 +113,24 @@ export const UserMetadataContainer: FC<PropsWithChildren<Props>> = ({
 
   const updateUserMetadata = useCallback(
     async (metadata: PartialUserMetadata) => {
+      if (authContext.status !== 'logged-in') {
+        setUserMetadata((currentMetadata) => {
+          if (currentMetadata === null) {
+            return null;
+          }
+
+          return mergeUserMetadata(currentMetadata, metadata);
+        });
+        return;
+      }
+
       const saveUserMetadataResult = await apiSaveUserMetadata(metadata);
 
       if (saveUserMetadataResult.success === true) {
         setUserMetadata(saveUserMetadataResult.value);
       }
     },
-    [setUserMetadata]
+    [setUserMetadata, authContext.status]
   );
 
   if (userMetadata === null || userStaticMetadata === null) {

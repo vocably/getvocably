@@ -1,12 +1,6 @@
 import { signInWithRedirect } from 'aws-amplify/auth';
 import React, { FC, ReactNode, useContext } from 'react';
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Linking, Platform, ScrollView, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,13 +26,15 @@ export const Login: FC<{
   const authStatus = useContext(AuthContext);
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { height: windowHeight } = useWindowDimensions();
 
   if (authStatus.status === 'undefined') {
     return <Loader>Authenticating...</Loader>;
   }
 
-  if (authStatus.status === 'logged-in') {
+  if (
+    authStatus.status === 'logged-in' ||
+    authStatus.status === 'not-logged-in'
+  ) {
     return <>{children}</>;
   }
 
