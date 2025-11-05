@@ -24,6 +24,10 @@ export const getPartialStaticMetadata = (
     metadata.premium = false;
   }
 
+  if (action.event.type === 'RENEWAL') {
+    metadata.premium = true;
+  }
+
   metadata.premium_status = action.event.type;
   metadata.premium_expiration_at_ms = action.event.expiration_at_ms;
 
