@@ -4,7 +4,7 @@ data "external" "www_backend_build" {
 (NODE_OPTIONS=--max-old-space-size=1024 npm run build --loglevel verbose) >&2 && echo "{\"dest\": \"dist\"}"
 EOT
   ]
-  working_dir = local.www_backed_root
+  working_dir = local.www_backend_root
 }
 
 data "archive_file" "www_backend_build" {

@@ -73,7 +73,6 @@ export class VocablyTranslation {
   @Prop() sourceLanguage: string = '';
   @Prop() targetLanguage: string = '';
   @Prop() isUpdating: TranslationCard | null = null;
-  @Prop() showSaveHint: boolean = true;
   @Prop() canCongratulate: boolean = false;
   @Prop() playAudioPronunciation: (
     payload: AudioPronunciationPayload
@@ -594,15 +593,6 @@ export class VocablyTranslation {
                                       marginTop: '4px',
                                     }}
                                   >
-                                    {/*{this.addedItemIndex === itemIndex &&*/}
-                                    {/*  canShowCardsCounter &&*/}
-                                    {/*  this.maxCards !== 'unlimited' && (*/}
-                                    {/*    <vocably-card-counter*/}
-                                    {/*      collectionLength={collectionLength}*/}
-                                    {/*      maxCards={this.maxCards}*/}
-                                    {/*      paymentLink={this.paymentLink}*/}
-                                    {/*    ></vocably-card-counter>*/}
-                                    {/*  )}*/}
                                     <button
                                       class="vocably-card-action-button"
                                       title="Remove card"
@@ -722,11 +712,7 @@ export class VocablyTranslation {
                                   marginTop: '6px',
                                   marginBottom: '6px',
                                 }}
-                                class={{
-                                  'vocably-card-source': true,
-                                  'vocably-card-hint-displayed':
-                                    itemIndex === 0 && this.showSaveHint,
-                                }}
+                                class="vocably-card-source"
                               ></vocably-card-source>
                               <vocably-card-definitions
                                 class="vocably-mb-6"

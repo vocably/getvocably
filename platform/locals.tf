@@ -3,6 +3,7 @@ locals {
   app_domain                       = "app.${var.root_domain}"
   api_domain                       = "api.${var.root_domain}"
   www_api_domain                   = "www-api.${var.root_domain}"
+  public_api_domain                = "public-api.${var.root_domain}"
   app_root                         = abspath("../packages/app")
   extension_root                   = abspath("../packages/extension")
   analyze_root                     = abspath("../packages/analyze")
@@ -10,7 +11,8 @@ locals {
   auth_lambdas_root                = abspath("../packages/auth-lambdas")
   www_root                         = abspath("../packages/www")
   e2e_www_root                     = abspath("../packages/e2e-www")
-  www_backed_root                  = abspath("../packages/www-backend")
+  www_backend_root                 = abspath("../packages/www-backend")
+  public_backend_root              = abspath("../packages/public-backend")
   artifacts_root                   = abspath("../packages/artifacts")
   extension_popup_root             = abspath("../packages/extension-popup")
   scripts_root                     = abspath("../scripts")

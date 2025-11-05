@@ -278,10 +278,6 @@ export namespace Components {
          */
         "showLanguages": boolean;
         /**
-          * @default true
-         */
-        "showSaveHint": boolean;
-        /**
           * @default ''
          */
         "sourceLanguage": string;
@@ -1063,10 +1059,6 @@ declare namespace LocalJSX {
           * @default true
          */
         "showLanguages"?: boolean;
-        /**
-          * @default true
-         */
-        "showSaveHint"?: boolean;
         /**
           * @default ''
          */

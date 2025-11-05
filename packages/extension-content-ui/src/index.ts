@@ -195,8 +195,6 @@ translationFirstTime.result = {
     tags: [],
   },
 };
-translationFirstTime.showSaveHint = true;
-
 // -----
 
 const editTagForm = document.getElementById(
@@ -348,7 +346,6 @@ const translationAskForRating = document.getElementById(
 ) as HTMLVocablyTranslationElement;
 
 translationAskForRating.result = successfulTranslationResult;
-translationAskForRating.showSaveHint = false;
 translationAskForRating.askForRating = true;
 translationAskForRating.extensionPlatform = {
   name: 'Chrome Web Store',

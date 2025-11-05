@@ -55,7 +55,6 @@ export const setContents = async ({
     const translation = document.createElement('vocably-translation');
     translation.phrase = source;
     translation.playAudioPronunciation = playAudioPronunciation;
-    translation.showSaveHint = !userKnowsHowToAdd;
     translation.extensionPlatform = extensionPlatform;
     (translation.premiumCtaSuffix =
       contentScriptConfiguration.premiumCtaSuffix),
