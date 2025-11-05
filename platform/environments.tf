@@ -138,12 +138,12 @@ PADDLE_WEBHOOK_SECRET_KEY="${var.paddle_webhook_secret_key}"
 
 resource "local_file" "www_backend_environment" {
   content  = local.www_backend_env_content
-  filename = "${local.www_backed_root}/.env.local"
+  filename = "${local.www_backend_root}/.env.local"
 }
 
 resource "local_file" "www_backend_test_environment" {
   content  = local.www_backend_env_content
-  filename = "${local.www_backed_root}/.env.test.local"
+  filename = "${local.www_backend_root}/.env.test.local"
 }
 
 locals {
@@ -174,4 +174,28 @@ ENDTEST_LATEST_ENV_SUITE="${var.endtest_latest_env_suite}"
 resource "local_file" "e2e_environment" {
   content  = local.scripts_environment_content
   filename = "${local.scripts_root}/.env.local"
+}
+
+resource "local_file" "public_backend_google_key" {
+  content  = base64decode(google_service_account_key.credentials.private_key)
+  filename = "${local.public_backend_root}/${local.google_key_filename}"
+}
+
+locals {
+  public_backend_env_content = <<EOT
+OPENAI_API_KEY="${var.openai_api_key}"
+UNITS_OF_SPEECH_BUCKET="${aws_s3_bucket.units_of_speech.bucket}"
+GOOGLE_APPLICATION_CREDENTIALS="${local.google_key_filename}"
+GOOGLE_PROJECT_ID="${var.gcloud_project_id}"
+  EOT
+}
+
+resource "local_file" "public_backend_environment" {
+  content  = local.public_backend_env_content
+  filename = "${local.public_backend_root}/.env.local"
+}
+
+resource "local_file" "public_backend_test_environment" {
+  content  = local.public_backend_env_content
+  filename = "${local.public_backend_root}/.env.test.local"
 }
