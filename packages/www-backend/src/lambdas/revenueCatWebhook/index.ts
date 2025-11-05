@@ -44,6 +44,16 @@ export const revenueCatWebhook = async (
           });
         }
 
+        if (action.event.app_user_id.startsWith('$RCAnonymousID')) {
+          return buildResponse({
+            statusCode: 200,
+            body: JSON.stringify({
+              success: true,
+              message: 'This action is for anonymous user.',
+            }),
+          });
+        }
+
         if (get(action.event, 'environment') === 'SANDBOX') {
           const allowedSandboxEmailsResult = await nodeFetchS3File(
             process.env.STATIC_USER_FILES_BUCKET,
