@@ -1,7 +1,8 @@
-import { deleteUser, signOut } from '@aws-amplify/auth';
+import { deleteUser, signOut as amplifySignOut } from '@aws-amplify/auth';
 import { FC, useCallback } from 'react';
 import { Alert, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import Purchases from 'react-native-purchases';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { clearAll } from '../asyncAppStorage';
 import { useUserEmail } from '../auth/useUserEmail';
@@ -31,6 +32,11 @@ export const AccountScreen: FC<Props> = () => {
       },
     ]);
   }, []);
+
+  const signOut = async () => {
+    await Purchases.logOut();
+    await amplifySignOut();
+  };
 
   return (
     <CustomScrollView>

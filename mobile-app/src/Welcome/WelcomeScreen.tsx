@@ -126,7 +126,9 @@ export const WelcomeScreen: FC<Props> = ({ navigation }) => {
             )}
           </View>
 
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+          <View
+            style={{ flex: 1, alignItems: 'flex-end', flexDirection: 'row' }}
+          >
             <Button
               style={{
                 opacity: isSet && swiperIndex > 0 ? 1 : 0,
@@ -138,6 +140,14 @@ export const WelcomeScreen: FC<Props> = ({ navigation }) => {
               }}
             >
               Skip
+            </Button>
+            <Button
+              onPress={() => {
+                posthog.capture('onboardingSignInClicked');
+                navigation.navigate('LoginModal');
+              }}
+            >
+              Sign in
             </Button>
           </View>
         </Surface>

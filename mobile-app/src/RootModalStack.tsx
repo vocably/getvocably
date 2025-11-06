@@ -5,6 +5,7 @@ import { ChatWithCardModal } from './ChatWithCard/ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
+import { LoginModal } from './LoginModal';
 import { PaymentSuccessModal } from './PaymentSuccessModal';
 import { PreviewStudyStepModal } from './Settings/PreviewStudyStepModal';
 import { StudyScreen } from './study/StudyScreen';
@@ -61,6 +62,7 @@ export const RootModalStack = () => {
           name="PreviewStudyStepModal"
           component={PreviewStudyStepModal}
         />
+        <Stack.Screen name="LoginModal" component={LoginModal} />
       </Stack.Group>
     </Stack.Navigator>
   );
