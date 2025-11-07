@@ -96,6 +96,7 @@ USER_FEEDBACK_TABLE="${aws_dynamodb_table.user_feedback.name}"
 CARDS_BUCKET="${aws_s3_bucket.cards.bucket}"
 CARDS_BACKUP_BUCKET="${aws_s3_bucket.cards_backup.bucket}"
 OPENAI_API_KEY="${var.openai_api_key}"
+GEMINI_API_KEY="${var.gemini_api_key}"
 USER_FILES_BUCKET="${aws_s3_bucket.user_files.bucket}"
 BREVO_API_KEY="${var.brevo_api_key}"
 NOTIFICATIONS_DYNAMO_TABLE="${aws_dynamodb_table.notifications.name}"
@@ -184,6 +185,7 @@ resource "local_file" "public_backend_google_key" {
 locals {
   public_backend_env_content = <<EOT
 OPENAI_API_KEY="${var.openai_api_key}"
+GEMINI_API_KEY="${var.gemini_api_key}"
 UNITS_OF_SPEECH_BUCKET="${aws_s3_bucket.units_of_speech.bucket}"
 GOOGLE_APPLICATION_CREDENTIALS="${local.google_key_filename}"
 GOOGLE_PROJECT_ID="${var.gcloud_project_id}"

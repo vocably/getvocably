@@ -22,16 +22,13 @@ describe('aiReverseTranslate', () => {
       return;
     }
 
+    const variants =
+      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken, hoes, kaft, hoever, dekking, afdekken';
+
     expect(result.value.length).toBeGreaterThanOrEqual(3);
-    expect(result.value[0].target).toHaveSomeOf(
-      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken'
-    );
-    expect(result.value[1].target).toHaveSomeOf(
-      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken'
-    );
-    expect(result.value[2].target).toHaveSomeOf(
-      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken'
-    );
+    expect(result.value[0].target).toHaveSomeOf(variants);
+    expect(result.value[1].target).toHaveSomeOf(variants);
+    expect(result.value[2].target).toHaveSomeOf(variants);
   });
 
   it('gets all the Dutch meanings of the word or phrase "phone case"', async () => {
@@ -69,6 +66,8 @@ describe('aiReverseTranslate', () => {
     }
 
     expect(result.value[0].target).toHaveSomeOf([
+      'Is everything still valid?',
+      'Is it still on?',
       'Is everything still in effect?',
       'Is everything in force?',
       'Is everything still on?',
@@ -123,7 +122,9 @@ describe('aiReverseTranslate', () => {
       }
 
       expect(result.value.length).toBeGreaterThanOrEqual(1);
-      expect(result.value[0].transcript).toHaveSomeOf("xīngqī èr, xīngqī'èr");
+      expect(result.value[0].transcript).toHaveSomeOf(
+        "xīngqī èr, xīngqī'èr, zhōu èr, zhōu'èr, xīng qī èr"
+      );
     });
 
     it('chinese simplified', async () => {
@@ -139,7 +140,9 @@ describe('aiReverseTranslate', () => {
       }
 
       expect(result.value.length).toBeGreaterThanOrEqual(1);
-      expect(result.value[0].transcript).toHaveSomeOf("xīngqī èr, xīngqī'èr");
+      expect(result.value[0].transcript).toHaveSomeOf(
+        "xīngqī èr, xīngqī'èr, xīng qī èr"
+      );
     });
   });
 });

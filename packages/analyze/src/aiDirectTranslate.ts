@@ -6,30 +6,16 @@ import {
   Result,
   Translation,
 } from '@vocably/model';
-import { get } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
+import { getTranscriptionName } from './getTranscriptionName';
 import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   source: string;
   sourceLanguage: ChatGPTLanguage;
   targetLanguage: GoogleLanguage;
-};
-
-const transcriptionName = {
-  zh: 'pinyin',
-  'zh-TW': 'pinyin',
-  ja: 'romaji',
-  ko: 'hangul',
-  vi: 'vietnamese',
-  th: 'thai',
-  id: 'indonesian',
-  ms: 'malay',
-  my: 'burmese',
-  hi: 'hindi',
-  ar: 'arabic',
 };
 
 const internalAiDirectTranslate = async (
@@ -53,10 +39,8 @@ const internalAiDirectTranslate = async (
     `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
     `- lemmaPos - part of speech of the lemma in English`,
     transcriptionIsNeeded
-      ? `- transcript - the ${get(
-          transcriptionName,
-          payload.sourceLanguage,
-          'IPA'
+      ? `- transcript - the ${getTranscriptionName(
+          payload.sourceLanguage
         )} transcription of the ${languageList[payload.sourceLanguage]} source`
       : null,
   ]

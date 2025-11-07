@@ -11,20 +11,9 @@ import { isArray } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
+import { getTranscriptionName } from './getTranscriptionName';
 import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 import { transformSource } from './transformSource';
-
-const transcriptionName: Partial<Record<GoogleLanguage, string>> = {
-  zh: 'pinyin',
-  'zh-TW': 'pinyin',
-  ja: 'romaji',
-  ko: 'hangul',
-  vi: 'vietnamese',
-  th: 'thai',
-  id: 'indonesian',
-  ms: 'malay',
-  my: 'burmese',
-};
 
 const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   ar: ['masculine', 'feminine'], // Arabic
@@ -115,7 +104,7 @@ export const getGptAnalyseChatGptBody = ({
 
   const genders = genderLanguages[sourceLanguage] ?? [];
 
-  const transcriptionType = transcriptionName[sourceLanguage] ?? 'IPA';
+  const transcriptionType = getTranscriptionName(sourceLanguage);
 
   const prompt = [
     `You are a smart language dictionary.`,

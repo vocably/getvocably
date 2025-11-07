@@ -12,6 +12,7 @@ import { extractPayload } from './extractPayload';
 configureAnalyzer({
   googleProjectId: process.env.GOOGLE_PROJECT_ID as string,
   openaiApiKey: process.env.OPENAI_API_KEY as string,
+  geminiApiKey: process.env.GEMINI_API_KEY as string,
   awsRegion: process.env.AWS_REGION as string,
   unitsOfSpeechBucket: process.env.UNITS_OF_SPEECH_BUCKET as string,
 });
