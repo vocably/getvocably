@@ -4,11 +4,11 @@ import {
   GPT_4O,
   nodeFetchS3File,
   nodePutS3File,
-  OpenAiModel,
 } from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
+import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
@@ -102,7 +102,7 @@ type GptAnalysePayload = {
 
 type GptAnalyseChatGptBody = {
   messages: Array<ChatCompletionMessageParam>;
-  model: OpenAiModel;
+  model: ChatModel;
 };
 
 export const getGptAnalyseChatGptBody = ({

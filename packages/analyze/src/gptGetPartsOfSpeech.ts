@@ -3,10 +3,10 @@ import {
   GPT_4O,
   nodeFetchS3File,
   nodePutS3File,
-  OpenAiModel,
 } from '@vocably/lambda-shared';
 import { GoogleLanguage, languageList, Result } from '@vocably/model';
 import { uniq } from 'lodash-es';
+import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 
@@ -17,7 +17,7 @@ type PartsOfSpeechPayload = {
 
 type PartsOfSpeechChatGptBody = {
   messages: Array<ChatCompletionMessageParam>;
-  model: OpenAiModel;
+  model: ChatModel;
 };
 
 export const getPartsOfSpeechGptBody = ({
