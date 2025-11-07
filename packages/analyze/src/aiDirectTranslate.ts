@@ -1,9 +1,4 @@
-import {
-  chatGptRequest,
-  GPT_4O,
-  GPT_4O_MINI,
-  OpenAiModel,
-} from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
 import {
   ChatGPTLanguage,
   GoogleLanguage,
@@ -12,6 +7,7 @@ import {
   Translation,
 } from '@vocably/model';
 import { get } from 'lodash-es';
+import { ChatModel } from 'openai/resources';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
 import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
@@ -38,7 +34,7 @@ const transcriptionName = {
 
 const internalAiDirectTranslate = async (
   payload: Payload,
-  model: OpenAiModel
+  model: ChatModel
 ): Promise<Result<Translation>> => {
   const source = truncateAsIs(payload.source, 500);
 

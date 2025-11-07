@@ -1,26 +1,19 @@
 import { parseJson } from '@vocably/api';
 import { Result, resultify } from '@vocably/model';
 import { get } from 'lodash';
+import { ChatModel } from 'openai/resources';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat';
 import { ChatCompletionCreateParamsBase } from 'openai/resources/chat/completions';
 import { getOpenAiClient } from './openAiClient';
 
 export const GPT_4O_MINI = 'gpt-4o-mini';
 export const GPT_4O = 'gpt-4o';
-export const GPT_41_MINI = 'gpt-4.1-mini';
 export const GPT_5_MINI = 'gpt-5-mini';
 export const GPT_5_NANO = 'gpt-5-nano';
 
-export type OpenAiModel =
-  | typeof GPT_4O_MINI
-  | typeof GPT_4O
-  | typeof GPT_41_MINI
-  | typeof GPT_5_MINI
-  | typeof GPT_5_NANO;
-
 type Options = {
   messages: Array<ChatCompletionMessageParam>;
-  model: OpenAiModel;
+  model: ChatModel;
   timeoutMs?: number;
   responseFormat?: ChatCompletionCreateParamsBase['response_format'];
   temperature?: number;
