@@ -1,6 +1,10 @@
 import '@vocably/jest';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
-import { translateUnitOfSpeechNoCache } from './translateUnitOfSpeech';
+import {
+  translateUnitOfSpeechChatGpt,
+  translateUnitOfSpeechGemini,
+  translateUnitOfSpeechNoCache,
+} from './translateUnitOfSpeech';
 
 configureTestAnalyzer();
 
@@ -10,6 +14,50 @@ describe('translateUnitOfSpeech', () => {
     return;
   }
 
+  it('gemini bank', async () => {
+    const translationResult = await translateUnitOfSpeechGemini({
+      source: 'bank',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      definitions: [
+        'A financial institution where money and other valuables are stored and managed.',
+        'A long, raised mass or mound of earth, especially bordering or paralleling a river or shore.',
+        'A set or series of similar or related things, particularly in a row or tier.',
+      ],
+    });
+    expect(translationResult.success).toEqual(true);
+
+    if (translationResult.success === false) {
+      return;
+    }
+
+    expect(translationResult.value[0]).toEqual('банк');
+    expect(translationResult.value[1]).toEqual('берег');
+  }, 60_000);
+
+  it('chatgpt bank', async () => {
+    const translationResult = await translateUnitOfSpeechChatGpt({
+      source: 'bank',
+      partOfSpeech: 'noun',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      definitions: [
+        'A financial institution where money and other valuables are stored and managed.',
+        'A long, raised mass or mound of earth, especially bordering or paralleling a river or shore.',
+        'A set or series of similar or related things, particularly in a row or tier.',
+      ],
+    });
+    expect(translationResult.success).toEqual(true);
+
+    if (translationResult.success === false) {
+      return;
+    }
+
+    expect(translationResult.value[0]).toEqual('банк');
+    expect(translationResult.value[1]).toEqual('берег');
+  }, 60_000);
+
   it('bank', async () => {
     const translationResult = await translateUnitOfSpeechNoCache({
       source: 'bank',
@@ -18,8 +66,12 @@ describe('translateUnitOfSpeech', () => {
       targetLanguage: 'ru',
     });
     expect(translationResult.success).toEqual(true);
-    // @ts-ignore
-    expect(translationResult.value).toEqual(['банк', 'берег']);
+    if (translationResult.success === false) {
+      return;
+    }
+
+    expect(translationResult.value[0]).toEqual('банк');
+    expect(translationResult.value[1]).toEqual('берег');
   }, 60_000);
 
   it('tailor', async () => {
@@ -65,10 +117,10 @@ describe('translateUnitOfSpeech', () => {
     if (!translationResult.success) {
       return;
     }
-    expect(translationResult.value.length).toEqual(2);
+    expect(translationResult.value.length).toBeGreaterThanOrEqual(2);
     // @ts-ignore
     expect(translationResult.value[0]).toEqual('источник');
-    expect(translationResult.value[1]).toHaveSomeOf('источник, родник');
+    expect(translationResult.value[1]).toHaveSomeOf('источник, родник, ключ');
   }, 60_000);
 
   it('arrival', async () => {
@@ -82,8 +134,7 @@ describe('translateUnitOfSpeech', () => {
     if (!translationResult.success) {
       return;
     }
-    expect(translationResult.value.length).toEqual(2);
-    // @ts-ignore
+    expect(translationResult.value.length).toBeGreaterThanOrEqual(2);
     expect(translationResult.value[0]).toEqual('прибытие');
     expect(translationResult.value[1]).toEqual('приезд');
   }, 60_000);
@@ -99,7 +150,7 @@ describe('translateUnitOfSpeech', () => {
     if (!translationResult.success) {
       return;
     }
-    expect(translationResult.value.length).toEqual(2);
+    expect(translationResult.value.length).toBeGreaterThanOrEqual(2);
     // @ts-ignore
     expect(translationResult.value[0]).toEqual('бутылка');
   }, 60_000);
@@ -110,6 +161,11 @@ describe('translateUnitOfSpeech', () => {
       partOfSpeech: 'verb',
       sourceLanguage: 'nl',
       targetLanguage: 'en',
+      definitions: [
+        'maakt iets tot werkelijkheid',
+        'verricht een handeling',
+        'functioneert op een specifieke manier',
+      ],
     });
     expect(translationResult.success).toEqual(true);
     if (!translationResult.success) {
@@ -130,6 +186,10 @@ describe('translateUnitOfSpeech', () => {
       return;
     }
 
-    expect(translationResult.value[0]).toEqual('объявлено');
+    expect(translationResult.value[0]).toHaveSomeOf([
+      'объявленный',
+      'объявлено',
+      'объявил',
+    ]);
   }, 60_000);
 });

@@ -1,21 +1,119 @@
+import { createUserContent, GoogleGenAI } from '@google/genai';
+import { parseJson } from '@vocably/api';
 import {
   chatGptRequest,
   GPT_4O,
   nodeFetchS3File,
   nodePutS3File,
 } from '@vocably/lambda-shared';
-import { ChatGPTLanguage, languageList, Result } from '@vocably/model';
+import {
+  ChatGPTLanguage,
+  languageList,
+  Result,
+  resultify,
+} from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
-import { uniq } from 'lodash-es';
+import { isArray, uniq } from 'lodash-es';
 import { config } from './config';
+import { fallback } from './fallback';
 
 type Payload = {
   sourceLanguage: ChatGPTLanguage;
   targetLanguage: ChatGPTLanguage;
   partOfSpeech: string;
   source: string;
+  definitions?: string[];
 };
-export const translateUnitOfSpeechNoCache = async ({
+
+export const translateUnitOfSpeechGemini = async ({
+  sourceLanguage,
+  targetLanguage,
+  source,
+  partOfSpeech,
+  definitions = [],
+}: Payload): Promise<Result<string[]>> => {
+  const genAI = new GoogleGenAI({
+    apiKey: config.geminiApiKey,
+  });
+
+  const safeSourceLanguage = languageList[sourceLanguage];
+  const safeTargetLanguage = languageList[targetLanguage];
+
+  const result = await resultify(
+    genAI.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: createUserContent([source, ...definitions]),
+      config: {
+        systemInstruction: [
+          `You are ${safeSourceLanguage}-${safeTargetLanguage} dictionary`,
+          `User provides ${safeSourceLanguage} ${partOfSpeech}${
+            definitions?.length > 0 ? ' and its definitions' : ''
+          }.`,
+          `Give several relevant translations into ${safeTargetLanguage}${
+            definitions?.length > 0 ? ' in the context of definitions' : ''
+          }.`,
+          `Respond in JSON array with each translation on a separate line`,
+          partOfSpeech.includes('verb')
+            ? `Consider tense of the provided ${partOfSpeech}`
+            : '',
+          `Omit explanations`,
+          `Sort results by commonality`,
+        ],
+        thinkingConfig: {
+          thinkingBudget: 0, // Disables thinking
+        },
+        temperature: 0,
+        responseMimeType: 'application/json',
+      },
+    }),
+    {
+      errorCode: 'FUCKING_ERROR',
+      reason: 'Unable to perform Gemini translation.',
+    }
+  );
+
+  if (!result.success) {
+    return result;
+  }
+
+  const parseResult = parseJson(result.value.text ?? '');
+  if (!parseResult.success) {
+    return parseResult;
+  }
+
+  if (!isArray(parseResult.value)) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: `The provided result is not an array`,
+      extra: {
+        result: result.value.text,
+      },
+    };
+  }
+
+  const translations = uniq(
+    parseResult.value.map((r) => r.toString().trim()).filter((r) => !!r)
+  ) as string[];
+
+  if (translations.length === 0) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: `The translations list is empty`,
+      extra: {
+        result: result.value.text,
+      },
+    };
+  }
+
+  return {
+    success: true,
+    value: translations,
+  };
+};
+
+export const translateUnitOfSpeechChatGpt = async ({
   sourceLanguage,
   targetLanguage,
   source,
@@ -73,6 +171,14 @@ export const translateUnitOfSpeechNoCache = async ({
     success: true,
     value: translations,
   };
+};
+
+export const translateUnitOfSpeechNoCache = async (
+  payload: Payload
+): Promise<Result<string[]>> => {
+  return fallback(translateUnitOfSpeechChatGpt(payload), () =>
+    translateUnitOfSpeechGemini(payload)
+  );
 };
 
 export const translateUnitOfSpeech = async (

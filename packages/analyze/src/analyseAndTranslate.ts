@@ -26,6 +26,7 @@ export const analyseAndTranslate = async (
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
       partOfSpeech: payload.partOfSpeech,
+      definitions: gptAnalyseResult.value.definitions,
     });
 
     if (translationResult.success === false) {
