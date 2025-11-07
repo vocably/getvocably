@@ -1,5 +1,4 @@
 import { Result, resultify } from '@vocably/model';
-import fetch from 'node-fetch';
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY as string;
 
