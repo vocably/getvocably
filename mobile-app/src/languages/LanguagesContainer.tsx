@@ -1,6 +1,7 @@
 import {
   deleteLanguageDeck,
   listLanguages,
+  loadLanguageDeck,
   saveLanguageDeck,
 } from '@vocably/api';
 import { LanguageDeck, Result, TagItem } from '@vocably/model';
@@ -36,12 +37,32 @@ export type LanguageContainerDeck = {
 
 type DecksCollection = Record<string, LanguageContainerDeck>;
 
+const createDefaultLanguageDeck = (language: string): LanguageDeck => ({
+  language,
+  cards: [],
+  tags: [],
+});
+
+const loadDecksFromStorage = async (): Promise<DecksCollection> => {
+  const decks = await asyncAppStorage.getItem('languageDecks');
+
+  if (decks === undefined) {
+    return {};
+  }
+
+  return JSON.parse(decks);
+};
+
+const saveDecksToStorage = async (decks: DecksCollection) => {
+  await asyncAppStorage.setItem('languageDecks', JSON.stringify(decks));
+};
+
 type Languages = {
   status: 'loading' | 'loaded' | 'error';
   languages: string[];
   decks: DecksCollection;
   storeDeck: (deck: LanguageContainerDeck) => void;
-  deleteLanguage: (language: string) => ReturnType<typeof deleteLanguageDeck>;
+  deleteLanguage: (language: string) => Promise<unknown>;
   selectedLanguage: string;
   selectLanguage: (language: string) => Promise<void>;
   refreshLanguages: () => Promise<void>;
@@ -53,7 +74,7 @@ export const LanguagesContext = createContext<Languages>({
   status: 'loading',
   languages: [],
   decks: {},
-  storeDeck: () => null,
+  storeDeck: () => Promise<unknown>,
   deleteLanguage: () =>
     Promise.resolve({
       success: true,
@@ -78,8 +99,8 @@ export const LanguagesContainer: FC<Props> = ({
   const posthog = usePostHog();
   const [listLoadingStatus, setListLoadingStatus] =
     useState<Languages['status']>('loading');
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [decks, setDecks] = useState<DecksCollection>({});
+  const [decks, setDecks] = useAsync(loadDecksFromStorage, saveDecksToStorage);
+  const languages = decks.status === 'loaded' ? Object.keys(decks.value) : [];
   const [selectedLanguage, selectLanguage] = useAsync(
     () =>
       loadSelectedLanguageStorage().catch((error) => {
@@ -95,38 +116,50 @@ export const LanguagesContainer: FC<Props> = ({
       })
   );
 
-  const storeDeck = (deck: LanguageContainerDeck) => {
-    setDecks({
-      ...decks,
+  const storeDeck = async (deck: LanguageContainerDeck) => {
+    if (decks.status !== 'loaded') {
+      return;
+    }
+
+    await setDecks({
+      ...decks.value,
       [deck.deck.language]: deck,
     });
   };
 
-  const addLanguage = (language: string) => {
+  const addLanguage = async (language: string) => {
     if (languages.includes(language)) {
       return;
     }
 
-    setLanguages([...languages, language]);
+    await storeDeck({
+      status: 'loaded',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+    });
   };
 
-  const deleteLanguage = (language: string) =>
-    deleteLanguageDeck(language).then((result) => {
+  const deleteLanguage = async (language: string) =>
+    deleteLanguageDeck(language).then(async (result) => {
       if (result.success === false) {
         return result;
       }
 
-      const { [language]: _, ...newDecks } = decks;
-      setDecks(newDecks);
+      if (decks.status !== 'loaded') {
+        return;
+      }
 
-      setLanguages((prevLanguages) =>
-        prevLanguages.filter((prevLanguage) => prevLanguage !== language)
-      );
+      const { [language]: _, ...newDecks } = decks.value;
+      await setDecks(newDecks);
 
       return result;
     });
 
   const refreshLanguages = async () => {
+    if (decks.status !== 'loaded') {
+      return;
+    }
+
     const listResult = await listLanguages();
 
     if (listResult.success === false) {
@@ -142,35 +175,81 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    setLanguages(listResult.value);
-    setListLoadingStatus('loaded');
+    const loadedLanguageDecks = await Promise.all(
+      listResult.value.map(async (language) => {
+        return {
+          language,
+          loadResult: await loadLanguageDeck(language),
+        };
+      })
+    );
+
+    const newDecks: DecksCollection = loadedLanguageDecks.reduce(
+      (acc, loadedLanguageDeck) => {
+        const selectedTags =
+          decks.value[loadedLanguageDeck.language]?.selectedTags ?? [];
+        const deck =
+          loadedLanguageDeck.loadResult.success === true
+            ? loadedLanguageDeck.loadResult.value
+            : decks.value[loadedLanguageDeck.language]?.deck ??
+              createDefaultLanguageDeck(loadedLanguageDeck.language);
+
+        return {
+          ...acc,
+          [loadedLanguageDeck.language]: {
+            status: 'loaded',
+            deck,
+            selectedTags,
+          },
+        };
+      },
+      {}
+    );
+
+    await setDecks(newDecks);
   };
 
   const addNewLanguage = async (language: string): Promise<Result<unknown>> => {
-    const existingLanguagesResult = await listLanguages();
-    if (existingLanguagesResult.success === false) {
-      return existingLanguagesResult;
-    }
-
-    if (existingLanguagesResult.value.includes(language)) {
-      setLanguages(existingLanguagesResult.value);
-      await selectLanguage(language);
+    if (decks.status !== 'loaded') {
       return {
-        success: true,
-        value: null,
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to add new language while decks are not loaded from the memory yet.',
       };
     }
 
-    setLanguages([...existingLanguagesResult.value, language]);
-    selectLanguage(language).then();
-    return saveLanguageDeck({
-      language,
-      cards: [],
-      tags: [],
+    if (decks.value[language]) {
+      await selectLanguage(language);
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason: 'Unable to add new language because it is already added.',
+      };
+    }
+
+    const newLanguageDeck = createDefaultLanguageDeck(language);
+    await setDecks({
+      ...decks.value,
+      [language]: {
+        status: 'loaded',
+        deck: newLanguageDeck,
+        selectedTags: [],
+      },
     });
+    return saveLanguageDeck(newLanguageDeck);
   };
 
   useEffect(() => {
+    if (decks.status !== 'loaded') {
+      return;
+    }
+
+    if (decks.value !== {}) {
+      setListLoadingStatus('loaded');
+      return;
+    }
+
     refreshLanguages().then();
 
     const subscription = AppState.addEventListener('change', (nextAppState) => {
@@ -182,7 +261,7 @@ export const LanguagesContainer: FC<Props> = ({
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [decks.status]);
 
   useEffect(() => {
     if (
@@ -212,7 +291,7 @@ export const LanguagesContainer: FC<Props> = ({
   const value: Languages = {
     status: listLoadingStatus,
     languages,
-    decks,
+    decks: decks.status === 'loaded' ? decks.value : {},
     storeDeck,
     deleteLanguage,
     selectedLanguage:
@@ -226,17 +305,18 @@ export const LanguagesContainer: FC<Props> = ({
   return (
     <LanguagesContext.Provider value={value}>
       {(listLoadingStatus === 'loading' ||
-        selectedLanguage.status === 'loading') && (
-        <Loader>Loading languages...</Loader>
-      )}
+        selectedLanguage.status === 'loading' ||
+        decks.status === 'loading') && <Loader>Loading languages...</Loader>}
       {(listLoadingStatus === 'error' ||
-        selectedLanguage.status === 'failed') && (
+        selectedLanguage.status === 'failed' ||
+        decks.status === 'failed') && (
         <Error onRetry={refreshLanguages}>
           Oops! We're unable to load your languages and cards right now.
         </Error>
       )}
       {listLoadingStatus === 'loaded' &&
         selectedLanguage.status === 'loaded' &&
+        decks.status === 'loaded' &&
         children}
     </LanguagesContext.Provider>
   );

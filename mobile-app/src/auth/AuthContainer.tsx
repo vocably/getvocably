@@ -68,7 +68,7 @@ export const AuthContainer: FC<{
   useEffect(() => {
     retry(
       () =>
-        fetchAuthSession().then(async (session) => {
+        fetchAuthSession({ forceRefresh: false }).then(async (session) => {
           if (!session.tokens) {
             throw new Error('The fetched session has no access tokens.');
           }

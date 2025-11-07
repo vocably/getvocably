@@ -188,10 +188,10 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
 
         const selectedTags = deck.selectedTags.filter((t) => t.id !== id);
 
-        await cacheSelectedTagIds(
-          language,
-          selectedTags.map((t) => t.id)
-        );
+        // await cacheSelectedTagIds(
+        //   language,
+        //   selectedTags.map((t) => t.id)
+        // );
 
         storeDeck({
           ...deck,
@@ -346,53 +346,53 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
 
       storeDeck({ ...deck, selectedTags });
 
-      await cacheSelectedTagIds(
-        language,
-        selectedTags.map((t) => t.id)
-      );
+      // await cacheSelectedTagIds(
+      //   language,
+      //   selectedTags.map((t) => t.id)
+      // );
     },
     [language, storeDeck, deck]
   );
 
   const reload = useCallback(async (): Promise<Result<true>> => {
-    if (language === '') {
-      return {
-        success: true,
-        value: true,
-      };
-    }
+    // if (language === '') {
+    return {
+      success: true,
+      value: true,
+    };
+    // }
 
-    if (deck.status === 'initial') {
-      storeDeck({
-        ...deck,
-        status: 'loading',
-      });
-    }
-    return loadLanguageDeck(language).then(async (result) => {
-      if (result.success === false) {
-        storeDeck({
-          ...deck,
-          status: 'error',
-        });
-        return result;
-      }
-
-      const tagMap = buildTagMap(result.value.tags);
-      const selectedTags = (await loadSelectedTagIds(language))
-        .filter((id) => !!tagMap[id])
-        .map((id) => tagMap[id]);
-
-      storeDeck({
-        status: 'loaded',
-        deck: result.value,
-        selectedTags,
-      });
-
-      return {
-        success: true,
-        value: true,
-      };
-    });
+    // if (deck.status === 'initial') {
+    //   storeDeck({
+    //     ...deck,
+    //     status: 'loading',
+    //   });
+    // }
+    // return loadLanguageDeck(language).then(async (result) => {
+    //   if (result.success === false) {
+    //     storeDeck({
+    //       ...deck,
+    //       status: 'error',
+    //     });
+    //     return result;
+    //   }
+    //
+    //   const tagMap = buildTagMap(result.value.tags);
+    //   const selectedTags = (await loadSelectedTagIds(language))
+    //     .filter((id) => !!tagMap[id])
+    //     .map((id) => tagMap[id]);
+    //
+    //   storeDeck({
+    //     status: 'loaded',
+    //     deck: result.value,
+    //     selectedTags,
+    //   });
+    //
+    //   return {
+    //     success: true,
+    //     value: true,
+    //   };
+    // });
   }, [language, storeDeck, deck]);
 
   useEffect(() => {
