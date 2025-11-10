@@ -2,7 +2,6 @@ import {
   deleteLanguageDeck,
   listLanguages,
   loadLanguageDeck,
-  saveLanguageDeck,
 } from '@vocably/api';
 import { LanguageDeck, Result, TagItem } from '@vocably/model';
 import { usePostHog } from 'posthog-react-native';
@@ -64,7 +63,7 @@ type Languages = {
   storeDeck: (deck: LanguageContainerDeck) => void;
   deleteLanguage: (language: string) => Promise<unknown>;
   selectedLanguage: string;
-  selectLanguage: (language: string) => Promise<void>;
+  selectLanguage: (language: string) => Promise<Result<unknown>>;
   refreshLanguages: () => Promise<void>;
   addLanguage: (language: string) => void;
   addNewLanguage: (language: string) => Promise<Result<unknown>>;
@@ -116,23 +115,31 @@ export const LanguagesContainer: FC<Props> = ({
       })
   );
 
-  const storeDeck = async (deck: LanguageContainerDeck) => {
+  const storeDeck = async (
+    deck: LanguageContainerDeck
+  ): Promise<Result<unknown>> => {
     if (decks.status !== 'loaded') {
-      return;
+      return {
+        success: true,
+        value: null,
+      };
     }
 
-    await setDecks({
+    return setDecks({
       ...decks.value,
       [deck.deck.language]: deck,
     });
   };
 
-  const addLanguage = async (language: string) => {
+  const addLanguage = async (language: string): Promise<Result<unknown>> => {
     if (languages.includes(language)) {
-      return;
+      return {
+        success: true,
+        value: null,
+      };
     }
 
-    await storeDeck({
+    return storeDeck({
       status: 'loaded',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
@@ -229,7 +236,7 @@ export const LanguagesContainer: FC<Props> = ({
     }
 
     const newLanguageDeck = createDefaultLanguageDeck(language);
-    await setDecks({
+    const setDecksResult = await setDecks({
       ...decks.value,
       [language]: {
         status: 'loaded',
@@ -237,7 +244,12 @@ export const LanguagesContainer: FC<Props> = ({
         selectedTags: [],
       },
     });
-    return saveLanguageDeck(newLanguageDeck);
+
+    if (!setDecksResult.success) {
+      return setDecksResult;
+    }
+
+    return selectLanguage(language);
   };
 
   useEffect(() => {
