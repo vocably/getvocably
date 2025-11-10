@@ -12,6 +12,7 @@ import {
   Tag,
   TagItem,
 } from '@vocably/model';
+import { isEmpty } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import React, {
   createContext,
@@ -58,7 +59,7 @@ const createDefaultLanguageDeck = (language: string): LanguageDeck => ({
 const loadDecksFromStorage = async (): Promise<DecksCollection> => {
   const decks = await asyncAppStorage.getItem('languageDecks');
 
-  if (decks === undefined) {
+  if (!decks) {
     return {};
   }
 
@@ -282,6 +283,7 @@ export const LanguagesContainer: FC<Props> = ({
     );
 
     await setDecks(newDecks);
+    setListLoadingStatus('loaded');
   };
 
   const addNewLanguage = async (language: string): Promise<Result<unknown>> => {
@@ -326,7 +328,7 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    if (decks.value !== {}) {
+    if (!isEmpty(decks.value)) {
       setListLoadingStatus('loaded');
       return;
     }

@@ -141,8 +141,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
     filteredCards,
   } = selectedDeck;
 
-  console.log('dashboard deck', deck);
-
   const { refreshLanguages } = useContext(LanguagesContext);
   const theme = useTheme();
   const netInfo = useNetInfo();
