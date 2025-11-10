@@ -1,18 +1,7 @@
-import { deleteTag, loadLanguageDeck, saveLanguageDeck } from '@vocably/api';
-import { Item, makeCreate, makeDelete, makeUpdate } from '@vocably/crud';
-import {
-  Card,
-  CardItem,
-  LanguageDeck,
-  Result,
-  SrsCard,
-  Tag,
-  TagItem,
-} from '@vocably/model';
+import { Card, CardItem, Result, SrsCard, Tag, TagItem } from '@vocably/model';
 import { buildTagMap } from '@vocably/model-operations';
 import { createSrsItem } from '@vocably/srs';
 import { useCallback, useContext, useEffect, useMemo } from 'react';
-import { getItem, setItem } from '../asyncAppStorage';
 import {
   LanguageContainerDeck,
   LanguagesContext,
@@ -23,31 +12,14 @@ export type Deck = {
   deck: LanguageContainerDeck['deck'];
   add: (card: Card) => Promise<Result<CardItem>>;
   update: (id: string, data: Partial<SrsCard>) => Promise<Result<CardItem>>;
-  remove: (id: string) => Promise<Result<true>>;
+  remove: (id: string) => Promise<Result<unknown>>;
   reload: () => Promise<Result<true>>;
   addTags: (tags: Tag[]) => Promise<Result<TagItem[]>>;
-  clearTags: () => Promise<Result<true>>;
-  removeTag: (id: string) => Promise<Result<true>>;
+  removeTag: (id: string) => Promise<Result<unknown>>;
   updateTag: (id: string, data: Partial<Tag>) => Promise<Result<TagItem>>;
   filteredCards: LanguageContainerDeck['deck']['cards'];
   selectedTags: TagItem[];
   setSelectedTagIds: (ids: string[]) => Promise<any>;
-};
-
-const cacheSelectedTagIds = (language: string, existingIds: string[]) => {
-  return setItem(`selectedItems-${language}`, JSON.stringify(existingIds));
-};
-
-const loadSelectedTagIds = async (language: string): Promise<string[]> => {
-  try {
-    return JSON.parse((await getItem(`selectedItems-${language}`)) ?? '[]');
-  } catch (e) {
-    console.error(
-      `Unable to get or parse storage item data with the key selectedItems-${language}`,
-      e
-    );
-    return [];
-  }
 };
 
 type Options = {
@@ -56,7 +28,16 @@ type Options = {
 };
 
 export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
-  const { decks, storeDeck, addLanguage } = useContext(LanguagesContext);
+  const {
+    decks,
+    storeDeck,
+    addCard: collectionAddCard,
+    updateCard: collectionUpdateCard,
+    removeCard: collectionRemoveCard,
+    addTag: collectionAddTag,
+    updateTag: collectionUpdateTag,
+    removeTag: collectionRemoveTag,
+  } = useContext(LanguagesContext);
 
   const deck = decks[language] ?? {
     status: 'initial',
@@ -68,270 +49,58 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     selectedTags: [],
   };
 
-  const add = useCallback(
-    (card: Card): Promise<Result<CardItem>> =>
-      loadLanguageDeck(language).then(async (loadResult) => {
-        if (loadResult.success === false) {
-          return loadResult;
-        }
+  const add = async (card: Card): Promise<Result<CardItem>> => {
+    return collectionAddCard(language, {
+      ...card,
+      ...createSrsItem(),
+    });
+  };
 
-        const cardItem = makeCreate(loadResult.value.cards)({
-          ...card,
-          ...createSrsItem(),
-        });
-
-        const saveResult = await saveLanguageDeck(loadResult.value);
-
-        if (saveResult.success === false) {
-          return saveResult;
-        }
-
-        addLanguage(deck.deck.language);
-
-        storeDeck({
-          ...deck,
-          deck: loadResult.value,
-          status: 'loaded',
-        });
-
-        return {
-          success: true,
-          value: cardItem,
-        };
-      }),
-    [language, addLanguage, storeDeck, deck]
-  );
-
-  const addTags = useCallback(
-    async (tags: Tag[]): Promise<Result<TagItem[]>> => {
-      if (tags.length === 0) {
-        return {
-          success: true,
-          value: [],
-        };
-      }
-
-      return loadLanguageDeck(language).then(async (loadResult) => {
-        if (loadResult.success === false) {
-          return loadResult;
-        }
-        const existingTags = loadResult.value.tags ?? [];
-
-        const addTag = makeCreate(existingTags);
-
-        const tagItems = tags.map(addTag);
-
-        const deckWithTags = {
-          ...loadResult.value,
-          tags: [...existingTags],
-        };
-
-        const saveResult = await saveLanguageDeck(deckWithTags);
-
-        if (saveResult.success === false) {
-          return saveResult;
-        }
-
-        addLanguage(deck.deck.language);
-
-        storeDeck({
-          ...deck,
-          deck: deckWithTags,
-          status: 'loaded',
-        });
-
-        return {
-          success: true,
-          value: tagItems,
-        };
-      });
-    },
-    [language, deck]
-  );
-
-  const clearTags = useCallback(async (): Promise<Result<true>> => {
-    return loadLanguageDeck(language).then(async (loadResult) => {
-      if (loadResult.success === false) {
-        return loadResult;
-      }
-
-      const newDeck = {
-        ...loadResult.value,
-        tags: [],
-      };
-
-      const saveResult = await saveLanguageDeck(newDeck);
-
-      if (saveResult.success === false) {
-        return saveResult;
-      }
-
-      storeDeck({
-        ...deck,
-        deck: newDeck,
-        status: 'loaded',
-      });
-
+  const addTags = async (tags: Tag[]): Promise<Result<TagItem[]>> => {
+    if (tags.length === 0) {
       return {
         success: true,
-        value: true,
+        value: [],
       };
-    });
-  }, [language, deck]);
+    }
 
-  const removeTag = useCallback(
-    async (id: string): Promise<Result<true>> => {
-      return deleteTag(language, id).then(async (deleteResult) => {
-        if (deleteResult.success === false) {
-          return deleteResult;
+    const tagItemsResults = await Promise.all(
+      tags.map((tag) => collectionAddTag(language, tag))
+    );
+
+    return {
+      success: true,
+      value: tagItemsResults.reduce<TagItem[]>((acc, tagResult) => {
+        if (tagResult.success === false) {
+          return acc;
         }
 
-        const selectedTags = deck.selectedTags.filter((t) => t.id !== id);
+        return [...acc, tagResult.value];
+      }, []),
+    };
+  };
 
-        // await cacheSelectedTagIds(
-        //   language,
-        //   selectedTags.map((t) => t.id)
-        // );
+  const removeTag = async (id: string): Promise<Result<unknown>> => {
+    return collectionRemoveTag(language, id);
+  };
 
-        storeDeck({
-          ...deck,
-          deck: deleteResult.value,
-          status: 'loaded',
-          selectedTags,
-        });
+  const updateTag = async (
+    id: string,
+    data: Partial<Tag>
+  ): Promise<Result<TagItem>> => {
+    return collectionUpdateTag(language, id, data);
+  };
 
-        return {
-          success: true,
-          value: true,
-        };
-      });
-    },
-    [language, deck]
-  );
+  const update = (
+    id: string,
+    data: Partial<SrsCard>
+  ): Promise<Result<CardItem>> => {
+    return collectionUpdateCard(language, id, data);
+  };
 
-  const updateTag = useCallback(
-    async (id: string, data: Partial<Tag>): Promise<Result<TagItem>> => {
-      return loadLanguageDeck(language).then(async (loadResult) => {
-        if (loadResult.success === false) {
-          return loadResult;
-        }
-
-        const updateResult = makeUpdate(loadResult.value.tags)(id, data);
-        if (updateResult.success === false) {
-          return updateResult;
-        }
-
-        const remapTag =
-          (updatedTag: TagItem) =>
-          (existingTagItem: TagItem): TagItem => {
-            if (updatedTag.id === existingTagItem.id) {
-              return updatedTag;
-            }
-
-            return existingTagItem;
-          };
-
-        const newDeck: LanguageDeck = {
-          ...loadResult.value,
-          cards: loadResult.value.cards.map((card) => {
-            if (!card.data.tags) {
-              return card;
-            }
-
-            return {
-              ...card,
-              data: {
-                ...card.data,
-                tags: card.data.tags.map(remapTag(updateResult.value)),
-              },
-            };
-          }),
-          tags: (loadResult.value.tags ?? []).map(remapTag(updateResult.value)),
-        };
-
-        const saveResult = await saveLanguageDeck(newDeck);
-
-        if (saveResult.success === false) {
-          return saveResult;
-        }
-
-        const selectedTags = deck.selectedTags.map(
-          remapTag(updateResult.value)
-        );
-
-        storeDeck({
-          ...deck,
-          deck: newDeck,
-          status: 'loaded',
-          selectedTags,
-        });
-
-        return {
-          success: true,
-          value: updateResult.value,
-        };
-      });
-    },
-    [language, deck]
-  );
-
-  const update = useCallback(
-    (id: string, data: Partial<SrsCard>): Promise<Result<Item<SrsCard>>> =>
-      loadLanguageDeck(language).then(async (loadResult) => {
-        if (loadResult.success === false) {
-          return loadResult;
-        }
-
-        const updateResult = makeUpdate(loadResult.value.cards)(id, data);
-        if (updateResult.success === false) {
-          return updateResult;
-        }
-
-        const saveResult = await saveLanguageDeck(loadResult.value);
-
-        if (saveResult.success === false) {
-          return saveResult;
-        }
-
-        storeDeck({
-          ...deck,
-          deck: loadResult.value,
-          status: 'loaded',
-        });
-
-        return updateResult;
-      }),
-    [language, deck]
-  );
-
-  const remove = useCallback(
-    (id: string): Promise<Result<true>> =>
-      loadLanguageDeck(language).then(async (loadResult) => {
-        if (loadResult.success === false) {
-          return loadResult;
-        }
-
-        const deleteResult = makeDelete(loadResult.value.cards)(id);
-        if (deleteResult.success === false) {
-          return deleteResult;
-        }
-
-        const saveResult = await saveLanguageDeck(loadResult.value);
-
-        if (saveResult.success === false) {
-          return saveResult;
-        }
-
-        storeDeck({
-          ...deck,
-          deck: loadResult.value,
-          status: 'loaded',
-        });
-
-        return deleteResult;
-      }),
-    [language, deck]
-  );
+  const remove = (id: string): Promise<Result<unknown>> => {
+    return collectionRemoveCard(language, id);
+  };
 
   const setSelectedTagIds = useCallback(
     async (ids: string[]) => {
@@ -345,11 +114,6 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
         .map((id) => tagMap[id]);
 
       storeDeck({ ...deck, selectedTags });
-
-      // await cacheSelectedTagIds(
-      //   language,
-      //   selectedTags.map((t) => t.id)
-      // );
     },
     [language, storeDeck, deck]
   );
@@ -424,7 +188,6 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     addTags,
     removeTag,
     updateTag,
-    clearTags,
     selectedTags: deck.selectedTags,
     setSelectedTagIds,
     filteredCards,

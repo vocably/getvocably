@@ -3,7 +3,15 @@ import {
   listLanguages,
   loadLanguageDeck,
 } from '@vocably/api';
-import { LanguageDeck, Result, TagItem } from '@vocably/model';
+import { makeCreate } from '@vocably/crud';
+import {
+  CardItem,
+  LanguageDeck,
+  Result,
+  SrsCard,
+  Tag,
+  TagItem,
+} from '@vocably/model';
 import { usePostHog } from 'posthog-react-native';
 import React, {
   createContext,
@@ -15,6 +23,10 @@ import React, {
 import { AppState } from 'react-native';
 import * as asyncAppStorage from '../asyncAppStorage';
 import { Sentry } from '../BetterSentry';
+import {
+  applyTransformation,
+  LanguageDeckTransformation,
+} from '../deckTransformations';
 import { Error } from '../Error';
 import { Loader } from '../loaders/Loader';
 import { pingGoogle } from '../pingGoogle';
@@ -32,6 +44,7 @@ export type LanguageContainerDeck = {
   status: 'initial' | 'loading' | 'loaded' | 'error';
   deck: LanguageDeck;
   selectedTags: TagItem[];
+  transformations: LanguageDeckTransformation[];
 };
 
 type DecksCollection = Record<string, LanguageContainerDeck>;
@@ -67,6 +80,20 @@ type Languages = {
   refreshLanguages: () => Promise<void>;
   addLanguage: (language: string) => void;
   addNewLanguage: (language: string) => Promise<Result<unknown>>;
+  addCard: (language: string, data: SrsCard) => Promise<Result<CardItem>>;
+  updateCard: (
+    language: string,
+    id: string,
+    data: Partial<SrsCard>
+  ) => Promise<Result<CardItem>>;
+  removeCard: (language: string, id: string) => Promise<Result<unknown>>;
+  addTag: (language: string, data: Tag) => Promise<Result<TagItem>>;
+  updateTag: (
+    language: string,
+    id: string,
+    data: Partial<Tag>
+  ) => Promise<Result<TagItem>>;
+  removeTag: (language: string, id: string) => Promise<Result<unknown>>;
 };
 
 export const LanguagesContext = createContext<Languages>({
@@ -80,10 +107,45 @@ export const LanguagesContext = createContext<Languages>({
       value: null,
     }),
   selectedLanguage: '',
-  selectLanguage: () => Promise.resolve(),
+  selectLanguage: () =>
+    Promise.resolve({
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: 'Select language is not defined',
+    }),
   refreshLanguages: () => Promise.resolve(),
   addLanguage: () => null,
   addNewLanguage: () => Promise.resolve({ success: true, value: null }),
+  addCard: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Add card is not defined',
+  }),
+  updateCard: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Update card is not defined',
+  }),
+  removeCard: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Remove card is not defined',
+  }),
+  addTag: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Add tag is not defined',
+  }),
+  updateTag: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Update tag is not defined',
+  }),
+  removeTag: async () => ({
+    success: false,
+    errorCode: 'FUCKING_ERROR',
+    reason: 'Remove tag is not defined',
+  }),
 });
 
 type Props = {
@@ -103,12 +165,14 @@ export const LanguagesContainer: FC<Props> = ({
   const [selectedLanguage, selectLanguage] = useAsync(
     () =>
       loadSelectedLanguageStorage().catch((error) => {
+        // @ts-ignore
         Sentry.captureMessage('loadSelectedLanguageError', { error: error });
         posthog.capture('loadSelectedLanguageError', { error });
         throw error;
       }),
     (payload) =>
       saveSelectedLanguageToStorage(payload).catch((error) => {
+        // @ts-ignore
         Sentry.captureMessage('storeSelectedLanguageError', { error: error });
         posthog.capture('storeSelectedLanguageError', { error });
         throw error;
@@ -120,8 +184,10 @@ export const LanguagesContainer: FC<Props> = ({
   ): Promise<Result<unknown>> => {
     if (decks.status !== 'loaded') {
       return {
-        success: true,
-        value: null,
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to store deck while decks are not loaded from the memory yet.',
       };
     }
 
@@ -143,6 +209,7 @@ export const LanguagesContainer: FC<Props> = ({
       status: 'loaded',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
+      transformations: [],
     });
   };
 
@@ -207,6 +274,7 @@ export const LanguagesContainer: FC<Props> = ({
             status: 'loaded',
             deck,
             selectedTags,
+            transformations: [],
           },
         };
       },
@@ -242,6 +310,7 @@ export const LanguagesContainer: FC<Props> = ({
         status: 'loaded',
         deck: newLanguageDeck,
         selectedTags: [],
+        transformations: [],
       },
     });
 
@@ -300,6 +369,282 @@ export const LanguagesContainer: FC<Props> = ({
     }
   }, [selectedLanguage, languages, listLoadingStatus, selectLanguage]);
 
+  const addCard = async (
+    language: string,
+    card: SrsCard
+  ): Promise<Result<CardItem>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to add card while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    // ToDo: make crud operations immutable and change this
+    const cardItem = makeCreate([...container.deck.cards])(card);
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'addCard',
+      card: cardItem,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    return {
+      success: true,
+      value: cardItem,
+    };
+  };
+
+  const updateCard = async (
+    language: string,
+    id: string,
+    data: Partial<SrsCard>
+  ): Promise<Result<CardItem>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to update card while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'updateCard',
+      id,
+      data,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    const cardItem = container.deck.cards.find((card) => card.id === id);
+
+    if (!cardItem) {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason: `Unable to find card with id ${id}`,
+      };
+    }
+
+    return {
+      success: true,
+      value: cardItem,
+    };
+  };
+
+  const removeCard = async (
+    language: string,
+    id: string
+  ): Promise<Result<unknown>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to remove card while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'removeCard',
+      id,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    return {
+      success: true,
+      value: null,
+    };
+  };
+
+  const addTag = async (
+    language: string,
+    tag: Tag
+  ): Promise<Result<TagItem>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to add tag while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    // ToDo: make crud operations immutable and change this
+    const tagItem = makeCreate([...container.deck.tags])(tag);
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'addTag',
+      tag: tagItem,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    return {
+      success: true,
+      value: tagItem,
+    };
+  };
+
+  const updateTag = async (
+    language: string,
+    id: string,
+    data: Partial<Tag>
+  ): Promise<Result<TagItem>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to update tag while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'updateTag',
+      id,
+      data,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    const tagItem = container.deck.tags.find((tag) => tag.id === id);
+
+    if (!tagItem) {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason: `Unable to find tag with id ${id}`,
+      };
+    }
+
+    return {
+      success: true,
+      value: tagItem,
+    };
+  };
+
+  const removeTag = async (
+    language: string,
+    id: string
+  ): Promise<Result<unknown>> => {
+    if (decks.status !== 'loaded') {
+      return {
+        success: false,
+        errorCode: 'FUCKING_ERROR',
+        reason:
+          'Unable to remove tag while decks are not loaded from the memory yet.',
+      };
+    }
+
+    const container = decks.value[language] ?? {
+      status: 'initial',
+      deck: createDefaultLanguageDeck(language),
+      selectedTags: [],
+      transformations: [],
+    };
+
+    const transformation: LanguageDeckTransformation = {
+      type: 'removeTag',
+      id,
+    };
+
+    const storeResult = await storeDeck({
+      ...container,
+      deck: applyTransformation(container.deck, transformation),
+      transformations: [...container.transformations, transformation],
+    });
+
+    if (!storeResult.success) {
+      return storeResult;
+    }
+
+    return {
+      success: true,
+      value: null,
+    };
+  };
+
   const value: Languages = {
     status: listLoadingStatus,
     languages,
@@ -312,6 +657,12 @@ export const LanguagesContainer: FC<Props> = ({
     refreshLanguages,
     addLanguage,
     addNewLanguage,
+    addCard,
+    updateCard,
+    removeCard,
+    addTag,
+    updateTag,
+    removeTag,
   };
 
   return (
