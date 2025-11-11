@@ -2,6 +2,7 @@ import {
   deleteLanguageDeck,
   listLanguages,
   loadLanguageDeck,
+  saveLanguageDeck,
 } from '@vocably/api';
 import { makeCreate } from '@vocably/crud';
 import {
@@ -180,6 +181,8 @@ export const LanguagesContainer: FC<Props> = ({
       })
   );
 
+  const [isSyncing, setIsSyncing] = useState(false);
+
   const storeDeck = async (
     deck: LanguageContainerDeck
   ): Promise<Result<unknown>> => {
@@ -230,14 +233,65 @@ export const LanguagesContainer: FC<Props> = ({
       return result;
     });
 
+  const syncDecks = async () => {
+    if (decks.status !== 'loaded') {
+      return;
+    }
+
+    if (isSyncing) {
+      return;
+    }
+
+    setIsSyncing(true);
+
+    for (let [language, deckContainer] of Object.entries(decks.value).filter(
+      ([_, deckContainer]) => deckContainer.transformations.length > 0
+    )) {
+      const { transformations } = deckContainer;
+      const loadedDeckResult = await loadLanguageDeck(language);
+      if (!loadedDeckResult.success) {
+        continue;
+      }
+
+      const deck = transformations.reduce(
+        (deck, transformation) => applyTransformation(deck, transformation),
+        loadedDeckResult.value
+      );
+
+      const saveResult = await saveLanguageDeck(deck);
+
+      if (!saveResult.success) {
+        continue;
+      }
+
+      await setDecks({
+        ...decks.value,
+        [language]: {
+          ...deckContainer,
+          status: 'loaded',
+          deck,
+          transformations: [],
+        },
+      });
+    }
+
+    setIsSyncing(false);
+  };
+
   const refreshLanguages = async () => {
     if (decks.status !== 'loaded') {
       return;
     }
 
+    if (isSyncing) {
+      return;
+    }
+
+    await syncDecks();
+
     const listResult = await listLanguages();
 
-    if (listResult.success === false) {
+    if (!listResult.success) {
       Sentry.captureMessage('listLanguagesError', { ...listResult });
       posthog.capture('listLanguagesError', { ...listResult });
       setListLoadingStatus('error');
@@ -259,14 +313,14 @@ export const LanguagesContainer: FC<Props> = ({
       })
     );
 
-    const newDecks: DecksCollection = loadedLanguageDecks.reduce(
+    const loadedDecks: DecksCollection = loadedLanguageDecks.reduce(
       (acc, loadedLanguageDeck) => {
-        const selectedTags =
-          decks.value[loadedLanguageDeck.language]?.selectedTags ?? [];
+        const storedDeckContainer = decks.value[loadedLanguageDeck.language];
+        const selectedTags = storedDeckContainer?.selectedTags ?? [];
         const deck =
           loadedLanguageDeck.loadResult.success === true
             ? loadedLanguageDeck.loadResult.value
-            : decks.value[loadedLanguageDeck.language]?.deck ??
+            : storedDeckContainer?.deck ??
               createDefaultLanguageDeck(loadedLanguageDeck.language);
 
         return {
@@ -280,6 +334,21 @@ export const LanguagesContainer: FC<Props> = ({
         };
       },
       {}
+    );
+
+    // Preserve non-synchronized decks
+    const newDecks = Object.entries(decks.value).reduce<DecksCollection>(
+      (acc, [language, deckContainer]) => {
+        if (deckContainer.transformations.length === 0) {
+          return acc;
+        }
+
+        return {
+          ...acc,
+          [language]: deckContainer,
+        };
+      },
+      loadedDecks
     );
 
     await setDecks(newDecks);

@@ -1,7 +1,7 @@
 import { Card, CardItem, Result, SrsCard, Tag, TagItem } from '@vocably/model';
 import { buildTagMap } from '@vocably/model-operations';
 import { createSrsItem } from '@vocably/srs';
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import {
   LanguageContainerDeck,
   LanguagesContext,
@@ -13,7 +13,6 @@ export type Deck = {
   add: (card: Card) => Promise<Result<CardItem>>;
   update: (id: string, data: Partial<SrsCard>) => Promise<Result<CardItem>>;
   remove: (id: string) => Promise<Result<unknown>>;
-  reload: () => Promise<Result<true>>;
   addTags: (tags: Tag[]) => Promise<Result<TagItem[]>>;
   removeTag: (id: string) => Promise<Result<unknown>>;
   updateTag: (id: string, data: Partial<Tag>) => Promise<Result<TagItem>>;
@@ -39,7 +38,7 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     removeTag: collectionRemoveTag,
   } = useContext(LanguagesContext);
 
-  const deck = decks[language] ?? {
+  const deck: LanguageContainerDeck = decks[language] ?? {
     status: 'initial',
     deck: {
       language,
@@ -47,6 +46,7 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
       tags: [],
     },
     selectedTags: [],
+    transformations: [],
   };
 
   const add = async (card: Card): Promise<Result<CardItem>> => {
@@ -118,55 +118,6 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     [language, storeDeck, deck]
   );
 
-  const reload = useCallback(async (): Promise<Result<true>> => {
-    // if (language === '') {
-    return {
-      success: true,
-      value: true,
-    };
-    // }
-
-    // if (deck.status === 'initial') {
-    //   storeDeck({
-    //     ...deck,
-    //     status: 'loading',
-    //   });
-    // }
-    // return loadLanguageDeck(language).then(async (result) => {
-    //   if (result.success === false) {
-    //     storeDeck({
-    //       ...deck,
-    //       status: 'error',
-    //     });
-    //     return result;
-    //   }
-    //
-    //   const tagMap = buildTagMap(result.value.tags);
-    //   const selectedTags = (await loadSelectedTagIds(language))
-    //     .filter((id) => !!tagMap[id])
-    //     .map((id) => tagMap[id]);
-    //
-    //   storeDeck({
-    //     status: 'loaded',
-    //     deck: result.value,
-    //     selectedTags,
-    //   });
-    //
-    //   return {
-    //     success: true,
-    //     value: true,
-    //   };
-    // });
-  }, [language, storeDeck, deck]);
-
-  useEffect(() => {
-    if (!autoReload || !language) {
-      return;
-    }
-
-    reload().then();
-  }, [autoReload, language]);
-
   const filteredCards = useMemo(() => {
     if (deck.selectedTags.length === 0) {
       return deck.deck.cards;
@@ -182,7 +133,6 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     add,
     update,
     remove,
-    reload,
     status: deck.status,
     deck: deck.deck,
     addTags,
