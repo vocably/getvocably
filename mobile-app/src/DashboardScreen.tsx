@@ -132,7 +132,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
   });
   const {
     deck,
-    reload,
     status,
     remove,
     update,
@@ -181,9 +180,8 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await refreshLanguages();
-    await reload();
     setRefreshing(false);
-  }, [setRefreshing, refreshLanguages, reload]);
+  }, [setRefreshing, refreshLanguages]);
 
   const deleteCard = useCallback(
     async (id: string) => {

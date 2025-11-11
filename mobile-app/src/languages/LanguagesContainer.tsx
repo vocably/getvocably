@@ -207,7 +207,7 @@ export const LanguagesContainer: FC<Props> = ({
     }
 
     return storeDeck({
-      status: 'loaded',
+      status: 'initial',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
       transformations: [],
@@ -309,7 +309,7 @@ export const LanguagesContainer: FC<Props> = ({
     const setDecksResult = await setDecks({
       ...decks.value,
       [language]: {
-        status: 'loaded',
+        status: 'initial',
         deck: newLanguageDeck,
         selectedTags: [],
         transformations: [],
