@@ -46,7 +46,12 @@ export const applyTransformation = (
   transformation: LanguageDeckTransformation
 ): LanguageDeck => {
   if (transformation.type === 'addCard') {
-    deck.cards.push(transformation.card);
+    const cardAlreadyExists = deck.cards.some(
+      (c) => c.id === transformation.card.id
+    );
+    if (!cardAlreadyExists) {
+      deck.cards.push(transformation.card);
+    }
   }
 
   if (transformation.type === 'updateCard') {
