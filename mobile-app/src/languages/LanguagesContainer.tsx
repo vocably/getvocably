@@ -24,14 +24,12 @@ import React, {
 } from 'react';
 import { AppState } from 'react-native';
 import * as asyncAppStorage from '../asyncAppStorage';
-import { Sentry } from '../BetterSentry';
 import {
   applyTransformation,
   LanguageDeckTransformation,
 } from '../deckTransformations';
 import { Error } from '../Error';
 import { Loader } from '../loaders/Loader';
-import { pingGoogle } from '../pingGoogle';
 import { useAsync } from '../useAsync';
 
 const selectedLanguageStorageKey = 'languagesContainerSelectedLanguage';
@@ -280,15 +278,9 @@ export const LanguagesContainer: FC<Props> = ({
     const listResult = await listLanguages();
 
     if (!listResult.success) {
-      Sentry.captureMessage('listLanguagesError', { ...listResult });
-      posthog.capture('listLanguagesError', { ...listResult });
-      setListLoadingStatus('error');
-
-      pingGoogle().then((status) => {
-        Sentry.captureMessage(`pingGoogleStatus_${status}`);
-        posthog.capture('pingGoogleStatus', { status });
-      });
-
+      if (isEmpty(decks.value)) {
+        setListLoadingStatus('error');
+      }
       return;
     }
 
