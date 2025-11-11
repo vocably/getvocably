@@ -93,7 +93,7 @@ export const useAnalyzeOperations = ({ deck }: Params): ReturnedMethods => {
   );
 
   const onTagsChange = useCallback(
-    async (id: string, tags: TagItem[]): Promise<Result<true>> => {
+    async (id: string, tags: TagItem[]): Promise<Result<unknown>> => {
       const updateResult = await deck.update(id, {
         tags,
       });
