@@ -165,20 +165,8 @@ export const LanguagesContainer: FC<Props> = ({
   const [decks, setDecks] = useAsync(loadDecksFromStorage, saveDecksToStorage);
   const languages = decks.status === 'loaded' ? Object.keys(decks.value) : [];
   const [selectedLanguage, selectLanguage] = useAsync(
-    () =>
-      loadSelectedLanguageStorage().catch((error) => {
-        // @ts-ignore
-        Sentry.captureMessage('loadSelectedLanguageError', { error: error });
-        posthog.capture('loadSelectedLanguageError', { error });
-        throw error;
-      }),
-    (payload) =>
-      saveSelectedLanguageToStorage(payload).catch((error) => {
-        // @ts-ignore
-        Sentry.captureMessage('storeSelectedLanguageError', { error: error });
-        posthog.capture('storeSelectedLanguageError', { error });
-        throw error;
-      })
+    () => loadSelectedLanguageStorage(),
+    (payload) => saveSelectedLanguageToStorage(payload)
   );
 
   const [isSyncing, setIsSyncing] = useState(false);
