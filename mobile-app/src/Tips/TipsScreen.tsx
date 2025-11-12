@@ -1,6 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { isGoogleLanguage } from '@vocably/model';
-import { languageToLexicalaLanguage } from '@vocably/model-operations';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useContext } from 'react';
 import { Linking, Platform, View } from 'react-native';
@@ -22,10 +20,6 @@ export const TipsScreen: FC<Props> = () => {
   const translationPreset = useTranslationPreset();
 
   const { languages } = useContext(LanguagesContext);
-
-  const isExportAvailable = languages.some(
-    (lng) => isGoogleLanguage(lng) && languageToLexicalaLanguage(lng) === null
-  );
 
   if (translationPreset.status !== 'known') {
     return <></>;
@@ -76,14 +70,12 @@ export const TipsScreen: FC<Props> = () => {
         <Divider style={{ alignSelf: 'stretch' }} />
         <ListItem
           order="middle"
-          title={isExportAvailable ? 'Import and export' : 'Import from CSV'}
+          title={'Import and export CSV'}
           onPress={() => {
             navigation.navigate('HowToImportAndExport');
             posthog.capture('tip-import-export-clicked');
           }}
-          leftIcon={
-            isExportAvailable ? 'swap-vertical' : 'file-delimited-outline'
-          }
+          leftIcon={'swap-vertical'}
           rightIcon="menu-right"
         ></ListItem>
         <Divider style={{ alignSelf: 'stretch' }} />
