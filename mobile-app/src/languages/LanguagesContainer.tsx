@@ -228,7 +228,12 @@ export const LanguagesContainer: FC<Props> = ({
 
   const isSyncing = useRef(false);
 
-  const syncDecks = async () => {
+  type SyncOptions = {
+    refreshLanguageContainer?: boolean;
+  };
+  const syncDecks = async ({
+    refreshLanguageContainer = false,
+  }: SyncOptions = {}) => {
     if (decks.status !== 'loaded') {
       return;
     }
@@ -273,15 +278,17 @@ export const LanguagesContainer: FC<Props> = ({
       transformations.splice(0, transformationsToBeSynced.length);
       await saveTransformations();
 
-      await setDecks({
-        ...decks.value,
-        [language]: {
-          ...deckContainer,
-          status: 'loaded',
-          // Apply the rest of transformations that have not been synced yet
-          deck: applyTransformations(deck, transformations),
-        },
-      });
+      if (refreshLanguageContainer) {
+        await setDecks({
+          ...decks.value,
+          [language]: {
+            ...deckContainer,
+            status: 'loaded',
+            // Apply the rest of transformations that have not been synced yet
+            deck: applyTransformations(deck, transformations),
+          },
+        });
+      }
     }
 
     isSyncing.current = false;
@@ -296,7 +303,7 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    await syncDecks();
+    await syncDecks({ syncLanguageContainer: true });
 
     const listResult = await listLanguages();
 
@@ -482,13 +489,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,
@@ -545,13 +548,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,
@@ -595,13 +594,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,
@@ -649,13 +644,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,
@@ -711,13 +702,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,
@@ -761,13 +748,9 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
-    syncDecks()
-      .then(() => {
-        console.log('Synced');
-      })
-      .catch(() => {
-        console.error('Sync failed');
-      });
+    syncDecks().catch(() => {
+      console.error('Sync failed');
+    });
 
     return {
       success: true,

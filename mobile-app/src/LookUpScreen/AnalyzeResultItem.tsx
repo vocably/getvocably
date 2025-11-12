@@ -52,6 +52,10 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
   const posthog = usePostHog();
 
   const toggleCard = async () => {
+    if (isProcessing) {
+      return;
+    }
+
     setIsProcessing(true);
     if (item.id) {
       await onRemove(item);
@@ -124,7 +128,6 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
               animated={true}
               iconColor={theme.colors.primary}
               onPress={toggleCard}
-              disabled={isProcessing}
               style={{ margin: 0 }}
               size={24 * fontScale}
             />
