@@ -1,21 +1,21 @@
 import { NavigationProp } from '@react-navigation/native';
 import React, { FC, useContext, useState } from 'react';
-import { RefreshControl, View } from 'react-native';
-import { Button, Divider, Text, useTheme } from 'react-native-paper';
+import { Pressable, RefreshControl, View } from 'react-native';
+import { Divider, Text } from 'react-native-paper';
 import VersionNumber from 'react-native-version-number';
 // @ts-ignore
-import { ENV_SUFFIX, SHOW_CLEAR_STORAGE_BUTTON } from '@env';
+import { ENV_SUFFIX, SHOW_DEBUG_MENU } from '@env';
 import { languageList } from '@vocably/model';
 import { trimLanguage } from '@vocably/sulna';
 import { get } from 'lodash-es';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { clearAll } from '../asyncAppStorage';
 import { CustomerInfoContext } from '../CustomerInfoContainer';
 import { LanguagesContext } from '../languages/LanguagesContainer';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
 import { UserMetadataContext } from '../UserMetadataContainer';
+import { DebugMenu } from './DebugMenu';
 import { Subscription } from './Subscription';
 
 type Props = {
@@ -23,7 +23,6 @@ type Props = {
 };
 
 export const SettingsScreen: FC<Props> = ({ navigation }) => {
-  const theme = useTheme();
   const insets = useSafeAreaInsets();
   const { refresh: refreshCustomerInfo } = useContext(CustomerInfoContext);
   const { refresh: refreshUserMetadata } = useContext(UserMetadataContext);
@@ -33,6 +32,8 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
   const languageName = trimLanguage(get(languageList, selectedLanguage, ''));
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const [versionPressedTimes, setVersionPressedTimes] = useState(0);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -125,6 +126,8 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
         </Text>
       </View>
 
+      {(SHOW_DEBUG_MENU === 'true' || versionPressedTimes > 2) && <DebugMenu />}
+
       {VersionNumber.appVersion && (
         <View
           style={{
@@ -136,25 +139,20 @@ export const SettingsScreen: FC<Props> = ({ navigation }) => {
             marginTop: 48,
           }}
         >
-          {SHOW_CLEAR_STORAGE_BUTTON === 'true' && (
-            <Button
-              mode="outlined"
-              textColor={theme.colors.error}
-              style={{ borderColor: theme.colors.error }}
-              onPress={() => clearAll()}
-            >
-              Clear storage data
-            </Button>
-          )}
-          <Text>
-            Version:{' '}
-            {`${VersionNumber.appVersion}${
-              (VersionNumber.buildVersion !== VersionNumber.appVersion &&
-                ` (${VersionNumber.buildVersion})`) ||
-              ``
-            }`}
-            {ENV_SUFFIX ?? ''}
-          </Text>
+          <Pressable
+            onPress={() => setVersionPressedTimes(versionPressedTimes + 1)}
+            style={{ backgroundColor: 'transparent' }}
+          >
+            <Text>
+              Version:{' '}
+              {`${VersionNumber.appVersion}${
+                (VersionNumber.buildVersion !== VersionNumber.appVersion &&
+                  ` (${VersionNumber.buildVersion})`) ||
+                ``
+              }`}
+              {ENV_SUFFIX ?? ''}
+            </Text>
+          </Pressable>
         </View>
       )}
     </CustomScrollView>

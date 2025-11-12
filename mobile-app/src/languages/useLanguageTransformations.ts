@@ -7,7 +7,7 @@ type TransformationsCollection = {
   [language: string]: LanguageDeckTransformation[];
 };
 
-const loadTransformationsFromStorage =
+export const loadTransformationsFromStorage =
   async (): Promise<TransformationsCollection> => {
     const collection = await asyncAppStorage.getItem('languageTransformations');
 
