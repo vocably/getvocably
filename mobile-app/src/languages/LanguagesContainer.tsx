@@ -477,6 +477,14 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
+
     return {
       success: true,
       value: cardItem,
@@ -532,6 +540,14 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
+
     return {
       success: true,
       value: cardItem,
@@ -573,6 +589,14 @@ export const LanguagesContainer: FC<Props> = ({
 
     getTransformations(language).push(transformation);
     await saveTransformations();
+
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
 
     return {
       success: true,
@@ -619,6 +643,14 @@ export const LanguagesContainer: FC<Props> = ({
 
     getTransformations(language).push(transformation);
     await saveTransformations();
+
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
 
     return {
       success: true,
@@ -674,6 +706,14 @@ export const LanguagesContainer: FC<Props> = ({
     getTransformations(language).push(transformation);
     await saveTransformations();
 
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
+
     return {
       success: true,
       value: tagItem,
@@ -715,6 +755,14 @@ export const LanguagesContainer: FC<Props> = ({
 
     getTransformations(language).push(transformation);
     await saveTransformations();
+
+    syncDecks()
+      .then(() => {
+        console.log('Synced');
+      })
+      .catch(() => {
+        console.error('Sync failed');
+      });
 
     return {
       success: true,
