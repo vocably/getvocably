@@ -19,6 +19,7 @@ import React, {
   FC,
   ReactNode,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { AppState } from 'react-native';
@@ -173,8 +174,6 @@ export const LanguagesContainer: FC<Props> = ({
     deleteTransformations,
   } = useLanguageTransformations();
 
-  const [isSyncing, setIsSyncing] = useState(false);
-
   const storeDeck = async (
     deck: LanguageContainerDeck
   ): Promise<Result<unknown>> => {
@@ -225,6 +224,8 @@ export const LanguagesContainer: FC<Props> = ({
       return result;
     });
 
+  const isSyncing = useRef(false);
+
   const syncDecks = async () => {
     if (decks.status !== 'loaded') {
       return;
@@ -234,11 +235,11 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    if (isSyncing) {
+    if (isSyncing.current) {
       return;
     }
 
-    setIsSyncing(true);
+    isSyncing.current = true;
 
     for (let [language, deckContainer] of Object.entries(decks.value)) {
       const transformations = getTransformations(language);
@@ -281,7 +282,7 @@ export const LanguagesContainer: FC<Props> = ({
       });
     }
 
-    setIsSyncing(false);
+    isSyncing.current = false;
   };
 
   const refreshLanguages = async () => {
@@ -289,7 +290,7 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    if (isSyncing) {
+    if (isSyncing.current) {
       return;
     }
 
