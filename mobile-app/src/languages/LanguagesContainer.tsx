@@ -14,7 +14,6 @@ import {
   TagItem,
 } from '@vocably/model';
 import { isEmpty } from 'lodash-es';
-import { usePostHog } from 'posthog-react-native';
 import React, {
   createContext,
   FC,
@@ -31,6 +30,7 @@ import {
 import { Error } from '../Error';
 import { Loader } from '../loaders/Loader';
 import { useAsync } from '../useAsync';
+import { useLanguageTransformations } from './useLanguageTransformations';
 
 const selectedLanguageStorageKey = 'languagesContainerSelectedLanguage';
 
@@ -44,7 +44,6 @@ export type LanguageContainerDeck = {
   status: 'initial' | 'loading' | 'loaded' | 'error';
   deck: LanguageDeck;
   selectedTags: TagItem[];
-  transformations: LanguageDeckTransformation[];
 };
 
 type DecksCollection = Record<string, LanguageContainerDeck>;
@@ -157,7 +156,6 @@ export const LanguagesContainer: FC<Props> = ({
   children,
   refreshLanguagesOnActive = false,
 }) => {
-  const posthog = usePostHog();
   const [listLoadingStatus, setListLoadingStatus] =
     useState<Languages['status']>('loading');
   const [decks, setDecks] = useAsync(loadDecksFromStorage, saveDecksToStorage);
@@ -166,6 +164,13 @@ export const LanguagesContainer: FC<Props> = ({
     () => loadSelectedLanguageStorage(),
     (payload) => saveSelectedLanguageToStorage(payload)
   );
+
+  const {
+    areLoaded: transformationsAreLoaded,
+    getTransformations,
+    saveTransformations,
+    deleteTransformations,
+  } = useLanguageTransformations();
 
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -199,7 +204,6 @@ export const LanguagesContainer: FC<Props> = ({
       status: 'initial',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
-      transformations: [],
     });
   };
 
@@ -215,6 +219,7 @@ export const LanguagesContainer: FC<Props> = ({
 
       const { [language]: _, ...newDecks } = decks.value;
       await setDecks(newDecks);
+      await deleteTransformations(language);
 
       return result;
     });
@@ -224,22 +229,31 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
+    if (!transformationsAreLoaded) {
+      return;
+    }
+
     if (isSyncing) {
       return;
     }
 
     setIsSyncing(true);
 
-    for (let [language, deckContainer] of Object.entries(decks.value).filter(
-      ([_, deckContainer]) => deckContainer.transformations.length > 0
-    )) {
-      const { transformations } = deckContainer;
+    for (let [language, deckContainer] of Object.entries(decks.value)) {
+      const transformations = getTransformations(language);
+
+      if (transformations.length === 0) {
+        continue;
+      }
+
       const loadedDeckResult = await loadLanguageDeck(language);
       if (!loadedDeckResult.success) {
         continue;
       }
 
-      const deck = transformations.reduce(
+      const transformationsToBeSynced = [...transformations];
+
+      const deck = transformationsToBeSynced.reduce(
         (deck, transformation) => applyTransformation(deck, transformation),
         loadedDeckResult.value
       );
@@ -256,9 +270,13 @@ export const LanguagesContainer: FC<Props> = ({
           ...deckContainer,
           status: 'loaded',
           deck,
-          transformations: [],
         },
       });
+
+      // We need this mumbo-jumbo because transformations might've been added
+      // while saving the deck
+      transformations.splice(0, transformationsToBeSynced.length);
+      await saveTransformations();
     }
 
     setIsSyncing(false);
@@ -309,7 +327,6 @@ export const LanguagesContainer: FC<Props> = ({
             status: 'loaded',
             deck,
             selectedTags,
-            transformations: [],
           },
         };
       },
@@ -319,7 +336,8 @@ export const LanguagesContainer: FC<Props> = ({
     // Preserve non-synchronized decks
     const newDecks = Object.entries(decks.value).reduce<DecksCollection>(
       (acc, [language, deckContainer]) => {
-        if (deckContainer.transformations.length === 0) {
+        const transformations = getTransformations(language);
+        if (transformations.length === 0) {
           return acc;
         }
 
@@ -361,7 +379,6 @@ export const LanguagesContainer: FC<Props> = ({
         status: 'initial',
         deck: newLanguageDeck,
         selectedTags: [],
-        transformations: [],
       },
     });
 
@@ -451,12 +468,14 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
       return storeResult;
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
@@ -494,7 +513,6 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
@@ -510,6 +528,9 @@ export const LanguagesContainer: FC<Props> = ({
         reason: `Unable to find card with id ${id}`,
       };
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
@@ -534,7 +555,6 @@ export const LanguagesContainer: FC<Props> = ({
       status: 'initial',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
-      transformations: [],
     };
 
     const transformation: LanguageDeckTransformation = {
@@ -545,12 +565,14 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
       return storeResult;
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
@@ -589,12 +611,14 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
       return storeResult;
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
@@ -620,7 +644,6 @@ export const LanguagesContainer: FC<Props> = ({
       status: 'initial',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
-      transformations: [],
     };
 
     const transformation: LanguageDeckTransformation = {
@@ -632,7 +655,6 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
@@ -648,6 +670,9 @@ export const LanguagesContainer: FC<Props> = ({
         reason: `Unable to find tag with id ${id}`,
       };
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
@@ -672,7 +697,6 @@ export const LanguagesContainer: FC<Props> = ({
       status: 'initial',
       deck: createDefaultLanguageDeck(language),
       selectedTags: [],
-      transformations: [],
     };
 
     const transformation: LanguageDeckTransformation = {
@@ -683,12 +707,14 @@ export const LanguagesContainer: FC<Props> = ({
     const storeResult = await storeDeck({
       ...container,
       deck: applyTransformation(container.deck, transformation),
-      transformations: [...container.transformations, transformation],
     });
 
     if (!storeResult.success) {
       return storeResult;
     }
+
+    getTransformations(language).push(transformation);
+    await saveTransformations();
 
     return {
       success: true,
