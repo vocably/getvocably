@@ -99,3 +99,10 @@ export const applyTransformation = (
     cards: [...deck.cards],
   };
 };
+
+export const applyTransformations = (
+  deck: LanguageDeck,
+  transformations: LanguageDeckTransformation[]
+): LanguageDeck => {
+  return transformations.reduce(applyTransformation, deck);
+};

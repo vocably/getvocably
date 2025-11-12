@@ -25,6 +25,7 @@ import { AppState } from 'react-native';
 import * as asyncAppStorage from '../asyncAppStorage';
 import {
   applyTransformation,
+  applyTransformations,
   LanguageDeckTransformation,
 } from '../deckTransformations';
 import { Error } from '../Error';
@@ -253,9 +254,9 @@ export const LanguagesContainer: FC<Props> = ({
 
       const transformationsToBeSynced = [...transformations];
 
-      const deck = transformationsToBeSynced.reduce(
-        (deck, transformation) => applyTransformation(deck, transformation),
-        loadedDeckResult.value
+      const deck = applyTransformations(
+        loadedDeckResult.value,
+        transformationsToBeSynced
       );
 
       const saveResult = await saveLanguageDeck(deck);
@@ -264,19 +265,20 @@ export const LanguagesContainer: FC<Props> = ({
         continue;
       }
 
+      // We need this mumbo-jumbo because transformations might've been added
+      // while saving the deck
+      transformations.splice(0, transformationsToBeSynced.length);
+      await saveTransformations();
+
       await setDecks({
         ...decks.value,
         [language]: {
           ...deckContainer,
           status: 'loaded',
-          deck,
+          // Apply the rest of transformations that have not been synced yet
+          deck: applyTransformations(deck, transformations),
         },
       });
-
-      // We need this mumbo-jumbo because transformations might've been added
-      // while saving the deck
-      transformations.splice(0, transformationsToBeSynced.length);
-      await saveTransformations();
     }
 
     setIsSyncing(false);
