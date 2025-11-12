@@ -78,6 +78,7 @@ type Languages = {
   deleteLanguage: (language: string) => Promise<unknown>;
   selectedLanguage: string;
   selectLanguage: (language: string) => Promise<Result<unknown>>;
+  syncDecks: () => Promise<unknown>;
   refreshLanguages: () => Promise<void>;
   addLanguage: (language: string) => void;
   addNewLanguage: (language: string) => Promise<Result<unknown>>;
@@ -114,6 +115,7 @@ export const LanguagesContext = createContext<Languages>({
       errorCode: 'FUCKING_ERROR',
       reason: 'Select language is not defined',
     }),
+  syncDecks: () => Promise.resolve(),
   refreshLanguages: () => Promise.resolve(),
   addLanguage: () => null,
   addNewLanguage: () => Promise.resolve({ success: true, value: null }),
@@ -782,6 +784,7 @@ export const LanguagesContainer: FC<Props> = ({
     selectedLanguage:
       selectedLanguage.status === 'loaded' ? selectedLanguage.value : '',
     selectLanguage,
+    syncDecks,
     refreshLanguages,
     addLanguage,
     addNewLanguage,
