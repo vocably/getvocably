@@ -1,14 +1,19 @@
-import { FC } from 'react';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { FC, useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { Button, IconButton, Text, useTheme } from 'react-native-paper';
 import { clearAll } from '../asyncAppStorage';
 import { loadTransformationsFromStorage } from '../languages/useLanguageTransformations';
 import { CustomSurface } from '../ui/CustomSurface';
-import { useAsync } from '../useAsync';
 
 type Props = {};
 
 export const DebugMenu: FC<Props> = () => {
-  const [transformations] = useAsync(loadTransformationsFromStorage);
+  const [transformations, setTransformations] = useState<any>(false);
+
+  useEffect(() => {
+    loadTransformationsFromStorage().then(setTransformations);
+  }, []);
+
   const theme = useTheme();
   return (
     <CustomSurface
@@ -21,11 +26,20 @@ export const DebugMenu: FC<Props> = () => {
       }}
     >
       <Text style={{ fontSize: 24 }}>Debug Menu</Text>
-      {transformations.status === 'loaded' && (
+      {transformations && (
         <>
-          <Text style={{ fontSize: 18 }}>Language Transformations</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Text style={{ fontSize: 18 }}>Language Transformations</Text>
+            <IconButton
+              size={14}
+              icon={'reload'}
+              onPress={() =>
+                loadTransformationsFromStorage().then(setTransformations)
+              }
+            />
+          </View>
           <Text selectable={true}>
-            {JSON.stringify(transformations.value, null, 4)}
+            {JSON.stringify(transformations, null, 4)}
           </Text>
         </>
       )}
