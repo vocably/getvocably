@@ -1,10 +1,11 @@
 import { deleteUser, signOut } from '@aws-amplify/auth';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useContext } from 'react';
 import { Alert, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { clearAll } from '../asyncAppStorage';
 import { useUserEmail } from '../auth/useUserEmail';
+import { LanguagesContext } from '../languages/LanguagesContainer';
 import { CustomScrollView } from '../ui/CustomScrollView';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
@@ -14,6 +15,13 @@ type Props = {};
 export const AccountScreen: FC<Props> = () => {
   const theme = useTheme();
   const userEmail = useUserEmail();
+  const { syncDecks } = useContext(LanguagesContext);
+
+  const onSignOut = async () => {
+    await syncDecks();
+    await clearAll();
+    await signOut();
+  };
 
   const onDelete = useCallback(() => {
     Alert.alert('Delete your account?', 'This operation cannot be undone.', [
@@ -52,11 +60,7 @@ export const AccountScreen: FC<Props> = () => {
       </View>
 
       <CustomSurface style={{ marginBottom: 16 }}>
-        <ListItem
-          title="Sign out"
-          onPress={() => signOut()}
-          leftIcon="logout"
-        />
+        <ListItem title="Sign out" onPress={onSignOut} leftIcon="logout" />
       </CustomSurface>
 
       <CustomSurface style={{ marginBottom: 16 }}>

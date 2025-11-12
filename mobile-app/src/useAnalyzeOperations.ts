@@ -13,8 +13,8 @@ type Params = {
 
 type ReturnedMethods = {
   onAdd: (card: AssociatedCard) => Promise<Result<CardItem>>;
-  onRemove: (card: AssociatedCard) => Promise<Result<true>>;
-  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<true>>;
+  onRemove: (card: AssociatedCard) => Promise<Result<unknown>>;
+  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<unknown>>;
 };
 
 export const useAnalyzeOperations = ({ deck }: Params): ReturnedMethods => {
@@ -59,7 +59,6 @@ export const useAnalyzeOperations = ({ deck }: Params): ReturnedMethods => {
         return addResult;
       }
 
-      languages.addLanguage(card.card.language);
       await languages.selectLanguage(card.card.language);
 
       return addResult;
@@ -68,7 +67,7 @@ export const useAnalyzeOperations = ({ deck }: Params): ReturnedMethods => {
   );
 
   const onRemove = useCallback(
-    async (card: AssociatedCard): Promise<Result<true>> => {
+    async (card: AssociatedCard): Promise<Result<unknown>> => {
       if (!card.id) {
         return {
           success: true,
@@ -94,7 +93,7 @@ export const useAnalyzeOperations = ({ deck }: Params): ReturnedMethods => {
   );
 
   const onTagsChange = useCallback(
-    async (id: string, tags: TagItem[]): Promise<Result<true>> => {
+    async (id: string, tags: TagItem[]): Promise<Result<unknown>> => {
       const updateResult = await deck.update(id, {
         tags,
       });

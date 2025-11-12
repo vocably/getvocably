@@ -150,7 +150,6 @@ export const WelcomeScreen: FC<Props> = ({ navigation }) => {
           }}
         >
           <Swiper
-            key={isSet ? 1 : 0}
             loop={false}
             showsPagination={false}
             ref={swiperRef}
@@ -237,7 +236,7 @@ export const WelcomeScreen: FC<Props> = ({ navigation }) => {
                 paddingTop: mainPadding,
               }}
             >
-              {swiperIndex < totalSlides - 1 && (
+              {(totalSlides === 1 || swiperIndex < totalSlides - 1) && (
                 <Button
                   mode="elevated"
                   elevation={3}
@@ -250,7 +249,7 @@ export const WelcomeScreen: FC<Props> = ({ navigation }) => {
                   Next
                 </Button>
               )}
-              {swiperIndex === totalSlides - 1 && (
+              {totalSlides !== 1 && swiperIndex === totalSlides - 1 && (
                 <Button
                   mode="elevated"
                   elevation={2}

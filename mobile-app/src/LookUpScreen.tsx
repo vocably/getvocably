@@ -127,10 +127,6 @@ export const LookUpScreen: FC<Props> = ({
       return;
     }
 
-    if (deck.status !== 'loaded') {
-      return;
-    }
-
     if (translationPresetState.status === 'unknown') {
       return;
     }
@@ -181,10 +177,8 @@ export const LookUpScreen: FC<Props> = ({
       translationPresetState.status === 'known' &&
       translationPresetState.preset.sourceLanguage &&
       translationPresetState.preset.translationLanguage &&
-      deck.status === 'loaded' &&
       lookUpText
     ) {
-      console.log('Looking up...');
       lookUp();
     }
   }, [
@@ -193,7 +187,6 @@ export const LookUpScreen: FC<Props> = ({
     translationPresetState.status === 'known'
       ? `${translationPresetState.preset.sourceLanguage}${translationPresetState.preset.translationLanguage}${translationPresetState.preset.isReverse}`
       : '',
-    deck.status,
   ]);
 
   const { onAdd, onRemove, onTagsChange } = useAnalyzeOperations({
