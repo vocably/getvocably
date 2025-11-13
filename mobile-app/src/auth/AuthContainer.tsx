@@ -1,15 +1,51 @@
 import { postOnboardingAction } from '@vocably/api';
-import { Result } from '@vocably/model';
-import { retry } from '@vocably/model-operations';
-import { fetchAuthSession } from 'aws-amplify/auth';
+import { Result, resultify } from '@vocably/model';
+import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 import { usePostHog } from 'posthog-react-native';
-import React, { FC, ReactNode, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  FC,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
+import * as asyncAppStorage from '../asyncAppStorage';
 import { Sentry } from '../BetterSentry';
 import { facility } from '../facility';
+import { Loader } from '../loaders/Loader';
 import { notificationsIdentifyUser } from '../notificationsIdentifyUser';
-import { AuthContext, AuthStatus } from './AuthContext';
+import { useAsync } from '../useAsync';
 import { getFlatAttributes } from './getFlatAttributes';
+
+export type AuthStatus =
+  | {
+      status: 'undefined';
+    }
+  | {
+      status: 'not-logged-in';
+    }
+  | {
+      status: 'logged-in';
+      sub: string;
+      email: string;
+      isPaidGroup: boolean;
+    };
+
+type AuthErrorCode =
+  | 'UNABLE_TO_GET_ATTRIBUTES'
+  | 'UNABLE_TO_REFRESH_TOKEN'
+  | 'UNABLE_TO_FETCH_AUTH_SESSION'
+  | 'FETCHED_SESSION_HAS_NO_TOKENS';
+
+export type AuthStatusWithError = {
+  error: AuthErrorCode | null;
+} & AuthStatus;
+
+export const AuthContext = createContext<AuthStatusWithError>({
+  status: 'undefined',
+  error: null,
+});
 
 const getAttributes = async (): Promise<
   Result<{
@@ -46,111 +82,187 @@ const getAttributes = async (): Promise<
   }
 };
 
+const loadAuthStatusFromStorage = async (): Promise<AuthStatus> => {
+  const status = await asyncAppStorage.getItem('vocablyAuthStatus');
+
+  if (!status) {
+    return {
+      status: 'undefined',
+    };
+  }
+
+  return JSON.parse(status);
+};
+
+const saveAuthStatusToStorage = async (status: AuthStatus) => {
+  await asyncAppStorage.setItem('vocablyAuthStatus', JSON.stringify(status));
+};
+
 export const AuthContainer: FC<{
   children?: ReactNode;
 }> = ({ children }) => {
-  const [authStatus, setAuthStatus] = useState<AuthStatus>({
-    status: 'undefined',
-  });
+  const [authStatusResult, setAuthStatus] = useAsync(
+    loadAuthStatusFromStorage,
+    saveAuthStatusToStorage
+  );
+
+  const [error, setError] = useState<AuthErrorCode | null>(null);
 
   const posthog = usePostHog();
 
-  useEffect(() => {
-    if (authStatus.status !== 'logged-in') {
+  const defineAuthStatus = async () => {
+    const currentUserResult = await resultify(getCurrentUser(), {
+      errorCode: 'FUCKING_ERROR',
+      reason: 'Unable to get current user.',
+    });
+
+    setError(null);
+
+    if (!currentUserResult.success) {
+      await setAuthStatus({
+        status: 'not-logged-in',
+      });
       return;
     }
 
-    posthog.identify(authStatus.attributes['sub'], {
-      email: authStatus.attributes['email'],
+    const fetchSessionResult = await resultify(
+      fetchAuthSession({
+        forceRefresh: false,
+      }),
+      {
+        errorCode: 'FUCKING_ERROR',
+        reason: 'Unable to fetch auth session.',
+      }
+    );
+
+    if (!fetchSessionResult.success) {
+      setError('UNABLE_TO_FETCH_AUTH_SESSION');
+      return;
+    }
+
+    if (!fetchSessionResult.value.tokens) {
+      setError('FETCHED_SESSION_HAS_NO_TOKENS');
+      return;
+    }
+
+    const attributesResult = await getAttributes();
+
+    if (!attributesResult.success) {
+      setError('UNABLE_TO_GET_ATTRIBUTES');
+      return;
+    }
+
+    await setAuthStatus({
+      status: 'logged-in',
+      sub: attributesResult.value.sub,
+      email: attributesResult.value.email,
+      isPaidGroup: attributesResult.value.sub.includes('paid'),
     });
-  }, [authStatus]);
+  };
 
   useEffect(() => {
-    retry(
-      () =>
-        fetchAuthSession({ forceRefresh: false }).then(async (session) => {
-          if (!session.tokens) {
-            throw new Error('The fetched session has no access tokens.');
-          }
+    if (authStatusResult.status !== 'loaded') {
+      return;
+    }
 
-          const attributesResult = await getAttributes();
-
-          if (attributesResult.success === false) {
-            throw new Error(
-              'Unable to get attributes (getAttributes) method is failing.'
-            );
-          }
-
-          setAuthStatus({
-            status: 'logged-in',
-            session,
-            attributes: attributesResult.value,
-          });
-        }),
-      3,
-      200
-    ).catch((error) => {
-      console.error('Unable to authenticate', error);
-      setAuthStatus({
-        status: 'not-logged-in',
+    if (authStatusResult.value.status === 'logged-in') {
+      posthog.identify(authStatusResult.value.sub, {
+        email: authStatusResult.value.email,
       });
-    });
+    }
 
-    return Hub.listen('auth', (event) => {
+    if (authStatusResult.value.status === 'undefined') {
+      defineAuthStatus();
+    }
+  }, [authStatusResult]);
+
+  useEffect(() => {
+    return Hub.listen('auth', async (event) => {
+      console.log('Auth event', event);
+
       if (event.payload.event === 'tokenRefresh_failure') {
+        //@ts-ignore
         posthog.capture('tokenRefreshFailure', { ...event.payload });
         //@ts-ignore
         Sentry.captureMessage('tokenRefreshFailure', { ...event.payload });
+        setError('UNABLE_TO_REFRESH_TOKEN');
+        return;
+      }
+
+      if (event.payload.event === 'tokenRefresh') {
+        setError(null);
+        return;
       }
 
       if (event.payload.event === 'signedOut') {
-        setAuthStatus({
-          status: 'not-logged-in',
+        setError(null);
+        await setAuthStatus({
+          status: 'undefined',
         });
         return;
       }
 
-      if (event.payload.event === 'signedIn') {
-        notificationsIdentifyUser();
-
-        fetchAuthSession()
-          .then(async (session) => {
-            if (!session.tokens) {
-              throw new Error('The fetched session has no access tokens.');
-            }
-
-            const attributesResult = await getAttributes();
-
-            if (attributesResult.success === false) {
-              throw new Error(
-                'Unable to get attributes (getAttributes) method is failing.'
-              );
-            }
-            setAuthStatus({
-              status: 'logged-in',
-              session,
-              attributes: attributesResult.value,
-            });
-
-            postOnboardingAction({
-              name: 'userLoggedIn',
-              payload: {
-                facility,
-              },
-            }).then();
-          })
-          .catch((error) => {
-            setAuthStatus({
-              status: 'error',
-              error,
-            });
-          });
+      if (event.payload.event !== 'signedIn') {
         return;
       }
+
+      await notificationsIdentifyUser();
+      const fetchSessionResult = await resultify(
+        fetchAuthSession({
+          forceRefresh: false,
+        }),
+        {
+          errorCode: 'FUCKING_ERROR',
+          reason: 'Unable to fetch auth session.',
+        }
+      );
+
+      if (!fetchSessionResult.success) {
+        setError('UNABLE_TO_FETCH_AUTH_SESSION');
+        return;
+      }
+
+      if (!fetchSessionResult.value.tokens) {
+        setError('FETCHED_SESSION_HAS_NO_TOKENS');
+        return;
+      }
+
+      const attributesResult = await getAttributes();
+
+      if (!attributesResult.success) {
+        setError('UNABLE_TO_GET_ATTRIBUTES');
+        return;
+      }
+
+      await setAuthStatus({
+        status: 'logged-in',
+        sub: attributesResult.value.sub,
+        email: attributesResult.value.email,
+        isPaidGroup: attributesResult.value.sub.includes('paid'),
+      });
+      setError(null);
+
+      await postOnboardingAction({
+        name: 'userLoggedIn',
+        payload: {
+          facility,
+        },
+      });
     });
   }, []);
 
+  if (authStatusResult.status !== 'loaded') {
+    return <Loader>Authenticating...</Loader>;
+  }
+
   return (
-    <AuthContext.Provider value={authStatus}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        ...authStatusResult.value,
+        error,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };

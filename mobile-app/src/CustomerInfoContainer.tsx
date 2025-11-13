@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import Purchases, { CustomerInfo } from 'react-native-purchases';
-import { AuthContext } from './auth/AuthContext';
+import { AuthContext } from './auth/AuthContainer';
 
 type Props = {};
 
@@ -50,7 +50,7 @@ export const CustomerInfoContainer: FC<PropsWithChildren<Props>> = ({
     };
 
     Purchases.addCustomerInfoUpdateListener(customerInfoRefreshed);
-    Purchases.logIn(authStatus.attributes.email).then(({ customerInfo }) => {
+    Purchases.logIn(authStatus.email).then(({ customerInfo }) => {
       setCustomerInfoStatus({
         status: 'loaded',
         customerInformation: customerInfo,

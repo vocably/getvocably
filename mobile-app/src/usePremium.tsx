@@ -1,6 +1,6 @@
 import { get } from 'lodash-es';
 import { useContext } from 'react';
-import { AuthContext, AuthStatus } from './auth/AuthContext';
+import { AuthContext, AuthStatus } from './auth/AuthContainer';
 import {
   CustomerInfoContext,
   CustomerInfoStatus,
@@ -10,16 +10,7 @@ const isPremium = (
   authStatus: AuthStatus,
   customerInfoStatus: CustomerInfoStatus
 ): boolean => {
-  if (
-    authStatus.status === 'logged-in' &&
-    (
-      get(
-        authStatus.session,
-        'tokens.accessToken.payload.cognito:groups',
-        []
-      ) as string[]
-    ).includes('paid')
-  ) {
+  if (authStatus.status === 'logged-in' && authStatus.isPaidGroup) {
     return true;
   }
 

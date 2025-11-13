@@ -3,9 +3,8 @@ import { StyleProp, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { CustomerInfo } from 'react-native-purchases';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { AuthContext } from '../auth/AuthContext';
+import { AuthContext } from '../auth/AuthContainer';
 import { CustomerInfoContext } from '../CustomerInfoContainer';
-import { isPaid } from '../isPaid';
 import { InlineLoader } from '../loaders/InlineLoader';
 import { CustomSurface } from '../ui/CustomSurface';
 import { ListItem } from '../ui/ListItem';
@@ -37,7 +36,8 @@ export const Subscription: FC<Props> = ({
   const useIsPaid =
     customerInfoStatus.status === 'loaded' &&
     !isPremium(customerInfoStatus.customerInformation) &&
-    isPaid(authStatus);
+    authStatus.status === 'logged-in' &&
+    authStatus.isPaidGroup;
 
   if (useIsPaid) {
     return <PaidAccount style={style} />;

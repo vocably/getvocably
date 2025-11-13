@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useContext, useEffect } from 'react';
 import { AppState } from 'react-native';
-import { AuthContext } from './auth/AuthContext';
+import { AuthContext } from './auth/AuthContainer';
 import { recalibrateNotifications } from './recalibrateNotifications';
 
 type Props = {};

@@ -12,7 +12,7 @@ import { Button, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import { Loader } from '../loaders/Loader';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './AuthContainer';
 import { getCards } from './getCards';
 
 const signIn = () => signInWithRedirect();

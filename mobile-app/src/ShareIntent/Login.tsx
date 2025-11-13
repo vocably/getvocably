@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useContext } from 'react';
 import { Linking, View } from 'react-native';
 import { Button, IconButton, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AuthContext } from '../auth/AuthContext';
+import { AuthContext } from '../auth/AuthContainer';
 import { exitSharedScreen } from '../exitSharedScreen';
 import { Loader } from '../loaders/Loader';
 
