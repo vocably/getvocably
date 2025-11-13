@@ -1,4 +1,4 @@
-# Vocably — a language-learning tool for active language users.
+# Vocably — a language-learning tool
 
 [![Android](https://img.shields.io/badge/Android-app-blue)](https://play.google.com/store/apps/details?id=com.vocablypro)
 [![iOS](https://img.shields.io/badge/iOS-app-blue)](https://apps.apple.com/app/vocably-pro-language-cards/id1641258757)
