@@ -3,7 +3,7 @@ import { getLastAdded } from '@vocably/model-operations';
 import { isToday } from '@vocably/sulna';
 import { usePostHog } from 'posthog-react-native';
 import React, { FC, useState } from 'react';
-import { PixelRatio, StyleProp, View, ViewStyle } from 'react-native';
+import { PixelRatio, Platform, StyleProp, View, ViewStyle } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
 import { CardListItem } from '../CardListItem';
 import { Deck } from '../languageDeck/useLanguageDeck';
@@ -125,7 +125,7 @@ export const AnalyzeResultItem: AnalyzeResultItem = ({
           >
             <IconButton
               icon={!item.id ? 'plus-circle-outline' : 'bookmark-check'}
-              animated={true}
+              animated={Platform.OS !== 'android'}
               iconColor={theme.colors.primary}
               onPress={toggleCard}
               style={{ margin: 0 }}
