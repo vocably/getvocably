@@ -27,13 +27,3 @@ Vocably exists in multiple forms:
 ![Study as flashcards](assets/github/study.png)
 ![Reverse translations](assets/github/reverse-translation.png)
 ![Youtube integration](assets/github/youtube.png)
-
-## License
-
-This is published under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
-
-_TLDR: You can share and adapt it but may not use it commercially without the author's permission._
-
-Some pieces of Vocably are released under the MIT license https://github.com/vocably
-
-If you'd like to use some module of this project, feel free to contact me.
