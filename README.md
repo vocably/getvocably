@@ -6,7 +6,7 @@
 [![Safari](https://img.shields.io/badge/Safari-extension-blue)](https://apps.apple.com/app/vocably-for-safari/id6464076425)
 [![Safari](https://img.shields.io/badge/iOS_Safari-extension-blue)](https://vocably.pro/ios-safari-extension.html)
 
-https://www.youtube.com/watch?v=1niJZkSb-dE
+[![How it works](assets/github/video-poster.png)](https://youtu.be/1niJZkSb-dE)
 
 ## How it works
 
