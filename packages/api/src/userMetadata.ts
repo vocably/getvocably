@@ -42,7 +42,10 @@ export const saveUserMetadata = async (
     return userMetadataResult;
   }
 
-  const toBeSaved = mergeUserMetadata(userMetadataResult.value, metadata);
+  const toBeSaved = mergeUserMetadata(userMetadataResult.value, {
+    ...metadata,
+    lastUpdated: new Date().getTime(),
+  });
 
   const saveResult = await request('/files/metadata.json', {
     method: 'PUT',

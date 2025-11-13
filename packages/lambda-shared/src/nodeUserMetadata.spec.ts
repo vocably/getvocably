@@ -46,8 +46,11 @@ describe('nodeUserMetadata', () => {
 
   it('puts new data, merges, and fetches', async () => {
     const saveResult = await nodeSaveUserMetadata(sub, bucket, {
-      usageStats: {
-        totalLookups: 25,
+      rate: {
+        android: {
+          response: 'later',
+          isoDate: new Date().toISOString(),
+        },
       },
     });
 
@@ -62,9 +65,6 @@ describe('nodeUserMetadata', () => {
     }
 
     expect(fetchResult.success).toBe(true);
-    expect(fetchResult.value.usageStats.totalLookups).toEqual(25);
-    expect(fetchResult.value.usageStats.lastLookupTimestamp).toEqual(
-      defaultUserMetadata.usageStats.lastLookupTimestamp
-    );
+    expect(fetchResult.value.rate.android?.response).toEqual('later');
   });
 });

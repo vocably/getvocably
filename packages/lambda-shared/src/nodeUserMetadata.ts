@@ -49,10 +49,10 @@ export const nodeSaveUserMetadata = async (
     return userMetadataResult;
   }
 
-  const userMetadata = mergeUserMetadata(
-    userMetadataResult.value,
-    partialUserMetadata
-  );
+  const userMetadata = mergeUserMetadata(userMetadataResult.value, {
+    ...partialUserMetadata,
+    lastUpdated: new Date().getTime(),
+  });
 
   const putFileResult = await nodePutS3File(
     bucket,
