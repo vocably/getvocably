@@ -231,9 +231,7 @@ export const LanguagesContainer: FC<Props> = ({
   type SyncOptions = {
     refreshLanguageContainer?: boolean;
   };
-  const syncDecks = async ({
-    refreshLanguageContainer = false,
-  }: SyncOptions = {}) => {
+  const syncDecks = async () => {
     if (decks.status !== 'loaded') {
       return;
     }
@@ -277,18 +275,6 @@ export const LanguagesContainer: FC<Props> = ({
       // while saving the deck
       transformations.splice(0, transformationsToBeSynced.length);
       await saveTransformations();
-
-      if (refreshLanguageContainer) {
-        await setDecks({
-          ...decks.value,
-          [language]: {
-            ...deckContainer,
-            status: 'loaded',
-            // Apply the rest of transformations that have not been synced yet
-            deck: applyTransformations(deck, transformations),
-          },
-        });
-      }
     }
 
     isSyncing.current = false;
@@ -303,7 +289,7 @@ export const LanguagesContainer: FC<Props> = ({
       return;
     }
 
-    await syncDecks({ syncLanguageContainer: true });
+    await syncDecks();
 
     const listResult = await listLanguages();
 
