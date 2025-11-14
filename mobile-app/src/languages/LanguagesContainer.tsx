@@ -246,7 +246,7 @@ export const LanguagesContainer: FC<Props> = ({
 
     isSyncing.current = true;
 
-    for (let [language, deckContainer] of Object.entries(decks.value)) {
+    for (let language of Object.keys(decks.value)) {
       const transformations = getTransformations(language);
 
       if (transformations.length === 0) {
