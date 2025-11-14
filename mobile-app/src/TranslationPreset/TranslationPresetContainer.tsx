@@ -1,3 +1,5 @@
+import { isGoogleLanguage } from '@vocably/model';
+import { first, get } from 'lodash-es';
 import {
   createContext,
   FC,
@@ -38,6 +40,24 @@ export const TranslationPresetContext =
       status: 'unknown',
     },
   });
+
+const getPossibleTranslationLanguage = (
+  sourceLanguage: string,
+  languagePairs: LanguagePairs
+): string => {
+  if (!isGoogleLanguage(sourceLanguage)) {
+    return '';
+  }
+
+  const existingSetting = languagePairs[sourceLanguage];
+
+  if (existingSetting) {
+    return existingSetting.translationLanguage;
+  }
+
+  const firstKey = first(Object.keys(languagePairs)) ?? '';
+  return get(languagePairs, `${firstKey}.translationLanguage`, '');
+};
 
 export const TranslationPresetContainer: FC<PropsWithChildren> = ({
   children,
@@ -86,14 +106,10 @@ export const TranslationPresetContainer: FC<PropsWithChildren> = ({
 
     storePreset({
       sourceLanguage: selectedLanguageResult.value.selectedLanguage,
-      translationLanguage:
-        // @ts-ignore
-        languagePairsResult.value[selectedLanguageResult.value.selectedLanguage]
-          ? // @ts-ignore
-            languagePairsResult.value[
-              selectedLanguageResult.value.selectedLanguage
-            ].translationLanguage
-          : '',
+      translationLanguage: getPossibleTranslationLanguage(
+        selectedLanguageResult.value.selectedLanguage,
+        languagePairsResult.value
+      ),
       isReverse: false,
     });
   }, [selectedLanguageResult, languagePairsResult, preset]);

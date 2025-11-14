@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationProp } from '@react-navigation/native';
 import { FC, useEffect } from 'react';
 import { useTheme } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DeckStack } from './DeckStack';
 import { LookUpScreen } from './LookUpScreen';
@@ -19,7 +18,6 @@ type Props = {
 export const TabsNavigator: FC<Props> = ({ navigation }) => {
   const welcomeIsRequiredResult = useWelcomeRequired();
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (
