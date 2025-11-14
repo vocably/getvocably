@@ -22,7 +22,11 @@ export type AsyncResult<T> = AsyncSuccess<T> | AsyncFailure | AsyncLoading;
 export const useAsync = <T>(
   load: () => Promise<T>,
   mutate?: (newValue: T) => Promise<unknown>
-): [AsyncResult<T>, (newValue: T) => Promise<Result<unknown>>] => {
+): [
+  AsyncResult<T>,
+  (newValue: T) => Promise<Result<unknown>>,
+  () => Promise<unknown>
+] => {
   const [result, setResult] = useState<AsyncResult<T>>({
     status: 'loading',
   });
@@ -107,5 +111,18 @@ export const useAsync = <T>(
     [mutate, result, setResult]
   );
 
-  return [result, update];
+  const refresh = async () => {
+    if (result.status === 'loaded') {
+      await load()
+        .then((value) => {
+          setResult({
+            status: 'loaded',
+            value,
+          });
+        })
+        .catch(() => {});
+    }
+  };
+
+  return [result, update, refresh];
 };

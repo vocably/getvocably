@@ -162,7 +162,10 @@ export const LanguagesContainer: FC<Props> = ({
 }) => {
   const [listLoadingStatus, setListLoadingStatus] =
     useState<Languages['status']>('loading');
-  const [decks, setDecks] = useAsync(loadDecksFromStorage, saveDecksToStorage);
+  const [decks, setDecks, refreshDeckStorage] = useAsync(
+    loadDecksFromStorage,
+    saveDecksToStorage
+  );
   const languages = decks.status === 'loaded' ? Object.keys(decks.value) : [];
   const [selectedLanguage, selectLanguage] = useAsync(
     () => loadSelectedLanguageStorage(),
@@ -228,9 +231,6 @@ export const LanguagesContainer: FC<Props> = ({
 
   const isSyncing = useRef(false);
 
-  type SyncOptions = {
-    refreshLanguageContainer?: boolean;
-  };
   const syncDecks = async () => {
     if (decks.status !== 'loaded') {
       return;
@@ -288,6 +288,8 @@ export const LanguagesContainer: FC<Props> = ({
     if (isSyncing.current) {
       return;
     }
+
+    await refreshDeckStorage();
 
     await syncDecks();
 
