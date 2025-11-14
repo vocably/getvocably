@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNetInfo } from '@react-native-community/netinfo';
 import { NavigationProp } from '@react-navigation/native';
 import { byDate, CardItem, TagItem } from '@vocably/model';
 import { hasStudied, studyPlan, STUDY_DELAY_MS } from '@vocably/srs';
@@ -142,7 +141,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
 
   const { refreshLanguages } = useContext(LanguagesContext);
   const theme = useTheme();
-  const netInfo = useNetInfo();
 
   const [refreshing, setRefreshing] = useState(false);
   const [toBeDeletedId, setToBeDeletedId] = useState<string | null>(null);
@@ -430,7 +428,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                   }}
                   mode={'contained'}
                   onPress={() => navigation.navigate('Study')}
-                  disabled={cards.length === 0 || !netInfo.isInternetReachable}
+                  disabled={cards.length === 0}
                 >
                   Study{selectedTags.length > 0 ? ' selected tags' : ''}
                 </Button>
@@ -517,17 +515,6 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                       </Chip>
                     </View>
                   ))}
-                </View>
-              )}
-              {!netInfo.isInternetReachable && (
-                <View style={{ marginTop: 16 }}>
-                  <Text
-                    style={{ textAlign: 'left', color: theme.colors.secondary }}
-                  >
-                    <Icon name="connection" /> Study mode isn't available right
-                    now as it looks like your device is offline. Please connect
-                    to the internet and try again later.
-                  </Text>
                 </View>
               )}
             </View>
