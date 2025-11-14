@@ -4,17 +4,25 @@ import { Button, IconButton, Text, useTheme } from 'react-native-paper';
 import { clearAll } from '../asyncAppStorage';
 import { loadTransformationsFromStorage } from '../languages/useLanguageTransformations';
 import { CustomSurface } from '../ui/CustomSurface';
+import { loadStudyStreakFromStorage } from '../UserMetadataContainer';
 
 type Props = {};
 
 export const DebugMenu: FC<Props> = () => {
   const [transformations, setTransformations] = useState<any>(false);
+  const [studyStreak, setStudyStreak] = useState<any>(false);
+
+  const refresh = () => {
+    loadTransformationsFromStorage().then(setTransformations);
+    loadStudyStreakFromStorage().then(setStudyStreak);
+  };
 
   useEffect(() => {
-    loadTransformationsFromStorage().then(setTransformations);
+    refresh();
   }, []);
 
   const theme = useTheme();
+
   return (
     <CustomSurface
       style={{
@@ -25,22 +33,24 @@ export const DebugMenu: FC<Props> = () => {
         marginTop: 32,
       }}
     >
-      <Text style={{ fontSize: 24 }}>Debug Menu</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+        <Text style={{ fontSize: 24 }}>Debug Menu</Text>
+        <IconButton size={24} icon={'reload'} onPress={() => refresh()} />
+      </View>
       {transformations && (
         <>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <Text style={{ fontSize: 18 }}>Language Transformations</Text>
-            <IconButton
-              size={14}
-              icon={'reload'}
-              onPress={() =>
-                loadTransformationsFromStorage().then(setTransformations)
-              }
-            />
-          </View>
+          <Text style={{ fontSize: 18 }}>Language Transformations</Text>
+
           <Text selectable={true}>
             {JSON.stringify(transformations, null, 4)}
           </Text>
+        </>
+      )}
+      {studyStreak && (
+        <>
+          <Text style={{ fontSize: 18 }}>Study Streak</Text>
+
+          <Text selectable={true}>{JSON.stringify(studyStreak, null, 4)}</Text>
         </>
       )}
       <Button

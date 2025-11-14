@@ -78,7 +78,7 @@ const saveUserStaticMetadataToStorage = async (
   );
 };
 
-const loadStudyStreakFromStorage = async (): Promise<StudyStreak> => {
+export const loadStudyStreakFromStorage = async (): Promise<StudyStreak> => {
   const studyStreak = await asyncAppStorage.getItem('studyStreak');
 
   if (!studyStreak) {
