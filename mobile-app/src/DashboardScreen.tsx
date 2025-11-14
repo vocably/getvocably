@@ -57,6 +57,7 @@ import { ScreenLayout } from './ui/ScreenLayout';
 import { useAsync } from './useAsync';
 import { useCurrentLanguageName } from './useCurrentLanguageName';
 import { usePresentPaywall } from './usePresentPaywall';
+import { UserMetadataContext } from './UserMetadataContainer';
 
 const SWIPE_MENU_BUTTON_SIZE = 80;
 const STUDY_BUTTON_RADIUS = 12;
@@ -153,6 +154,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
     getStatsViewEnabled,
     storeStatsViewEnabled
   );
+  const { refresh: refreshMetadata } = useContext(UserMetadataContext);
 
   const presentPaywall = usePresentPaywall();
 
@@ -177,7 +179,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await refreshLanguages();
+    await Promise.all([refreshLanguages(), refreshMetadata()]);
     setRefreshing(false);
   }, [setRefreshing, refreshLanguages]);
 
