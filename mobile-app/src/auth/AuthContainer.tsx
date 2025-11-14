@@ -2,6 +2,7 @@ import { postOnboardingAction } from '@vocably/api';
 import { Result, resultify } from '@vocably/model';
 import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
+import { get } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
 import React, {
   createContext,
@@ -156,7 +157,13 @@ export const AuthContainer: FC<{
       status: 'logged-in',
       sub: attributesResult.value.sub,
       email: attributesResult.value.email,
-      isPaidGroup: attributesResult.value.sub.includes('paid'),
+      isPaidGroup: (
+        get(
+          fetchSessionResult.value,
+          'tokens.accessToken.payload.cognito:groups',
+          []
+        ) as string[]
+      ).includes('paid'),
     });
   };
 
@@ -238,7 +245,13 @@ export const AuthContainer: FC<{
         status: 'logged-in',
         sub: attributesResult.value.sub,
         email: attributesResult.value.email,
-        isPaidGroup: attributesResult.value.sub.includes('paid'),
+        isPaidGroup: (
+          get(
+            fetchSessionResult.value,
+            'tokens.accessToken.payload.cognito:groups',
+            []
+          ) as string[]
+        ).includes('paid'),
       });
       setError(null);
 

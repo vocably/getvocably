@@ -33,13 +33,15 @@ export const Subscription: FC<Props> = ({
   const customerInfoStatus = useContext(CustomerInfoContext);
   const authStatus = useContext(AuthContext);
 
-  const useIsPaid =
+  const isLifetimePremium =
     customerInfoStatus.status === 'loaded' &&
     !isPremium(customerInfoStatus.customerInformation) &&
     authStatus.status === 'logged-in' &&
     authStatus.isPaidGroup;
 
-  if (useIsPaid) {
+  console.log('is lifetime premium', authStatus);
+
+  if (isLifetimePremium) {
     return <PaidAccount style={style} />;
   }
 
