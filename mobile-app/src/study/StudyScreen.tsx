@@ -4,7 +4,7 @@ import { grade, slice, SrsScore } from '@vocably/srs';
 import { setBadgeCount } from 'aws-amplify/push-notifications';
 import { shuffle } from 'lodash-es';
 import { usePostHog } from 'posthog-react-native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Button, IconButton, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,6 +21,7 @@ import {
 } from '../Settings/StudySettingsScreen';
 import { ScreenLayout } from '../ui/ScreenLayout';
 import { useAsync } from '../useAsync';
+import { UserMetadataContext } from '../UserMetadataContainer';
 import { useStudySteps } from '../useStudySteps';
 import { useCardsAnsweredToday } from './cardsAnsweredToday';
 import { Completed } from './Completed';
@@ -28,7 +29,6 @@ import { craftTheStrategy } from './craftTheStrategy';
 import { getPredefinedMultiChoiceOptions } from './getPredefinedMultiChoiceOptions';
 import { Grade } from './Grade';
 import { useStreakHasBeenShown } from './useStreakHasBeenShown';
-import { useStudyStats } from './useStudyStats';
 import { useTranslationLanguage } from './useTranslationLanguage';
 
 export const PADDING_VERTICAL = 40;
@@ -75,7 +75,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
   );
 
   const [streakHasShownToday, setStreakHasShown] = useStreakHasBeenShown();
-  const studyStatsResult = useStudyStats();
+  const { studyStreak, increaseStudyStreak } = useContext(UserMetadataContext);
 
   useEffect(() => {
     if (
@@ -87,21 +87,6 @@ export const StudyScreen: Props = ({ route, navigation }) => {
       setBadgeCount(0);
     }
   }, [cardsAnsweredToday, maximumCardsPerSessionResult]);
-
-  useEffect(() => {
-    if (studyStatsResult.status === 'failed') {
-      Alert.alert(
-        `Error: unable to load essential data`,
-        `Sorry, Vocably is unable data essential for the study session. Please try again later.`,
-        [
-          {
-            text: 'Exit study session',
-            onPress: () => navigation.goBack(),
-          },
-        ]
-      );
-    }
-  }, [studyStatsResult.status]);
 
   const { planSection } = route.params ?? ({} as { planSection?: string });
 
@@ -162,21 +147,6 @@ export const StudyScreen: Props = ({ route, navigation }) => {
       return;
     }
 
-    if (studyStatsResult.status !== 'loaded') {
-      Alert.alert(
-        `Unable to grade the card`,
-        `Sorry, Vocably is unable to grade the card yet. Please try again in a moment.`,
-        [
-          {
-            text: 'Exit study session',
-            onPress: () => navigation.goBack(),
-          },
-        ]
-      );
-
-      return;
-    }
-
     const { strategy } = craftTheStrategy({
       studySteps: studySteps,
       card: cards[0],
@@ -212,22 +182,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
           return;
         }
 
-        const setStreakResult = await studyStatsResult.value.setStreak();
-
-        if (setStreakResult.success === false) {
-          Alert.alert(
-            `Error: Card update failed`,
-            setStreakResult.errorCode === 'NETWORK_REQUEST_ERROR'
-              ? `Your answer wasn't saved due to a lost connection. The session will stop and resume from the failed answer.`
-              : `Oops! Unable to continue study session due to a technical issue. Please try again later.`,
-            [
-              {
-                text: 'Exit study session',
-                onPress: () => navigation.goBack(),
-              },
-            ]
-          );
-        }
+        await increaseStudyStreak();
       }
     );
 
@@ -267,7 +222,6 @@ export const StudyScreen: Props = ({ route, navigation }) => {
     isRandomizerEnabledResult.status !== 'loaded' ||
     autoPlayResult.status !== 'loaded' ||
     maximumCardsPerSessionResult.status !== 'loaded' ||
-    studyStatsResult.status !== 'loaded' ||
     streakHasShownToday.status !== 'loaded'
   ) {
     return <Loader>Loading...</Loader>;
@@ -375,7 +329,7 @@ export const StudyScreen: Props = ({ route, navigation }) => {
               }
               onStudyAgain={() => setCardsStudied(-1)}
               streakHasBeenShown={streakHasShownToday.value}
-              streakDays={studyStatsResult.value.streak.days}
+              streakDays={studyStreak.days}
               onShow={() => setStreakHasShown()}
               canStudyAgain={!planSection}
             ></Completed>

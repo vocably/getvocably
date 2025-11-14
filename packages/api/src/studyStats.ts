@@ -1,4 +1,4 @@
-import { Result, StudyStreak } from '@vocably/model';
+import { defaultStudyStreak, Result, StudyStreak } from '@vocably/model';
 import { request } from './restClient';
 
 export const fetchStudyStreak = async (): Promise<Result<StudyStreak>> => {
@@ -12,12 +12,7 @@ export const fetchStudyStreak = async (): Promise<Result<StudyStreak>> => {
 
   return {
     success: true,
-    value: response.value || {
-      days: 0,
-      longestStreak: 0,
-      lastPracticeDay: '0000-01-01',
-      lastPracticeTimezone: 'Asia/Jerusalem',
-    },
+    value: response.value || defaultStudyStreak,
   };
 };
 
