@@ -1,12 +1,14 @@
-import { isGoogleLanguage } from '@vocably/model';
+import { isGoogleLanguage, UserMetadata } from '@vocably/model';
 import { first, get } from 'lodash-es';
 import {
   createContext,
   FC,
   PropsWithChildren,
+  useContext,
   useEffect,
   useState,
 } from 'react';
+import { UserMetadataContext } from '../UserMetadataContainer';
 import { updateLanguagePairs } from './languagePairs';
 import { LanguagePairs, useLanguagePairs } from './useLanguagePairs';
 import { useTranslationPresetSelectedLanguage } from './useTranslationPresetSelectedLanguage';
@@ -43,16 +45,21 @@ export const TranslationPresetContext =
 
 const getPossibleTranslationLanguage = (
   sourceLanguage: string,
-  languagePairs: LanguagePairs
+  languagePairs: LanguagePairs,
+  metadata: UserMetadata
 ): string => {
   if (!isGoogleLanguage(sourceLanguage)) {
-    return '';
+    return metadata.defaultTranslationLanguage ?? '';
   }
 
   const existingSetting = languagePairs[sourceLanguage];
 
   if (existingSetting) {
     return existingSetting.translationLanguage;
+  }
+
+  if (metadata.defaultTranslationLanguage) {
+    return metadata.defaultTranslationLanguage;
   }
 
   const firstKey = first(Object.keys(languagePairs)) ?? '';
@@ -65,6 +72,7 @@ export const TranslationPresetContainer: FC<PropsWithChildren> = ({
   const selectedLanguageResult = useTranslationPresetSelectedLanguage();
   const [languagePairsResult, saveLanguagePairs] = useLanguagePairs();
   const [preset, storePreset] = useState<Preset>();
+  const { userMetadata } = useContext(UserMetadataContext);
 
   const setPreset = async (newPreset: Preset) => {
     if (selectedLanguageResult.status !== 'loaded') {
@@ -108,7 +116,8 @@ export const TranslationPresetContainer: FC<PropsWithChildren> = ({
       sourceLanguage: selectedLanguageResult.value.selectedLanguage,
       translationLanguage: getPossibleTranslationLanguage(
         selectedLanguageResult.value.selectedLanguage,
-        languagePairsResult.value
+        languagePairsResult.value,
+        userMetadata
       ),
       isReverse: false,
     });

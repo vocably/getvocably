@@ -22,6 +22,7 @@ export type UserMetadata = {
   onboardingFlow: OnboardingFlow;
   rate: Record<Platform, RateResponse | undefined>;
   studyFlow?: StudyFlowType[];
+  defaultTranslationLanguage?: string;
   lastUpdated: number;
 };
 
@@ -30,6 +31,7 @@ export type PartialUserMetadata = {
   onboardingFlow?: Partial<UserMetadata['onboardingFlow']>;
   studyFlow?: UserMetadata['studyFlow'];
   lastUpdated?: UserMetadata['lastUpdated'];
+  defaultTranslationLanguage?: UserMetadata['defaultTranslationLanguage'];
 };
 
 export const defaultUserMetadata: UserMetadata = {
