@@ -80,7 +80,6 @@ type Languages = {
   selectLanguage: (language: string) => Promise<Result<unknown>>;
   syncDecks: () => Promise<unknown>;
   refreshLanguages: () => Promise<void>;
-  addLanguage: (language: string) => void;
   addNewLanguage: (language: string) => Promise<Result<unknown>>;
   addCard: (language: string, data: SrsCard) => Promise<Result<CardItem>>;
   updateCard: (
@@ -117,7 +116,6 @@ export const LanguagesContext = createContext<Languages>({
     }),
   syncDecks: () => Promise.resolve(),
   refreshLanguages: () => Promise.resolve(),
-  addLanguage: () => null,
   addNewLanguage: () => Promise.resolve({ success: true, value: null }),
   addCard: async () => ({
     success: false,
@@ -194,21 +192,6 @@ export const LanguagesContainer: FC<Props> = ({
     return setDecks({
       ...decks.value,
       [deck.deck.language]: deck,
-    });
-  };
-
-  const addLanguage = async (language: string): Promise<Result<unknown>> => {
-    if (languages.includes(language)) {
-      return {
-        success: true,
-        value: null,
-      };
-    }
-
-    return storeDeck({
-      status: 'initial',
-      deck: createDefaultLanguageDeck(language),
-      selectedTags: [],
     });
   };
 
@@ -337,10 +320,7 @@ export const LanguagesContainer: FC<Props> = ({
     const newDecks = Object.entries(decks.value).reduce<DecksCollection>(
       (acc, [language, deckContainer]) => {
         const transformations = getTransformations(language);
-        if (
-          transformations.length === 0 &&
-          deckContainer.status !== 'initial'
-        ) {
+        if (transformations.length === 0) {
           return acc;
         }
 
@@ -375,12 +355,23 @@ export const LanguagesContainer: FC<Props> = ({
       };
     }
 
-    const newLanguageDeck = createDefaultLanguageDeck(language);
+    const loadResult = await loadLanguageDeck(language);
+
+    if (!loadResult.success) {
+      return loadResult;
+    }
+
+    const saveResult = await saveLanguageDeck(loadResult.value);
+
+    if (!saveResult.success) {
+      return saveResult;
+    }
+
     const setDecksResult = await setDecks({
       ...decks.value,
       [language]: {
-        status: 'initial',
-        deck: newLanguageDeck,
+        status: 'loaded',
+        deck: loadResult.value,
         selectedTags: [],
       },
     });
@@ -399,7 +390,6 @@ export const LanguagesContainer: FC<Props> = ({
 
     if (!isEmpty(decks.value)) {
       setListLoadingStatus('loaded');
-      return;
     }
 
     refreshLanguages().then();
@@ -762,7 +752,6 @@ export const LanguagesContainer: FC<Props> = ({
     selectLanguage,
     syncDecks,
     refreshLanguages,
-    addLanguage,
     addNewLanguage,
     addCard,
     updateCard,
