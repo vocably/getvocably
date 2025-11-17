@@ -400,17 +400,19 @@ export const LanguagesContainer: FC<Props> = ({
     }
 
     refreshLanguages().then();
+  }, [decks.status]);
 
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active' && refreshLanguagesOnActive) {
-        refreshLanguages().then();
+        refreshDeckStorage().then();
       }
     });
 
     return () => {
       subscription.remove();
     };
-  }, [decks.status]);
+  }, [refreshDeckStorage, refreshLanguagesOnActive]);
 
   useEffect(() => {
     if (
