@@ -337,7 +337,10 @@ export const LanguagesContainer: FC<Props> = ({
     const newDecks = Object.entries(decks.value).reduce<DecksCollection>(
       (acc, [language, deckContainer]) => {
         const transformations = getTransformations(language);
-        if (transformations.length === 0) {
+        if (
+          transformations.length === 0 &&
+          deckContainer.status !== 'initial'
+        ) {
           return acc;
         }
 
