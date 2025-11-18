@@ -20,46 +20,10 @@
   </head>
   <body>
     <div class="container">
-      <vocably-first-translation-congratulation
-        id="congrats"
-      ></vocably-first-translation-congratulation>
-      <vocably-first-translation-congratulation
-        id="congrats-short"
-      ></vocably-first-translation-congratulation>
-      <h1>Card counter</h1>
-      <div style="position: relative; width: 300px; text-align: right">
-        <vocably-card-counter
-          collection-length="1"
-          max-cards="5"
-        ></vocably-card-counter>
-      </div>
+      <h1>Search form</h1>
+      {{> search-form }}
 
-      <div style="position: relative; width: 300px; text-align: right">
-        <vocably-card-counter
-          collection-length="32"
-          max-cards="5"
-        ></vocably-card-counter>
-      </div>
-
-      <div style="position: relative; width: 300px; text-align: right">
-        <vocably-card-counter
-          collection-length="512"
-          max-cards="5"
-        ></vocably-card-counter>
-      </div>
-
-      <div style="position: relative; width: 300px; text-align: right">
-        <vocably-card-counter
-          collection-length="2350"
-          max-cards="5"
-        ></vocably-card-counter>
-      </div>
-
-      <h2>Explanation</h2>
-
-      <vocably-card-countdown-explanation></vocably-card-countdown-explanation>
-
-      <h1>Add paywall</h1>
+      <h1>Payment</h1>
 
       <div class="mb-3">
         <vocably-popup
@@ -73,7 +37,13 @@
         ></vocably-popup>
       </div>
 
-      <h1>Menu</h1>
+      <h1>First time user</h1>
+      {{> first-time-user }}
+
+      <h1>Rating Request</h1>
+      {{> rating }}
+
+      <h1>Tags</h1>
 
       <div class="mb-3">
         <vocably-tag-form id="editTagForm"></vocably-tag-form>
@@ -102,7 +72,7 @@
       <p>
         <vocably-tags-menu id="menu"></vocably-tags-menu>
       </p>
-      <h1>Buttons</h1>
+      <h1>Popup Buttons</h1>
       <p>
         <vocably-button></vocably-button>
       </p>
@@ -110,10 +80,6 @@
       <p>
         <vocably-mobile-button></vocably-mobile-button>
       </p>
-
-      <h1>First card added.</h1>
-
-      <vocably-first-translation-congratulation></vocably-first-translation-congratulation>
 
       <h1>Popups</h1>
 
@@ -123,32 +89,6 @@
           ><vocably-translation phrase="geweldig"></vocably-translation
         ></vocably-popup>
         <div id="closed" class="d-none pt-2">Close clicked.</div>
-      </div>
-
-      <h2>First time</h2>
-
-      <div class="mb-3">
-        <vocably-popup
-          ><vocably-translation
-            phrase="gemaakt"
-            id="translationFirstTime"
-            source-language="nl"
-            target-language="en"
-          ></vocably-translation
-        ></vocably-popup>
-      </div>
-
-      <h2>Ask for rating</h2>
-
-      <div class="mb-3">
-        <vocably-popup
-          ><vocably-translation
-            phrase="gemaakt"
-            id="translationAskForRating"
-            source-language="nl"
-            target-language="en"
-          ></vocably-translation
-        ></vocably-popup>
       </div>
 
       <h2>Success</h2>

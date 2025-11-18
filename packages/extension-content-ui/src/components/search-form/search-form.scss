@@ -1,62 +1,165 @@
 @import '../../styles/variables';
 
-$dot-size: 18px;
+$input-padding: 12px;
 
 :host {
-  display: inline-block;
-  width: 140px;
-  height: $dot-size;
-  vertical-align: middle;
+  display: block;
   // Reddit sets visibility: hidden for custom elements
   visibility: visible !important;
 }
 
-.spinner {
-  text-align: center;
-  height: $dot-size;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.spinner > div {
-  width: $dot-size;
-  height: $dot-size;
-  background-color: $v-light-color-primary;
+.preset {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
+  .direction {
+    $size: 40px;
 
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    height: $size;
+    line-height: $size;
+    border: none;
+    border-radius: $v-border-radius;
+    background-color: $v-light-color-contrast;
+    transition: background-color 0.25s ease-in-out;
+    cursor: pointer;
+    outline: none;
 
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
+    &:focus {
+      background-color: $v-light-color-contrast-2 !important;
+    }
 
-@-webkit-keyframes sk-bouncedelay {
-  0%,
-  80%,
-  100% {
-    -webkit-transform: scale(0);
+    &:hover {
+      background-color: $v-light-color-contrast-2;
+    }
+
+    .icon {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &.reversed .icon {
+      transform: rotate(180deg);
+    }
   }
-  40% {
-    -webkit-transform: scale(1);
+
+  .language {
+    width: 100%;
   }
 }
 
-@keyframes sk-bouncedelay {
-  0%,
-  80%,
-  100% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
+.search-input {
+  $height: 40px;
+  $border: none;
+
+  position: relative;
+
+  .input {
+    padding-left: $input-padding;
+    padding-right: $input-padding;
+    color: $v-light-color-body;
+    border: $border;
+    border-radius: $v-border-radius;
+    background-color: $v-light-color-elevation-2;
+    outline: none;
+    height: $height;
+    box-shadow: none;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    transition: background-color 0.25s ease-in-out;
+    font-size: 14.4px;
+
+    &:focus {
+      background-color: $v-light-color-elevation-3;
+    }
   }
-  40% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
+
+  .submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: $height;
+    width: $height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: $border;
+    border-left: none;
+    border-radius: 0 $v-border-radius $v-border-radius 0;
+    background-color: transparent;
+    transition: all 0.25s ease-in-out;
+
+    &:not(:disabled) {
+      cursor: pointer;
+      background-color: $v-light-color-elevation-3;
+
+      &:hover {
+        background-color: $v-light-color-elevation-4;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.2;
+    }
+
+    .magnify {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .animating {
+      transition: none;
+      animation-name: rock;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      transform-origin: 9px 9px;
+    }
+
+    @keyframes rock {
+      0%,
+      50%,
+      100% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(-25deg);
+      }
+      75% {
+        transform: rotate(25deg);
+      }
+    }
+  }
+}
+
+.hint {
+  margin-left: $input-padding;
+  font-size: 14.4px;
+  color: $v-light-color-muted;
+
+  .hint-icon-button {
+    vertical-align: bottom;
+    border: none;
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+
+    &.reversed {
+      transform: rotate(180deg);
+    }
   }
 }

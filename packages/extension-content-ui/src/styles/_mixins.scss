@@ -62,6 +62,10 @@
   box-shadow: none !important;
   box-sizing: border-box !important;
   width: 100% !important;
+
+  &:focus {
+    background-color: $v-light-color-contrast-2 !important;
+  }
 }
 
 @mixin input-text($input-padding-x, $input-padding-y) {

@@ -2,18 +2,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WebpackWatchPlugin = require('webpack-watch-files-plugin').default;
-const { environment } = require('./environment');
 const glob = require('glob');
-const { templateOptions } = require('./template-options');
 
-const pagesDir = `./src/pages`;
+const pagesDir = `./public/pages`;
 const handlebarsExtension = `handlebars`;
 const pagesPattern = `**/*${handlebarsExtension}`;
 
 module.exports = (env) => {
   return {
     mode: env.production ? 'production' : 'development',
-    entry: './src/index.ts',
+    entry: './public/index.ts',
     module: {
       rules: [
         {
@@ -36,7 +34,10 @@ module.exports = (env) => {
             {
               loader: 'handlebars-loader',
               options: {
-                partialDirs: [`${__dirname}/src/partials`],
+                partialDirs: [
+                  `${__dirname}/public/partials`,
+                  `${__dirname}/public/components`,
+                ],
               },
             },
           ],
@@ -70,28 +71,18 @@ module.exports = (env) => {
           filename: filename,
           canonicalHref: canonicalHref,
           inject: true,
-          favicon: './src/favicon.ico',
-          environment: {
-            ...environment,
-            ...templateOptions,
-          },
+          favicon: './public/favicon.ico',
         });
       }),
       new MiniCssExtractPlugin({
         filename: env.production ? '[name].[contenthash].css' : '[name].css',
-      }),
-      new CopyPlugin({
-        patterns: [{ from: 'src/assets', to: 'assets' }],
-      }),
-      new CopyPlugin({
-        patterns: [{ from: 'src/robots.txt', to: 'robots.txt' }],
       }),
       new WebpackWatchPlugin({
         files: [`${pagesDir}/${pagesPattern}`, './environment.js'],
       }),
     ],
     devServer: {
-      port: 8050,
+      port: 8010,
       hot: false,
       liveReload: true,
     },

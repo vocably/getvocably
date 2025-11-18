@@ -87,7 +87,7 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  onSearchValuesChanged(values: SearchValues) {
+  onSearchValuesChanged(values: any) {
     localStorage.setItem(lastUsedSearchValuesKey, JSON.stringify(values));
     this.searchValues = values;
   }
@@ -102,7 +102,7 @@ export class HomePageComponent implements OnInit {
     this.isRetrying = false;
   }
 
-  async onSearchFormSubmit(values: SearchValues) {
+  async onSearchFormSubmit(values: any) {
     localStorage.setItem(lastUsedSearchValuesKey, JSON.stringify(values));
     this.searchValues = values;
 

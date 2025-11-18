@@ -6,8 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+import { SearchValues } from "./components/search-form/search-form";
 import { ComponentExplanationState } from "./components/translation/translation";
 export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+export { SearchValues } from "./components/search-form/search-form";
 export { ComponentExplanationState } from "./components/translation/translation";
 export namespace Components {
     interface VocablyAnimatedContentWrapper {
@@ -96,6 +98,8 @@ export namespace Components {
     }
     interface VocablyIconError {
     }
+    interface VocablyIconMagnify {
+    }
     interface VocablyIconPlayCircle {
     }
     interface VocablyIconPlus {
@@ -155,6 +159,32 @@ export namespace Components {
     }
     interface VocablyRate {
         "platform": { name: string; url: string };
+    }
+    interface VocablySearchForm {
+        /**
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * @default []
+         */
+        "existingSourceLanguages": GoogleLanguage[];
+        /**
+          * @default []
+         */
+        "existingTargetLanguages": GoogleLanguage[];
+        /**
+          * @default false
+         */
+        "hideHint": boolean;
+        /**
+          * @default false
+         */
+        "loading": boolean;
+        /**
+          * @default {     text: '',     sourceLanguage: 'de',     targetLanguage: 'en',     isReversed: false,   }
+         */
+        "values": SearchValues;
     }
     interface VocablySignIn {
     }
@@ -320,6 +350,10 @@ export interface VocablyPopupCustomEvent<T> extends CustomEvent<T> {
 export interface VocablyRateCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLVocablyRateElement;
+}
+export interface VocablySearchFormCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVocablySearchFormElement;
 }
 export interface VocablySignInCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -497,6 +531,12 @@ declare global {
         prototype: HTMLVocablyIconErrorElement;
         new (): HTMLVocablyIconErrorElement;
     };
+    interface HTMLVocablyIconMagnifyElement extends Components.VocablyIconMagnify, HTMLStencilElement {
+    }
+    var HTMLVocablyIconMagnifyElement: {
+        prototype: HTMLVocablyIconMagnifyElement;
+        new (): HTMLVocablyIconMagnifyElement;
+    };
     interface HTMLVocablyIconPlayCircleElement extends Components.VocablyIconPlayCircle, HTMLStencilElement {
     }
     var HTMLVocablyIconPlayCircleElement: {
@@ -641,6 +681,24 @@ declare global {
         prototype: HTMLVocablyRateElement;
         new (): HTMLVocablyRateElement;
     };
+    interface HTMLVocablySearchFormElementEventMap {
+        "valuesChange": SearchValues;
+        "formSubmit": SearchValues;
+    }
+    interface HTMLVocablySearchFormElement extends Components.VocablySearchForm, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVocablySearchFormElementEventMap>(type: K, listener: (this: HTMLVocablySearchFormElement, ev: VocablySearchFormCustomEvent<HTMLVocablySearchFormElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVocablySearchFormElementEventMap>(type: K, listener: (this: HTMLVocablySearchFormElement, ev: VocablySearchFormCustomEvent<HTMLVocablySearchFormElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVocablySearchFormElement: {
+        prototype: HTMLVocablySearchFormElement;
+        new (): HTMLVocablySearchFormElement;
+    };
     interface HTMLVocablySignInElementEventMap {
         "confirm": any;
     }
@@ -747,6 +805,7 @@ declare global {
         "vocably-icon-close": HTMLVocablyIconCloseElement;
         "vocably-icon-edit": HTMLVocablyIconEditElement;
         "vocably-icon-error": HTMLVocablyIconErrorElement;
+        "vocably-icon-magnify": HTMLVocablyIconMagnifyElement;
         "vocably-icon-play-circle": HTMLVocablyIconPlayCircleElement;
         "vocably-icon-plus": HTMLVocablyIconPlusElement;
         "vocably-icon-reload": HTMLVocablyIconReloadElement;
@@ -765,6 +824,7 @@ declare global {
         "vocably-popup": HTMLVocablyPopupElement;
         "vocably-qr-code": HTMLVocablyQrCodeElement;
         "vocably-rate": HTMLVocablyRateElement;
+        "vocably-search-form": HTMLVocablySearchFormElement;
         "vocably-sign-in": HTMLVocablySignInElement;
         "vocably-spinner": HTMLVocablySpinnerElement;
         "vocably-subscribe": HTMLVocablySubscribeElement;
@@ -865,6 +925,8 @@ declare namespace LocalJSX {
     }
     interface VocablyIconError {
     }
+    interface VocablyIconMagnify {
+    }
     interface VocablyIconPlayCircle {
     }
     interface VocablyIconPlus {
@@ -928,6 +990,34 @@ declare namespace LocalJSX {
     interface VocablyRate {
         "onUserSelected"?: (event: VocablyRateCustomEvent<'review' | 'later' | 'never' | 'feedback'>) => void;
         "platform"?: { name: string; url: string };
+    }
+    interface VocablySearchForm {
+        /**
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * @default []
+         */
+        "existingSourceLanguages"?: GoogleLanguage[];
+        /**
+          * @default []
+         */
+        "existingTargetLanguages"?: GoogleLanguage[];
+        /**
+          * @default false
+         */
+        "hideHint"?: boolean;
+        /**
+          * @default false
+         */
+        "loading"?: boolean;
+        "onFormSubmit"?: (event: VocablySearchFormCustomEvent<SearchValues>) => void;
+        "onValuesChange"?: (event: VocablySearchFormCustomEvent<SearchValues>) => void;
+        /**
+          * @default {     text: '',     sourceLanguage: 'de',     targetLanguage: 'en',     isReversed: false,   }
+         */
+        "values"?: SearchValues;
     }
     interface VocablySignIn {
         "onConfirm"?: (event: VocablySignInCustomEvent<any>) => void;
@@ -1094,6 +1184,7 @@ declare namespace LocalJSX {
         "vocably-icon-close": VocablyIconClose;
         "vocably-icon-edit": VocablyIconEdit;
         "vocably-icon-error": VocablyIconError;
+        "vocably-icon-magnify": VocablyIconMagnify;
         "vocably-icon-play-circle": VocablyIconPlayCircle;
         "vocably-icon-plus": VocablyIconPlus;
         "vocably-icon-reload": VocablyIconReload;
@@ -1112,6 +1203,7 @@ declare namespace LocalJSX {
         "vocably-popup": VocablyPopup;
         "vocably-qr-code": VocablyQrCode;
         "vocably-rate": VocablyRate;
+        "vocably-search-form": VocablySearchForm;
         "vocably-sign-in": VocablySignIn;
         "vocably-spinner": VocablySpinner;
         "vocably-subscribe": VocablySubscribe;
@@ -1143,6 +1235,7 @@ declare module "@stencil/core" {
             "vocably-icon-close": LocalJSX.VocablyIconClose & JSXBase.HTMLAttributes<HTMLVocablyIconCloseElement>;
             "vocably-icon-edit": LocalJSX.VocablyIconEdit & JSXBase.HTMLAttributes<HTMLVocablyIconEditElement>;
             "vocably-icon-error": LocalJSX.VocablyIconError & JSXBase.HTMLAttributes<HTMLVocablyIconErrorElement>;
+            "vocably-icon-magnify": LocalJSX.VocablyIconMagnify & JSXBase.HTMLAttributes<HTMLVocablyIconMagnifyElement>;
             "vocably-icon-play-circle": LocalJSX.VocablyIconPlayCircle & JSXBase.HTMLAttributes<HTMLVocablyIconPlayCircleElement>;
             "vocably-icon-plus": LocalJSX.VocablyIconPlus & JSXBase.HTMLAttributes<HTMLVocablyIconPlusElement>;
             "vocably-icon-reload": LocalJSX.VocablyIconReload & JSXBase.HTMLAttributes<HTMLVocablyIconReloadElement>;
@@ -1161,6 +1254,7 @@ declare module "@stencil/core" {
             "vocably-popup": LocalJSX.VocablyPopup & JSXBase.HTMLAttributes<HTMLVocablyPopupElement>;
             "vocably-qr-code": LocalJSX.VocablyQrCode & JSXBase.HTMLAttributes<HTMLVocablyQrCodeElement>;
             "vocably-rate": LocalJSX.VocablyRate & JSXBase.HTMLAttributes<HTMLVocablyRateElement>;
+            "vocably-search-form": LocalJSX.VocablySearchForm & JSXBase.HTMLAttributes<HTMLVocablySearchFormElement>;
             "vocably-sign-in": LocalJSX.VocablySignIn & JSXBase.HTMLAttributes<HTMLVocablySignInElement>;
             "vocably-spinner": LocalJSX.VocablySpinner & JSXBase.HTMLAttributes<HTMLVocablySpinnerElement>;
             "vocably-subscribe": LocalJSX.VocablySubscribe & JSXBase.HTMLAttributes<HTMLVocablySubscribeElement>;

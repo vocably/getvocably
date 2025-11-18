@@ -1,422 +1,352 @@
-import { isItem } from '@vocably/crud';
-import { TagItem } from '@vocably/model';
-import { cloneDeep, isEqual } from 'lodash-es';
-import { registerContentScript } from '../src';
-import { configureContentScript } from '../src/configuration';
+import { defineCustomElements } from '@vocably/extension-content-ui/loader';
 
-let isUserKnowsHowToAdd = false;
+import { Result, TagItem, TranslationCards } from '@vocably/model';
 
-let tags: TagItem[] = [
-  {
-    id: '1',
-    created: 123,
-    data: {
-      title: 'Lesson 1',
-    },
-  },
-  {
-    id: '2',
-    created: 234,
-    data: {
-      title: 'Lesson 2',
-    },
-  },
-];
+export { Components, JSX } from '../src/components';
 
-registerContentScript({
-  api: {
-    appBaseUrl: 'http://localhost:8030',
-    isLoggedIn: () =>
-      Promise.resolve(
-        (document.getElementById('isLoggedIn') as HTMLInputElement).checked
-      ),
-    getInternalProxyLanguage: () =>
-      Promise.resolve(
-        (document.getElementById('hasProxyLanguage') as HTMLInputElement)
-          .checked
-          ? 'en'
-          : null
-      ),
-    setInternalProxyLanguage: async () => {
-      // @ts-ignore
-      document.getElementById('hasProxyLanguage').checked = true;
-    },
-    getInternalSourceLanguage: () =>
-      Promise.resolve(
-        (document.getElementById('hasProxyLanguage') as HTMLInputElement)
-          .checked
-          ? 'nl'
-          : null
-      ),
-    setInternalSourceLanguage: async () => {
-      // @ts-ignore
-      document.getElementById('hasProxyLanguage').checked = true;
-    },
-    isActive: () =>
-      Promise.resolve(
-        (document.getElementById('isActive') as HTMLInputElement).checked
-      ),
-    isEligibleForTrial: () =>
-      Promise.resolve(
-        (document.getElementById('isEligibleForTrial') as HTMLInputElement)
-          .checked
-      ),
-    analyze: (payload) => {
-      console.info('Analyze request', payload);
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const result = JSON.parse(
-            (document.getElementById('response') as HTMLTextAreaElement).value
-          );
+defineCustomElements();
 
-          if (result.success === false) {
-            resolve(result);
-            return;
-          }
+document.querySelectorAll('h1').forEach((h1) => {
+  if (!h1 || !h1.textContent) {
+    return;
+  }
 
-          if (payload.sourceLanguage) {
-            result.value.translation.sourceLanguage = payload.sourceLanguage;
-          }
+  const text = h1.textContent.trim();
+  const id = text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]/g, '');
+  if (!h1.id) h1.id = id || 'h1-' + Math.random().toString(36).slice(2);
+  const link = document.createElement('a');
+  link.href = '#' + h1.id;
+  link.textContent = text;
+  h1.textContent = '';
+  h1.appendChild(link);
 
-          // @ts-ignore
-          result.value.translation.source = payload.source;
-
-          result.value.tags = tags;
-          result.value.lastAdded = new Date().getTime();
-
-          resolve(result);
-        }, parseInt((document.getElementById('delay') as HTMLInputElement).value));
-      });
-    },
-    explain: (payload) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          if (payload.source.split(' ').length === 1) {
-            resolve({
-              success: true,
-              value: {
-                sourceLanguage: payload.sourceLanguage,
-                targetLanguage: payload.targetLanguage,
-                explanation: '',
-              },
-            });
-          }
-
-          resolve({
-            success: true,
-            value: {
-              sourceLanguage: payload.sourceLanguage,
-              targetLanguage: payload.targetLanguage,
-              explanation:
-                'Для правильного понимания этого предложения обратите внимание на следующие моменты:\n' +
-                '\n' +
-                '1. **Грамматическая структура**: \n' +
-                '   - "Alice was beginning" - это конструкция в прошедшем продолженном времени (Past Continuous), указывающая на действие, которое началось в прошлом и продолжалось в тот момент.\n' +
-                '   - "to get very tired" - инфинитивная конструкция, указывающая на процесс становления уставшей.\n' +
-                '\n' +
-                '2. **Смысловые акценты**:\n' +
-                '   - "beginning to get" - подчеркивает начало процесса усталости, а не его завершение.\n' +
-                '   - "very tired" - усиливает степень усталости, показывая, что это не просто легкая усталость.\n' +
-                '\n' +
-                '3. **Контекст**:\n' +
-                '   - "of sitting" - указывает причину усталости, то есть усталость вызвана длительным сидением.\n' +
-                '\n' +
-                'Понимание этих аспектов поможет правильно интерпретировать предложение.',
-            },
-          });
-        }, 4000);
-      });
-    },
-    addCard: (payload) =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            value: {
-              ...payload.translationCards,
-              cards: payload.translationCards.cards.map((card) => {
-                return isEqual(card, payload.card)
-                  ? {
-                      id: 'new-id',
-                      created: new Date().getTime(),
-                      ...payload.card,
-                    }
-                  : card;
-              }),
-              collectionLength: payload.translationCards.collectionLength + 1,
-            },
-          });
-        }, 500);
-      }),
-    getUserEmail: () =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            value: 'dmytro@sneas.io',
-          });
-        }, 500);
-      }),
-    removeCard: (payload) =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            value: {
-              ...payload.translationCards,
-              cards: payload.translationCards.cards.map((card) => {
-                return isEqual(card, payload.card)
-                  ? {
-                      data: payload.card.data,
-                    }
-                  : card;
-              }),
-              collectionLength: payload.translationCards.collectionLength - 1,
-            },
-          });
-        }, 500);
-      }),
-    cleanUp: () => Promise.resolve({ success: true, value: null }),
-    ping: () => Promise.resolve('pong'),
-    listLanguages: () =>
-      Promise.resolve({ success: true, value: ['en', 'nl'] }),
-    listTargetLanguages: () => Promise.resolve(['en', 'ru']),
-    isUserKnowsHowToAdd: () => Promise.resolve(isUserKnowsHowToAdd),
-    setUserKnowsHowToAdd: async (value) => {
-      isUserKnowsHowToAdd = value;
-    },
-    getAudioPronunciation: (payload) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            value: {
-              url: `https://ssl.gstatic.com/dictionary/static/sounds/20200429/hello--_gb_1.mp3`,
-            },
-          });
-        }, 50);
-      });
-    },
-    canPlayOffScreen: async () => {
-      return false;
-    },
-    playAudioPronunciation: async () => {
-      return {
-        success: true,
-        value: true,
-      };
-    },
-    askForRating: () => {
-      const askForRating = document.getElementById(
-        'askForRating'
-      ) as HTMLInputElement;
-      return new Promise((resolve) => {
-        if (askForRating.checked === false) {
-          resolve(false);
-          return;
-        }
-
-        setTimeout(() => resolve(true), 1000);
-      });
-    },
-    saveAskForRatingResponse: () => Promise.resolve(undefined),
-    getLocationLanguage: () => Promise.resolve(null),
-    saveLocationLanguage: () => Promise.resolve(undefined),
-    getSettings: () =>
-      new Promise((resolve) => {
-        resolve({
-          showOnDoubleClick: (
-            document.getElementById('showOnDoubleClick') as HTMLInputElement
-          ).checked,
-
-          autoPlay: (document.getElementById('playSound') as HTMLInputElement)
-            .checked,
-
-          hideSelectionButton: (
-            document.getElementById('hideSelectionButton') as HTMLInputElement
-          ).checked,
-
-          showOnHotKey: (
-            document.getElementById('showOnHotKey') as HTMLInputElement
-          ).checked,
-
-          autodetectLanguage: false,
-        });
-      }),
-
-    updateCard: (payload) => {
-      return new Promise((resolve) => {
-        const translationCards = cloneDeep(payload.translationCards);
-
-        translationCards.cards = translationCards.cards.map((existingCard) => {
-          if (!isEqual(existingCard, payload.card)) {
-            return existingCard;
-          }
-
-          return {
-            ...payload.card,
-            data: {
-              ...payload.card.data,
-              ...payload.data,
-            },
-          };
-        });
-
-        setTimeout(() => {
-          resolve({
-            success: true,
-            value: translationCards,
-          });
-        }, 1000);
-      });
-    },
-
-    attachTag: (payload) =>
-      new Promise((resolve) => {
-        const translationCards = cloneDeep(payload.translationCards);
-        setTimeout(() => {
-          let tag: TagItem;
-          if (isItem(payload.tag)) {
-            tag = payload.tag;
-          } else {
-            tag = {
-              id: Math.random().toString(),
-              data: payload.tag.data,
-              created: +new Date(),
-            };
-
-            tags = [...tags, tag];
-            translationCards.tags = tags;
-          }
-
-          translationCards.cards = translationCards.cards.map(
-            (translationCard) => {
-              return {
-                ...translationCard,
-                data: {
-                  ...translationCard.data,
-                  tags: translationCard.data.tags.map((cardTag) =>
-                    cardTag.id === tag.id ? tag : cardTag
-                  ),
-                },
-              };
-            }
-          );
-
-          const card = translationCards.cards.find(
-            (candidate) => isItem(candidate) && candidate.id == payload.cardId
-          );
-
-          if (card) {
-            card.data.tags.push(tag);
-          }
-
-          return resolve({
-            success: true,
-            value: translationCards,
-          });
-        }, 1000);
-      }),
-    detachTag: (payload) =>
-      new Promise((resolve) => {
-        const translationCards = cloneDeep(payload.translationCards);
-        setTimeout(() => {
-          const card = translationCards.cards.find(
-            (translationCard) =>
-              isItem(translationCard) && translationCard.id === payload.cardId
-          );
-
-          if (card) {
-            card.data.tags = card.data.tags.filter(
-              (cardTag) => cardTag.id !== payload.tag.id
-            );
-          }
-
-          resolve({
-            success: true,
-            value: translationCards,
-          });
-        }, 1000);
-      }),
-    updateTag: (payload) =>
-      new Promise((resolve) =>
-        setTimeout(() => {
-          const translationCards = cloneDeep(payload.translationCards);
-          tags = tags.map((tag) =>
-            tag.id !== payload.tag.id ? tag : payload.tag
-          );
-          translationCards.tags = tags;
-          translationCards.cards.forEach((card) => {
-            card.data.tags = card.data.tags.map((cardTag) =>
-              cardTag.id !== payload.tag.id ? cardTag : payload.tag
-            );
-          });
-
-          resolve({
-            success: true,
-            value: translationCards,
-          });
-        }, 1000)
-      ),
-    deleteTag: (payload) =>
-      new Promise((resolve) =>
-        setTimeout(() => {
-          const translationCards = cloneDeep(payload.translationCards);
-          tags = tags.filter((t) => t.id !== payload.tag.id);
-          translationCards.tags = tags;
-
-          translationCards.cards.forEach((card) => {
-            card.data.tags = card.data.tags.filter(
-              (cardTag) => cardTag.id !== payload.tag.id
-            );
-          });
-
-          resolve({
-            success: true,
-            value: translationCards,
-          });
-        }, 1000)
-      ),
-    getMaxCards: () => {
-      return new Promise((resolve) =>
-        setTimeout(() => {
-          resolve(
-            (document.getElementById('limitCards') as HTMLInputElement).checked
-              ? 50
-              : 'unlimited'
-          );
-        }, 200)
-      );
-    },
-  },
-  youTube: {
-    ytHosts: ['localhost:8020'],
-  },
-  contentScript: {
-    askForRatingEnabled: true,
-    displayMobileLookupButton: false,
-    allowFirstTranslationCongratulation: true,
-    webPaymentLink: 'http://localhost:8030/subscribe',
-    premiumCtaSuffix: ' (from $2.50/month)',
-  },
-}).then();
-
-// @ts-ignore
-document
-  // @ts-ignore
-  .getElementById('showMobileButton')
-  // @ts-ignore
-  .addEventListener('change', (event) => {
-    configureContentScript({
-      // @ts-ignore
-      displayMobileLookupButton: event.target.checked,
+  const observer = new MutationObserver(() => {
+    requestAnimationFrame(() => {
+      if (window.location.hash !== '#' + h1.id) return;
+      h1.scrollIntoView({ block: 'start' });
     });
   });
 
-(window as any).putCaptions = () => {
-  const captionSegment = document.querySelector('.ytp-caption-segment');
+  observer.observe(document.body, { childList: true, subtree: true });
+});
 
-  if (captionSegment) {
-    captionSegment.innerHTML = `These orbits, these arcs\n...something`;
-  }
+const simpletonTranslationResult: Result<TranslationCards> = {
+  success: true,
+  value: {
+    explanation: '',
+    source: 'gemaakt',
+    translation: {
+      source: 'gemaakt',
+      sourceLanguage: 'nl',
+      target: 'created',
+      targetLanguage: 'en',
+      partOfSpeech: 'verb',
+    },
+    cards: [
+      {
+        data: {
+          language: 'nl',
+          source: 'gemaakt',
+          ipa: "xə'mak",
+          translation: 'created, done',
+          definition:
+            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
+          example:
+            '* Bij een gemaakte glimlach lachen onze ogen niet mee.\n* De klok is weer gemaakt.',
+          partOfSpeech: 'verb',
+          g: 'n',
+          tags: [],
+        },
+      },
+    ],
+    tags: [],
+    collectionLength: 50,
+    lastAdded: new Date().getTime(),
+  },
 };
+
+const longCard = JSON.parse(
+  JSON.stringify(simpletonTranslationResult.value.cards[0])
+);
+
+longCard.data.source =
+  'Zo verdeeld als de reacties op zijn uitspraken waren tijdens\n' +
+  '                zijn leven, zo uiteenlopend zijn ook de reacties op de\n' +
+  '                gewelddadige dood van de Amerikaanse politiek activist en\n' +
+  '                invloedrijk mediapersoonlijkheid Charlie Kirk. Naast de\n' +
+  '                gebruikelijke oproepen tot kalmte, verdraagzaamheid en gebed,\n' +
+  '                zijn er ook mensen die zich afvragen of Kirk het er niet naar\n' +
+  '                gemaakt heeft. En er zijn aansporingen af te rekenen met zijn\n' +
+  '                politieke vijanden, allemaal nog voordat er ook maar een dader\n' +
+  '                is gearresteerd of een motief bekend is. ';
+
+console.log(longCard);
+
+// @ts-ignore
+document.getElementById('congrats').card = longCard;
+
+// @ts-ignore
+document.getElementById('congrats-short').card =
+  simpletonTranslationResult.value.cards[0];
+
+const successfulTranslationResult: Result<TranslationCards> = {
+  success: true,
+  value: {
+    collectionLength: 50,
+    lastAdded: 0,
+    explanation: '',
+    source: 'gemaakt',
+    translation: {
+      source: 'gemaakt',
+      sourceLanguage: 'nl',
+      target: 'created',
+      targetLanguage: 'en',
+    },
+    cards: [
+      {
+        id: 'NYS4L',
+        created: 1639827779683,
+        data: {
+          language: 'nl',
+          source: 'maken',
+          ipa: "'makə(n)",
+          example: '* winst maken\n* De klok is weer gemaakt.',
+          definition:
+            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
+          translation: 'to make',
+          partOfSpeech: 'verb',
+          tags: [
+            { id: '1', data: { title: 'Lesson 1' }, created: 123 },
+            { id: '2', data: { title: 'Lesson 2' }, created: 234 },
+          ],
+        },
+      },
+      {
+        data: {
+          language: 'nl',
+          source: 'gemaakt',
+          ipa: "xə'mak",
+          example: 'Bij een gemaakte glimlach lachen onze ogen niet mee.',
+          definition: 'als iets niet natuurlijk is of gebeurt',
+          translation: 'created, done',
+          partOfSpeech: 'adjective',
+          tags: [],
+        },
+      },
+    ],
+    tags: [
+      { id: '1', data: { title: 'Lesson 1' }, created: 123 },
+      { id: '2', data: { title: 'Lesson 2' }, created: 234 },
+      { id: '3', data: { title: 'Lesson 3' }, created: 345 },
+    ],
+  },
+};
+
+const englishTranslationResult: Result<TranslationCards> = {
+  success: true,
+  value: {
+    collectionLength: 50,
+    lastAdded: 0,
+    explanation: '',
+    cards: [
+      {
+        data: {
+          language: 'en',
+          source: 'bring',
+          example:
+            '* Bring your swimsuit.\\n* March usually brings rain.\\n* We added another ten, bringing the number to 104.',
+          definition:
+            '* to have something or somebody with you when you come\n* to make sth come to a place\n* to result in a new total of',
+          translation: '',
+          partOfSpeech: 'verb',
+          interval: 0,
+          repetition: 0,
+          eFactor: 2.5,
+          dueDate: 1651622400000,
+          tags: [],
+        },
+        id: 'ifu0J',
+        created: 1651656677053,
+      },
+    ],
+    source: 'bringing',
+    translation: {
+      source: 'bringing',
+      sourceLanguage: 'en',
+      target: 'bringing',
+      targetLanguage: 'en',
+    },
+    tags: [],
+  },
+};
+
+const editTagForm = document.getElementById(
+  'editTagForm'
+) as HTMLVocablyTagFormElement;
+editTagForm.tagItem = {
+  id: '1',
+  data: {
+    title: 'Luke Skywalker',
+  },
+  created: 123,
+};
+
+// ----
+
+const translationWithTagMenu = document.getElementById(
+  'translationWithTagMenu'
+) as HTMLVocablyTranslationElement;
+
+translationWithTagMenu.result = successfulTranslationResult;
+
+// ----
+
+const menu = document.getElementById('menu') as HTMLVocablyTagsMenuElement;
+menu.existingItems = [
+  { id: '1', data: { title: 'Luke Skywalker' }, created: 123 },
+  { id: '2', data: { title: 'Darth Vader' }, created: 123 },
+  { id: '3', data: { title: 'Leia Organa' }, created: 123 },
+  { id: '4', data: { title: 'Han Solo' }, created: 123 },
+  { id: '5', data: { title: 'Yoda' }, created: 123 },
+  { id: '6', data: { title: 'Obi-Wan Kenobi' }, created: 123 },
+  { id: '7', data: { title: 'Palpatine' }, created: 123 },
+  { id: '8', data: { title: 'Chewbacca' }, created: 123 },
+  { id: '9', data: { title: 'Boba Fett' }, created: 123 },
+  { id: '10', data: { title: 'Padmé Amidala' }, created: 123 },
+  { id: '11', data: { title: 'Anakin Skywalker' }, created: 123 },
+  { id: '12', data: { title: 'Mace Windu' }, created: 123 },
+];
+menu.selectedItems = ['2', '3', '4'];
+
+menu.addEventListener('tagClick', (event) => {
+  // @ts-ignore
+  const tag = event.detail as TagItem;
+  if (menu.selectedItems.includes(tag.id)) {
+    menu.selectedItems = menu.selectedItems.filter(
+      (itemId) => itemId !== tag.id
+    );
+  } else {
+    menu.selectedItems = [tag.id, ...menu.selectedItems];
+  }
+});
+
+// ----
+
+const popup = document.getElementById('popup');
+const closed = document.getElementById('closed');
+
+popup &&
+  popup.addEventListener('close', () => {
+    closed && closed.classList.remove('d-none');
+    setTimeout(() => {
+      closed && closed.classList.add('d-none');
+    }, 2000);
+  });
+
+// ---
+
+const simpletonTranslation = document.getElementById(
+  'simpletonTranslation'
+) as HTMLVocablyTranslationElement;
+simpletonTranslation.existingSourceLanguages = ['en', 'nl'];
+simpletonTranslation.result = simpletonTranslationResult;
+simpletonTranslation.canCongratulate = true;
+simpletonTranslation.askForRating = true;
+simpletonTranslation.explanation = { state: 'loading' };
+simpletonTranslation.extensionPlatform = {
+  name: 'Chrome Web Store',
+  url: 'https://chrome.google.com/webstore/detail/vocably/baocigmmhhdemijfjnjdidbkfgpgogmb',
+  platform: 'chromeExtension',
+  paymentLink: 'web',
+};
+
+// ---
+
+const paywallTranslation = document.getElementById(
+  'paywallTranslation'
+) as HTMLVocablyTranslationElement;
+paywallTranslation.existingSourceLanguages = ['en', 'nl'];
+paywallTranslation.result = simpletonTranslationResult;
+paywallTranslation.canCongratulate = true;
+paywallTranslation.askForRating = true;
+paywallTranslation.explanation = { state: 'loading' };
+paywallTranslation.extensionPlatform = {
+  name: 'Chrome Web Store',
+  url: 'https://chrome.google.com/webstore/detail/vocably/baocigmmhhdemijfjnjdidbkfgpgogmb',
+  platform: 'chromeExtension',
+  paymentLink: 'web',
+};
+paywallTranslation.paymentLink = 'https://app.vocably.pro/subscribe';
+paywallTranslation.maxCards = 50;
+
+// ---
+
+(
+  document.getElementById(
+    'translationEnglishSuccess'
+  ) as HTMLVocablyTranslationElement
+).result = englishTranslationResult;
+
+// ----
+
+const translationReload = document.getElementById(
+  'translationReload'
+) as HTMLVocablyTranslationElement;
+
+translationReload.result = successfulTranslationResult;
+translationReload.loading = true;
+
+// ---
+
+const translationError = document.getElementById(
+  'translationError'
+) as HTMLVocablyTranslationElement;
+
+translationError.result = {
+  success: false,
+  errorCode: 'LANGUAGE_DECK_LOAD_ERROR',
+  reason: 'Unable to fetch cards',
+  extra: { a: 'b' },
+};
+
+// ----
+
+const waitingCheckbox = document.getElementById(
+  'languageWaiting'
+) as HTMLInputElement;
+const languageForm = document.getElementById(
+  'languageForm'
+) as HTMLVocablyLanguageElement;
+
+waitingCheckbox.addEventListener('change', () => {
+  languageForm.waiting = waitingCheckbox.checked;
+});
+
+// ---
+
+const translationAskForRating = document.getElementById(
+  'translationAskForRating'
+) as HTMLVocablyTranslationElement;
+
+translationAskForRating.result = successfulTranslationResult;
+translationAskForRating.askForRating = true;
+translationAskForRating.extensionPlatform = {
+  name: 'Chrome Web Store',
+  url: 'https://chrome.google.com/webstore/detail/vocably/baocigmmhhdemijfjnjdidbkfgpgogmb',
+  platform: 'chromeExtension',
+  paymentLink: 'web',
+};
+
+// ----
+
+const translationSuccess = document.getElementById(
+  'translationSuccess'
+) as HTMLVocablyTranslationElement;
+translationSuccess.existingSourceLanguages = ['en', 'nl'];
+translationSuccess.result = successfulTranslationResult;
+translationSuccess.canCongratulate = true;
+
+// ----

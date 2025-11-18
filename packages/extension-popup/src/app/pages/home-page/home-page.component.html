@@ -30,16 +30,14 @@
   </div>
 
   <ng-container *ngIf="!needsOnboarding">
-    <app-search-form
+    <vocably-search-form
       class="block"
-      (onSubmit)="onSearchFormSubmit($event)"
-      (onChange)="onSearchValuesChanged($event)"
-      [isSearching]="isSearching"
-      [value]="searchValues"
-      [languagePairs]="languagePairs"
+      (valuesChange)="onSearchValuesChanged($event.detail)"
+      (formSubmit)="onSearchFormSubmit($event.detail)"
+      [values]="searchValues"
+      [loading]="isSearching"
       [hideHint]="isSearching || !!searchResult"
-    ></app-search-form>
-
+    ></vocably-search-form>
     <div
       *ngIf="isSearching"
       class="text-center"

@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 :host {
-  --color: #{$v-light-color-primary};
+  --color: #{$v-light-color-body};
   --size: 24px;
 
   display: inline-block;
