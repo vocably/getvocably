@@ -113,14 +113,12 @@ const createTranslationCards = (
   };
 };
 
-searchForm.addEventListener('formSubmit', async (e) => {
-  if (isSearchValues(e.detail)) {
-    saveSearchValues(e.detail);
-  }
+const loadSearchValues = async (searchValues: SearchValues) => {
+  resultsContainer.innerHTML = `<div class="text-center" style="font-size:16px;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
 
-  resultsContainer.innerHTML = `<div class="text-center" style="font-size: 80%;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
-
-  const analyzeResult = await analyze(searchValuesToAnalyzePayload(e.detail));
+  const analyzeResult = await analyze(
+    searchValuesToAnalyzePayload(searchValues)
+  );
 
   const translation = document.createElement(
     'vocably-translation'
@@ -133,4 +131,16 @@ searchForm.addEventListener('formSubmit', async (e) => {
 
   resultsContainer.innerHTML = '';
   resultsContainer.appendChild(translation);
+};
+
+searchForm.addEventListener('formSubmit', async (e) => {
+  if (isSearchValues(e.detail)) {
+    saveSearchValues(e.detail);
+  }
+
+  await loadSearchValues(e.detail);
 });
+
+if (searchForm.values.text.length) {
+  loadSearchValues(searchForm.values).then();
+}
