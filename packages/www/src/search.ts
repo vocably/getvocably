@@ -64,14 +64,15 @@ const saveSearchValues = (searchValues: SearchValues) => {
 };
 
 const searchContainer = document.getElementById('search');
-const translationContainer = document.createElement('div');
+const resultsContainer = document.createElement('div');
+resultsContainer.classList.add('results-container');
 const searchForm = document.createElement(
   'vocably-search-form'
 ) as HTMLVocablySearchFormElement;
 
 searchForm.values = getInitialSearchValues();
 searchContainer.appendChild(searchForm);
-searchContainer.appendChild(translationContainer);
+searchContainer.appendChild(resultsContainer);
 
 searchForm.addEventListener('valuesChange', (e) => {
   if (isSearchValues(e.detail)) {
@@ -117,22 +118,19 @@ searchForm.addEventListener('formSubmit', async (e) => {
     saveSearchValues(e.detail);
   }
 
+  resultsContainer.innerHTML = `<div class="text-center" style="font-size: 80%;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
+
+  const analyzeResult = await analyze(searchValuesToAnalyzePayload(e.detail));
+
   const translation = document.createElement(
     'vocably-translation'
   ) as HTMLVocablyTranslationElement;
-
   translation.classList.add('search-results');
-
   translation.showLanguages = false;
   translation.hideChatGpt = true;
-  translation.loading = true;
-
-  translationContainer.innerHTML = '';
-  translationContainer.appendChild(translation);
-
-  translation.result = createTranslationCards(
-    await analyze(searchValuesToAnalyzePayload(e.detail))
-  );
-
+  translation.result = createTranslationCards(analyzeResult);
   translation.loading = false;
+
+  resultsContainer.innerHTML = '';
+  resultsContainer.appendChild(translation);
 });
