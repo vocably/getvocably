@@ -3,6 +3,7 @@
 $input-padding: 12px;
 
 :host {
+  --font-size: 16px;
   display: block;
   // Reddit sets visibility: hidden for custom elements
   visibility: visible !important;
@@ -78,7 +79,7 @@ $input-padding: 12px;
     display: block;
     width: 100%;
     transition: background-color 0.25s ease-in-out;
-    font-size: 14.4px;
+    font-size: var(--font-size);
 
     &:focus {
       background-color: $v-light-color-elevation-3;
@@ -144,11 +145,11 @@ $input-padding: 12px;
 
 .hint {
   margin-left: $input-padding;
-  font-size: 14.4px;
+  font-size: var(--font-size);
   color: $v-light-color-muted;
 
   .hint-icon-button {
-    vertical-align: bottom;
+    vertical-align: middle;
     border: none;
     display: inline-flex;
     width: 24px;

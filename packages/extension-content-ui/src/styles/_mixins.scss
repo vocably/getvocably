@@ -51,7 +51,7 @@
 
 @mixin input($input-padding-x, $input-padding-y) {
   color: $v-light-color-body !important;
-  font-size: $base-font-size * 0.9 !important;
+  font-size: var(--font-size, #{$base-font-size * 0.9}) !important;
   padding: $input-padding-y $input-padding-x !important;
   border: none !important;
   border-radius: $v-border-radius !important;
