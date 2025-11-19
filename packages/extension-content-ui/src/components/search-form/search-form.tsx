@@ -8,8 +8,13 @@ import {
   Prop,
   State,
 } from '@stencil/core';
-import { GoogleLanguage, languageList } from '@vocably/model';
-import { sortLanguages } from '../translation/sortLanguages';
+import {
+  GoogleLanguage,
+  isGoogleLanguage,
+  languageList,
+  LanguagePairs,
+} from '@vocably/model';
+import { uniq } from 'lodash-es';
 import { SearchValues } from './types';
 
 const article = (phrase: string) => {
@@ -34,6 +39,7 @@ export class VocablySearchForm {
   @Prop() existingTargetLanguages: GoogleLanguage[] = [];
   @Prop() hideHint: boolean = false;
   @Prop() autoFocus: boolean = false;
+  @Prop() languagePairs: LanguagePairs = {};
 
   @Prop() values: SearchValues = {
     text: '',
@@ -78,6 +84,110 @@ export class VocablySearchForm {
     return `Enter any word or phrase here.`;
   }
 
+  getSourceLanguageGroups(): any {
+    const { preferred, available } = Object.keys(languageList).reduce<{
+      preferred: string[];
+      available: string[];
+    }>(
+      (acc, language) => {
+        if (this.languagePairs.hasOwnProperty(language)) {
+          return {
+            ...acc,
+            preferred: [...acc.preferred, language],
+          };
+        } else {
+          return {
+            ...acc,
+            available: [...acc.available, language],
+          };
+        }
+      },
+      {
+        preferred: [],
+        available: [],
+      }
+    );
+
+    const availableGroup = [
+      'Available Languages',
+      available.map((lng) => [lng, this.languageName(lng)] as const),
+    ] as const;
+
+    if (preferred.length === 0) {
+      return [availableGroup];
+    }
+
+    return [
+      [
+        'Preferred Languages',
+        preferred.map((lng) => [lng, this.languageName(lng)] as const),
+      ],
+      availableGroup,
+    ];
+  }
+
+  getTargetLanguageGroups(): any {
+    const allPreferredLanguages: string[] = uniq(
+      Object.values(this.languagePairs).flatMap(
+        (pairs) => pairs.possibleTargetLanguages
+      )
+    );
+
+    const { preferred, available } = Object.keys(languageList).reduce<{
+      preferred: string[];
+      available: string[];
+    }>(
+      (acc, language) => {
+        if (allPreferredLanguages.includes(language)) {
+          return {
+            ...acc,
+            preferred: [...acc.preferred, language],
+          };
+        } else {
+          return {
+            ...acc,
+            available: [...acc.available, language],
+          };
+        }
+      },
+      {
+        preferred: [],
+        available: [],
+      }
+    );
+
+    const availableGroup = [
+      'Available Languages',
+      available.map((lng) => [lng, this.languageName(lng)] as const),
+    ] as const;
+
+    if (preferred.length === 0) {
+      return [availableGroup];
+    }
+
+    return [
+      [
+        'Preferred Languages',
+        preferred.map((lng) => [lng, this.languageName(lng)] as const),
+      ],
+      availableGroup,
+    ];
+  }
+
+  getTargetLanguageCandidate(sourceLanguage: string): string {
+    if (
+      !isGoogleLanguage(sourceLanguage) ||
+      !this.languagePairs.hasOwnProperty(sourceLanguage)
+    ) {
+      return this.values.targetLanguage;
+    }
+
+    return (
+      this.languagePairs[sourceLanguage]?.currentTargetLanguage ??
+      this.values.targetLanguage
+    );
+  }
+
   render() {
     return (
       <Host>
@@ -99,17 +209,11 @@ export class VocablySearchForm {
                 this.valuesChange.emit({
                   ...this.values,
                   sourceLanguage: event.detail,
+                  targetLanguage: this.getTargetLanguageCandidate(event.detail),
                 })
               }
               value={this.values.sourceLanguage}
-              optionGroups={[
-                [
-                  '',
-                  Object.entries(languageList).sort(
-                    sortLanguages(this.existingSourceLanguages)
-                  ),
-                ],
-              ]}
+              optionGroups={this.getSourceLanguageGroups()}
             ></vocably-hint-selector>
             <div>
               <button
@@ -137,14 +241,7 @@ export class VocablySearchForm {
                 })
               }
               value={this.values.targetLanguage}
-              optionGroups={[
-                [
-                  '',
-                  Object.entries(languageList).sort(
-                    sortLanguages(this.existingTargetLanguages)
-                  ),
-                ],
-              ]}
+              optionGroups={this.getTargetLanguageGroups()}
             ></vocably-hint-selector>
           </div>
           <div class="search-input">

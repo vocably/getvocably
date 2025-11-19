@@ -38,6 +38,7 @@
       [loading]="isSearching"
       [hideHint]="isSearching || !!searchResult"
       [autoFocus]="true"
+      [languagePairs]="languagePairs"
     ></vocably-search-form>
     <div
       *ngIf="isSearching"

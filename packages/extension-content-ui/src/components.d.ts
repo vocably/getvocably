@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+import { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, LanguagePairs, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
 import { SearchValues } from "./components/search-form/types";
 import { ComponentExplanationState } from "./components/translation/translation";
-export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
+export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, LanguagePairs, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
 export { SearchValues } from "./components/search-form/types";
 export { ComponentExplanationState } from "./components/translation/translation";
 export namespace Components {
@@ -181,6 +181,10 @@ export namespace Components {
           * @default false
          */
         "hideHint": boolean;
+        /**
+          * @default {}
+         */
+        "languagePairs": LanguagePairs;
         /**
           * @default false
          */
@@ -1016,6 +1020,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "hideHint"?: boolean;
+        /**
+          * @default {}
+         */
+        "languagePairs"?: LanguagePairs;
         /**
           * @default false
          */
