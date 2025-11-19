@@ -1,8 +1,11 @@
 import '@sneas/telephone/iphone-16-max';
 import '@sneas/telephone/pixel-9-pro';
+import { defineCustomElements } from '@vocably/extension-content-ui/loader';
 import * as Bowser from 'bowser';
 import './bootstrap.scss';
 import './styles.scss';
+
+defineCustomElements();
 
 const browser = Bowser.getParser(window.navigator.userAgent);
 const isAndroid = browser.is('android');
