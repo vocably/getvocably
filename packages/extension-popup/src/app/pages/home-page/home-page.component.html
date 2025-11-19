@@ -37,6 +37,7 @@
       [values]="searchValues"
       [loading]="isSearching"
       [hideHint]="isSearching || !!searchResult"
+      [autoFocus]="true"
     ></vocably-search-form>
     <div
       *ngIf="isSearching"

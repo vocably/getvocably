@@ -164,6 +164,10 @@ export namespace Components {
         /**
           * @default false
          */
+        "autoFocus": boolean;
+        /**
+          * @default false
+         */
         "disabled": boolean;
         /**
           * @default []
@@ -992,6 +996,10 @@ declare namespace LocalJSX {
         "platform"?: { name: string; url: string };
     }
     interface VocablySearchForm {
+        /**
+          * @default false
+         */
+        "autoFocus"?: boolean;
         /**
           * @default false
          */

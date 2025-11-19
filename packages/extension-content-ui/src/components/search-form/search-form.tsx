@@ -39,6 +39,7 @@ export class VocablySearchForm {
   @Prop() existingSourceLanguages: GoogleLanguage[] = [];
   @Prop() existingTargetLanguages: GoogleLanguage[] = [];
   @Prop() hideHint: boolean = false;
+  @Prop() autoFocus: boolean = false;
 
   @Prop() values: SearchValues = {
     text: '',
@@ -50,6 +51,16 @@ export class VocablySearchForm {
   @Event() formSubmit: EventEmitter<SearchValues>;
 
   @State() textInputFocused: boolean = false;
+
+  private textInput: HTMLInputElement | undefined = undefined;
+
+  componentDidLoad() {
+    if (this.autoFocus) {
+      setTimeout(() => {
+        this.textInput?.focus();
+      }, 300);
+    }
+  }
 
   languageName(languageCode: string): string {
     // @ts-ignore
@@ -144,6 +155,9 @@ export class VocablySearchForm {
           </div>
           <div class="search-input">
             <input
+              ref={(el) => {
+                this.textInput = el;
+              }}
               autocomplete="off"
               aria-haspopup="false"
               autocapitalize="off"
