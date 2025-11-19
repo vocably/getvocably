@@ -16,6 +16,8 @@ $input-padding: 12px;
 }
 
 .preset {
+  --font-size: calc(var(--font-size) * 0.9);
+
   display: flex;
   flex-direction: row;
   gap: 12px;
@@ -145,7 +147,7 @@ $input-padding: 12px;
 
 .hint {
   margin-left: $input-padding;
-  font-size: var(--font-size);
+  font-size: calc(var(--font-size) * 0.9);
   color: $v-light-color-muted;
 
   .hint-icon-button {

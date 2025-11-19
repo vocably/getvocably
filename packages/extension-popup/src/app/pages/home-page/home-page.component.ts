@@ -55,6 +55,10 @@ export class HomePageComponent implements OnInit {
       localStorage.getItem(lastUsedSearchValuesKey) ?? 'null'
     );
 
+    if (this.searchValues !== null) {
+      this.searchValues.text = '';
+    }
+
     environment.getLanguagePairs().then((languagePairs) => {
       this.languagePairs = languagePairs;
       this.languagePairsLoaded = true;
