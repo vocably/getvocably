@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { detectExtensionPlatform } from '@vocably/browser';
+import { SearchValues } from '@vocably/extension-content-ui/src/components/search-form/types';
 import {
   AddCardPayload,
   AttachTagPayload,
@@ -16,7 +17,6 @@ import {
 } from '@vocably/model';
 import { first, isString } from 'lodash-es';
 import { environment } from '../../../environments/environment';
-import { SearchValues } from '../../search-form/search-form.component';
 import { playDataUrl } from './playDataUrl';
 
 const lastUsedSearchValuesKey = 'lastUsedSearchValues_01';

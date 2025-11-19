@@ -10,6 +10,7 @@ import {
 } from '@stencil/core';
 import { GoogleLanguage, languageList } from '@vocably/model';
 import { sortLanguages } from '../translation/sortLanguages';
+import { SearchValues } from './types';
 
 const article = (phrase: string) => {
   if (
@@ -19,13 +20,6 @@ const article = (phrase: string) => {
   } else {
     return 'a';
   }
-};
-
-export type SearchValues = {
-  text: string;
-  sourceLanguage: string;
-  targetLanguage: string;
-  isReversed: boolean;
 };
 
 @Component({

@@ -6,10 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
-import { SearchValues } from "./components/search-form/search-form";
+import { SearchValues } from "./components/search-form/types";
 import { ComponentExplanationState } from "./components/translation/translation";
 export { AddCardPayload, AttachTagPayload, AudioPronunciationPayload, Card, DeleteTagPayload, DetachTagPayload, GoogleLanguage, GoogleTTSLanguage, RateInteractionPayload, RemoveCardPayload, Result, TagCandidate, TagItem, TranslationCard, TranslationCards, UpdateCardPayload, UpdateTagPayload } from "@vocably/model";
-export { SearchValues } from "./components/search-form/search-form";
+export { SearchValues } from "./components/search-form/types";
 export { ComponentExplanationState } from "./components/translation/translation";
 export namespace Components {
     interface VocablyAnimatedContentWrapper {
