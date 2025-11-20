@@ -78,3 +78,5 @@ $hero-bg-color-byte: 250;
 .container-lg {
   max-width: map.get($container-max-widths, 'lg');
 }
+
+@import './styles/search.scss';

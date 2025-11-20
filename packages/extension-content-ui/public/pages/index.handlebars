@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>@Vocably: Extension Content UI</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Search form</h1>
+      {{> search-form }}
+
+      <h1>Payment</h1>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="gemaakt"
+            source-language="nl"
+            target-language="en"
+            id="paywallTranslation"
+            premium-cta-suffix=" (from $2.50/month)"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h1>First time user</h1>
+      {{> first-time-user }}
+
+      <h1>Rating Request</h1>
+      {{> rating }}
+
+      <h1>Tags</h1>
+
+      <div class="mb-3">
+        <vocably-tag-form id="editTagForm"></vocably-tag-form>
+      </div>
+
+      <div class="mb-3">
+        <vocably-tag-form></vocably-tag-form>
+      </div>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="gemaakt"
+            source-language="nl"
+            target-language="en"
+            id="translationWithTagMenu"
+            `
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <p>
+        <vocably-tags-menu></vocably-tags-menu>
+      </p>
+
+      <p>
+        <vocably-tags-menu id="menu"></vocably-tags-menu>
+      </p>
+      <h1>Popup Buttons</h1>
+      <p>
+        <vocably-button></vocably-button>
+      </p>
+
+      <p>
+        <vocably-mobile-button></vocably-mobile-button>
+      </p>
+
+      <h1>Popups</h1>
+
+      <h2>Loading</h2>
+      <div class="mb-3">
+        <vocably-popup id="popup"
+          ><vocably-translation phrase="geweldig"></vocably-translation
+        ></vocably-popup>
+        <div id="closed" class="d-none pt-2">Close clicked.</div>
+      </div>
+
+      <h2>Success</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="gemaakt"
+            source-language="nl"
+            target-language="en"
+            id="translationSuccess"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h2>Success. Simple</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="gemaakt"
+            source-language="nl"
+            target-language="en"
+            id="simpletonTranslation"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h2>Main language</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="bringing"
+            source-language="en"
+            target-language="en"
+            id="translationEnglishSuccess"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h2>Changing language</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="gemaakt"
+            id="translationReload"
+            source-language="nl"
+            target-language="en"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h2>Error</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-translation
+            phrase="geweldig"
+            id="translationError"
+            source-language="nl"
+            target-language="en"
+          ></vocably-translation
+        ></vocably-popup>
+      </div>
+
+      <h2>Sign In</h2>
+
+      <div class="mb-3">
+        <vocably-popup><vocably-sign-in></vocably-sign-in></vocably-popup>
+      </div>
+
+      <h2>Language</h2>
+
+      <div class="mb-3">
+        <div>
+          <vocably-popup
+            ><vocably-language
+              source-language="nl"
+              target-language="en"
+              id="languageForm"
+            ></vocably-language
+          ></vocably-popup>
+        </div>
+        <div class="form-check form-check-inline form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="languageWaiting"
+          />
+          <label class="form-check-label" for="languageWaiting"
+            >Loading...</label
+          >
+        </div>
+      </div>
+
+      <h2>Free trial</h2>
+
+      <div class="mb-3">
+        <vocably-popup
+          ><vocably-subscribe trial="true"></vocably-subscribe
+        ></vocably-popup>
+      </div>
+
+      <h2>No free trial</h2>
+
+      <div class="mb-3">
+        <vocably-popup><vocably-subscribe></vocably-subscribe></vocably-popup>
+      </div>
+
+      <div class="mb-3">
+        <vocably-add-card-hint></vocably-add-card-hint>
+      </div>
+    </div>
+  </body>
+</html>

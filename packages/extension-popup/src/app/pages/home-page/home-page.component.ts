@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { detectExtensionPlatform } from '@vocably/browser';
+import { SearchValues } from '@vocably/extension-content-ui/src/components/search-form/types';
 import {
   AddCardPayload,
   AttachTagPayload,
@@ -16,7 +17,6 @@ import {
 } from '@vocably/model';
 import { first, isString } from 'lodash-es';
 import { environment } from '../../../environments/environment';
-import { SearchValues } from '../../search-form/search-form.component';
 import { playDataUrl } from './playDataUrl';
 
 const lastUsedSearchValuesKey = 'lastUsedSearchValues_01';
@@ -55,6 +55,10 @@ export class HomePageComponent implements OnInit {
       localStorage.getItem(lastUsedSearchValuesKey) ?? 'null'
     );
 
+    if (this.searchValues !== null) {
+      this.searchValues.text = '';
+    }
+
     environment.getLanguagePairs().then((languagePairs) => {
       this.languagePairs = languagePairs;
       this.languagePairsLoaded = true;
@@ -87,7 +91,7 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  onSearchValuesChanged(values: SearchValues) {
+  onSearchValuesChanged(values: any) {
     localStorage.setItem(lastUsedSearchValuesKey, JSON.stringify(values));
     this.searchValues = values;
   }
@@ -102,7 +106,7 @@ export class HomePageComponent implements OnInit {
     this.isRetrying = false;
   }
 
-  async onSearchFormSubmit(values: SearchValues) {
+  async onSearchFormSubmit(values: any) {
     localStorage.setItem(lastUsedSearchValuesKey, JSON.stringify(values));
     this.searchValues = values;
 

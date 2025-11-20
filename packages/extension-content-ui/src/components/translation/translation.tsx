@@ -107,6 +107,7 @@ export class VocablyTranslation {
   @Prop() explanation: ComponentExplanationState = { state: 'none' };
   @Prop() explanationAnimationDelay = 0;
   @Prop() isRetrying = false;
+  @Prop() isLightweight = false;
 
   @Event() ratingInteraction: EventEmitter<RateInteractionPayload>;
 
@@ -649,7 +650,7 @@ export class VocablyTranslation {
                                   </button>
                                 </div>
                               )}
-                              {isDetachedCardItem(card) && (
+                              {!this.isLightweight && isDetachedCardItem(card) && (
                                 <button
                                   class={{
                                     'vocably-card-action-button': true,
@@ -718,6 +719,7 @@ export class VocablyTranslation {
                                 class="vocably-mb-6"
                                 card={card}
                                 updateCard={this.makeUpdateCard(card)}
+                                isLightweight={this.isLightweight}
                               ></vocably-card-definitions>
                               {card.data.example && (
                                 <div>

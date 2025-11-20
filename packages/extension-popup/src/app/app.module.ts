@@ -11,15 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
-import { SearchFormComponent } from './search-form/search-form.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomePageComponent,
-    SettingsPageComponent,
-    SearchFormComponent,
-  ],
+  declarations: [AppComponent, HomePageComponent, SettingsPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

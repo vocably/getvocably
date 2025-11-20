@@ -1,0 +1,7 @@
+<vocably-search-form id='searchForm'></vocably-search-form>
+<script type='text/javascript'>
+  const searchForm = document.getElementById('searchForm'); searchForm.values =
+  { sourceLanguage: 'de', targetLanguage: 'en', isReversed: false, text: '', };
+  searchForm.addEventListener('valuesChange', (e) => { searchForm.values =
+  e.detail; });
+</script>

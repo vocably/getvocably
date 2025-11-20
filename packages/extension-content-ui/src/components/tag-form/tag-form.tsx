@@ -22,7 +22,9 @@ export class VocablyTagsMenu {
     const initialTitle = this.tagItem ? this.tagItem.data.title : '';
     this.title = initialTitle;
     this.textInput.value = initialTitle;
-    this.textInput.focus();
+    if (window.location.port !== '8010') {
+      this.textInput.focus();
+    }
   }
 
   isDisabled() {

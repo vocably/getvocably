@@ -8,7 +8,7 @@
     is almost ready!
   </div>
   <a class="settings" [routerLink]="['settings']"
-    ><mat-icon>tune</mat-icon> Settings</a
+    ><mat-icon>page_info</mat-icon> Settings</a
   >
 </div>
 
@@ -30,16 +30,16 @@
   </div>
 
   <ng-container *ngIf="!needsOnboarding">
-    <app-search-form
+    <vocably-search-form
       class="block"
-      (onSubmit)="onSearchFormSubmit($event)"
-      (onChange)="onSearchValuesChanged($event)"
-      [isSearching]="isSearching"
-      [value]="searchValues"
-      [languagePairs]="languagePairs"
+      (valuesChange)="onSearchValuesChanged($event.detail)"
+      (formSubmit)="onSearchFormSubmit($event.detail)"
+      [values]="searchValues"
+      [loading]="isSearching"
       [hideHint]="isSearching || !!searchResult"
-    ></app-search-form>
-
+      [autoFocus]="true"
+      [languagePairs]="languagePairs"
+    ></vocably-search-form>
     <div
       *ngIf="isSearching"
       class="text-center"

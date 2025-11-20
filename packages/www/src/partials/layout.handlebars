@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
+    <script>
+      window.publicApiBaseUrl = '{{ htmlWebpackPlugin.options.environment.publicApiBaseUrl }}';
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />

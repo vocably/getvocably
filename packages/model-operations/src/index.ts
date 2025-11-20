@@ -3,5 +3,6 @@ export * from './compareCards';
 export * from './deckSerializer';
 export * from './getLastAdded';
 export * from './languageToLexicalaLanguage';
+export * from './restClient';
 export * from './retry';
 export * from './setStreak';

@@ -1,7 +1,7 @@
 @import '../../styles/component';
 $input-padding-x: 14px;
 $input-padding-y: 10px;
-$hint-screen-max-width: 600px;
+$hint-screen-max-width: 500px;
 
 :host {
   @include base-font();
@@ -23,7 +23,7 @@ $hint-screen-max-width: 600px;
   left: $input-padding-x;
   display: inline-flex;
   align-items: center;
-  font-size: $base-font-size * 0.9 !important;
+  font-size: var(--font-size, #{$base-font-size * 0.9}) !important;
   pointer-events: none;
   padding-right: 4px;
 }
