@@ -12,6 +12,7 @@ import { join } from '@vocably/sulna';
 import { isObject } from 'lodash-es';
 import { analyze } from './search/analyze';
 
+document.body.classList.add('vocably-extension-disabled');
 defineCustomElements();
 
 const isSearchValues = (value: any): value is SearchValues => {
