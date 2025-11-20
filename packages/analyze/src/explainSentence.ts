@@ -29,13 +29,13 @@ export const explainGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a helpful and knowledgeable language tutor. A user is learning ${trimLanguage(
+          `Shortly explain what to pay attention to for proper understanding of the submitted ${trimLanguage(
             languageList[sourceLanguage]
-          )}.`,
-          `Shortly explain what to pay attention to for proper understanding of the submitted sentence.`,
+          )} sentence`,
           `Provide explanation in ${trimLanguage(
             languageList[targetLanguage]
           )}'`,
+          `Use bullet points.`,
           `Avoid introduction.`,
         ],
         thinkingConfig: {
