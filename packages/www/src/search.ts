@@ -11,6 +11,7 @@ import {
 import { join } from '@vocably/sulna';
 import { isObject } from 'lodash-es';
 import { analyze } from './search/analyze';
+import { playAudioPronunciation } from './search/playAudioPronunciation';
 
 document.body.classList.add('vocably-extension-disabled');
 defineCustomElements();
@@ -130,6 +131,7 @@ const loadSearchValues = async (searchValues: SearchValues) => {
   translation.hideChatGpt = true;
   translation.result = createTranslationCards(analyzeResult);
   translation.loading = false;
+  translation.playAudioPronunciation = playAudioPronunciation;
 
   resultsContainer.innerHTML = '';
   resultsContainer.appendChild(translation);
