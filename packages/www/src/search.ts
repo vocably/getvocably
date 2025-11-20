@@ -1,3 +1,4 @@
+import { google } from '@google-cloud/translate/build/protos/protos';
 import { defineCustomElements } from '@vocably/extension-content-ui/loader';
 import { SearchValues } from '@vocably/extension-content-ui/src/components/search-form/types';
 import {
@@ -12,6 +13,7 @@ import { join } from '@vocably/sulna';
 import { isObject } from 'lodash-es';
 import { analyze } from './search/analyze';
 import { playAudioPronunciation } from './search/playAudioPronunciation';
+import translation = google.cloud.translation;
 
 document.body.classList.add('vocably-extension-disabled');
 defineCustomElements();
@@ -135,6 +137,12 @@ const loadSearchValues = async (searchValues: SearchValues) => {
 
   resultsContainer.innerHTML = '';
   resultsContainer.appendChild(translation);
+
+  translation.addEventListener('retry', () => {
+    if (isSearchValues(searchForm.values)) {
+      loadSearchValues(searchForm.values).then();
+    }
+  });
 };
 
 searchForm.addEventListener('formSubmit', async (e) => {
@@ -143,12 +151,6 @@ searchForm.addEventListener('formSubmit', async (e) => {
   }
 
   await loadSearchValues(e.detail);
-});
-
-searchForm.addEventListener('retry', () => {
-  if (isSearchValues(searchForm.values)) {
-    loadSearchValues(searchForm.values).then();
-  }
 });
 
 if (searchForm.values.text.length) {

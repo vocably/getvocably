@@ -5,8 +5,7 @@ export const playAudioPronunciation = async (
   payload: AudioPronunciationPayload
 ): Promise<Result<true>> => {
   const result = await request(
-    'https://public-api.dev.env.vocably.pro/audio?' +
-      new URLSearchParams(payload),
+    `${window['publicApiBaseUrl']}/audio?` + new URLSearchParams(payload),
     {
       method: 'GET',
     }

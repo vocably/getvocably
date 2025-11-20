@@ -4,6 +4,7 @@ module.exports = {
   environment: {
     baseUrl: '${local.www_base_url}',
     piwikId: '${var.piwik_www_id}',
+    publicApiBaseUrl: 'https://${local.public_api_domain}',
   },
 };
   EOT
