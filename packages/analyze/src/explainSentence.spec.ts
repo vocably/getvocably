@@ -5,7 +5,7 @@ import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
 
-xdescribe('explainSentence', () => {
+describe('explainSentence', () => {
   if (process.env.TEST_SKIP_SPEC === 'true') {
     it('skip spec testing', () => {});
     return;
