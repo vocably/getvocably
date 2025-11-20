@@ -19,6 +19,7 @@ export class VocablyCardTranslation {
   @Prop() updateCard: (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
+  @Prop() disableEditing: boolean = false;
 
   @State() isEdit = false;
   @State() isSaving = false;
@@ -57,6 +58,10 @@ export class VocablyCardTranslation {
   };
 
   render() {
+    if (this.disableEditing) {
+      return <div class="vocably-italic">{this.card.data.translation}</div>;
+    }
+
     if (!this.isEdit) {
       return (
         <div

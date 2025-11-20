@@ -125,6 +125,7 @@ const loadSearchValues = async (searchValues: SearchValues) => {
     'vocably-translation'
   ) as HTMLVocablyTranslationElement;
   translation.classList.add('search-results');
+  translation.isLightweight = true;
   translation.showLanguages = false;
   translation.hideChatGpt = true;
   translation.result = createTranslationCards(analyzeResult);
@@ -140,6 +141,12 @@ searchForm.addEventListener('formSubmit', async (e) => {
   }
 
   await loadSearchValues(e.detail);
+});
+
+searchForm.addEventListener('retry', () => {
+  if (isSearchValues(searchForm.values)) {
+    loadSearchValues(searchForm.values).then();
+  }
 });
 
 if (searchForm.values.text.length) {

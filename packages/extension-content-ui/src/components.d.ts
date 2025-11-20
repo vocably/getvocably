@@ -43,6 +43,10 @@ export namespace Components {
     }
     interface VocablyCardDefinitions {
         "card": TranslationCard;
+        /**
+          * @default false
+         */
+        "isLightweight": boolean;
         "updateCard": (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
@@ -58,6 +62,10 @@ export namespace Components {
     }
     interface VocablyCardTranslation {
         "card": TranslationCard;
+        /**
+          * @default false
+         */
+        "disableEditing": boolean;
         "updateCard": (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
@@ -278,6 +286,10 @@ export namespace Components {
           * @default false
          */
         "hideChatGpt": boolean;
+        /**
+          * @default false
+         */
+        "isLightweight": boolean;
         /**
           * @default false
          */
@@ -876,6 +888,10 @@ declare namespace LocalJSX {
     }
     interface VocablyCardDefinitions {
         "card"?: TranslationCard;
+        /**
+          * @default false
+         */
+        "isLightweight"?: boolean;
         "updateCard"?: (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
@@ -891,6 +907,10 @@ declare namespace LocalJSX {
     }
     interface VocablyCardTranslation {
         "card"?: TranslationCard;
+        /**
+          * @default false
+         */
+        "disableEditing"?: boolean;
         "updateCard"?: (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
@@ -1122,6 +1142,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "hideChatGpt"?: boolean;
+        /**
+          * @default false
+         */
+        "isLightweight"?: boolean;
         /**
           * @default false
          */

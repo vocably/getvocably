@@ -17,29 +17,28 @@ export class VocablyCardDefinitions {
   @Prop() updateCard: (
     data: Partial<Card>
   ) => Promise<Result<TranslationCards>>;
+  @Prop() isLightweight: boolean = false;
+
+  private renderTranslation() {
+    return (
+      <vocably-card-translation
+        card={this.card}
+        updateCard={this.updateCard}
+        disableEditing={this.isLightweight}
+      ></vocably-card-translation>
+    );
+  }
 
   render() {
     const definitions = explode(this.card.data.definition);
 
     if (definitions.length === 0) {
-      return (
-        <vocably-card-translation
-          card={this.card}
-          updateCard={this.updateCard}
-        ></vocably-card-translation>
-      );
+      return this.renderTranslation();
     }
 
     return (
       <ul class="vocably-list">
-        {this.card.data.translation && (
-          <li>
-            <vocably-card-translation
-              card={this.card}
-              updateCard={this.updateCard}
-            ></vocably-card-translation>
-          </li>
-        )}
+        {this.card.data.translation && <li>{this.renderTranslation()}</li>}
         {definitions.map((item) => (
           <li>{item}</li>
         ))}
