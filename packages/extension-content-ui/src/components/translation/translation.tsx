@@ -474,381 +474,368 @@ export class VocablyTranslation {
           )}
           {this.result && this.result.success === true && (
             <Fragment>
-              <div class="vocably-translation" data-test="translation">
-                <div class="vocably-translation-section">
-                  {this.showLanguages && (
-                    <div class="vocably-mb-12 vocably-language-selector">
-                      <div class="vocably-language-wrapper">
-                        {sourceLanguageSelector}
-                      </div>
-                      <vocably-icon-arrow-right class="vocably-from-to"></vocably-icon-arrow-right>
-                      <div class="vocably-language-wrapper">
-                        {targetLanguageSelector}
-                      </div>
-                    </div>
-                  )}
-                  {showChatGpt && (
-                    <div class="vocably-mb-12">
-                      <div class="vocably-small vocably-muted vocably-mb-4">
-                        ChatGPT thinks that{' '}
-                      </div>
-                      <span class="vocably-emphasized">
-                        {isGoogleTTSLanguage(
-                          this.result.value.translation.sourceLanguage
-                        ) && (
-                          <vocably-play-sound
-                            text={this.phrase}
-                            language={
-                              this.result.value.translation.sourceLanguage
-                            }
-                            playAudioPronunciation={this.playAudioPronunciation}
-                          />
-                        )}
-                        {this.phrase}
-                      </span>{' '}
-                      means <i>{this.result.value.translation.target}</i>
-                    </div>
-                  )}
-                  <div
-                    class="vocably-cards-container"
-                    style={{ position: 'relative' }}
-                  >
-                    <div class="vocably-cards" data-test="cards">
-                      {this.result.value.cards.map((card, itemIndex) => (
-                        <div data-test="card" class="vocably-card">
-                          {this.canCongratulate && (
-                            <div
-                              class={
-                                'vocably-added-congratulation' +
-                                (this.congratulateItemIndex === itemIndex
-                                  ? ' vocably-added-congratulation-visible'
-                                  : '')
-                              }
-                            >
-                              <div class="vocably-added-congratulation-content">
-                                <div class="vocably-added-congratulation-content-1">
-                                  <vocably-first-translation-congratulation
-                                    card={card}
-                                  ></vocably-first-translation-congratulation>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          {!canAdd && (
-                            <div
-                              class={{
-                                'max-limit-1': true,
-                                'max-limit-visible':
-                                  this.addAttemptIndex === itemIndex,
-                              }}
-                            >
-                              <div class="max-limit-2">
-                                <div class="max-limit-3">
-                                  <div>
-                                    The{' '}
-                                    <strong class="vocably-emphasized">
-                                      Free Plan
-                                    </strong>{' '}
-                                    allows to freely save up to{' '}
-                                    <strong>{this.maxCards}</strong> cards.
-                                  </div>
-                                  <div>
-                                    After you reached the limit, you can save{' '}
-                                    <strong class="vocably-emphasized">
-                                      one card per day
-                                    </strong>
-                                    .
-                                  </div>
-                                  <a
-                                    href={this.paymentLink}
-                                    target="_blank"
-                                    class="upgrade-button"
-                                    onClick={() => {
-                                      this.watchMePaying.emit();
-                                    }}
-                                  >
-                                    Upgrade to Premium{this.premiumCtaSuffix}
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          <div class="vocably-card-container">
-                            <div class="vocably-card-action">
-                              {isCardItem(card) && (
-                                <div
-                                  style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '8px',
-                                    alignItems: 'flex-end',
-                                    justifyContent: 'flex-end',
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      gap: '4px',
-                                      marginTop: '4px',
-                                    }}
-                                  >
-                                    <button
-                                      class="vocably-card-action-button"
-                                      title="Remove card"
-                                      disabled={this.isUpdating !== null}
-                                      onClick={() => {
-                                        if (this.disabled) {
-                                          return false;
-                                        }
-
-                                        this.saveCardClicked = true;
-                                        if (
-                                          this.congratulateItemIndex ===
-                                          itemIndex
-                                        ) {
-                                          this.congratulateItemIndex = -1;
-                                        }
-                                        this.addedItemIndex = -1;
-                                        this.result &&
-                                          this.result.success === true &&
-                                          this.removeCard.emit({
-                                            translationCards: this.result.value,
-                                            card,
-                                          });
-                                      }}
-                                    >
-                                      {this.isUpdating === card && (
-                                        <vocably-icon-spin></vocably-icon-spin>
-                                      )}
-                                      {this.isUpdating !== card && (
-                                        <vocably-icon-bookmark-check></vocably-icon-bookmark-check>
-                                      )}
-                                    </button>
-                                  </div>
-
-                                  <button
-                                    class="vocably-card-action-button"
-                                    title="Edit tags"
-                                    disabled={this.isUpdating !== null}
-                                    onClick={(e) => {
-                                      if (this.disabled) {
-                                        return;
-                                      }
-
-                                      e.target &&
-                                        this.showTagMenu(
-                                          e.target as HTMLElement,
-                                          card.id
-                                        );
-                                    }}
-                                  >
-                                    {this.isUpdating !== card && (
-                                      <vocably-icon-tag></vocably-icon-tag>
-                                    )}
-                                  </button>
-                                </div>
-                              )}
-                              {!this.isLightweight && isDetachedCardItem(card) && (
-                                <button
-                                  class={{
-                                    'vocably-card-action-button': true,
-                                    'vocably-card-add-button': true,
-                                  }}
-                                  title="Add card"
-                                  disabled={this.isUpdating !== null}
-                                  onClick={() => {
-                                    if (this.disabled) {
-                                      return false;
-                                    }
-
-                                    if (!canAdd) {
-                                      this.addAttemptIndex = itemIndex;
-                                      return;
-                                    } else {
-                                      this.addAttemptIndex = -1;
-                                    }
-
-                                    this.saveCardClicked = true;
-                                    if (this.congratulateItemIndex === -1) {
-                                      this.congratulateItemIndex = itemIndex;
-                                    }
-
-                                    this.addedItemIndex = itemIndex;
-
-                                    this.result &&
-                                      this.result.success === true &&
-                                      this.addCard.emit({
-                                        translationCards: this.result.value,
-                                        card,
-                                      });
-                                  }}
-                                >
-                                  {this.isUpdating === card && (
-                                    <vocably-icon-spin></vocably-icon-spin>
-                                  )}
-                                  {this.isUpdating !== card && (
-                                    <vocably-icon-plus></vocably-icon-plus>
-                                  )}
-                                  <span
-                                    style={{
-                                      marginLeft: '2px',
-                                      display: 'inline-block',
-                                      fontSize: '16px',
-                                    }}
-                                  >
-                                    Learn
-                                  </span>
-                                </button>
-                              )}
-                            </div>
-                            <div class="vocably-safe-action-area">
-                              <vocably-card-source
-                                card={card}
-                                playAudioPronunciation={
-                                  this.playAudioPronunciation
-                                }
-                                style={{
-                                  marginTop: '6px',
-                                  marginBottom: '6px',
-                                }}
-                                class="vocably-card-source"
-                              ></vocably-card-source>
-                              <vocably-card-definitions
-                                class="vocably-mb-6"
-                                card={card}
-                                updateCard={this.makeUpdateCard(card)}
-                                isLightweight={this.isLightweight}
-                              ></vocably-card-definitions>
-                              {card.data.example && (
-                                <div>
-                                  <div class="vocably-small vocably-mb-6">
-                                    Example:
-                                  </div>
-                                  <vocably-card-examples
-                                    example={card.data.example}
-                                  ></vocably-card-examples>
-                                </div>
-                              )}
-                              {isItem(card) && card.data.tags.length > 0 && (
-                                <div
-                                  class="vocably-mt-12"
-                                  style={{
-                                    display: 'flex',
-                                    gap: '6px',
-                                    flexWrap: 'wrap',
-                                  }}
-                                >
-                                  {card.data.tags.map((tagItem) => (
-                                    <div class="vocably-tag">
-                                      {tagItem.data.title}
-
-                                      <button
-                                        type="button"
-                                        class="vocably-tag-remove-button"
-                                        aria-label="Remove this tag from the card"
-                                        title="Remove this tag from the card"
-                                        onClick={this.detachTagClick(
-                                          card,
-                                          tagItem
-                                        )}
-                                      >
-                                        {this.removing &&
-                                          this.removing.card === card &&
-                                          this.removing.tag === tagItem && (
-                                            <vocably-icon-spin></vocably-icon-spin>
-                                          )}
-                                        {(!this.removing ||
-                                          this.removing.card !== card ||
-                                          this.removing.tag !== tagItem) && (
-                                          <vocably-icon-remove class="vocably-tag-remove-button-icon"></vocably-icon-remove>
-                                        )}
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+              {this.showLanguages && (
+                <div class="vocably-mb-18 vocably-language-selector">
+                  <div class="vocably-language-wrapper">
+                    {sourceLanguageSelector}
                   </div>
-                  <vocably-animated-content-wrapper
-                    delay={this.explanationAnimationDelay}
-                    class="explanation-frame"
+                  <vocably-icon-arrow-right class="vocably-from-to"></vocably-icon-arrow-right>
+                  <div class="vocably-language-wrapper">
+                    {targetLanguageSelector}
+                  </div>
+                </div>
+              )}
+              {showChatGpt && (
+                <div class="padding-left-12 vocably-bottom-12-border">
+                  <div class="vocably-small vocably-muted vocably-mb-4">
+                    ChatGPT thinks that{' '}
+                  </div>
+                  <span class="vocably-emphasized">
+                    {isGoogleTTSLanguage(
+                      this.result.value.translation.sourceLanguage
+                    ) && (
+                      <vocably-play-sound
+                        text={this.phrase}
+                        language={this.result.value.translation.sourceLanguage}
+                        playAudioPronunciation={this.playAudioPronunciation}
+                      />
+                    )}
+                    {this.phrase}
+                  </span>{' '}
+                  means <i>{this.result.value.translation.target}</i>
+                </div>
+              )}
+              {this.result.value.cards.map((card, itemIndex, cardsArray) => (
+                <Fragment>
+                  {!canAdd && (
+                    <div
+                      class={{
+                        'max-limit-1': true,
+                        'max-limit-visible': this.addAttemptIndex === itemIndex,
+                      }}
+                    >
+                      <div class="max-limit-2">
+                        <div class="panel max-limit-3">
+                          <div>
+                            The{' '}
+                            <strong class="vocably-emphasized">
+                              Free Plan
+                            </strong>{' '}
+                            allows to freely save up to{' '}
+                            <strong>{this.maxCards}</strong> cards.
+                          </div>
+                          <div>
+                            After you reached the limit, you can save{' '}
+                            <strong class="vocably-emphasized">
+                              one card per day
+                            </strong>
+                            .
+                          </div>
+                          <a
+                            href={this.paymentLink}
+                            target="_blank"
+                            class="upgrade-button"
+                            onClick={() => {
+                              this.watchMePaying.emit();
+                            }}
+                          >
+                            Upgrade to Premium{this.premiumCtaSuffix}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div
+                    data-test="card"
+                    class={{
+                      'vocably-card padding-left-12': true,
+                      'vocably-bottom-12-border':
+                        itemIndex < cardsArray.length - 1,
+                    }}
                   >
-                    {this.explanation.state !== 'none' && (
-                      <div class="vocably-pt-12">
-                        <div class="explanation-frame-content">
-                          {this.explanation.state === 'loading' && (
-                            <Fragment>
-                              <span
-                                style={{
-                                  display: 'inline-block',
-                                  verticalAlign: 'middle',
-                                  fontSize: '13px',
-                                }}
-                              >
-                                Requesting extra info from ChatGPT
-                              </span>
-                              <vocably-inline-loader
-                                style={{ marginLeft: '8px' }}
-                              ></vocably-inline-loader>
-                            </Fragment>
-                          )}
-                          {this.explanation.state === 'error' &&
-                            this.explanation.error}
-                          {this.explanation.state === 'loaded' && (
-                            <div
-                              class="explanation"
-                              innerHTML={mdConverter.makeHtml(
-                                this.explanation.value
-                              )}
-                            ></div>
-                          )}
+                    {this.canCongratulate && (
+                      <div
+                        class={
+                          'vocably-added-congratulation' +
+                          (this.congratulateItemIndex === itemIndex
+                            ? ' vocably-added-congratulation-visible'
+                            : '')
+                        }
+                      >
+                        <div class="vocably-pb-12">
+                          <vocably-first-translation-congratulation
+                            card={card}
+                          ></vocably-first-translation-congratulation>
                         </div>
                       </div>
                     )}
-                  </vocably-animated-content-wrapper>
-                  {isOkayToAskForRating && (
-                    <div
-                      class="vocably-rate-container"
-                      ref={(el) => (this.askForRatingContainer = el)}
-                    >
-                      <div style={{ paddingTop: '12px' }}>
-                        <div class="vocably-cards vocably-rate-padding">
-                          <vocably-rate
-                            platform={this.extensionPlatform}
-                            onUserSelected={(choiceEvent) => {
-                              switch (choiceEvent.detail) {
-                                case 'review':
-                                case 'feedback':
-                                  break;
-                                case 'later':
-                                  this.askForRatingContainer &&
-                                    this.askForRatingContainer.classList.add(
-                                      'vocably-rate-container-hidden'
-                                    );
-                                  break;
-                                case 'never':
-                                  this.askForRatingContainer &&
-                                    this.askForRatingContainer.classList.add(
-                                      'vocably-rate-container-hidden'
-                                    );
-                                  break;
+                    <div class="vocably-card-container">
+                      <div class="vocably-card-action">
+                        {isCardItem(card) && (
+                          <div
+                            style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '8px',
+                              alignItems: 'flex-end',
+                              justifyContent: 'flex-end',
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: '4px',
+                                marginTop: '4px',
+                              }}
+                            >
+                              <button
+                                class="vocably-card-action-button"
+                                title="Remove card"
+                                disabled={this.isUpdating !== null}
+                                onClick={() => {
+                                  if (this.disabled) {
+                                    return false;
+                                  }
+
+                                  this.saveCardClicked = true;
+                                  if (
+                                    this.congratulateItemIndex === itemIndex
+                                  ) {
+                                    this.congratulateItemIndex = -1;
+                                  }
+                                  this.addedItemIndex = -1;
+                                  this.result &&
+                                    this.result.success === true &&
+                                    this.removeCard.emit({
+                                      translationCards: this.result.value,
+                                      card,
+                                    });
+                                }}
+                              >
+                                {this.isUpdating === card && (
+                                  <vocably-icon-spin></vocably-icon-spin>
+                                )}
+                                {this.isUpdating !== card && (
+                                  <vocably-icon-bookmark-check></vocably-icon-bookmark-check>
+                                )}
+                              </button>
+                            </div>
+
+                            <button
+                              class="vocably-card-action-button"
+                              title="Edit tags"
+                              disabled={this.isUpdating !== null}
+                              onClick={(e) => {
+                                if (this.disabled) {
+                                  return;
+                                }
+
+                                e.target &&
+                                  this.showTagMenu(
+                                    e.target as HTMLElement,
+                                    card.id
+                                  );
+                              }}
+                            >
+                              {this.isUpdating !== card && (
+                                <vocably-icon-tag></vocably-icon-tag>
+                              )}
+                            </button>
+                          </div>
+                        )}
+                        {!this.isLightweight && isDetachedCardItem(card) && (
+                          <button
+                            class={{
+                              'vocably-card-action-button': true,
+                              'vocably-card-add-button': true,
+                            }}
+                            title="Add card"
+                            disabled={this.isUpdating !== null}
+                            onClick={() => {
+                              if (this.disabled) {
+                                return false;
                               }
 
-                              this.ratingInteraction.emit(choiceEvent.detail);
+                              if (!canAdd) {
+                                this.addAttemptIndex = itemIndex;
+                                return;
+                              } else {
+                                this.addAttemptIndex = -1;
+                              }
+
+                              this.saveCardClicked = true;
+                              if (this.congratulateItemIndex === -1) {
+                                this.congratulateItemIndex = itemIndex;
+                              }
+
+                              this.addedItemIndex = itemIndex;
+
+                              this.result &&
+                                this.result.success === true &&
+                                this.addCard.emit({
+                                  translationCards: this.result.value,
+                                  card,
+                                });
                             }}
-                          ></vocably-rate>
-                        </div>
+                          >
+                            {this.isUpdating === card && (
+                              <vocably-icon-spin></vocably-icon-spin>
+                            )}
+                            {this.isUpdating !== card && (
+                              <vocably-icon-plus></vocably-icon-plus>
+                            )}
+                            <span
+                              style={{
+                                marginLeft: '2px',
+                                display: 'inline-block',
+                                fontSize: '16px',
+                              }}
+                            >
+                              Learn
+                            </span>
+                          </button>
+                        )}
+                      </div>
+                      <div class="vocably-safe-action-area">
+                        <vocably-card-source
+                          card={card}
+                          playAudioPronunciation={this.playAudioPronunciation}
+                          style={{
+                            marginBottom: '6px',
+                          }}
+                          class="vocably-card-source"
+                        ></vocably-card-source>
+                        <vocably-card-definitions
+                          class="vocably-mb-6"
+                          card={card}
+                          updateCard={this.makeUpdateCard(card)}
+                          isLightweight={this.isLightweight}
+                        ></vocably-card-definitions>
+                        {card.data.example && (
+                          <div>
+                            <div class="vocably-small vocably-mb-6">
+                              Example:
+                            </div>
+                            <vocably-card-examples
+                              example={card.data.example}
+                            ></vocably-card-examples>
+                          </div>
+                        )}
+                        {isItem(card) && card.data.tags.length > 0 && (
+                          <div
+                            class="vocably-mt-12"
+                            style={{
+                              display: 'flex',
+                              gap: '6px',
+                              flexWrap: 'wrap',
+                            }}
+                          >
+                            {card.data.tags.map((tagItem) => (
+                              <div class="vocably-tag">
+                                {tagItem.data.title}
+
+                                <button
+                                  type="button"
+                                  class="vocably-tag-remove-button"
+                                  aria-label="Remove this tag from the card"
+                                  title="Remove this tag from the card"
+                                  onClick={this.detachTagClick(card, tagItem)}
+                                >
+                                  {this.removing &&
+                                    this.removing.card === card &&
+                                    this.removing.tag === tagItem && (
+                                      <vocably-icon-spin></vocably-icon-spin>
+                                    )}
+                                  {(!this.removing ||
+                                    this.removing.card !== card ||
+                                    this.removing.tag !== tagItem) && (
+                                    <vocably-icon-remove class="vocably-tag-remove-button-icon"></vocably-icon-remove>
+                                  )}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  )}
+                  </div>
+                </Fragment>
+              ))}
+              <vocably-animated-content-wrapper
+                delay={this.explanationAnimationDelay}
+                class="explanation-frame"
+              >
+                {this.explanation.state !== 'none' && (
+                  <div class="vocably-pt-12">
+                    <div class="panel">
+                      {this.explanation.state === 'loading' && (
+                        <Fragment>
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              verticalAlign: 'middle',
+                              fontSize: '13px',
+                            }}
+                          >
+                            Requesting extra info from ChatGPT
+                          </span>
+                          <vocably-inline-loader
+                            style={{ marginLeft: '8px' }}
+                          ></vocably-inline-loader>
+                        </Fragment>
+                      )}
+                      {this.explanation.state === 'error' &&
+                        this.explanation.error}
+                      {this.explanation.state === 'loaded' && (
+                        <div
+                          class="explanation"
+                          innerHTML={mdConverter.makeHtml(
+                            this.explanation.value
+                          )}
+                        ></div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </vocably-animated-content-wrapper>
+              {isOkayToAskForRating && (
+                <div
+                  class="vocably-rate-container"
+                  ref={(el) => (this.askForRatingContainer = el)}
+                >
+                  <div style={{ paddingTop: '12px' }}>
+                    <div class="panel">
+                      <vocably-rate
+                        platform={this.extensionPlatform}
+                        onUserSelected={(choiceEvent) => {
+                          switch (choiceEvent.detail) {
+                            case 'review':
+                            case 'feedback':
+                              break;
+                            case 'later':
+                              this.askForRatingContainer &&
+                                this.askForRatingContainer.classList.add(
+                                  'vocably-rate-container-hidden'
+                                );
+                              break;
+                            case 'never':
+                              this.askForRatingContainer &&
+                                this.askForRatingContainer.classList.add(
+                                  'vocably-rate-container-hidden'
+                                );
+                              break;
+                          }
+
+                          this.ratingInteraction.emit(choiceEvent.detail);
+                        }}
+                      ></vocably-rate>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
               {this.loading && (
                 <div class="vocably-reload" data-test="reload">
                   <vocably-spinner></vocably-spinner>

@@ -34,7 +34,21 @@ $section-margin: 8px;
   padding-top: 12px;
 }
 
+.vocably-pb-12 {
+  padding-bottom: 12px;
+}
+
 .vocably-mb-12 {
+  margin-bottom: 12px;
+}
+
+.vocably-mb-18 {
+  margin-bottom: 18px;
+}
+
+.vocably-bottom-12-border {
+  padding-bottom: 12px;
+  border-bottom: 1px solid $v-light-color-elevation-2;
   margin-bottom: 12px;
 }
 
@@ -55,27 +69,10 @@ $section-margin: 8px;
   color: $v-light-color-muted;
 }
 
-.vocably-translation {
-  display: flex;
-  align-items: stretch;
-  gap: $section-margin;
-
-  @media screen and (max-width: 600px) {
-    & {
-      flex-direction: column;
-    }
-  }
-
-  .vocably-translation-section {
-    padding-left: $input-padding-x;
-    flex: 1;
-  }
-
-  .vocably-invisible-space {
-    display: inline-block;
-    width: 0;
-    font-size: 0;
-  }
+.vocably-invisible-space {
+  display: inline-block;
+  width: 0;
+  font-size: 0;
 }
 
 .vocably-error {
@@ -111,11 +108,7 @@ $section-margin: 8px;
   }
 }
 
-$container-padding: $input-padding-y $input-padding-x $input-padding-y
-  $input-padding-x;
-
 .explanation-frame {
-  margin-left: -$input-padding-x;
 }
 
 .explanation-frame-visible {
@@ -123,7 +116,7 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
   opacity: 1;
 }
 
-.explanation-frame-content {
+.panel {
   background: $v-light-color-elevation-2;
   border: none;
   border-radius: $v-border-radius;
@@ -151,89 +144,77 @@ $container-padding: $input-padding-y $input-padding-x $input-padding-y
   }
 }
 
-$border-between-sections: 3px solid $v-light-color-body-bg;
+.vocably-card {
+  .vocably-card-container {
+    position: relative;
+  }
 
-.vocably-cards {
-  border-radius: $v-border-radius;
-  background-color: $v-light-color-elevation-2;
-  margin-left: -$input-padding-x;
-  margin-bottom: 1px;
+  .vocably-safe-action-area {
+    padding-right: 34px;
+  }
 
-  .vocably-card {
-    border-top: $border-between-sections;
+  &:first-child {
+    border-top: none;
+  }
 
-    .vocably-card-container {
-      position: relative;
-      padding: $container-padding;
+  .vocably-card-source {
+    padding-right: 50px;
+  }
+
+  .vocably-card-action {
+    $size: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: $size;
+    height: $size;
+    line-height: $size;
+    text-align: center;
+  }
+
+  .vocably-card-action-button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    min-width: auto;
+    box-shadow: none;
+    color: $v-light-color-primary;
+
+    &:hover {
+      filter: brightness(80%);
     }
 
-    .vocably-safe-action-area {
-      padding-right: 34px;
+    &:active {
+      filter: brightness(60%);
     }
 
-    &:first-child {
-      border-top: none;
+    & > * {
+      vertical-align: middle;
     }
 
-    .vocably-card-source {
-      padding-right: 50px;
-    }
+    &.vocably-card-add-button {
+      --button-color: #{$v-light-color-primary};
+      --color: var(--button-color);
 
-    .vocably-card-action {
-      $size: 24px;
-      position: absolute;
-      right: $input-padding-x;
-      top: $input-padding-y;
-      min-width: $size;
-      height: $size;
-      line-height: $size;
-      text-align: center;
-    }
+      border: 1.5px solid var(--button-color);
+      color: var(--button-color);
+      border-radius: 16px;
+      padding-right: 8px !important;
+      padding-left: 2px !important;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-    .vocably-card-action-button {
-      padding: 0;
-      margin: 0;
-      background: none;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      min-width: auto;
-      box-shadow: none;
-      color: $v-light-color-primary;
-
-      &:hover {
-        filter: brightness(80%);
-      }
-
-      &:active {
-        filter: brightness(60%);
-      }
-
-      & > * {
-        vertical-align: middle;
-      }
-
-      &.vocably-card-add-button {
-        --button-color: #{$v-light-color-primary};
+      vocably-icon-spin {
         --color: var(--button-color);
+      }
 
-        border: 1.5px solid var(--button-color);
-        color: var(--button-color);
-        border-radius: 16px;
-        padding-right: 8px !important;
-        padding-left: 2px !important;
-        height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        vocably-icon-spin {
-          --color: var(--button-color);
-        }
-
-        vocably-icon-plus {
-          --color: var(--button-color);
-        }
+      vocably-icon-plus {
+        --color: var(--button-color);
       }
     }
   }
@@ -254,15 +235,12 @@ vocably-play-sound {
   max-height: 500px;
   opacity: 1;
   box-sizing: border-box;
+  overflow: hidden;
 
   &.vocably-rate-container-hidden {
     max-height: 0;
     opacity: 0;
   }
-}
-
-.vocably-rate-padding {
-  padding: $input-padding-x;
 }
 
 .vocably-direct-translation {
@@ -280,16 +258,6 @@ vocably-play-sound {
   }
 }
 
-.vocably-added-congratulation-content {
-  padding-top: $input-padding-x - $input-padding-y; // Add a bit of padding for beauty
-  padding-bottom: $input-padding-x - $input-padding-y;
-  border-bottom: $border-between-sections;
-}
-
-.vocably-added-congratulation-content-1 {
-  padding: $container-padding;
-}
-
 .vocably-list {
   list-style: outside;
   padding: 0;
@@ -305,8 +273,6 @@ vocably-play-sound {
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  margin-left: -$input-padding-x;
-  width: calc(100% + #{$input-padding-x});
 
   .vocably-language-wrapper {
     width: 46%;
@@ -374,6 +340,10 @@ vocably-play-sound {
   }
 }
 
+.padding-left-12 {
+  padding-left: 12px;
+}
+
 .max-limit-1 {
   overflow: hidden;
   color: $v-light-color-emphasize;
@@ -385,12 +355,10 @@ vocably-play-sound {
   }
 
   .max-limit-2 {
-    padding: $input-padding-y $input-padding-x 0 $input-padding-x;
+    padding-bottom: 12px;
   }
 
   .max-limit-3 {
-    padding-bottom: 8px;
-    border-radius: 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
