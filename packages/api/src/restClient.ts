@@ -11,7 +11,7 @@ export const request = async (
     Authorization: `Bearer ${await apiOptions.getJwtToken()}`,
   };
   return httpRequest(
-    url,
+    apiOptions.baseUrl + url,
     merge(init, {
       headers,
     })
