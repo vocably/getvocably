@@ -9,7 +9,11 @@ import {
 import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from './analyseAndTranslate';
 import { buildDirectAnalyseBatch } from './buildDirectAnalyseBatch';
-import { gptGetPartsOfSpeech } from './gptGetPartsOfSpeech';
+import { contextAnalysis } from './buildDirectResult/contextAnalysis';
+import { reverseAnalysis } from './buildDirectResult/reverseAnalysis';
+import { sentenceAnalysis } from './buildDirectResult/sentenceAnalysis';
+import { detectAnalysisType } from './detectAnalysisType';
+import { getPartsOfSpeechGpt } from './getPartsOfSpeechGpt';
 import { isIndependentUnitOfSpeech } from './isIndependentUnitOfSpeech';
 import { sanitizePayload } from './sanitizePayload';
 import { translate } from './translate';
@@ -24,6 +28,23 @@ export const buildDirectResult = async ({
 }: Options): Promise<Result<DirectAnalysis>> => {
   const payload = sanitizePayload(rawPayload);
 
+  const detectedAnalysisType = detectAnalysisType(payload);
+
+  if (detectedAnalysisType.type === 'reverse-translate') {
+    return reverseAnalysis(detectedAnalysisType);
+  }
+
+  if (detectedAnalysisType.type === 'context-analysis') {
+    return contextAnalysis(detectedAnalysisType);
+  }
+
+  if (detectedAnalysisType.type === 'sentence-analysis') {
+    return sentenceAnalysis(detectedAnalysisType);
+  }
+
+  if (detectedAnalysisType.type === 'unit-of-speech-analysis') {
+  }
+
   const payloadWithoutArticle = {
     ...payload,
     source: trimArticle(payload.sourceLanguage, payload.source).source,
@@ -36,7 +57,7 @@ export const buildDirectResult = async ({
           success: true,
           value: [payload.partOfSpeech],
         })
-      : gptGetPartsOfSpeech({
+      : getPartsOfSpeechGpt({
           source: payloadWithoutArticle.source,
           language: payload.sourceLanguage,
         }),

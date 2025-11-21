@@ -1,6 +1,6 @@
 import { Result } from '@vocably/model';
 
-export const parseJson = (text: string): Result<Record<any, any>> => {
+export const parseJson = (text: string): Result<any> => {
   try {
     return {
       success: true,

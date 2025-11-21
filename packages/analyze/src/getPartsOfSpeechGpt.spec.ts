@@ -1,5 +1,5 @@
 import '@vocably/jest';
-import { gptGetPartsOfSpeechNoCache } from './gptGetPartsOfSpeech';
+import { gptGetPartsOfSpeechNoCache } from './getPartsOfSpeechGpt';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();

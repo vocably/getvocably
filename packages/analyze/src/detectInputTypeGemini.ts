@@ -1,5 +1,4 @@
 import { createUserContent, GoogleGenAI } from '@google/genai';
-
 import {
   ChatGPTLanguage,
   languageList,
@@ -14,10 +13,20 @@ type Payload = {
   language: ChatGPTLanguage;
 };
 
-export const getPartsOfSpeechGemini = async ({
+const inputTypes = [
+  'word',
+  'phrase',
+  'phrasal verb',
+  'sentence',
+  'idiom',
+  'other',
+] as const;
+type InputType = typeof inputTypes[number];
+
+export const detectInputTypeGemini = async ({
   source,
   language,
-}: Payload): Promise<Result<string[]>> => {
+}: Payload): Promise<Result<InputType>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });
@@ -28,10 +37,9 @@ export const getPartsOfSpeechGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a smart ${trimLanguage(languageList[language])} translator`,
-          `User provides an input`,
-          `Detect it's type as phrase, sentence, w`,
-          `Each part of speech must be on a separate line`,
+          `User provides an input in ${trimLanguage(languageList[language])}`,
+          `Detect it's type`,
+          `Response variants: word, phrase, phrasal verb, sentence, idiom, other`,
         ],
         thinkingConfig: {
           thinkingBudget: 0, // Disables thinking
@@ -58,8 +66,22 @@ export const getPartsOfSpeechGemini = async ({
     };
   }
 
+  if (
+    inputTypes.includes(result.value.text.toLowerCase() as InputType) === false
+  ) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason:
+        'Unsupported input type returned from Gemini: ' +
+        result.value.text +
+        '. Supported types: ' +
+        inputTypes.join(', '),
+    };
+  }
+
   return {
     success: true,
-    value: result.value.text.split('\n').map((s) => s.trim().toLowerCase()),
+    value: result.value.text.toLowerCase() as InputType,
   };
 };

@@ -1,62 +1,44 @@
-import {
-  DirectAnalysis,
-  isAiTranslation,
-  Result,
-  Translation,
-  ValidAnalysisItems,
-} from '@vocably/model';
+import { DirectAnalysis, Result, ValidAnalysisItems } from '@vocably/model';
 import { analyseAndTranslate } from '../analyseAndTranslate';
+
+import { trimArticle } from '@vocably/sulna';
 import { buildDirectAnalyseBatch } from '../buildDirectAnalyseBatch';
-import { ReverseAnalysisRequest } from '../detectAnalysisType';
-import { isIndependentUnitOfSpeech } from '../isIndependentUnitOfSpeech';
+import { ContextAnalysisRequest } from '../detectAnalysisType';
+import { translateFromContext } from '../translateFromContext';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
 
-export const reverseAnalysis = async ({
-  source,
-  target,
+export const contextAnalysis = async ({
+  source: rawSource,
   sourceLanguage,
   targetLanguage,
-  partOfSpeech,
-  transcript,
-  lemma,
-  lemmaPos,
-}: ReverseAnalysisRequest): Promise<Result<DirectAnalysis>> => {
-  const translation: Translation = {
+  context,
+  isSentence,
+}: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+  const source = isSentence
+    ? rawSource
+    : trimArticle(sourceLanguage, rawSource).source;
+  const contextAnalysisResult = await translateFromContext({
     source,
-    target,
+    context,
     sourceLanguage,
     targetLanguage,
-    partOfSpeech,
-    transcript,
-    lemma,
-    lemmaPos,
-  };
+  });
 
-  if (
-    !isAiTranslation(translation) ||
-    !isIndependentUnitOfSpeech(translation.partOfSpeech)
-  ) {
-    return {
-      success: true,
-      value: {
-        source: source,
-        targetLanguage: targetLanguage,
-        sourceLanguage: sourceLanguage,
-        translation: translation,
-        items: [translationToAnalysisItem(translation)],
-      },
-    };
+  if (contextAnalysisResult.success === false) {
+    return contextAnalysisResult;
   }
+
+  contextAnalysisResult.value;
 
   const analyseResults = await Promise.all(
     buildDirectAnalyseBatch({
-      translation: translation,
-      partsOfSpeech: [translation.partOfSpeech],
+      translation: contextAnalysisResult.value,
+      partsOfSpeech: [contextAnalysisResult.value.partOfSpeech],
     }).map((payload) => analyseAndTranslate(payload))
   );
 
   const resultItems: ValidAnalysisItems = [
-    translationToAnalysisItem(translation),
+    translationToAnalysisItem(contextAnalysisResult.value),
   ];
 
   if (analyseResults[0].success === true) {
@@ -77,7 +59,7 @@ export const reverseAnalysis = async ({
       source: source,
       targetLanguage: targetLanguage,
       sourceLanguage: sourceLanguage,
-      translation: translation,
+      translation: contextAnalysisResult.value,
       items: resultItems,
     },
   };

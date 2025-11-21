@@ -1,15 +1,15 @@
 import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
 import {
+  AiTranslation,
   ChatGPTLanguage,
   ChatGPTLanguages,
   GoogleLanguage,
   languageList,
   Result,
-  Translation,
 } from '@vocably/model';
 import { tokenize } from '@vocably/sulna';
 import { get } from 'lodash-es';
-import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
+import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 
 type Payload = {
   source: string;
@@ -78,7 +78,7 @@ const transcriptionName = {
 
 export const translateFromContext = async (
   payload: Payload
-): Promise<Result<Translation>> => {
+): Promise<Result<AiTranslation>> => {
   const source = truncateAsIs(payload.source, 400);
   const context = truncateAsIs(payload.context, 400).replace(/\n/g, ' ');
 
@@ -142,7 +142,7 @@ export const translateFromContext = async (
       targetLanguage: payload.targetLanguage,
       target: response.target,
       partOfSpeech: mapPartOfSpeech(response.partOfSpeech ?? ''),
-      transcript: response.transcript,
+      transcript: response.transcript ?? '',
       lemma: response.lemma,
       lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
     },

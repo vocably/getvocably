@@ -11,8 +11,8 @@ import { isArray } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
+import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
-import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 import { transformSource } from './transformSource';
 
 const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {

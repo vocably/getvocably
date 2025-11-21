@@ -1,28 +1,15 @@
 import { createUserContent, GoogleGenAI } from '@google/genai';
 
 import { parseJson } from '@vocably/api';
-import {
-  ChatGPTLanguage,
-  languageList,
-  Result,
-  resultify,
-} from '@vocably/model';
+import { languageList, Result, resultify } from '@vocably/model';
 import { trimLanguage } from '@vocably/sulna';
 import { config } from './config';
+import {
+  GetPartsOfSpeechPayload,
+  PartOfSpeechGemini,
+} from './getPartsOfSpeech';
 
-type Payload = {
-  source: string;
-  sourceLanguage: ChatGPTLanguage;
-};
-
-type AiAnalysis = {
-  source: string;
-  partOfSpeech: string;
-  lemma: string;
-  lemmaPos: string;
-};
-
-const isAiAnalysis = (v: any): v is AiAnalysis => {
+const isGeminiPartOfSpeech = (v: any): v is PartOfSpeechGemini => {
   return (
     typeof v['source'] === 'string' &&
     typeof v['partOfSpeech'] === 'string' &&
@@ -31,10 +18,10 @@ const isAiAnalysis = (v: any): v is AiAnalysis => {
   );
 };
 
-export const geminiAnalyzeUnitOfSpeech = async ({
+export const getPartsOfSpeechGemini = async ({
   source,
-  sourceLanguage,
-}: Payload): Promise<Result<AiAnalysis[]>> => {
+  language,
+}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeechGemini[]>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });
@@ -45,14 +32,12 @@ export const geminiAnalyzeUnitOfSpeech = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a smart ${trimLanguage(
-            languageList[sourceLanguage]
-          )} dictionary`,
+          `You are a smart ${trimLanguage(languageList[language])} dictionary`,
           `User provides a word`,
           `Provide an array of possible parts of speech for the word`,
           `Each object of array must contain the following fields:`,
           `- source - the word or phrase in ${trimLanguage(
-            languageList[sourceLanguage]
+            languageList[language]
           )} spelling fixed.`,
           `- partOfSpeech - the part of speech of the word or phrase in English`,
           `- lemma - lemma of the word or phrase`,
@@ -80,7 +65,7 @@ export const geminiAnalyzeUnitOfSpeech = async ({
     return parseResult;
   }
 
-  const analysisItems = parseResult.value.filter(isAiAnalysis);
+  const analysisItems = parseResult.value.filter(isGeminiPartOfSpeech);
   if (analysisItems.length === 0) {
     return {
       success: false,

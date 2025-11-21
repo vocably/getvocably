@@ -1,6 +1,6 @@
 import '@vocably/jest';
 import { inspect } from '@vocably/node-sulna';
-import { geminiAnalyzeUnitOfSpeech } from './geminiAnalyzeUnitOfSpeech';
+import { getPartsOfSpeechGemini } from './getPartsOfSpeechGemini';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -12,7 +12,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
   }
 
   it('works for a word', async () => {
-    const responseResult = await geminiAnalyzeUnitOfSpeech({
+    const responseResult = await getPartsOfSpeechGemini({
       sourceLanguage: 'en',
       source: 'beginning',
     });
@@ -30,7 +30,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
   });
 
   it('works for a phrasal verb', async () => {
-    const responseResult = await geminiAnalyzeUnitOfSpeech({
+    const responseResult = await getPartsOfSpeechGemini({
       sourceLanguage: 'en',
       source: 'come to',
     });
@@ -47,7 +47,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
   });
 
   it('fixes grammar', async () => {
-    const responseResult = await geminiAnalyzeUnitOfSpeech({
+    const responseResult = await getPartsOfSpeechGemini({
       sourceLanguage: 'en',
       source: 'scisors',
     });
@@ -65,7 +65,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
   });
 
   it('fixes grammar ger,am', async () => {
-    const responseResult = await geminiAnalyzeUnitOfSpeech({
+    const responseResult = await getPartsOfSpeechGemini({
       sourceLanguage: 'de',
       source: 'apfel',
     });

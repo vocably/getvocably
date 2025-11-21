@@ -4,16 +4,12 @@ import {
   nodeFetchS3File,
   nodePutS3File,
 } from '@vocably/lambda-shared';
-import { GoogleLanguage, languageList, Result } from '@vocably/model';
+import { languageList, Result } from '@vocably/model';
 import { uniq } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
-
-type PartsOfSpeechPayload = {
-  source: string;
-  language: GoogleLanguage;
-};
+import { GetPartsOfSpeechPayload } from './getPartsOfSpeech';
 
 type PartsOfSpeechChatGptBody = {
   messages: Array<ChatCompletionMessageParam>;
@@ -23,7 +19,7 @@ type PartsOfSpeechChatGptBody = {
 export const getPartsOfSpeechGptBody = ({
   source,
   language,
-}: PartsOfSpeechPayload): PartsOfSpeechChatGptBody => {
+}: GetPartsOfSpeechPayload): PartsOfSpeechChatGptBody => {
   const prompt = [
     `You are a smart ${languageList[language]} dictionary`,
     `User provides a word in ${languageList[language]}. Provide its parts of speech`,
@@ -63,7 +59,7 @@ export const parsePartsOfSpeechGptResult = (result: string): string[] => {
 export const gptGetPartsOfSpeechNoCache = async ({
   source,
   language,
-}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
+}: GetPartsOfSpeechPayload): Promise<Result<string[]>> => {
   const responseResult = await chatGptRequest({
     ...getPartsOfSpeechGptBody({ source, language }),
     timeoutMs: 5000,
@@ -85,14 +81,14 @@ export const gptGetPartsOfSpeechNoCache = async ({
 export const getPartsOfSpeechCacheFileName = ({
   source,
   language,
-}: PartsOfSpeechPayload): string => {
+}: GetPartsOfSpeechPayload): string => {
   return `parts-of-speech/${language.toLowerCase()}/${source.toLowerCase()}.txt`;
 };
 
-export const gptGetPartsOfSpeech = async ({
+export const getPartsOfSpeechGpt = async ({
   source,
   language,
-}: PartsOfSpeechPayload): Promise<Result<string[]>> => {
+}: GetPartsOfSpeechPayload): Promise<Result<string[]>> => {
   const fileName = getPartsOfSpeechCacheFileName({ source, language });
 
   const s3FetchResult = await nodeFetchS3File(

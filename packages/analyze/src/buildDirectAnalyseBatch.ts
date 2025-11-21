@@ -1,59 +1,41 @@
-import { AiTranslation } from '@vocably/model';
+import { Translation } from '@vocably/model';
 import { AnalyseAndTranslatePayload } from './analyseAndTranslate';
+import { PartOfSpeech } from './getPartsOfSpeech';
 
-type Payload = {
-  translation: AiTranslation;
-  partsOfSpeech: string[];
-};
-
-export const buildDirectAnalyseBatch = ({
-  translation,
-  partsOfSpeech,
-}: Payload): AnalyseAndTranslatePayload[] => {
-  let payloads: AnalyseAndTranslatePayload[] = [];
-
-  payloads.push({
-    source: translation.source,
-    sourceLanguage: translation.sourceLanguage,
-    targetLanguage: translation.targetLanguage,
-    partOfSpeech: translation.partOfSpeech,
-  });
-
-  const lemmaMustBeAnalysed =
-    translation.source.toLowerCase() !== translation.lemma.toLowerCase();
-
-  if (lemmaMustBeAnalysed) {
-    payloads.push({
-      source: translation.lemma,
-      sourceLanguage: translation.sourceLanguage,
-      targetLanguage: translation.targetLanguage,
-      partOfSpeech: translation.lemmaPos,
-    });
-  }
-
-  partsOfSpeech
-    .filter((pos) => {
-      if (translation.partOfSpeech === pos) {
-        return false;
+export const buildDirectAnalyseBatch = (
+  translation: Translation,
+  partsOfSpeech: PartOfSpeech[]
+): AnalyseAndTranslatePayload[] => {
+  return partsOfSpeech.reduce<AnalyseAndTranslatePayload[]>(
+    (acc, partOfSpeech) => {
+      if ('lemma' in partOfSpeech) {
+        return [
+          ...acc,
+          {
+            source: partOfSpeech.source,
+            partOfSpeech: partOfSpeech.partOfSpeech,
+            sourceLanguage: translation.sourceLanguage,
+            targetLanguage: translation.targetLanguage,
+          },
+          {
+            source: partOfSpeech.lemma,
+            partOfSpeech: partOfSpeech.lemmaPos,
+            sourceLanguage: translation.sourceLanguage,
+            targetLanguage: translation.targetLanguage,
+          },
+        ];
       }
 
-      if (
-        ['phrasal verb', 'verb'].includes(pos) &&
-        ['phrasal verb', 'verb'].includes(translation.partOfSpeech)
-      ) {
-        return false;
-      }
-
-      return true;
-    })
-    .forEach((pos) => {
-      payloads.push({
-        source: translation.source,
-        sourceLanguage: translation.sourceLanguage,
-        targetLanguage: translation.targetLanguage,
-        partOfSpeech: pos,
-      });
-    });
-
-  return payloads;
+      return [
+        ...acc,
+        {
+          source: partOfSpeech.source,
+          partOfSpeech: partOfSpeech.partOfSpeech,
+          sourceLanguage: translation.sourceLanguage,
+          targetLanguage: translation.targetLanguage,
+        },
+      ];
+    },
+    []
+  );
 };
