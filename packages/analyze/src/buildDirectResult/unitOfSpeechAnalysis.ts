@@ -5,18 +5,21 @@ import {
   ValidAnalysisItems,
 } from '@vocably/model';
 
+import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from '../analyseAndTranslate';
 import { buildDirectAnalyseBatch } from '../buildDirectAnalyseBatch';
 import { buildReverseResult } from '../buildReverseResult';
-import { SentenceAnalysisRequest } from '../detectAnalysisType';
+import { UnitOfSpeechAnalysisRequest } from '../detectAnalysisType';
 import { getPartsOfSpeech } from '../getPartsOfSpeech';
 import { googleTranslate } from '../googleTranslate';
+import { translationToAnalysisItem } from '../translationToAnalyzeItem';
 
 export const unitOfSpeechAnalysis = async ({
   source,
   sourceLanguage,
   targetLanguage,
-}: SentenceAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+}: UnitOfSpeechAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+  const trimmedSource = trimArticle(sourceLanguage, source).source;
   const [languageVerificationResult, translationResult] = await Promise.all([
     googleTranslate(source, null, sourceLanguage),
     googleTranslate(source, null, targetLanguage),
@@ -42,22 +45,27 @@ export const unitOfSpeechAnalysis = async ({
   }
 
   const translation: Translation = {
-    source: languageVerificationResult.value.target,
+    source: source,
     target: translationResult.value.target,
     sourceLanguage: sourceLanguage,
     targetLanguage: targetLanguage,
   };
 
   const partsOfSpeechResult = await getPartsOfSpeech({
-    source: translation.source,
+    source: trimmedSource,
     language: translation.sourceLanguage,
   });
 
   const analyseResults = await Promise.all(
-    buildDirectAnalyseBatch(
-      translationResult.value,
-      partsOfSpeechResult.success ? partsOfSpeechResult.value : []
-    ).map((payload) => analyseAndTranslate(payload))
+    buildDirectAnalyseBatch({
+      translation: {
+        ...translation,
+        source: trimmedSource,
+      },
+      partsOfSpeech: partsOfSpeechResult.success
+        ? partsOfSpeechResult.value
+        : [],
+    }).map((payload) => analyseAndTranslate(payload))
   );
 
   const resultItems: ValidAnalysisItems = [
@@ -79,10 +87,10 @@ export const unitOfSpeechAnalysis = async ({
   return {
     success: true,
     value: {
-      source: payload.source,
-      targetLanguage: payload.targetLanguage,
-      sourceLanguage: payload.sourceLanguage,
-      translation: directTranslation,
+      source: source,
+      targetLanguage: targetLanguage,
+      sourceLanguage: sourceLanguage,
+      translation: translation,
       items: resultItems,
     },
   };

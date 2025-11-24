@@ -1,14 +1,24 @@
 import { Translation } from '@vocably/model';
 import { AnalyseAndTranslatePayload } from './analyseAndTranslate';
 import { PartOfSpeech } from './getPartsOfSpeech';
+type Payload = {
+  translation: Translation;
+  partsOfSpeech: PartOfSpeech[];
+};
 
-export const buildDirectAnalyseBatch = (
-  translation: Translation,
-  partsOfSpeech: PartOfSpeech[]
-): AnalyseAndTranslatePayload[] => {
+export const buildDirectAnalyseBatch = ({
+  translation,
+  partsOfSpeech,
+}: Payload): AnalyseAndTranslatePayload[] => {
   return partsOfSpeech.reduce<AnalyseAndTranslatePayload[]>(
     (acc, partOfSpeech) => {
-      if ('lemma' in partOfSpeech) {
+      if (
+        'lemma' in partOfSpeech &&
+        (partOfSpeech.partOfSpeech.toLowerCase() !==
+          partOfSpeech.lemmaPos.toLowerCase() ||
+          partOfSpeech.lemma.toLowerCase() !==
+            partOfSpeech.source.toLowerCase())
+      ) {
         return [
           ...acc,
           {

@@ -51,7 +51,14 @@ export const reverseAnalysis = async ({
   const analyseResults = await Promise.all(
     buildDirectAnalyseBatch({
       translation: translation,
-      partsOfSpeech: [translation.partOfSpeech],
+      partsOfSpeech: [
+        {
+          partOfSpeech: translation.partOfSpeech,
+          source: translation.source,
+          lemma: translation.lemma,
+          lemmaPos: translation.lemmaPos,
+        },
+      ],
     }).map((payload) => analyseAndTranslate(payload))
   );
 

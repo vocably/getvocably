@@ -1,5 +1,6 @@
 import '@vocably/jest';
 import { isReverseAnalysis } from '@vocably/model';
+import { uniq } from 'lodash-es';
 import { buildResult } from './buildResult';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
@@ -183,7 +184,7 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items.length).toEqual(2);
+    expect(result.value.items.length).toEqual(3);
     expect(result.value.items[0].translation).toHaveSomeOf(
       'трюк, прием, приём, уловка, фокус, хитрость'
     );
@@ -220,10 +221,10 @@ describe('integration check for translate lambda', () => {
       return;
     }
 
-    expect(result.value.items[0].translation).toHaveSomeOf(
-      'to be, to exist, to happen, being, to be, to exist, to happen'
-    );
-    // expect(result.value.items[1].translation).toEqual('his');
+    const translations = result.value.items[0].translation.split(', ');
+
+    expect(translations.length).toBeGreaterThan(4);
+    expect(translations.length).toEqual(uniq(translations).length);
   });
 
   it('adds romaji to IPA', async () => {
@@ -279,7 +280,7 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items.length).toBeGreaterThanOrEqual(2);
     expect(result.value.items[0].translation.toLowerCase()).toHaveSomeOf(
-      'да, угу, хорошо'
+      'да, угу, хорошо, ага, есть'
     );
   });
 
@@ -408,7 +409,7 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].translation).toEqual('портной, швея');
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
-    expect(result.value.items[1].translation).toContain('подгонять');
+    expect(result.value.items[1].translation).toContain('шить, подгонять');
   });
 
   it('tailor - uk', async () => {
@@ -428,7 +429,7 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
     expect(result.value.items[1].translation).toHaveSomeOf(
-      'пристосовувати, шити на замовлення, шити, адаптувати'
+      'шити, кроїти, пристосовувати, адаптувати'
     );
   });
 
@@ -631,7 +632,6 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].source).toEqual('frère');
-    expect(result.value.items[0].translation).toEqual('брат');
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
   });
 

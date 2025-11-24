@@ -33,7 +33,14 @@ export const contextAnalysis = async ({
   const analyseResults = await Promise.all(
     buildDirectAnalyseBatch({
       translation: contextAnalysisResult.value,
-      partsOfSpeech: [contextAnalysisResult.value.partOfSpeech],
+      partsOfSpeech: [
+        {
+          partOfSpeech: contextAnalysisResult.value.partOfSpeech,
+          source: contextAnalysisResult.value.source,
+          lemma: contextAnalysisResult.value.lemma,
+          lemmaPos: contextAnalysisResult.value.lemmaPos,
+        },
+      ],
     }).map((payload) => analyseAndTranslate(payload))
   );
 
