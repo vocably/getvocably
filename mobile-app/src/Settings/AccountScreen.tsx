@@ -3,7 +3,6 @@ import { FC, useCallback, useContext } from 'react';
 import { Alert, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { clearAll } from '../asyncAppStorage';
 import { useUserEmail } from '../auth/useUserEmail';
 import { LanguagesContext } from '../languages/LanguagesContainer';
 import { CustomScrollView } from '../ui/CustomScrollView';
@@ -19,7 +18,6 @@ export const AccountScreen: FC<Props> = () => {
 
   const onSignOut = async () => {
     await syncDecks();
-    await clearAll();
     await signOut();
   };
 
@@ -31,7 +29,6 @@ export const AccountScreen: FC<Props> = () => {
         onPress: async () => {
           await deleteUser();
           await signOut();
-          await clearAll();
         },
       },
       {

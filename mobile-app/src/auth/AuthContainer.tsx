@@ -83,7 +83,7 @@ const getAttributes = async (): Promise<
   }
 };
 
-const loadAuthStatusFromStorage = async (): Promise<AuthStatus> => {
+export const loadAuthStatusFromStorage = async (): Promise<AuthStatus> => {
   const status = await asyncAppStorage.getItem('vocablyAuthStatus');
 
   if (!status) {

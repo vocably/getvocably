@@ -30,6 +30,7 @@ import {
   LanguageDeckTransformation,
 } from '../deckTransformations';
 import { Error } from '../Error';
+import { getCurrentUserSub } from '../getCurrentUserSub';
 import { Loader } from '../loaders/Loader';
 import { useAsync } from '../useAsync';
 import { useLanguageTransformations } from './useLanguageTransformations';
@@ -57,8 +58,23 @@ const createDefaultLanguageDeck = (language: string): LanguageDeck => ({
 });
 
 const loadDecksFromStorage = async (): Promise<DecksCollection> => {
-  const decks = await asyncAppStorage.getItem('languageDecks');
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return {};
+  }
 
+  const key = `${userSubResult.value}.languageDecks`;
+
+  // ToDo: remove this after a while
+  const oldKey = 'languageDecks';
+  const oldDecks = await asyncAppStorage.getItem(oldKey);
+  if (oldDecks) {
+    await asyncAppStorage.removeItem(oldKey);
+    await asyncAppStorage.setItem(key, oldDecks);
+  }
+  // EndOfToDo
+
+  const decks = await asyncAppStorage.getItem(key);
   if (!decks) {
     return {};
   }
@@ -67,7 +83,13 @@ const loadDecksFromStorage = async (): Promise<DecksCollection> => {
 };
 
 const saveDecksToStorage = async (decks: DecksCollection) => {
-  await asyncAppStorage.setItem('languageDecks', JSON.stringify(decks));
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return;
+  }
+
+  const key = `${userSubResult.value}.languageDecks`;
+  await asyncAppStorage.setItem(key, JSON.stringify(decks));
 };
 
 type Languages = {
