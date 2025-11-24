@@ -317,6 +317,7 @@ describe('integration check for translate lambda', () => {
       'опоздать',
       'поздно',
       'опоздавший',
+      'поздний',
     ]);
   });
 

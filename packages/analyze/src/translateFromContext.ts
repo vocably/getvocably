@@ -1,14 +1,16 @@
-import { chatGptRequest, GPT_4O, GPT_4O_MINI } from '@vocably/lambda-shared';
+import { createUserContent, GoogleGenAI } from '@google/genai';
+import { parseJson } from '@vocably/api';
 import {
   AiTranslation,
   ChatGPTLanguage,
-  ChatGPTLanguages,
   GoogleLanguage,
   languageList,
   Result,
+  resultify,
 } from '@vocably/model';
-import { tokenize } from '@vocably/sulna';
 import { get } from 'lodash-es';
+import { config } from './config';
+import { InputAnalysis } from './detectInputTypeGemini';
 import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 
 type Payload = {
@@ -16,6 +18,8 @@ type Payload = {
   context: string;
   sourceLanguage: ChatGPTLanguage;
   targetLanguage: GoogleLanguage;
+  inputType: InputAnalysis['type'];
+  isDirect: boolean;
 };
 
 type ContextTranslation = {
@@ -29,37 +33,6 @@ type ContextTranslation = {
 
 const isContextTranslation = (o: any): o is ContextTranslation => {
   return !(!o || !o.target || !o.source || !o.lemma || !o.lemmaPos);
-};
-
-export const isContextPayload = (o: any): o is Payload => {
-  return (
-    !(
-      !o ||
-      !o.source ||
-      !o.context ||
-      !o.sourceLanguage ||
-      !o.targetLanguage
-    ) && ChatGPTLanguages.includes(o.sourceLanguage)
-  );
-};
-
-export const itMakesSense = (p: Payload): boolean => {
-  const source = tokenize(p.source);
-  const context = tokenize(p.context);
-
-  if (source.length === 0 || context.length === 0) {
-    return false;
-  }
-
-  if (source.length > 3) {
-    return false;
-  }
-
-  if (source.length >= context.length) {
-    return false;
-  }
-
-  return true;
 };
 
 const transcriptionName = {
@@ -79,72 +52,82 @@ const transcriptionName = {
 export const translateFromContext = async (
   payload: Payload
 ): Promise<Result<AiTranslation>> => {
-  const source = truncateAsIs(payload.source, 400);
-  const context = truncateAsIs(payload.context, 400).replace(/\n/g, ' ');
+  const isTranscriptionNeeded = payload.source.length <= 20;
 
-  const isTranscriptionNeeded = source.length <= 20;
-
-  const prompt = [
-    `You are a smart language dictionary.`,
-    `Use provides two inputs:`,
-    `The first input is context sentence`,
-    `The second input is substring in that sentence`,
-    `Only respond in JSON format with an object containing the following properties:`,
-    `- source - the substring translated into ${
-      languageList[payload.sourceLanguage]
-    }`,
-    `- target - the substring translated into${
-      languageList[payload.targetLanguage]
-    }`,
-    `- partOfSpeech - part of speech in English`,
-    `- lemma - ${languageList[payload.sourceLanguage]} lemma or infinitive`,
-    `- lemmaPos - part of speech of the lemma in English`,
-    isTranscriptionNeeded
-      ? `- transcript - the ${get(
-          transcriptionName,
-          payload.sourceLanguage,
-          'IPA'
-        )} transcription of the ${languageList[payload.sourceLanguage]} source`
-      : null,
-  ]
-    .filter((s) => !!s)
-    .join('\n');
-
-  const responseResult = await chatGptRequest({
-    messages: [
-      { role: 'system', content: prompt },
-      { role: 'user', content: context },
-      { role: 'user', content: source },
-    ],
-    model: payload.sourceLanguage === 'en' ? GPT_4O_MINI : GPT_4O,
-    timeoutMs: 5000,
+  const genAI = new GoogleGenAI({
+    apiKey: config.geminiApiKey,
   });
 
-  if (!responseResult.success) {
-    return responseResult;
+  const safeSourceLanguage = languageList[payload.sourceLanguage];
+  const safeTargetLanguage = languageList[payload.targetLanguage];
+
+  const result = await resultify(
+    genAI.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: createUserContent([payload.context, payload.source]),
+      config: {
+        systemInstruction: [
+          `You are a smart language dictionary.`,
+          `User provides two inputs:`,
+          `The first input is context`,
+          `The second input is a ${payload.inputType}`,
+          `Only respond in JSON format with an object containing the following properties:`,
+          `- source - ${payload.inputType} translated in ${safeSourceLanguage}`,
+          `- target - ${payload.inputType} in ${safeTargetLanguage}`,
+          `- partOfSpeech - part of speech in English`,
+          `- lemma - ${safeSourceLanguage} lemma or infinitive`,
+          `- lemmaPos - part of speech of the lemma in English`,
+          isTranscriptionNeeded
+            ? `- transcript - the ${get(
+                transcriptionName,
+                payload.sourceLanguage,
+                'IPA'
+              )} transcription of the ${safeSourceLanguage} ${
+                payload.inputType
+              }`
+            : '',
+        ],
+        thinkingConfig: {
+          thinkingBudget: 0, // Disables thinking
+        },
+        temperature: 0,
+        responseMimeType: 'application/json',
+      },
+    }),
+    {
+      errorCode: 'FUCKING_ERROR',
+      reason: 'Unable to perform Gemini translation.',
+    }
+  );
+
+  if (!result.success) {
+    return result;
   }
 
-  const response = responseResult.value;
+  const parseResult = parseJson(result.value.text ?? '');
+  if (!parseResult.success) {
+    return parseResult;
+  }
 
-  if (!isContextTranslation(response)) {
+  if (!isContextTranslation(parseResult.value)) {
     return {
       success: false,
       errorCode: 'OPENAI_UNEXPECTED_RESPONSE',
-      reason: `Unexpected response from analyzer: ${JSON.stringify(response)}`,
+      reason: `Unexpected response from analyzer: ${result.value.text}`,
     };
   }
 
   return {
     success: true,
     value: {
-      source: response.source,
+      source: parseResult.value.source,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
-      target: response.target,
-      partOfSpeech: mapPartOfSpeech(response.partOfSpeech ?? ''),
-      transcript: response.transcript ?? '',
-      lemma: response.lemma,
-      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
+      target: parseResult.value.target,
+      partOfSpeech: mapPartOfSpeech(parseResult.value.partOfSpeech ?? ''),
+      transcript: parseResult.value.transcript ?? '',
+      lemma: parseResult.value.lemma,
+      lemmaPos: mapPartOfSpeech(parseResult.value.lemmaPos ?? ''),
     },
   };
 };

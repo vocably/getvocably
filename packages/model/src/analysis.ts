@@ -11,6 +11,7 @@ export type Translation = {
   transcript?: string;
   lemma?: string;
   lemmaPos?: string;
+  isDirect?: boolean;
 };
 
 export type AiTranslation = Translation &

@@ -17,15 +17,21 @@ export const contextAnalysis = async ({
   sourceLanguage,
   targetLanguage,
   context,
+  isDirect,
+  inputType,
 }: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
-  const source = isSentence
-    ? rawSource
-    : trimArticle(sourceLanguage, rawSource).source;
+  const source =
+    inputType === 'word' && isDirect
+      ? rawSource
+      : trimArticle(sourceLanguage, rawSource).source;
+
   const contextAnalysisResult = await translateFromContext({
     source,
     context,
     sourceLanguage,
     targetLanguage,
+    inputType,
+    isDirect,
   });
 
   if (contextAnalysisResult.success === false) {
@@ -34,10 +40,16 @@ export const contextAnalysis = async ({
 
   const translation: Translation = {
     source: rawSource,
-    target: contextAnalysisResult.value.target,
+    target: isDirect
+      ? contextAnalysisResult.value.target
+      : contextAnalysisResult.value.source,
     sourceLanguage: sourceLanguage,
     targetLanguage: targetLanguage,
     partOfSpeech: contextAnalysisResult.value.partOfSpeech,
+    transcript: contextAnalysisResult.value.transcript,
+    lemma: contextAnalysisResult.value.lemma,
+    lemmaPos: contextAnalysisResult.value.lemmaPos,
+    isDirect,
   };
 
   const analyseResults = await Promise.all(
@@ -76,7 +88,7 @@ export const contextAnalysis = async ({
       source: source,
       targetLanguage: targetLanguage,
       sourceLanguage: sourceLanguage,
-      translation: contextAnalysisResult.value,
+      translation,
       items: resultItems,
     },
   };

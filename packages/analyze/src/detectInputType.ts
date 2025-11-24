@@ -17,6 +17,8 @@ export type ContextAnalysisRequest = {
   targetLanguage: GoogleLanguage;
   source: string;
   context: string;
+  inputType: InputAnalysis['type'];
+  isDirect: boolean;
 };
 
 export type UnitOfSpeechAnalysisRequest = {
@@ -75,6 +77,15 @@ export const detectInputType = async (
     };
   }
 
+  const detectedTypeResult = await detectInputTypeGemini({
+    language: payload.sourceLanguage,
+    source: payload.source,
+  });
+
+  if (detectedTypeResult.success === false) {
+    return detectedTypeResult;
+  }
+
   if (payload.context && payload.context.length > payload.source.length) {
     return {
       success: true,
@@ -84,17 +95,10 @@ export const detectInputType = async (
         context: payload.context,
         sourceLanguage: payload.sourceLanguage,
         targetLanguage: payload.targetLanguage,
+        inputType: detectedTypeResult.value.type,
+        isDirect: detectedTypeResult.value.isDirect,
       },
     };
-  }
-
-  const detectedTypeResult = await detectInputTypeGemini({
-    language: payload.sourceLanguage,
-    source: payload.source,
-  });
-
-  if (detectedTypeResult.success === false) {
-    return detectedTypeResult;
   }
 
   if (
