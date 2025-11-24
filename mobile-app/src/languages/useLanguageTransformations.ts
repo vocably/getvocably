@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as asyncAppStorage from '../asyncAppStorage';
 import { LanguageDeckTransformation } from '../deckTransformations';
+import { getCurrentUserSub } from '../getCurrentUserSub';
 import { useAsync } from '../useAsync';
 
 type TransformationsCollection = {
@@ -9,7 +10,23 @@ type TransformationsCollection = {
 
 export const loadTransformationsFromStorage =
   async (): Promise<TransformationsCollection> => {
-    const collection = await asyncAppStorage.getItem('languageTransformations');
+    const userSubResult = await getCurrentUserSub();
+    if (!userSubResult.success) {
+      return {};
+    }
+
+    const key = `${userSubResult.value}.languageTransformations`;
+
+    // ToDo: remove this after a while
+    const oldKey = 'languageTransformations';
+    const oldDecks = await asyncAppStorage.getItem(oldKey);
+    if (oldDecks) {
+      await asyncAppStorage.removeItem(oldKey);
+      await asyncAppStorage.setItem(key, oldDecks);
+    }
+    // EndOfToDo
+
+    const collection = await asyncAppStorage.getItem(key);
 
     if (!collection) {
       return {};
@@ -21,10 +38,15 @@ export const loadTransformationsFromStorage =
 const saveTransformationsToStorage = async (
   collection: TransformationsCollection
 ) => {
-  await asyncAppStorage.setItem(
-    'languageTransformations',
-    JSON.stringify(collection)
-  );
+  const userSubResult = await getCurrentUserSub();
+
+  if (userSubResult.success === false) {
+    return;
+  }
+
+  const key = `${userSubResult.value}.languageTransformations`;
+
+  await asyncAppStorage.setItem(key, JSON.stringify(collection));
 };
 
 type Return = {

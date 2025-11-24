@@ -1,21 +1,25 @@
 import { signInWithRedirect } from 'aws-amplify/auth';
 import React, { FC, ReactNode, useContext } from 'react';
-import {
-  Linking,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Linking, Platform, ScrollView, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
+import { forcefulSignOut } from '../forcefulSignOut';
 import { Loader } from '../loaders/Loader';
 import { AuthContext } from './AuthContainer';
 import { getCards } from './getCards';
 
-const signIn = () => signInWithRedirect();
+const signIn = async () => {
+  try {
+    await signInWithRedirect();
+  } catch (e) {
+    // @ts-ignore
+    if (e.toString().includes('UserAlreadyAuthenticatedException')) {
+      forcefulSignOut();
+    }
+  }
+};
 
 const signInWithAnIdioticCognitoFlow = async () => {
   await signInWithRedirect({
@@ -32,7 +36,6 @@ export const Login: FC<{
   const authStatus = useContext(AuthContext);
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { height: windowHeight } = useWindowDimensions();
 
   if (authStatus.status === 'undefined') {
     return <Loader>Authenticating...</Loader>;
@@ -42,10 +45,54 @@ export const Login: FC<{
     return <>{children}</>;
   }
 
-  const sliderHeight = 260;
-
   const paddingLeft = 24 + insets.left;
   const paddingRight = 24 + insets.right;
+
+  if (authStatus.login.reason === 'logged-out') {
+    return (
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 16,
+        }}
+      >
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 16,
+            paddingLeft: paddingLeft + 12,
+            paddingRight: paddingRight + 12,
+          }}
+        >
+          <Text style={{ textAlign: 'center' }}>
+            Your authentication session is expired. Please sign in again.
+          </Text>
+          <Button
+            mode="contained"
+            onPress={signIn}
+            style={{ alignSelf: 'stretch' }}
+          >
+            Sign in
+          </Button>
+          {Platform.OS === 'ios' && (
+            <Text
+              onPress={() => signInWithAnIdioticCognitoFlow()}
+              style={{
+                color: theme.colors.primary,
+              }}
+            >
+              I want to sign in with another Google Account.
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    );
+  }
+
+  const sliderHeight = 260;
 
   const cards = getCards();
 

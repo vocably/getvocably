@@ -21,6 +21,7 @@ import { createContext, FC, PropsWithChildren, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { getTimeZone } from 'react-native-localize';
 import * as asyncAppStorage from './asyncAppStorage';
+import { getCurrentUserSub } from './getCurrentUserSub';
 import { Loader } from './loaders/Loader';
 import { useAsync } from './useAsync';
 
@@ -43,7 +44,23 @@ export const UserMetadataContext = createContext<UserMetadataContextValues>({
 });
 
 const loadUserMetadataFromStorage = async (): Promise<UserMetadata> => {
-  const userMetadata = await asyncAppStorage.getItem('userMetadata');
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return defaultUserMetadata;
+  }
+
+  const key = `${userSubResult.value}.userMetadata`;
+
+  // ToDo: remove this after a while
+  const oldKey = 'userMetadata';
+  const oldValues = await asyncAppStorage.getItem(oldKey);
+  if (oldValues) {
+    await asyncAppStorage.removeItem(oldKey);
+    await asyncAppStorage.setItem(key, oldValues);
+  }
+  // EndOfToDo
+
+  const userMetadata = await asyncAppStorage.getItem(key);
 
   if (!userMetadata) {
     return defaultUserMetadata;
@@ -53,14 +70,34 @@ const loadUserMetadataFromStorage = async (): Promise<UserMetadata> => {
 };
 
 const saveUserMetadataToStorage = async (userMetadata: UserMetadata) => {
-  await asyncAppStorage.setItem('userMetadata', JSON.stringify(userMetadata));
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return;
+  }
+
+  const key = `${userSubResult.value}.userMetadata`;
+  await asyncAppStorage.setItem(key, JSON.stringify(userMetadata));
 };
 
 const loadUserStaticMetadataFromStorage =
   async (): Promise<UserStaticMetadata> => {
-    const userStaticMetadata = await asyncAppStorage.getItem(
-      'userStaticMetadata'
-    );
+    const userSubResult = await getCurrentUserSub();
+    if (!userSubResult.success) {
+      return defaultUserStaticMetadata;
+    }
+
+    const key = `${userSubResult.value}.userStaticMetadata`;
+
+    // ToDo: remove this after a while
+    const oldKey = 'userStaticMetadata';
+    const oldValues = await asyncAppStorage.getItem(oldKey);
+    if (oldValues) {
+      await asyncAppStorage.removeItem(oldKey);
+      await asyncAppStorage.setItem(key, oldValues);
+    }
+    // EndOfToDo
+
+    const userStaticMetadata = await asyncAppStorage.getItem(key);
 
     if (!userStaticMetadata) {
       return defaultUserStaticMetadata;
@@ -72,14 +109,33 @@ const loadUserStaticMetadataFromStorage =
 const saveUserStaticMetadataToStorage = async (
   userStaticMetadata: UserStaticMetadata
 ) => {
-  await asyncAppStorage.setItem(
-    'userStaticMetadata',
-    JSON.stringify(userStaticMetadata)
-  );
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return;
+  }
+
+  const key = `${userSubResult.value}.userStaticMetadata`;
+  await asyncAppStorage.setItem(key, JSON.stringify(userStaticMetadata));
 };
 
 export const loadStudyStreakFromStorage = async (): Promise<StudyStreak> => {
-  const studyStreak = await asyncAppStorage.getItem('studyStreak');
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return defaultStudyStreak;
+  }
+
+  const key = `${userSubResult.value}.studyStreak`;
+
+  // ToDo: remove this after a while
+  const oldKey = 'studyStreak';
+  const oldValues = await asyncAppStorage.getItem(oldKey);
+  if (oldValues) {
+    await asyncAppStorage.removeItem(oldKey);
+    await asyncAppStorage.setItem(key, oldValues);
+  }
+  // EndOfToDo
+
+  const studyStreak = await asyncAppStorage.getItem(key);
 
   if (!studyStreak) {
     return defaultStudyStreak;
@@ -89,7 +145,14 @@ export const loadStudyStreakFromStorage = async (): Promise<StudyStreak> => {
 };
 
 const saveStudyStreakToStorage = async (studyStreak: StudyStreak) => {
-  await asyncAppStorage.setItem('studyStreak', JSON.stringify(studyStreak));
+  const userSubResult = await getCurrentUserSub();
+  if (!userSubResult.success) {
+    return;
+  }
+
+  const key = `${userSubResult.value}.studyStreak`;
+
+  await asyncAppStorage.setItem(key, JSON.stringify(studyStreak));
 };
 
 type Props = {};
