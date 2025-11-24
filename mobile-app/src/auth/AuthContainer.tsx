@@ -137,11 +137,27 @@ export const AuthContainer: FC<{
     );
 
     if (!fetchSessionResult.success) {
+      if (
+        authStatusResult.status === 'loaded' &&
+        authStatusResult.value.status === 'undefined'
+      ) {
+        await setAuthStatus({
+          status: 'not-logged-in',
+        });
+      }
       setError('UNABLE_TO_FETCH_AUTH_SESSION');
       return;
     }
 
     if (!fetchSessionResult.value.tokens) {
+      if (
+        authStatusResult.status === 'loaded' &&
+        authStatusResult.value.status === 'undefined'
+      ) {
+        await setAuthStatus({
+          status: 'not-logged-in',
+        });
+      }
       setError('FETCHED_SESSION_HAS_NO_TOKENS');
       return;
     }
@@ -149,6 +165,14 @@ export const AuthContainer: FC<{
     const attributesResult = await getAttributes();
 
     if (!attributesResult.success) {
+      if (
+        authStatusResult.status === 'loaded' &&
+        authStatusResult.value.status === 'undefined'
+      ) {
+        await setAuthStatus({
+          status: 'not-logged-in',
+        });
+      }
       setError('UNABLE_TO_GET_ATTRIBUTES');
       return;
     }
