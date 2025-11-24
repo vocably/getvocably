@@ -14,10 +14,19 @@ import React, {
 import * as asyncAppStorage from '../asyncAppStorage';
 import { Sentry } from '../BetterSentry';
 import { facility } from '../facility';
+import { forcefulSignOut } from '../forcefulSignOut';
 import { Loader } from '../loaders/Loader';
 import { notificationsIdentifyUser } from '../notificationsIdentifyUser';
 import { useAsync } from '../useAsync';
 import { getFlatAttributes } from './getFlatAttributes';
+
+type LoginStatus =
+  | {
+      reason: 'undefined';
+    }
+  | {
+      reason: 'logged-out';
+    };
 
 export type AuthStatus =
   | {
@@ -39,12 +48,17 @@ type AuthErrorCode =
   | 'UNABLE_TO_FETCH_AUTH_SESSION'
   | 'FETCHED_SESSION_HAS_NO_TOKENS';
 
-export type AuthStatusWithError = {
+export type ExtendedAuthStatus = {
   error: AuthErrorCode | null;
+} & {
+  login: LoginStatus;
 } & AuthStatus;
 
-export const AuthContext = createContext<AuthStatusWithError>({
+export const AuthContext = createContext<ExtendedAuthStatus>({
   status: 'undefined',
+  login: {
+    reason: 'undefined',
+  },
   error: null,
 });
 
@@ -99,12 +113,29 @@ const saveAuthStatusToStorage = async (status: AuthStatus) => {
   await asyncAppStorage.setItem('vocablyAuthStatus', JSON.stringify(status));
 };
 
+export const loadLoginStatusFromStorage = async (): Promise<LoginStatus> => {
+  const status = await asyncAppStorage.getItem('loginStatus');
+  if (!status) {
+    return { reason: 'undefined' };
+  }
+  return JSON.parse(status);
+};
+
+export const saveLoginStatusToStorage = async (status: LoginStatus) => {
+  await asyncAppStorage.setItem('loginStatus', JSON.stringify(status));
+};
+
 export const AuthContainer: FC<{
   children?: ReactNode;
 }> = ({ children }) => {
   const [authStatusResult, setAuthStatus] = useAsync(
     loadAuthStatusFromStorage,
     saveAuthStatusToStorage
+  );
+
+  const [loginStatusResult, setLoginStatus] = useAsync(
+    loadLoginStatusFromStorage,
+    saveLoginStatusToStorage
   );
 
   const [error, setError] = useState<AuthErrorCode | null>(null);
@@ -202,7 +233,10 @@ export const AuthContainer: FC<{
       });
     }
 
-    if (authStatusResult.value.status === 'undefined') {
+    if (
+      authStatusResult.value.status !== 'logged-in' &&
+      authStatusResult.value.status !== 'not-logged-in'
+    ) {
       defineAuthStatus();
     }
   }, [authStatusResult]);
@@ -212,6 +246,13 @@ export const AuthContainer: FC<{
       console.log('Auth event', event);
 
       if (event.payload.event === 'tokenRefresh_failure') {
+        if (event.payload.data.error?.name === 'NotAuthorizedException') {
+          await forcefulSignOut();
+          await setLoginStatus({ reason: 'logged-out' });
+          await setAuthStatus({
+            status: 'undefined',
+          });
+        }
         //@ts-ignore
         posthog.capture('tokenRefreshFailure', { ...event.payload });
         //@ts-ignore
@@ -278,6 +319,7 @@ export const AuthContainer: FC<{
         ).includes('paid'),
       });
       setError(null);
+      await setLoginStatus({ reason: 'undefined' });
 
       await postOnboardingAction({
         name: 'userLoggedIn',
@@ -288,7 +330,10 @@ export const AuthContainer: FC<{
     });
   }, []);
 
-  if (authStatusResult.status !== 'loaded') {
+  if (
+    authStatusResult.status !== 'loaded' ||
+    loginStatusResult.status !== 'loaded'
+  ) {
     return <Loader>Authenticating...</Loader>;
   }
 
@@ -296,6 +341,7 @@ export const AuthContainer: FC<{
     <AuthContext.Provider
       value={{
         ...authStatusResult.value,
+        login: loginStatusResult.value,
         error,
       }}
     >
