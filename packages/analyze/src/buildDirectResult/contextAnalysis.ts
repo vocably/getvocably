@@ -1,9 +1,14 @@
-import { DirectAnalysis, Result, ValidAnalysisItems } from '@vocably/model';
+import {
+  DirectAnalysis,
+  Result,
+  Translation,
+  ValidAnalysisItems,
+} from '@vocably/model';
 import { analyseAndTranslate } from '../analyseAndTranslate';
 
 import { trimArticle } from '@vocably/sulna';
 import { buildDirectAnalyseBatch } from '../buildDirectAnalyseBatch';
-import { ContextAnalysisRequest } from '../detectAnalysisType';
+import { ContextAnalysisRequest } from '../detectInputType';
 import { translateFromContext } from '../translateFromContext';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
 
@@ -12,7 +17,6 @@ export const contextAnalysis = async ({
   sourceLanguage,
   targetLanguage,
   context,
-  isSentence,
 }: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
   const source = isSentence
     ? rawSource
@@ -28,7 +32,13 @@ export const contextAnalysis = async ({
     return contextAnalysisResult;
   }
 
-  contextAnalysisResult.value;
+  const translation: Translation = {
+    source: rawSource,
+    target: contextAnalysisResult.value.target,
+    sourceLanguage: sourceLanguage,
+    targetLanguage: targetLanguage,
+    partOfSpeech: contextAnalysisResult.value.partOfSpeech,
+  };
 
   const analyseResults = await Promise.all(
     buildDirectAnalyseBatch({

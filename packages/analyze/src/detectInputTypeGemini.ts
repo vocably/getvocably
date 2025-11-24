@@ -1,4 +1,5 @@
 import { createUserContent, GoogleGenAI } from '@google/genai';
+import { parseJson } from '@vocably/api';
 import {
   ChatGPTLanguage,
   languageList,
@@ -21,12 +22,24 @@ const inputTypes = [
   'idiom',
   'other',
 ] as const;
-type InputType = typeof inputTypes[number];
+export type InputAnalysis = {
+  type: typeof inputTypes[number];
+  isDirect: boolean;
+};
+
+const isInputAnalysis = (v: any): v is InputAnalysis => {
+  return (
+    typeof v['type'] === 'string' &&
+    typeof v['isDirect'] === 'boolean' &&
+    //@ts-ignore
+    inputTypes.includes(v['type'].toLowerCase())
+  );
+};
 
 export const detectInputTypeGemini = async ({
   source,
   language,
-}: Payload): Promise<Result<InputType>> => {
+}: Payload): Promise<Result<InputAnalysis>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });
@@ -37,15 +50,18 @@ export const detectInputTypeGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `User provides an input in ${trimLanguage(languageList[language])}`,
-          `Detect it's type`,
-          `Response variants: word, phrase, phrasal verb, sentence, idiom, other`,
+          `User provides an input`,
+          `Respond with an object`,
+          `- type - word, phrase, phrasal verb, sentence, idiom, other`,
+          `- isDirect - true if the input is ${trimLanguage(
+            languageList[language]
+          )}`,
         ],
         thinkingConfig: {
           thinkingBudget: 0, // Disables thinking
         },
         temperature: 0,
-        responseMimeType: 'text/plain',
+        responseMimeType: 'application/json',
       },
     }),
     {
@@ -66,22 +82,23 @@ export const detectInputTypeGemini = async ({
     };
   }
 
-  if (
-    inputTypes.includes(result.value.text.toLowerCase() as InputType) === false
-  ) {
+  const jsonResult = parseJson(result.value.text);
+
+  if (!jsonResult.success) {
+    return jsonResult;
+  }
+
+  if (!isInputAnalysis(jsonResult.value)) {
     return {
       success: false,
       errorCode: 'FUCKING_ERROR',
       reason:
-        'Unsupported input type returned from Gemini: ' +
-        result.value.text +
-        '. Supported types: ' +
-        inputTypes.join(', '),
+        'Unsupported input type returned from Gemini: ' + result.value.text,
     };
   }
 
   return {
     success: true,
-    value: result.value.text.toLowerCase() as InputType,
+    value: jsonResult.value,
   };
 };

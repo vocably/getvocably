@@ -7,7 +7,7 @@ import {
 } from '@vocably/model';
 import { analyseAndTranslate } from '../analyseAndTranslate';
 import { buildDirectAnalyseBatch } from '../buildDirectAnalyseBatch';
-import { ReverseAnalysisRequest } from '../detectAnalysisType';
+import { ReverseAnalysisRequest } from '../detectInputType';
 import { isIndependentUnitOfSpeech } from '../isIndependentUnitOfSpeech';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
 

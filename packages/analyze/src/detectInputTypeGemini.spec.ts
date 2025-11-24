@@ -5,7 +5,7 @@ import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
 
-describe('geminiAnalyze', () => {
+describe('detectInputTypeGemini', () => {
   if (process.env.TEST_SKIP_SPEC === 'true') {
     it('skip spec testing', () => {});
     return;
@@ -23,7 +23,8 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('sentence');
+    expect(responseResult.value.type).toEqual('sentence');
+    expect(responseResult.value.isDirect).toEqual(true);
   });
 
   it('move on', async () => {
@@ -38,7 +39,8 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('phrasal verb');
+    expect(responseResult.value.type).toEqual('phrasal verb');
+    expect(responseResult.value.isDirect).toEqual(true);
   });
 
   it('idiom', async () => {
@@ -53,7 +55,8 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('idiom');
+    expect(responseResult.value.type).toEqual('idiom');
+    expect(responseResult.value.isDirect).toEqual(true);
   });
 
   it('german idiom', async () => {
@@ -68,7 +71,8 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('idiom');
+    expect(responseResult.value.type).toEqual('idiom');
+    expect(responseResult.value.isDirect).toEqual(true);
   });
 
   it('chinese word', async () => {
@@ -81,7 +85,8 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('word');
+    expect(responseResult.value.type).toEqual('word');
+    expect(responseResult.value.isDirect).toEqual(true);
   });
 
   it('chinese sentence', async () => {
@@ -96,6 +101,39 @@ describe('geminiAnalyze', () => {
     if (responseResult.success === false) {
       return;
     }
-    expect(responseResult.value).toEqual('sentence');
+    expect(responseResult.value.type).toEqual('sentence');
+    expect(responseResult.value.isDirect).toEqual(true);
+  });
+
+  it('riant', async () => {
+    const responseResult = await detectInputTypeGemini({
+      language: 'en',
+      source: 'riant',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+    if (responseResult.success === false) {
+      return;
+    }
+    expect(responseResult.value.type).toEqual('word');
+    expect(responseResult.value.isDirect).toEqual(true);
+  });
+
+  it('is not direct', async () => {
+    const responseResult = await detectInputTypeGemini({
+      language: 'en',
+      source: 'собака',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+    if (responseResult.success === false) {
+      return;
+    }
+    expect(responseResult.value.type).toEqual('word');
+    expect(responseResult.value.isDirect).toEqual(false);
   });
 });

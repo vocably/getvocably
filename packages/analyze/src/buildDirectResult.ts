@@ -3,7 +3,7 @@ import { contextAnalysis } from './buildDirectResult/contextAnalysis';
 import { reverseAnalysis } from './buildDirectResult/reverseAnalysis';
 import { sentenceAnalysis } from './buildDirectResult/sentenceAnalysis';
 import { unitOfSpeechAnalysis } from './buildDirectResult/unitOfSpeechAnalysis';
-import { detectAnalysisType } from './detectAnalysisType';
+import { detectInputType } from './detectInputType';
 import { sanitizePayload } from './sanitizePayload';
 
 type Options = {
@@ -15,25 +15,26 @@ export const buildDirectResult = async ({
 }: Options): Promise<Result<DirectAnalysis>> => {
   const payload = sanitizePayload(rawPayload);
 
-  const detectedAnalysisType = detectAnalysisType(payload);
+  const detectedAnalysisTypeResult = await detectInputType(payload);
 
-  if (detectedAnalysisType.type === 'reverse-translate') {
-    return reverseAnalysis(detectedAnalysisType);
+  if (detectedAnalysisTypeResult.success === false) {
+    return detectedAnalysisTypeResult;
   }
 
-  if (detectedAnalysisType.type === 'context-analysis') {
-    return contextAnalysis(detectedAnalysisType);
+  if (detectedAnalysisTypeResult.value.type === 'reverse-translate') {
+    return reverseAnalysis(detectedAnalysisTypeResult.value);
   }
 
-  if (detectedAnalysisType.type === 'sentence-analysis') {
-    return sentenceAnalysis(detectedAnalysisType);
+  if (detectedAnalysisTypeResult.value.type === 'context-analysis') {
+    return contextAnalysis(detectedAnalysisTypeResult.value);
   }
 
-  if (detectedAnalysisType.type === 'unit-of-speech-analysis') {
+  if (detectedAnalysisTypeResult.value.type === 'sentence-analysis') {
+    return sentenceAnalysis(detectedAnalysisTypeResult.value);
   }
 
   return unitOfSpeechAnalysis({
-    ...detectedAnalysisType,
+    ...detectedAnalysisTypeResult.value,
     type: 'unit-of-speech-analysis',
   });
 };

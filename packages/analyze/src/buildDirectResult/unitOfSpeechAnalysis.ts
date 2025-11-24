@@ -9,7 +9,7 @@ import { trimArticle } from '@vocably/sulna';
 import { analyseAndTranslate } from '../analyseAndTranslate';
 import { buildDirectAnalyseBatch } from '../buildDirectAnalyseBatch';
 import { buildReverseResult } from '../buildReverseResult';
-import { UnitOfSpeechAnalysisRequest } from '../detectAnalysisType';
+import { UnitOfSpeechAnalysisRequest } from '../detectInputType';
 import { getPartsOfSpeech } from '../getPartsOfSpeech';
 import { googleTranslate } from '../googleTranslate';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
@@ -18,30 +18,22 @@ export const unitOfSpeechAnalysis = async ({
   source,
   sourceLanguage,
   targetLanguage,
+  isDirect,
 }: UnitOfSpeechAnalysisRequest): Promise<Result<DirectAnalysis>> => {
   const trimmedSource = trimArticle(sourceLanguage, source).source;
-  const [languageVerificationResult, translationResult] = await Promise.all([
-    googleTranslate(source, null, sourceLanguage),
-    googleTranslate(source, null, targetLanguage),
-  ]);
 
-  if (languageVerificationResult.success === false) {
-    return languageVerificationResult;
-  }
-
-  if (translationResult.success === false) {
-    return translationResult;
-  }
-
-  if (
-    languageVerificationResult.value.target.toLowerCase() !==
-    source.toLowerCase()
-  ) {
+  if (!isDirect) {
     return buildReverseResult({
       target: source,
       sourceLanguage,
       targetLanguage,
     });
+  }
+
+  const translationResult = await googleTranslate(source, null, targetLanguage);
+
+  if (translationResult.success === false) {
+    return translationResult;
   }
 
   const translation: Translation = {
