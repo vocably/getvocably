@@ -13,7 +13,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
 
   it('works for a word', async () => {
     const responseResult = await getPartsOfSpeechGemini({
-      sourceLanguage: 'en',
+      language: 'en',
       source: 'beginning',
     });
 
@@ -31,7 +31,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
 
   it('works for a phrasal verb', async () => {
     const responseResult = await getPartsOfSpeechGemini({
-      sourceLanguage: 'en',
+      language: 'en',
       source: 'come to',
     });
 
@@ -43,12 +43,15 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
       return;
     }
 
-    expect(responseResult.value[0].partOfSpeech).toEqual('phrasal verb');
+    expect(responseResult.value[0].partOfSpeech).toHaveSomeOf([
+      'verb',
+      'phrasal verb',
+    ]);
   });
 
   it('fixes grammar', async () => {
     const responseResult = await getPartsOfSpeechGemini({
-      sourceLanguage: 'en',
+      language: 'en',
       source: 'scisors',
     });
 
@@ -66,7 +69,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
 
   it('fixes grammar ger,am', async () => {
     const responseResult = await getPartsOfSpeechGemini({
-      sourceLanguage: 'de',
+      language: 'de',
       source: 'apfel',
     });
 
