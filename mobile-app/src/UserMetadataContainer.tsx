@@ -55,7 +55,7 @@ const loadUserMetadataFromStorage = async (): Promise<UserMetadata> => {
   const oldKey = 'userMetadata';
   const oldValues = await asyncAppStorage.getItem(oldKey);
   if (oldValues) {
-    await asyncAppStorage.removeItem(oldValues);
+    await asyncAppStorage.removeItem(oldKey);
     await asyncAppStorage.setItem(key, oldValues);
   }
   // EndOfToDo
@@ -92,7 +92,7 @@ const loadUserStaticMetadataFromStorage =
     const oldKey = 'userStaticMetadata';
     const oldValues = await asyncAppStorage.getItem(oldKey);
     if (oldValues) {
-      await asyncAppStorage.removeItem(oldValues);
+      await asyncAppStorage.removeItem(oldKey);
       await asyncAppStorage.setItem(key, oldValues);
     }
     // EndOfToDo
@@ -130,7 +130,7 @@ export const loadStudyStreakFromStorage = async (): Promise<StudyStreak> => {
   const oldKey = 'studyStreak';
   const oldValues = await asyncAppStorage.getItem(oldKey);
   if (oldValues) {
-    await asyncAppStorage.removeItem(oldValues);
+    await asyncAppStorage.removeItem(oldKey);
     await asyncAppStorage.setItem(key, oldValues);
   }
   // EndOfToDo
@@ -152,7 +152,7 @@ const saveStudyStreakToStorage = async (studyStreak: StudyStreak) => {
 
   const key = `${userSubResult.value}.studyStreak`;
 
-  await asyncAppStorage.setItem('studyStreak', JSON.stringify(studyStreak));
+  await asyncAppStorage.setItem(key, JSON.stringify(studyStreak));
 };
 
 type Props = {};
