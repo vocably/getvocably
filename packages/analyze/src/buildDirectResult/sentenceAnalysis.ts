@@ -34,6 +34,7 @@ export const sentenceAnalysis = async ({
       : translationIntoSourceLanguageResult.value.target,
     sourceLanguage: sourceLanguage,
     targetLanguage: targetLanguage,
+    isDirect,
   };
 
   return {

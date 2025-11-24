@@ -41,6 +41,7 @@ export const unitOfSpeechAnalysis = async ({
     target: translationResult.value.target,
     sourceLanguage: sourceLanguage,
     targetLanguage: targetLanguage,
+    isDirect,
   };
 
   const partsOfSpeechResult = await getPartsOfSpeech({
