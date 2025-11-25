@@ -86,6 +86,11 @@ resource "local_file" "analyze_google_key" {
   filename = "${local.analyze_root}/${local.google_key_filename}"
 }
 
+resource "local_file" "public_backend_key" {
+  content  = base64decode(google_service_account_key.credentials.private_key)
+  filename = "${local.public_backend_root}/${local.google_key_filename}"
+}
+
 locals {
   backend_env_content = <<EOT
 GOOGLE_APPLICATION_CREDENTIALS="${local.google_key_filename}"

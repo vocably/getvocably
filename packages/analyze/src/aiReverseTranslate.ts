@@ -12,8 +12,8 @@ import { isSafeObject } from '@vocably/sulna';
 import { get, isArray } from 'lodash-es';
 import { config } from './config';
 import { fallback } from './fallback';
+import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
-import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   target: string;

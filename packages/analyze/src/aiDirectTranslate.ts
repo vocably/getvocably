@@ -9,8 +9,8 @@ import {
 import { ChatModel } from 'openai/resources';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
+import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
-import { mapPartOfSpeech } from './gptGetPartsOfSpeech';
 
 type Payload = {
   source: string;

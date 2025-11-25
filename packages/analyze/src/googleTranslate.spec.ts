@@ -34,4 +34,16 @@ describe('googleTranslate', () => {
     expect(result.value.target).toEqual('asylum');
     expect(result.value.sourceLanguage).toEqual('en');
   });
+
+  it('does not change the input string when it is in the provided language', async () => {
+    const result = await googleTranslate('Tel pere, tel fils.', null, 'fr');
+
+    if (result.success === false) {
+      console.log({ inappropriateResult: result });
+      expect(result.success).toBeTruthy();
+      return;
+    }
+
+    expect(result.value.source).toEqual(result.value.target);
+  });
 });

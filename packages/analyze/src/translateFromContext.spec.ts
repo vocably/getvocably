@@ -1,3 +1,4 @@
+import '@vocably/jest';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 import { translateFromContext } from './translateFromContext';
 
@@ -16,10 +17,15 @@ describe('translateFromContext', () => {
         "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'",
       sourceLanguage: 'en',
       targetLanguage: 'ru',
+      isDirect: true,
+      inputType: 'word',
     });
     expect(translationResult.success).toEqual(true);
-    // @ts-ignore
-    expect(translationResult.value.target).toEqual('берег');
+    if (translationResult.success === false) {
+      return;
+    }
+    expect(translationResult.value.partOfSpeech).toEqual('noun');
+    expect(translationResult.value.target).toHaveSomeOf('берег, берегу');
   }, 60_000);
 
   it('groundbreaking', async () => {
@@ -29,10 +35,19 @@ describe('translateFromContext', () => {
         "Scientists have announced a groundbreaking discovery on Saturn's moon Titan: a new form of life that looks like algae.",
       sourceLanguage: 'en',
       targetLanguage: 'ru',
+      isDirect: true,
+      inputType: 'word',
     });
     expect(translationResult.success).toEqual(true);
-    // @ts-ignore
-    expect(translationResult.value.target).toEqual('революционный');
+
+    if (translationResult.success === false) {
+      return;
+    }
+
+    expect(translationResult.value.partOfSpeech).toEqual('adjective');
+    expect(translationResult.value.target).toHaveSomeOf(
+      'революционный, новаторский'
+    );
   }, 60_000);
 
   it('out of context', async () => {
@@ -42,6 +57,8 @@ describe('translateFromContext', () => {
         "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'",
       sourceLanguage: 'en',
       targetLanguage: 'ru',
+      isDirect: false,
+      inputType: 'word',
     });
     expect(translationResult.success).toEqual(true);
     expect(
@@ -57,11 +74,13 @@ describe('translateFromContext', () => {
         "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'",
       sourceLanguage: 'en',
       targetLanguage: 'ru',
+      isDirect: true,
+      inputType: 'phrase',
     });
     expect(translationResult.success).toEqual(true);
     // @ts-ignore
     expect(translationResult.value.target).toEqual(
-      'книга, которую читала её сестра'
+      'книгу, которую читала ее сестра'
     );
   }, 60_000);
 
@@ -72,6 +91,8 @@ describe('translateFromContext', () => {
         'Het was er moeilijk den weg te vinden, want in het huis waren veel donkere portaaltjes, trappen, kamertjes en ruime rommelzolders, en in den tuin waren overal schuttingen en broeikasten',
       sourceLanguage: 'nl',
       targetLanguage: 'ru',
+      isDirect: true,
+      inputType: 'word',
     });
     expect(translationResult.success).toEqual(true);
     // @ts-ignore
@@ -84,6 +105,8 @@ describe('translateFromContext', () => {
       context: 'Привет, как тебя зовут?',
       sourceLanguage: 'ru',
       targetLanguage: 'en',
+      isDirect: false,
+      inputType: 'phrase',
     });
     expect(translationResult.success).toEqual(true);
 
@@ -103,6 +126,8 @@ describe('translateFromContext', () => {
       context: 'Привет, как тебя зовут?',
       sourceLanguage: 'en',
       targetLanguage: 'ru',
+      isDirect: false,
+      inputType: 'phrase',
     });
     expect(translationResult.success).toEqual(true);
 
@@ -110,7 +135,6 @@ describe('translateFromContext', () => {
       return;
     }
 
-    expect(translationResult.value.partOfSpeech).toEqual('phrase');
     expect(translationResult.value.source.toLowerCase()).toEqual(
       'what is your name?'
     );

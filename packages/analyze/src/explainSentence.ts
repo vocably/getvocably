@@ -20,9 +20,6 @@ export const explainGemini = async ({
     apiKey: config.geminiApiKey,
   });
 
-  const safeSourceLanguage = languageList[sourceLanguage];
-  const safeTargetLanguage = languageList[targetLanguage];
-
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',

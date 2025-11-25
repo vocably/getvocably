@@ -8,10 +8,10 @@ export type Translation = {
   target: string;
   targetLanguage: GoogleLanguage;
   partOfSpeech?: string;
-  comesFromExplanation?: boolean;
   transcript?: string;
   lemma?: string;
   lemmaPos?: string;
+  isDirect?: boolean;
 };
 
 export type AiTranslation = Translation &
