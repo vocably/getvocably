@@ -16,8 +16,9 @@ type Payload = {
 
 const inputTypes = [
   'word',
-  'phrase',
+  'compound word',
   'phrasal verb',
+  'phrase',
   'sentence',
   'idiom',
   'other',
@@ -52,7 +53,7 @@ export const detectInputTypeGemini = async ({
         systemInstruction: [
           `User provides an input`,
           `Respond with an object`,
-          `- type - word, phrase, phrasal verb, sentence, idiom, other`,
+          `- type - ${inputTypes.join(', ')}`,
           `- isDirect - true if the input is ${trimLanguage(
             languageList[language]
           )}`,

@@ -136,4 +136,20 @@ describe('detectInputTypeGemini', () => {
     expect(responseResult.value.type).toEqual('word');
     expect(responseResult.value.isDirect).toEqual(false);
   });
+
+  it('compound word', async () => {
+    const responseResult = await detectInputTypeGemini({
+      language: 'ru',
+      source: 'лопатка для готовки',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+    if (responseResult.success === false) {
+      return;
+    }
+    expect(responseResult.value.type).toEqual('compound word');
+    expect(responseResult.value.isDirect).toEqual(true);
+  });
 });

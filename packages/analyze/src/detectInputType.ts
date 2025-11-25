@@ -102,7 +102,9 @@ export const detectInputType = async (
   }
 
   if (
-    ['word', 'phrasal verb', 'idiom'].includes(detectedTypeResult.value.type)
+    ['word', 'phrasal verb', 'idiom', 'compound word'].includes(
+      detectedTypeResult.value.type
+    )
   ) {
     return {
       success: true,
