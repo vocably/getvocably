@@ -47,6 +47,7 @@ export type LanguageContainerDeck = {
   status: 'initial' | 'loading' | 'loaded' | 'error';
   deck: LanguageDeck;
   selectedTags: TagItem[];
+  noTags: boolean;
 };
 
 type DecksCollection = Record<string, LanguageContainerDeck>;
@@ -395,6 +396,7 @@ export const LanguagesContainer: FC<Props> = ({
         status: 'loaded',
         deck: loadResult.value,
         selectedTags: [],
+        noTags: false,
       },
     });
 

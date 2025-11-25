@@ -18,7 +18,9 @@ export type Deck = {
   updateTag: (id: string, data: Partial<Tag>) => Promise<Result<TagItem>>;
   filteredCards: LanguageContainerDeck['deck']['cards'];
   selectedTags: TagItem[];
-  setSelectedTagIds: (ids: string[]) => Promise<any>;
+  setSelectedTagIds: (ids: string[]) => Promise<unknown>;
+  noTags: boolean;
+  setNoTags: (noTags: boolean) => Promise<unknown>;
 };
 
 type Options = {
@@ -118,16 +120,28 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     [language, storeDeck, deck]
   );
 
+  const setNoTags = async (noTags: boolean): Promise<unknown> => {
+    if (!language) {
+      return;
+    }
+
+    return storeDeck({ ...deck, noTags });
+  };
+
   const filteredCards = useMemo(() => {
-    if (deck.selectedTags.length === 0) {
+    if (deck.selectedTags.length === 0 && !deck.noTags) {
       return deck.deck.cards;
     }
 
     const tagMap = buildTagMap(deck.selectedTags);
-    return deck.deck.cards.filter((card) =>
-      card.data.tags.some((cardTag) => !!tagMap[cardTag.id])
-    );
-  }, [deck.deck.cards, deck.selectedTags]);
+    return deck.deck.cards.filter((card) => {
+      return (
+        (deck.noTags && card.data.tags.length === 0) ||
+        (deck.selectedTags.length > 0 &&
+          card.data.tags.some((cardTag) => !!tagMap[cardTag.id]))
+      );
+    });
+  }, [deck.deck.cards, deck.selectedTags, deck.noTags]);
 
   return {
     add,
@@ -141,5 +155,7 @@ export const useLanguageDeck = ({ language, autoReload }: Options): Deck => {
     selectedTags: deck.selectedTags,
     setSelectedTagIds,
     filteredCards,
+    noTags: deck.noTags,
+    setNoTags,
   };
 };

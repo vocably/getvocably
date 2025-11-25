@@ -10,6 +10,9 @@ type Props = {
   onChange?: (tags: TagItem[]) => Promise<any>;
   isAllowedToAdd?: boolean;
   deck: Deck;
+  showNoTags?: boolean;
+  noTagsChecked?: boolean;
+  onNoTagsCheck?: (checked: boolean) => Promise<unknown>;
 };
 
 const isTagItem = (tag: Tag): tag is TagItem => {
@@ -22,6 +25,9 @@ export const TagsSelector: FC<Props> = ({
   onChange,
   isAllowedToAdd = true,
   deck: { addTags, deck, removeTag, updateTag },
+  showNoTags = false,
+  noTagsChecked = false,
+  onNoTagsCheck = () => Promise.resolve(),
 }) => {
   const [isSaving, setIsSaving] = useState(false);
 
@@ -60,6 +66,9 @@ export const TagsSelector: FC<Props> = ({
       isAllowedToAdd={isAllowedToAdd}
       renderAnchor={renderAnchor}
       triggerChangeOnSelect={!isAllowedToAdd}
+      showNoTags={showNoTags}
+      noTagsChecked={noTagsChecked}
+      onNoTagsCheck={onNoTagsCheck}
     />
   );
 };

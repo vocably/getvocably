@@ -138,6 +138,8 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
     selectedTags,
     setSelectedTagIds,
     filteredCards,
+    noTags,
+    setNoTags,
   } = selectedDeck;
 
   const { refreshLanguages } = useContext(LanguagesContext);
@@ -432,7 +434,8 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                   onPress={() => navigation.navigate('Study')}
                   disabled={cards.length === 0}
                 >
-                  Study{selectedTags.length > 0 ? ' selected tags' : ''}
+                  Study
+                  {noTags || selectedTags.length > 0 ? ' selected tags' : ''}
                 </Button>
                 {hasTags && (
                   <View
@@ -452,6 +455,9 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                         });
                       }}
                       isAllowedToAdd={false}
+                      showNoTags={true}
+                      noTagsChecked={noTags}
+                      onNoTagsCheck={setNoTags}
                       deck={selectedDeck}
                       renderAnchor={({ openMenu, disabled }) => (
                         <Pressable
@@ -483,7 +489,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                   </View>
                 )}
               </View>
-              {selectedTags.length > 0 && (
+              {(noTags || selectedTags.length) > 0 && (
                 <View
                   style={{
                     marginTop: 16,
@@ -493,7 +499,7 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                     flexWrap: 'wrap',
                   }}
                 >
-                  <Text>Selected tags: </Text>
+                  <Text>Tags: </Text>
                   {selectedTags.map((tag) => (
                     // Wrap the chip in view to fix the close button on Android
                     <View key={tag.id}>
@@ -517,6 +523,20 @@ export const DashboardScreen: FC<Props> = ({ navigation }) => {
                       </Chip>
                     </View>
                   ))}
+                  {noTags && (
+                    <View>
+                      <Chip
+                        mode="outlined"
+                        selectedColor={theme.colors.onSurface}
+                        style={{
+                          backgroundColor: 'transparent',
+                        }}
+                        onClose={() => setNoTags(false)}
+                      >
+                        Cards with no tags
+                      </Chip>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
