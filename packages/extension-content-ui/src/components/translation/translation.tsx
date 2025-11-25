@@ -436,7 +436,7 @@ export class VocablyTranslation {
               }}
             >
               <vocably-spinner></vocably-spinner>
-              <div style={{ fontSize: '13px' }}>...ChatGPT</div>
+              <div style={{ fontSize: '13px' }}>...Generating</div>
             </div>
           )}
           {this.result && this.result.success === false && (
@@ -447,7 +447,9 @@ export class VocablyTranslation {
                 gap: '12px',
               }}
             >
-              <div>A (likely) ChatGPT request has resulted in an error.</div>
+              <div>
+                A (likely) Gemini or ChatGPT request has resulted in an error.
+              </div>
               <div>
                 <button
                   class="vocably-link-button vocably-nondecorated"
@@ -488,7 +490,7 @@ export class VocablyTranslation {
               {showChatGpt && (
                 <div class="padding-left-12 vocably-bottom-12-border">
                   <div class="vocably-small vocably-muted vocably-mb-4">
-                    ChatGPT thinks that{' '}
+                    AI thinks that{' '}
                   </div>
                   <span class="vocably-emphasized">
                     {isGoogleTTSLanguage(
@@ -780,7 +782,7 @@ export class VocablyTranslation {
                               fontSize: '13px',
                             }}
                           >
-                            Requesting extra info from ChatGPT
+                            Requesting extra info from AI
                           </span>
                           <vocably-inline-loader
                             style={{ marginLeft: '8px' }}
