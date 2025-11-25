@@ -35,7 +35,8 @@ for (const userCardCollection of userCardCollections) {
   const cardCollection = JSON.parse(
     (
       await execute(
-        `aws s3 cp s3://vocably-prod-cards/${userCardCollection.Key} -`
+        `aws s3 cp s3://vocably-prod-cards/${userCardCollection.Key} -`,
+        { maxBuffer: 10 * 1024 * 1024 }
       )
     ).stdout || '""'
   );
