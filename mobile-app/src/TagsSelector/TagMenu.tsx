@@ -32,7 +32,7 @@ type Props = {
   isAllowedToAdd?: boolean;
   value: TagItem[];
   existingTags: TagItem[];
-  removeTag: (id: string) => Promise<Result<true>>;
+  removeTag: (id: string) => Promise<Result<unknown>>;
   updateTag: (
     id: string,
     data: Partial<Tag['data']>
@@ -45,7 +45,7 @@ type Props = {
 };
 
 const SWIPE_MENU_BUTTON_SIZE = 50;
-const MENU_WIDTH = 250;
+const MENU_WIDTH = 300;
 const ITEM_FONT_SIZE = 18;
 
 export const extractKey = (tag: Tag) => tag.id ?? tag.data.title;

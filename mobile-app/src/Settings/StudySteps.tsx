@@ -193,12 +193,14 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
                 alignItems: 'center',
               }}
             >
-              <StudyStepSwitch
-                value={isEnabled}
-                disabled={needsPremium && !isPremium}
-                readonly={!changeIsEnabled}
-                onValueChange={toggleStep(item.id)}
-              />
+              <View style={{ paddingRight: 8 }}>
+                <StudyStepSwitch
+                  value={isEnabled}
+                  disabled={needsPremium && !isPremium}
+                  readonly={!changeIsEnabled}
+                  onValueChange={toggleStep(item.id)}
+                />
+              </View>
               <View
                 style={{
                   gap: 8,
