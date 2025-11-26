@@ -842,5 +842,139 @@
     </div>
   </div>
 
+  <style>
+    /* Base Layout */
+    .vocab-wall-section {
+      background-color: #f9f9f9;
+    }
+
+    /* The Wrapper controls the visibility/height */
+    .wall-wrapper {
+      position: relative;
+      max-height: 300px; /* Initial visible height */
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
+    }
+
+    /* Class added via JS to reveal all */
+    .wall-wrapper.expanded {
+      max-height: none;
+      overflow: visible;
+    }
+
+    /* Masonry Layout using CSS Columns */
+    .wall-grid {
+      column-count: 3;
+      column-gap: 20px;
+    }
+
+    /* Responsive columns */
+    @media (max-width: 768px) {
+      .wall-grid { column-count: 2; }
+    }
+    @media (max-width: 480px) {
+      .wall-grid { column-count: 1; }
+    }
+
+    /* Individual Card Styling */
+    .review-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px; /* Bottom spacing for flow */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      break-inside: avoid; /* Prevents card from splitting across columns */
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: var(--bs-body-color);
+    }
+
+    a.name {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .stars {
+      color: #ffb400; /* Gold color */
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* The Fade Overlay and Button */
+    .wall-fade-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(to bottom, rgba(249,249,249,0), rgba(249,249,249,1) 80%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 20px;
+      pointer-events: none; /* Allows clicks to pass through top part of fade */
+    }
+
+    .wall-fade-overlay button {
+      pointer-events: auto;
+    }
+
+    /* Hide overlay when expanded */
+    .wall-wrapper.expanded .wall-fade-overlay {
+      display: none;
+    }
+  </style>
+
+  <section class="vocab-wall-section" data-nosnippet>
+    <div class="container-xl py-5">
+      <h2 class="h3 mb-1">Language use is the only path to fluency.</h2>
+      <p class="lead">Vocably is loved by those who get it.</p>
+
+      <div class="wall-wrapper" id="wallWrapper">
+        <div class="wall-grid">
+          {{#each htmlWebpackPlugin.options.environment.reviews}}
+            <div class="review-card">
+              <div class="review-header">
+                <a href="{{this.url}}" class="name" target="_blank">{{this.name}}</a>
+                <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+              </div>
+              <p class="review-text">{{this.text}}</p>
+            </div>
+          {{/each}}
+        </div>
+
+        <div class="wall-fade-overlay" id="wallOverlay">
+          <button class="btn btn-secondary btn-sm rounded-pill px-5 text-sm" id="showMoreBtn">Show more reviews</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('showMoreBtn').addEventListener('click', function() {
+      const wrapper = document.getElementById('wallWrapper');
+      wrapper.classList.add('expanded');
+    });
+  </script>
+
 {{/layout}}
 

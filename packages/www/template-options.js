@@ -24,5 +24,664 @@ module.exports = {
       { code: 'tr', name: 'Turkish' },
       { code: 'zh', name: 'Chinese' },
     ],
+    reviews: [
+      {
+        name: 'Tuấn Trần',
+        date: '26 Nov 2025',
+        text: 'This program is really convenient. I find it better than Anki for creating flashcards.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/07ea2219-0efd-49f0-83bb-f43cdc57366e',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUNECCiqF2MgJA38-tivnRrNHISyiU61tL3vPxBiGDOzQvPl1Mw=s48-w48-h48',
+      },
+      {
+        name: 'Chawika',
+        date: '3 Oct 2025',
+        text: "Highly recommended for all language learners! After using Vocably for a while, I'm really satisfied with its AI-translated features, which are accurate and seamlessly integrated with other platforms. Vocably is a wonderful tool for learning words and sentences using flashcards on a mobile application. I really appreciate the developer. Thank you so much for creating this awesome tool. <3",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/96445048-988e-423c-bec9-4d520fc6a45b',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocK-kJ49OCvErwRxHkVDOkos_a5oRKroOCioSzAzsxccE-CXJTs=s48-w48-h48',
+      },
+      {
+        name: 'Doston Kamilov',
+        date: '22 Sept 2025',
+        text: 'Лучшее расширение для изучения языка, а еще огромное спасибо разработчику за отзывчивость',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/79a4e5ba-ddea-4ae8-acb8-905848174b45',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocIJ8h9AvGsRQ3VlPa94GeQIGgjuS6BhgBqr78BEqLgUpOWK1A=s48-w48-h48',
+      },
+      {
+        name: '12C6-42-Huỳnh Thiên Phú',
+        date: '16 Sept 2025',
+        text: 'this is useful for english learners',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/5a0f45bc-9143-4bfb-945c-d4cae817a7a3',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVF-uKjVQnNTu0WtXdi7YBrgNrqcEVGU7QB_FwKhAZYLEoftrMl=s48-w48-h48',
+      },
+      {
+        name: 'CAIO VICTOR FERREIRA DO NASCIMENTO',
+        date: '13 Sept 2025',
+        text: 'Simply the best Chrome extension to learn any language!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/285462b0-0057-4f1f-ace0-e82dd810275f',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLEP8Y-xzhqXGf9cs27ueKj-cyhaPDM7t3cH4H9XlOBAHa898E=s48-w48-h48',
+      },
+      {
+        name: 'Tapsi Mufa',
+        date: '9 Sept 2025',
+        text: 'bingle bangle bingle bongla veryy nicceee',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/b330d3f1-3ba9-4c7b-8ddd-c53f9012aef8',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjW4-AMJziyl3aA5huRWcioC29C8beMK7rXaarOturRkjV6_J1c=s48-w48-h48',
+      },
+      {
+        name: 'Konstantin MK',
+        date: '8 Sept 2025',
+        text: 'Отличное приложение, то что нужно каждому в изучении языка',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/3e6fd857-f687-43ba-baf9-8d1cf7088f8b',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocK1E6DCMPJS2n6fWyk4o-S0c3bpkTPVhltRR60sxHp2LY6L5w=s48-w48-h48',
+      },
+      {
+        name: 'Israel Kianzambi',
+        date: '31 Aug 2025',
+        text: 'This extension is really impressive! I just came across it on the Chrome Web Store, and I had no idea how useful it could be. For those who don’t know, you can use it with YouTube by pausing the subtitles whenever you encounter a word you don’t know and take notes if you want to— it makes learning so much easier. Don’t forget to pin the extension so it’s always ready to use. Big cheerios to the creator — they did an amazing job making this!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/37aa5756-6262-4302-982e-ebb2038a1a5a',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJkyr8MQWsDZyFCWI6VzkZOl31SQwCK9Ft8v1JU7GyPpeFrgQ=s48-w48-h48',
+      },
+      {
+        name: 'Макс Привезенцев',
+        date: '29 Aug 2025',
+        text: 'Очень круто, то что надо и без излишеств',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/c9106998-ddde-4696-b59e-9e370c87fd50',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXDe4tvQmqKiCdIsxWK2C3zdYO9b8_UfR9UgXcmFaxGfm8SLSc1=s48-w48-h48',
+      },
+      {
+        name: 'Данир Кашапов',
+        date: '15 Aug 2025',
+        text: 'Very useful instrument to upgrade your vocabulary, especially with the app!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/15c02811-5ce2-43ca-9df4-6c0b9210c851',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJ5v7FNqEV6miJBktllN1b-WfTtDlcZsAbZmsbvDvEJVHtteA=s48-w48-h48',
+      },
+      {
+        name: 'Floriano',
+        date: '14 Jul 2025',
+        text: 'A very good subtitles app, it is simple, but very functional ;)',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/0498bf70-92b0-47a4-b314-d64f01acbe39',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJ7ZNVGoE_mNo-eKAalZhcMzDS29AXPzdtxoySypMY1GjX62Mo=s48-w48-h48',
+      },
+      {
+        name: 'Gary Malkin',
+        date: '11 Jul 2025',
+        text: "This is the best flashcard app that I've used. It goes into more detail than others. For example, if I type in a word in a foreign language, it will automatically give me the definition (or a number of them to choose from if there is more than one), as well as examples of use. This is incredibly useful when studying a language. You can even edit the definition field to make it more personal or memorable to you. It's really intuitive and easy to use and strikes a perfect balance between the au... Show more",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/23a423ed-f6c7-4088-be04-b815ef3ef3ab',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXk8lJZYAOxP-bx1u-t3gCBk9gWfuZ9UzihKGY0Fm1cGikvIsdohw=s48-w48-h48',
+      },
+      {
+        name: 'Bohdan Yalovskyi',
+        date: '9 Jul 2025',
+        text: 'Вокеблі — це саме той інструмент, якого мені не вистачало для щоденного вивчення слів. Інтерфейс простий і приємний, все працює стабільно, а функції підібрані з розумінням реальних потреб користувача. Видно, що проєкт створено з любов’ю і увагою до деталей. Дуже рекомендую всім, хто хоче покращити свій словниковий запас ефективно й без зайвого шуму.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/91525591-106e-4f0d-97f1-d3588ecaa0df',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjU5yBUPPhIudT-6Op8NAKpakDkKdFes8GU_7JmM-L_tBgyKjBSs=s48-w48-h48',
+      },
+      {
+        name: 'Dmytro Palivoda',
+        date: '7 Jul 2025',
+        text: 'Really love this plugin — it makes adding new words to flashcards so much easier. I like that I can instantly see the translation without switching tabs or looking it up separately. Saves time and keeps me focused while studying.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/e6444dc1-e867-4e72-9919-e3c31ee6e1a6',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWzFz82lUDd3dqFoJMqub9ZJqUd5EsDRwejUBOgSSi2-gQAslFFKA=s48-w48-h48',
+      },
+      {
+        name: 'Jaider Barraza',
+        date: '6 Jul 2025',
+        text: "So this service is very practical and useful. I'm trying to take the most of it. I can be on my computer reading or watching something on youtube and with some clicks I get the word in my phone for reviewing later. Thank you for this because it helps a lot when you try to do inmersion on the language you're acquiring. Keep doing such a excellent job. I know it'll be much better in the future.",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/81537b22-1591-4476-ab12-946672fb4bcb',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocKayrH8czzItvtitGyriYHx37G2rLRIM7iWzfxt1DYM4DC5ZQ=s48-w48-h48',
+      },
+      {
+        name: 'Demet Bağcı',
+        date: '3 Jul 2025',
+        text: 'Çok yararlı bir eklenti. Uygulama olarak da telefona indirilebiliyor. Flashcard gibi kullanabiliyorsunuz kaydettiğiniz kelimeleri ayrıca soru şeklinde de çalışılabiliyor.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/16e818d1-aa5e-4ad6-9ba4-3ac1cc56f7b1',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjW5WlUKlf_Y2VU58giV-l8eK9DQ1ltmESD_5xGDyPTxFLq276w=s48-w48-h48',
+      },
+      {
+        name: 'fkrusenstern',
+        date: '10 Jun 2025',
+        text: "I really couldn't imagine how useful and easy to use this App is. Vocably gives you short and detailed multi-language translation in a couple with AI. I installed it into my Chrome and on my Android as well. I prefer reading large texts on a full-size screen, but It's better to learn the words using phone. Thank you guys!",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/184252ff-7ed5-4be3-8009-143a7bfc517d',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWp-ET7o8BsCDpf-zleffQzC_xrT4BkriXFxSnnKuAjXgxjgPY=s48-w48-h48',
+      },
+      {
+        name: 'Saeed Fattahi',
+        date: '30 May 2025',
+        text: "that's so nice, using chatGpt and user friendly makes it awesome, thanks dev team",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/d9ad3d8b-4c82-4495-ab1e-09eda8400075',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocI7XcbWXg_4CmVRPIjwkmjh_xyDkkr967n5LCQi5BRUmdRoWA=s48-w48-h48',
+      },
+      {
+        name: 'Ruben',
+        date: '28 May 2025',
+        text: 'Esta extensão usa a inteligência artificial para produzir explicações sobre palavras que selecionamos. Também dá para gravar palavras para estudá-las depois. Seria bom incluir línguas antigas, como o latim',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/1a82f3a2-9a5b-4c75-9fa2-d01fa7fd1502',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLoc2rzTe09aI8Tw2zwTndNftTnyjjkdclTB3Jw2aVE2uGr9Q=s48-w48-h48',
+      },
+      {
+        name: 'Mike Kilmer',
+        date: '26 May 2025',
+        text: 'A beautiful gift. Helping us communicate better with one another. Thanks much, Dmytro and team.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/567ad343-4a5e-491c-b75d-973700bcc401',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWpht4bMXndL69JFXpZWyS6PMNxxebYt1oXVxXRSXVBCWPZRCM=s48-w48-h48',
+      },
+      {
+        name: 'Ira Rekh',
+        date: '2 May 2025',
+        text: 'Искала простое приложение с возможностью удобного создания карточек через браузер и упражнений для запоминания на телефоне. Нашла то что нужно, ничего лишнего, есть перевод на русский язык.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4436916b-ff1f-4688-b2ef-9663b1f4bb38',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXpWWjCh-UoOoZqQ0Gf65RmvSoBBipCNBgN6HqtIiEsjqy9LswK=s48-w48-h48',
+      },
+      {
+        name: 'Vitalii',
+        date: '7 Apr 2025',
+        text: "Дуже класна пріложуха. Особливо коли працює у зв'язці App в смартфоні та Extension в Хром браузері. Це ніби Комбо фаталіті.",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/590977f3-5ef5-41fd-8a68-d58a5748766f',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocKbUus4_PNl4ZNbM1XwozKj63f1Qc6MwcRcRsUbt7Iz-05MeQ=s48-w48-h48',
+      },
+      {
+        name: 'Марiя Тищенко',
+        date: '7 Apr 2025',
+        text: 'Просто супер. З радістю користуюсь кожен день, щиро дякую👍',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/e8c36e7c-a8eb-4617-8d70-c19d9555ceba',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJrkCARpprysG6ad2n2GO9k8GhjaZlCnKIwRJaLPyFbbX3JYIE=s48-w48-h48',
+      },
+      {
+        name: 'S D',
+        date: '5 Apr 2025',
+        text: 'Amazing tool for language learning and growing your vocabulary.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/b0e2b3e7-120c-4227-ae55-846af8bc23e2',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocIovLShnpivaXQrAa17ZVFRUgPX7dQ_A3m3cwEsTiEaizmv8Q=s48-w48-h48',
+      },
+      {
+        name: 'Trang Thule',
+        date: '5 Apr 2025',
+        text: 'perfect',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/d85827b6-0c7a-4c0b-824d-7118d02b444b',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVGIP_tw2sPyhC8C3XJ64CEZiPAflxnjGBfyi1sg9hBdoLrj3yi=s48-w48-h48',
+      },
+      {
+        name: 'krunal prajapati',
+        date: '4 Apr 2025',
+        text: 'amazing',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/24d61f8b-c794-4673-9eff-582b6032fb2c',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWgqeVsTreiHwallsLpwBIwdN2HuznQAacv-4skCeYcVFHsyzQ=s48-w48-h48',
+      },
+      {
+        name: 'Amir Sayfiddinov',
+        date: '1 Apr 2025',
+        text: 'finally. needed smth similar for long',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/34672d07-96da-4524-a8de-2a14b3284fa7',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWBTp2An2QDW1ALJipN79iCIZ8kJ9uKBJP5kR4n4GRXVn9sYY0=s48-w48-h48',
+      },
+      {
+        name: 'Noorain Bashir',
+        date: '29 Mar 2025',
+        text: 'after spending hours for finding an extension which provides definition and save words along with their details to learn/recall later, i found this. believe me it is the best extension out there. please add synonyms and antonyms of the words too. It will be a great addition. thank you so much, team vocably!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/6c690405-b70b-4e79-a0c5-63b95fe16479',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXmk41Ms9DcYy0c2gvldmF3l4o-i83fXK7HE6s88wWKn9E02KM=s48-w48-h48',
+      },
+      {
+        name: 'Пожилая Чепуха',
+        date: '28 Mar 2025',
+        text: 'Лучшее расширение, приятный красивый интерфейс, всё круто переводит и хранит. Есть крутое мобильное приложение. Интеллектуальный анализ слов и их хороший перевод. 5/5. Ошибок не замечено. Огромное спасибо.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/6c689753-d923-4b39-927e-a0c30a4d91b4',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWi3c7MOAnwNms2Iky-dT0eerfZTNh1V3LUjJdx5on8rGJ59lA=s48-w48-h48',
+      },
+      {
+        name: 'CatBeheMath',
+        date: '27 Mar 2025',
+        text: 'It is very useful app.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4ba70258-7379-43a3-b1aa-1084120b41f2',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVV0twjGdADcR9GFWq_rR-lyq47K-OjKWhPcY8elCevsyQfqEM=s48-w48-h48',
+      },
+      {
+        name: 'Stewart L',
+        date: '14 Mar 2025',
+        text: 'Very good extension. Simple to understand, light, fast.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4019dcbf-7e22-4eff-9c3a-86c8764950c1',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUsvhLcXdmliEcDmlbm54PseWSoFIvdJy9hzB54HJEsi8HXegI=s48-w48-h48',
+      },
+      {
+        name: 'Journey Kim',
+        date: '10 Mar 2025',
+        text: 'Great!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4a8ae946-82fb-4615-b26e-bef8d1e49915',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLiRDNnpvo5sNNXkks0n_NSGwMBn4G8JinZJWu86aUYz10-vw=s48-w48-h48',
+      },
+      {
+        name: '江瑋平（GHSRobert 瑋平）',
+        date: '1 Mar 2025',
+        text: 'So many languages available. Very handy to add new words and new language decks. Great project!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/997fae51-c1dd-4ef5-beb7-89fd9a3225da',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWYOSKaQYl0z1AJ2oKvAFZrmanVqAbAcmhidxjzCy4C4OJusU9z=s48-w48-h48',
+      },
+      {
+        name: 'Samy',
+        date: '22 Feb 2025',
+        text: 'A god-send',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/d1874834-28f6-4f2b-a31b-f0a84de313be',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJoIJx5UOnUOlI-mTngVRUDtRm1shsPm6jhAFZYYglQppR_Tw=s48-w48-h48',
+      },
+      {
+        name: 'Vira Morenets',
+        date: '18 Feb 2025',
+        text: "Wonderful! The most I like it's the feature that brings all the words to Vocably app and I can learn my words on my way.",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/1db54959-4e83-40e5-8495-41ffff53889f',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWUOULlXW6foWXfLH8JdkQot-Kb5HDjoJDIHL3NjKgb93XpyDbU=s48-w48-h48',
+      },
+      {
+        name: 'Anna Krusenstern',
+        date: '13 Feb 2025',
+        text: 'Very helpful and life-long developing tool. Feel grateful to the creator!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/cc09491c-3fa6-4923-9088-1a580e0913bb',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjV4ujXlgxG1PKhXRjlCf5sPYqLzmwzJL5fE6sHCQKaTQKc1Py5u=s48-w48-h48',
+      },
+      {
+        name: 'Ruslan Pavlenko',
+        date: '5 Feb 2025',
+        text: 'Супер!\nОсобливо після впровадження ChatGPT переклад просто став чудовим!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/44020c97-a124-4766-9f5d-13886ad42b6e',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXmUH7MGyRmjMdnbi4pWexrIHcxlnRynTfSvKxY_VwVHIYYEFX9kw=s48-w48-h48',
+      },
+      {
+        name: 'Оксана Купрякова',
+        date: '29 Jan 2025',
+        text: 'super',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/a077372d-10bf-439b-87e4-320e4206257e',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWDZePfORPB4vMfxYIJv_OcNZihSyuwWoG_-i6L9Xg9vLohRepG=s48-w48-h48',
+      },
+      {
+        name: 'Sofia Efimochkina',
+        date: '28 Jan 2025',
+        text: 'давно искала такое расширение, спасибо разработчикам за такую полезную программу!)',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/2a786e37-10ad-4486-8dad-fd694df421a1',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLRz3I0XrfInaMC0RGVryq7eKTC7dGlnNzDML6nrn9lYL1CJvw=s48-w48-h48',
+      },
+      {
+        name: 'Руслан Савчук',
+        date: '14 Jan 2025',
+        text: 'Мне очень понравилось. Удобно и практично.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/a8339e99-e7f2-44ea-b383-b88def505218',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLQEIH84c1AeJVgzVHT7L7FeqsFLflsqfCAv5uBtVxIlKwTOg=s48-w48-h48',
+      },
+      {
+        name: 'Chau',
+        date: '11 Jan 2025',
+        text: 'Just what I was looking for in a vocab extension. Thank you :)',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/5af2e626-709f-4691-bd44-25089e51a3a2',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJ0EGIrQTyXRD1QSTJHky-KqMHnY-xVbeiDpSJhOmAxKeYbvoVM=s48-w48-h48',
+      },
+      {
+        name: 'Z. Ar',
+        date: '30 Dec 2024',
+        text: 'Powerful tool. Thank you!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/641782b6-9e40-4203-9eaf-a1d9c066d6a1',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWytriDeGhX12DQoPmLhOezkdyg6xMxGYqcVyGIPgIcRINGbpnh=s48-w48-h48',
+      },
+      {
+        name: 'hoa truong',
+        date: '28 Dec 2024',
+        text: 'great',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/bcb4f270-a873-4659-89de-5ca1644e19b9',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVeaVEt5D0UGcUJh9NUhfBjDn6HL39ZyfZFgoSdcSXUAMDjx1dE=s48-w48-h48',
+      },
+      {
+        name: 'QiaoChu Liu',
+        date: '25 Nov 2024',
+        text: '我使用过的最好用最方便的意大利语翻译为中文的字典.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4dbf82b1-62b2-49cf-ad5c-c4d463cf3b28',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVBdt7vX3aiQD_XdX-KJ36T1xQk7J1jIzWn4-AV7acpmQaakFNg=s48-w48-h48',
+      },
+      {
+        name: 'Minh Quang Trần',
+        date: '10 Oct 2024',
+        text: "By far the most sensible extension for words highlighting I've found: right features, clean UI. The support is top-notch as well. Highly recommend.",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/b361c398-1f83-418c-baf8-bd60bf19798b',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWJ9ENStMKsblSEiTmKbz21xB2CdUC9LvqZ5J3tywJE5lIyJgg=s48-w48-h48',
+      },
+      {
+        name: 'Maksym Korzh',
+        date: '9 Oct 2024',
+        text: 'Очень удобное приложение с большим потенциалом. Например есть программа Анки, но там очень сложно добавлять слова из любого приложения или с любой страницы браузера. Здесь это легко сделать. Синхронизация словаря на всех устройствах. Спасибо автору за труд и продуманность удобства использования приложения.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/df774cdb-0a90-40b9-9836-e7411304d508',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJ0yixYIsHtYF95-54EMGfjAHmNOQJO6SSzTGYiawv7cKdd4A=s48-w48-h48',
+      },
+      {
+        name: 'Fatemeh Douroudian',
+        date: '26 Sept 2024',
+        text: 'It’s great! I just wish I could use it outside of browsers to read PDFs. (I am working on mac)',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/d8e7427c-4f5e-4417-8d33-22b144f7ef37',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXTJOfGHht1spl4riJ646om5zRBTm3xMRGkdqFQ08e27k8JBGUz=s48-w48-h48',
+      },
+      {
+        name: 'KuanYi Chen',
+        date: '23 Sept 2024',
+        text: 'nice app',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/84c5e1c9-4095-4fc6-8071-7b0ad6c046fc',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWBp-dJszTdeMysq46cBdkKxXI1rBTvkMWDDoGgqdNgzFx4ohtv=s48-w48-h48',
+      },
+      {
+        name: 'Ксенія Комарова',
+        date: '26 Jul 2024',
+        text: 'super!!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/bcad399a-2adb-428b-98aa-e264169f4f24',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUbpyJSmrIROMSbk99UqzKo784XW9mQVqqoo8mwx7CffRryi93N=s48-w48-h48',
+      },
+      {
+        name: 'Dmitrii Babich',
+        date: '10 Jul 2024',
+        text: "Thanks to Vocably, I successfully built up the vocabulary I needed to pass my German B1 exam. The extension makes adding new words friction-free, and learning and revising them is easy. This was the key feature for me, as other applications require effort and context switching to create new cards. With Vocably, it's just one button click directly on the page. The new ChatGPT assistant is also great for new learners. Highly recommended for anyone learning a language - it’s the perfect day-to-d... Show more",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/11990636-c92e-415e-8b52-b5e6a820fa0c',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWwQKOZQh1zfqIitD6yf3ii8bILnZbQlNizOocd_PBe5doUJSTmhw=s48-w48-h48',
+      },
+      {
+        name: 'Denis Shcherbak',
+        date: '28 Jun 2024',
+        text: 'Лучшее расширение для Chrome',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/e001797e-a6c2-4886-8096-5e2b60a619c3',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocLO4_3iR5x3K1ozHDbwqxlwgF6fGygXcbUwecKzJ_w3vZ_kKA=s48-w48-h48',
+      },
+      {
+        name: 'Oleksandr',
+        date: '23 Jun 2024',
+        text: "That's great! Our teacher made a great program. Thank you Dmitry)))))",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/36f414a6-d9b8-479a-a987-5a6d5b90482e',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJIbIupyrTrsSatLhlLhsGkjNorr4cvgI9QwWC_KLZLAztmRg=s48-w48-h48',
+      },
+      {
+        name: 'Janaíne Arioli',
+        date: '14 Jun 2024',
+        text: "Besides my native language (portuguese), I also speak english and italian and I often read articles and newsletters to practice my reading skills. I've been using Vocably for over 6 months and it has been helping me learn the translation of a lot of words I'm not familiar with it yet. Highly recommend!",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/56c72103-03ab-4679-a588-0d3be2a33d1f',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWDsf-T5KlQs95MJm5cMqR1gNQrFM45yk7Q9CmHQolSsMdIvCln=s48-w48-h48',
+      },
+      {
+        name: 'Dương Nguyễn Thanh',
+        date: '7 Jun 2024',
+        text: "it's useful, thank a lots",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/3458e41d-aef5-47f8-93ed-8602484c93c1',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUhesc_NYc2aJR9faTPbI_uiFUOdgSWeWiVkpGItlrLtqgLaG0=s48-w48-h48',
+      },
+      {
+        name: 'Rosen Dimitrov',
+        date: '6 Jun 2024',
+        text: 'Thanks to the creators! An excellent helper and means of development for each of us!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/7081af32-3d90-41e5-80bb-1f435e40af0c',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJf4CuvWI8YZWwr1wCrezSUPUbSE4irywd9zCAc2Wl3FmQscA=s48-w48-h48',
+      },
+      {
+        name: 'Aliaksandr Yerashenka',
+        date: '2 Jun 2024',
+        text: 'Great app. It would be nice to have dark mode for the extension. Also more options for customization, such as number of examples and translation of examples.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/03affcd2-9b0b-47be-abb3-adba49e10f95',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocJE4qjDkSVRHDZo-2LpYh2qLsY-At8ovGF4E55tY6wEzL-Xcw=s48-w48-h48',
+      },
+      {
+        name: 'Kostia',
+        date: '29 May 2024',
+        text: 'Very good application. Something that I was looking for a long time. The support of PDF format would be great.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/7eae2387-8540-40c3-b39b-02afc16e104c',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVl_AebYtkBuYywTIeC1BMncPGQ2PWRgw2mMzxZ8ovKSDllxzJ_=s48-w48-h48',
+      },
+      {
+        name: 'Richard Yates',
+        date: '1 May 2024',
+        text: '谢谢开发者！',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/56a2f160-ec44-4714-8118-a99f243c2eff',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocIdjGmy9ZkiwOF6tu_BmRG_JkLa-E6Wig9q6ij5Am42zw_MB_py=s48-w48-h48',
+      },
+      {
+        name: 'Vadim Karedin',
+        date: '25 Apr 2024',
+        text: 'very useful app, it would be great if it continued to be developed further. Thank you very much',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/ddd03358-da12-4e8e-b362-58dfafd9fa19',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXtWMRXCLx9yDD-Wn3-sJ6pVtnjhMZ6jwyzG1po7hehmcS1TY0=s48-w48-h48',
+      },
+      {
+        name: 'John “TROPIC” Doe',
+        date: '15 Apr 2024',
+        text: 'Очень полезное приложение, помогает учить целевой язык с помощью интервального повторения!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/41a4bd1a-8fc9-4213-9728-9c14949b2414',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUotSuowj7p3LLfMVoj75i0Zn0VgrZkyLNYXNkFa5fX9mtnjK8=s48-w48-h48',
+      },
+      {
+        name: 'Godfrey Norton',
+        date: '25 Mar 2024',
+        text: 'Very useful extension that support many languages, if you are studying a language, then this app is for you!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/69a5806b-6b9b-4c18-976b-bb011dc58c9a',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjWGxxxwMqLoEeUlu-A0ZOLeu72U2BaA3jdZGL9ed-4YxgJDrjGl=s48-w48-h48',
+      },
+      {
+        name: 'ZeeGreed',
+        date: '22 Mar 2024',
+        text: 'Useful and easy to master',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/b2652a83-2053-4858-a2f3-4445d3753ebe',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXdWrKX8RQ_s-QmLdyYcV7NFPu47L2qdxppz5gqWippaeX-d6-f_w=s48-w48-h48',
+      },
+      {
+        name: 'Asefine',
+        date: '11 Mar 2024',
+        text: 'Поистине гениальное приложение, причём выделять можно слова можно в том числе и с субтитров на ютубе, просто кликая на них. Единственное хотелось бы ещё разных способов повторять слова, но и без этого приложение отличное.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/1a45c311-eba5-4a43-b506-be2bc4cd934b',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUrBnEYGeHJH8DRvM6dkGo2yySC0zyljPss9eG_wpgSb4bmeBa7=s48-w48-h48',
+      },
+      {
+        name: 'Nick Gisich',
+        date: '10 Mar 2024',
+        text: 'Простое и гениальное решение, его очень не хватало. Выделил непонятное слово в браузере -> добавил в базу -> учишь в смартфоне.\nБольшое спасибо автору!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/fcd05fb4-7f7b-4f07-b4c0-7b931d18c4cf',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjXzxexzIF3vZiiqhqqw58L7i966yezpp6N54I3NkFYFFiGrvFZr=s48-w48-h48',
+      },
+      {
+        name: 'Pavlo Krasnomovets',
+        date: '4 Mar 2024',
+        text: 'Simple and awesome',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/3f74cac5-f6ef-4218-98a1-23c7aaa36924',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUVyo26z61IXoUBgMiy_k7xTYTLbTgptUIaWz3mywIecHF18pJk7A=s48-w48-h48',
+      },
+      {
+        name: 'Dino',
+        date: '4 Mar 2024',
+        text: 'Fantastic work! This is impressive.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/0e9ca2cf-94d2-46e7-b5e5-3355b1d0ab71',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUz4QfgE-npdzxKBzk0ZPPNTtd1JyZEkOYFxXiQ3V84VTrYH4C9=s48-w48-h48',
+      },
+      {
+        name: 'Oleksandr Nesterenko',
+        date: '3 Mar 2024',
+        text: 'Exactly, what i need',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/b450abd7-1832-4124-b1ef-b72d863c9e8c',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVO5VRYhdTYlufAcXD8hNUJvAJsWb5g-VIAMY4E2iVkVDpbDvv_=s48-w48-h48',
+      },
+      {
+        name: 'Shota Arabuli',
+        date: '3 Mar 2024',
+        text: 'Идеальное решение для изучения неочевидных словосочетаний, которые встречаются в тексте - можно просто делать с ними такие же карточки для изучения, как со словами. Спасибо большое создателю!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/28b1e9e1-777b-4b24-bccd-ff11e4407416',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjU5I7zgQs0w4JZbi6w2gzazWd6ZzHW3t1iG8BrYBxd8w_RliAeq9g=s48-w48-h48',
+      },
+      {
+        name: 'FragMent',
+        date: '14 Feb 2024',
+        text: 'Works great, just what you need ^_^ ',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4ab53d86-612c-4182-b25f-f692dedc28d9',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVpJKY-9Ql2AVvKRgy3kqPL6civLpdLUpSGmW3NCTK67nkuAhJ4=s48-w48-h48',
+      },
+      {
+        name: 'Alexander “Qantas”',
+        date: '12 Feb 2024',
+        text: 'Отличное решение, похоже это именно то, о чём мечтал для расширения словарного запаса на английском. Мира и всех благ тебе, добрый человек!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4ac1c130-ac1f-46ba-a147-99d32d4d14c8',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjVssbB81qvWcZKFkBJ3VwTXjA_DCfap-h0BwwOqhDaNdu62vnI=s48-w48-h48',
+      },
+      {
+        name: 'Wissam',
+        date: '15 Nov 2023',
+        text: 'Simple and easy to use! Recommended for folks just getting started or who like to use the flashcards!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/18a0b3cb-eb07-4e68-8fcf-73d6eb7ce6df',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUDAdYpHmB6y9dG15lThAnfMonhxEigajNnhbhoP0WltpfftF_F=s48-w48-h48',
+      },
+      {
+        name: 'Lia Nelson',
+        date: '29 Aug 2023',
+        text: 'Using it already for a month, works nicely in tandem with phone app',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/\\351\\004)\\335\\370\\263@\\303\\257\\030\\313D\\246\\244\\027\\n\\202F[\\227\\203p8F1\\336\\034\\352RZ6\\277',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUzjmy63jSoocpVOReE8NsJ1Sh2TrpVKrlEqAw41HmoGQRSWCW6=s48-w48-h48',
+      },
+      {
+        name: 'Mary Grigoryeva',
+        date: '29 Aug 2023',
+        text: 'Great app for intermediate and upper-intermediate level of language. Love the slick design!',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/\\213\\021c\\331g\\344\\303\\035`\\024\\022\\345\\027\\246A\\311\\271\\03011\\241D\\274\\203\\2429he\\325w\\005\\004',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjV1Oj7y1oU-gPQgWER4TDtg01feaL6SX2SyS5VFwhC1H46noVg=s48-w48-h48',
+      },
+    ],
   },
 };
