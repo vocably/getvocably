@@ -18,8 +18,8 @@ type Props = {
   analysis: Analysis;
   cards: CardItem[];
   onAdd: (card: AssociatedCard) => Promise<Result<CardItem>>;
-  onRemove: (card: AssociatedCard) => Promise<Result<true>>;
-  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<true>>;
+  onRemove: (card: AssociatedCard) => Promise<Result<unknown>>;
+  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<unknown>>;
   style?: StyleProp<ViewStyle>;
   deck: Deck;
   leftInset?: number;

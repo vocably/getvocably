@@ -14,8 +14,8 @@ import { AssociatedCard } from './associateCards';
 
 type AnalyzeResultItem = FC<{
   onAdd: (card: AssociatedCard) => Promise<Result<CardItem>>;
-  onRemove: (card: AssociatedCard) => Promise<Result<true>>;
-  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<true>>;
+  onRemove: (card: AssociatedCard) => Promise<Result<unknown>>;
+  onTagsChange: (id: string, tags: TagItem[]) => Promise<Result<unknown>>;
   item: AssociatedCard;
   deck: Deck;
   hideOperations?: boolean;

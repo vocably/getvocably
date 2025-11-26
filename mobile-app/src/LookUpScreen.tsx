@@ -1,6 +1,7 @@
 import { NavigationProp } from '@react-navigation/native';
 import { analyze } from '@vocably/api';
 import { AnalyzePayload, GoogleLanguage, languageList } from '@vocably/model';
+import { trimLanguage } from '@vocably/sulna';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
@@ -45,8 +46,12 @@ const getLoadingText = (translationPreset: Preset) => {
     ? translationPreset.sourceLanguage
     : translationPreset.translationLanguage;
 
-  const fromLanguageLabel = languageList[fromLanguage as GoogleLanguage];
-  const toLanguageLabel = languageList[toLanguage as GoogleLanguage];
+  const fromLanguageLabel = trimLanguage(
+    languageList[fromLanguage as GoogleLanguage]
+  );
+  const toLanguageLabel = trimLanguage(
+    languageList[toLanguage as GoogleLanguage]
+  );
 
   if (!fromLanguageLabel || !toLanguageLabel) {
     return 'Looking up...!';
@@ -269,14 +274,14 @@ export const LookUpScreen: FC<Props> = ({
               ref={searchInputRef}
               value={lookUpText}
               multiline={false}
-              placeholder={
+              placeholder={trimLanguage(
                 languageList[
                   (translationPresetState.preset.isReverse
                     ? translationPresetState.preset.translationLanguage
                     : translationPresetState.preset
                         .sourceLanguage) as GoogleLanguage
                 ]
-              }
+              )}
               onChange={setLookUpText}
               onSubmit={lookUp}
               pasteFromClipboard={true}
@@ -341,21 +346,21 @@ export const LookUpScreen: FC<Props> = ({
                           </TouchableRipple>{' '}
                           to translate from{' '}
                           <Text style={{ fontWeight: 'bold' }}>
-                            {
+                            {trimLanguage(
                               languageList[
                                 translationPresetState.preset
                                   .translationLanguage as GoogleLanguage
                               ]
-                            }
+                            )}
                           </Text>{' '}
                           to{' '}
                           <Text style={{ fontWeight: 'bold' }}>
-                            {
+                            {trimLanguage(
                               languageList[
                                 translationPresetState.preset
                                   .sourceLanguage as GoogleLanguage
                               ]
-                            }
+                            )}
                           </Text>
                           .
                         </Text>
@@ -388,21 +393,21 @@ export const LookUpScreen: FC<Props> = ({
                           </TouchableRipple>{' '}
                           to translate from{' '}
                           <Text style={{ fontWeight: 'bold' }}>
-                            {
+                            {trimLanguage(
                               languageList[
                                 translationPresetState.preset
                                   .sourceLanguage as GoogleLanguage
                               ]
-                            }
+                            )}
                           </Text>{' '}
                           to{' '}
                           <Text style={{ fontWeight: 'bold' }}>
-                            {
+                            {trimLanguage(
                               languageList[
                                 translationPresetState.preset
                                   .translationLanguage as GoogleLanguage
                               ]
-                            }
+                            )}
                           </Text>
                           .
                         </Text>
