@@ -1,12 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChatWithCardModal } from './ChatWithCard/ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
 import { FeedbackModal } from './FeedbackModal';
 import { LanguageSelectorModal } from './LanguageSelectorModal';
 import { PaymentSuccessModal } from './PaymentSuccessModal';
 import { PreviewStudyStepModal } from './Settings/PreviewStudyStepModal';
+import { StudySettingsScreen } from './Settings/StudySettingsScreen';
 import { StudyScreen } from './study/StudyScreen';
 import { TabsNavigator } from './TabsNavigator';
 import { WelcomeScreen } from './Welcome/WelcomeScreen';
@@ -15,6 +18,9 @@ const Stack = createStackNavigator();
 
 export const RootModalStack = () => {
   const theme = useTheme();
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+
   return (
     <Stack.Navigator>
       <Stack.Group screenOptions={{ headerShown: false }}>
@@ -60,6 +66,35 @@ export const RootModalStack = () => {
         <Stack.Screen
           name="PreviewStudyStepModal"
           component={PreviewStudyStepModal}
+        />
+        <Stack.Screen
+          name="StudySettingsModal"
+          component={StudySettingsScreen}
+          options={{
+            headerShown: true,
+            presentation: 'modal',
+            title: 'Study settings',
+            headerStyle: {},
+            headerTitleStyle: {
+              fontSize: 18,
+              marginLeft: 8,
+              color: theme.colors.onBackground,
+            },
+            headerTitleAlign: 'left',
+            headerLeft: () => <></>,
+            headerRight: () => (
+              <Button
+                textColor={theme.colors.onBackground}
+                onPress={() => navigation.goBack()}
+                buttonColor={theme.colors.background}
+                style={{
+                  marginRight: 8,
+                }}
+              >
+                Done
+              </Button>
+            ),
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>
