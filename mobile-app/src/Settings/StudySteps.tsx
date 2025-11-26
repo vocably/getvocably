@@ -98,9 +98,13 @@ export const StudySteps: FC<Props> = ({ style, scrollableRef }) => {
       };
     }
 
-    for (let card of [...shuffle(cards), ...prerenderedCards]) {
+    // Multichoice is not working without translations
+    const cardsWithTranslation = cards.filter((card) => card.data.translation);
+
+    for (let card of [...shuffle(cardsWithTranslation), ...prerenderedCards]) {
       const multiChoice =
-        getMultiChoice(card, cards) ?? getMultiChoice(card, prerenderedCards);
+        getMultiChoice(card, cardsWithTranslation) ??
+        getMultiChoice(card, prerenderedCards);
 
       if (multiChoice === null) {
         continue;
