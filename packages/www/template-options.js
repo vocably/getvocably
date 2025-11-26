@@ -26,6 +26,15 @@ module.exports = {
     ],
     reviews: [
       {
+        name: 'Stewart L',
+        date: '14 Mar 2025',
+        text: 'Very good extension. Simple to understand, light, fast.',
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/4019dcbf-7e22-4eff-9c3a-86c8764950c1',
+        image:
+          'https://lh3.googleusercontent.com/a-/ALV-UjUsvhLcXdmliEcDmlbm54PseWSoFIvdJy9hzB54HJEsi8HXegI=s48-w48-h48',
+      },
+      {
         name: 'Tuấn Trần',
         date: '26 Nov 2025',
         text: 'This program is really convenient. I find it better than Anki for creating flashcards.',
@@ -294,15 +303,6 @@ module.exports = {
         url: 'https://chromewebstore.google.com/reviews/4ba70258-7379-43a3-b1aa-1084120b41f2',
         image:
           'https://lh3.googleusercontent.com/a-/ALV-UjVV0twjGdADcR9GFWq_rR-lyq47K-OjKWhPcY8elCevsyQfqEM=s48-w48-h48',
-      },
-      {
-        name: 'Stewart L',
-        date: '14 Mar 2025',
-        text: 'Very good extension. Simple to understand, light, fast.',
-        stars: 5,
-        url: 'https://chromewebstore.google.com/reviews/4019dcbf-7e22-4eff-9c3a-86c8764950c1',
-        image:
-          'https://lh3.googleusercontent.com/a-/ALV-UjUsvhLcXdmliEcDmlbm54PseWSoFIvdJy9hzB54HJEsi8HXegI=s48-w48-h48',
       },
       {
         name: 'Journey Kim',
