@@ -2,7 +2,6 @@ import { createUserContent, GoogleGenAI } from '@google/genai';
 
 import { parseJson } from '@vocably/api';
 import { languageList, Result, resultify } from '@vocably/model';
-import { trimLanguage } from '@vocably/sulna';
 import { config } from './config';
 import {
   GetPartsOfSpeechPayload,
@@ -32,13 +31,11 @@ export const getPartsOfSpeechGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a smart ${trimLanguage(languageList[language])} dictionary`,
+          `You are a smart ${languageList[language]} dictionary`,
           `User provides a word`,
           `Provide an array of possible parts of speech for the word`,
           `Each object of array must contain the following fields:`,
-          `- source - the word or phrase in ${trimLanguage(
-            languageList[language]
-          )} spelling fixed.`,
+          `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
           `- partOfSpeech - the part of speech of the word or phrase in English`,
           `- lemma - lemma of the word or phrase`,
           `- lemmaPos - part of speech of the lemma in English`,

@@ -21,6 +21,7 @@ const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   es: ['masculine', 'feminine'], // Spanish
   it: ['masculine', 'feminine'], // Italian
   pt: ['masculine', 'feminine'], // Portuguese
+  'pt-PT': ['masculine', 'feminine'], // Portuguese
   ro: ['masculine', 'feminine', 'neuter'], // Romanian
   de: ['masculine', 'feminine', 'neuter'], // German
   nl: ['common', 'neuter'], // Dutch

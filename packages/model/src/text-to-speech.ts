@@ -30,9 +30,9 @@ export const GoogleTTSLanguages = [
   'ms',
   'ml',
   'mr',
-  'nb',
   'pl',
   'pt',
+  'pt-PT',
   'pa',
   'ro',
   'ru',
@@ -48,12 +48,12 @@ export const GoogleTTSLanguages = [
   'vi',
   'zh',
   'zh-TW',
-];
+] as const;
 
 export type GoogleTTSLanguage = typeof GoogleTTSLanguages[number];
 
 export const isGoogleTTSLanguage = (
   language: string
 ): language is GoogleTTSLanguage => {
-  return GoogleTTSLanguages.includes(language);
+  return GoogleTTSLanguages.includes(language as GoogleTTSLanguage);
 };

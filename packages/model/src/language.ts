@@ -70,6 +70,7 @@ export const GoogleLanguages = [
   'fa',
   'pl',
   'pt',
+  'pt-PT',
   'pa',
   'ro',
   'ru',
@@ -182,6 +183,7 @@ export const ChatGPTLanguages = [
   'fa',
   'pl',
   'pt',
+  'pt-PT',
   'pa',
   'ro',
   'ru',
@@ -222,7 +224,12 @@ export const ChatGPTLanguages = [
 
 export type ChatGPTLanguage = typeof ChatGPTLanguages[number];
 
-const NLPLanguages = [
+export const isGoogleLanguage = (
+  language: string
+): language is GoogleLanguage =>
+  GoogleLanguages.indexOf(language as GoogleLanguage) !== -1;
+
+const GoogleTranslateLanguages = [
   'af',
   'sq',
   'am',
@@ -234,13 +241,13 @@ const NLPLanguages = [
   'bn',
   'bs',
   'bg',
-  'my',
   'ca',
-  'ny',
+  'zh',
   'zh-CN',
-  'zh-TW',
   'co',
+  'haw',
   'hr',
+  'hmn',
   'cs',
   'da',
   'nl',
@@ -257,10 +264,9 @@ const NLPLanguages = [
   'gu',
   'ht',
   'ha',
-  'haw',
+  'he',
   'iw',
   'hi',
-  'hmn',
   'hu',
   'is',
   'ig',
@@ -268,9 +274,11 @@ const NLPLanguages = [
   'ga',
   'it',
   'ja',
+  'jv',
   'kn',
   'kk',
   'km',
+  'rw',
   'ko',
   'ku',
   'ky',
@@ -286,12 +294,16 @@ const NLPLanguages = [
   'mi',
   'mr',
   'mn',
+  'my',
   'ne',
   'no',
+  'ny',
+  'or',
   'ps',
   'fa',
   'pl',
-  'pt',
+  'pt-BR',
+  'pt-PT',
   'pa',
   'ro',
   'ru',
@@ -316,8 +328,11 @@ const NLPLanguages = [
   'te',
   'th',
   'tr',
+  'tk',
+  'zh-TW',
   'uk',
   'ur',
+  'ug',
   'uz',
   'vi',
   'cy',
@@ -326,6 +341,8 @@ const NLPLanguages = [
   'yo',
   'zu',
 ] as const;
+
+export type GoogleTranslateLanguage = typeof GoogleTranslateLanguages[number];
 
 export const LexicalaLanguages = [
   'ar',
@@ -356,32 +373,3 @@ export const LexicalaLanguages = [
 ] as const;
 
 export type LexicalaLanguage = typeof LexicalaLanguages[number];
-
-export type NLPLanguage = typeof NLPLanguages[number];
-
-const GoogleNLPLanguageMap: Partial<Record<GoogleLanguage, NLPLanguage>> = {
-  he: 'iw',
-  zh: 'zh-CN',
-};
-
-export const googleToNlp = (
-  googleLanguage: GoogleLanguage
-): NLPLanguage | null => {
-  if (GoogleNLPLanguageMap[googleLanguage] !== undefined) {
-    return GoogleNLPLanguageMap[googleLanguage];
-  }
-
-  return (
-    NLPLanguages.find((nlpLanguage) => nlpLanguage === googleLanguage) ?? null
-  );
-};
-
-export const isGoogleLanguage = (
-  language: string
-): language is GoogleLanguage =>
-  GoogleLanguages.indexOf(language as GoogleLanguage) !== -1;
-
-export const isChatGPTLanguage = (
-  language: string
-): language is ChatGPTLanguage =>
-  ChatGPTLanguages.indexOf(language as ChatGPTLanguage) !== -1;

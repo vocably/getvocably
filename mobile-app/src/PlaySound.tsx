@@ -1,4 +1,5 @@
 import { GoogleTTSLanguage, Result } from '@vocably/model';
+import { languageToGoogleTranslateLanguage } from '@vocably/model-operations';
 import React, {
   forwardRef,
   useImperativeHandle,
@@ -52,7 +53,7 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
       return new Promise((resolve) => {
         const soundUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
           text
-        )}&tl=${language}&client=tw-ob`;
+        )}&tl=${languageToGoogleTranslateLanguage(language)}&client=tw-ob`;
         Sound.setCategory('Playback');
         const audio = new Sound(soundUrl, '', (error) => {
           if (error === null) {

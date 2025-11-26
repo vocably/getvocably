@@ -5,6 +5,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { lastValueFrom, mergeMap, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { languageToGoogleTranslateLanguage } from '@vocably/model-operations';
 import { buildErrorResponse } from '../../utils/buildErrorResponse';
 import { buildResponse } from '../../utils/buildResponse';
 import { extractPayload } from './extractPayload';
@@ -24,7 +25,7 @@ export const playSound = async (
         const request: ISynthesizeSpeechRequest = {
           input: { text: payload.text },
           voice: {
-            languageCode: payload.language,
+            languageCode: languageToGoogleTranslateLanguage(payload.language),
             ssmlGender: SsmlVoiceGender.FEMALE,
           },
           audioConfig: { audioEncoding: AudioEncoding.MP3 },

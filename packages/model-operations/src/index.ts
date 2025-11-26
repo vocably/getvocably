@@ -2,6 +2,7 @@ export * from './buildTagMap';
 export * from './compareCards';
 export * from './deckSerializer';
 export * from './getLastAdded';
+export * from './googleLanguageMapper';
 export * from './languageToLexicalaLanguage';
 export * from './restClient';
 export * from './retry';

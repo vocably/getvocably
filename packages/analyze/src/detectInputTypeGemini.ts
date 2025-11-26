@@ -6,7 +6,6 @@ import {
   Result,
   resultify,
 } from '@vocably/model';
-import { trimLanguage } from '@vocably/sulna';
 import { config } from './config';
 
 type Payload = {
@@ -54,9 +53,7 @@ export const detectInputTypeGemini = async ({
           `User provides an input`,
           `Respond with an object`,
           `- type - ${inputTypes.join(', ')}`,
-          `- isDirect - true if the input is ${trimLanguage(
-            languageList[language]
-          )}`,
+          `- isDirect - true if the input is ${languageList[language]}`,
         ],
         thinkingConfig: {
           thinkingBudget: 0, // Disables thinking

@@ -1,11 +1,15 @@
 import { TranslationServiceClient } from '@google-cloud/translate';
-import { GoogleLanguage, Result, Translation } from '@vocably/model';
-import { config } from './config';
 import {
+  GoogleLanguage,
   GoogleTranslateLanguage,
+  Result,
+  Translation,
+} from '@vocably/model';
+import {
   googleTranslateLanguageToLanguage,
   languageToGoogleTranslateLanguage,
-} from './translateText/googleLanguageMapper';
+} from '@vocably/model-operations';
+import { config } from './config';
 
 const translationClient = new TranslationServiceClient();
 const location = 'global';
@@ -31,7 +35,7 @@ export const googleTranslate = async (
     parent: `projects/${config.googleProjectId}/locations/${location}`,
     contents: [source],
     mimeType: 'text/plain',
-    targetLanguageCode: targetLanguage,
+    targetLanguageCode: languageToGoogleTranslateLanguage(targetLanguage),
     sourceLanguageCode:
       sourceLanguage === null
         ? null

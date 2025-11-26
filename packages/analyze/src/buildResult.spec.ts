@@ -791,4 +791,19 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
     expect(result.value.items.length).toBeGreaterThan(1);
   });
+
+  it('reverse translate into europen portuguese', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'pt-PT',
+      targetLanguage: 'en',
+      target: 'train',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items[0].source).toEqual('comboio');
+    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+  });
 });

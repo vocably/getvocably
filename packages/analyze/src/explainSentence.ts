@@ -7,7 +7,6 @@ import {
   Result,
   resultify,
 } from '@vocably/model';
-import { trimLanguage } from '@vocably/sulna';
 import { config } from './config';
 import { fallback } from './fallback';
 
@@ -26,12 +25,8 @@ export const explainGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `Shortly explain what to pay attention to for proper understanding of the submitted ${trimLanguage(
-            languageList[sourceLanguage]
-          )} sentence`,
-          `Provide explanation in ${trimLanguage(
-            languageList[targetLanguage]
-          )}'`,
+          `Shortly explain what to pay attention to for proper understanding of the submitted ${languageList[sourceLanguage]} sentence`,
+          `Provide explanation in ${languageList[targetLanguage]}'`,
           `Use bullet points.`,
           `Avoid introduction.`,
         ],
@@ -71,17 +66,13 @@ export const explainGpt = async ({
     messages: [
       {
         role: 'system',
-        content: `You are a helpful and knowledgeable language tutor. A user is learning ${trimLanguage(
-          languageList[sourceLanguage]
-        )}.`,
+        content: `You are a helpful and knowledgeable language tutor. A user is learning ${languageList[sourceLanguage]}.`,
       },
       {
         role: 'system',
         content: [
           `Shortly explain what to pay attention to for proper understanding of the submitted sentence.`,
-          `Provide explanation in ${trimLanguage(
-            languageList[targetLanguage]
-          )}'`,
+          `Provide explanation in ${languageList[targetLanguage]}'`,
           `Avoid introduction.`,
         ].join('\n'),
       },
