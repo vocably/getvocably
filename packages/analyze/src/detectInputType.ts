@@ -1,15 +1,5 @@
 import { DirectAnalyzePayload, GoogleLanguage, Result } from '@vocably/model';
-import { detectInputTypeGemini, InputAnalysis } from './detectInputTypeGemini';
-
-const nonTokenizableLanguages: GoogleLanguage[] = [
-  'zh',
-  'zh-TW',
-  'ja',
-  'vi',
-  'th',
-  'km',
-  'lo',
-];
+import { detectInputTypeAi, InputAnalysis } from './detectInputTypeAi';
 
 export type ContextAnalysisRequest = {
   type: 'context-analysis';
@@ -77,7 +67,7 @@ export const detectInputType = async (
     };
   }
 
-  const detectedTypeResult = await detectInputTypeGemini({
+  const detectedTypeResult = await detectInputTypeAi({
     language: payload.sourceLanguage,
     source: payload.source,
   });

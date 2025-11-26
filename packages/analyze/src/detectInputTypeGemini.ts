@@ -1,45 +1,18 @@
 import { createUserContent, GoogleGenAI } from '@google/genai';
 import { parseJson } from '@vocably/api';
-import {
-  ChatGPTLanguage,
-  languageList,
-  Result,
-  resultify,
-} from '@vocably/model';
+import { languageList, Result, resultify } from '@vocably/model';
 import { config } from './config';
-
-type Payload = {
-  source: string;
-  language: ChatGPTLanguage;
-};
-
-const inputTypes = [
-  'word',
-  'compound word',
-  'phrasal verb',
-  'phrase',
-  'sentence',
-  'idiom',
-  'other',
-] as const;
-export type InputAnalysis = {
-  type: typeof inputTypes[number];
-  isDirect: boolean;
-};
-
-const isInputAnalysis = (v: any): v is InputAnalysis => {
-  return (
-    typeof v['type'] === 'string' &&
-    typeof v['isDirect'] === 'boolean' &&
-    //@ts-ignore
-    inputTypes.includes(v['type'].toLowerCase())
-  );
-};
+import {
+  DetectInputTypeAiPayload,
+  InputAnalysis,
+  inputTypes,
+  isInputAnalysis,
+} from './detectInputTypeAi';
 
 export const detectInputTypeGemini = async ({
   source,
   language,
-}: Payload): Promise<Result<InputAnalysis>> => {
+}: DetectInputTypeAiPayload): Promise<Result<InputAnalysis>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });
