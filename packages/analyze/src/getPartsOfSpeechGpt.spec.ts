@@ -1,5 +1,5 @@
 import '@vocably/jest';
-import { gptGetPartsOfSpeechNoCache } from './getPartsOfSpeechGpt';
+import { getPartsOfSpeechGpt } from './getPartsOfSpeechGpt';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -11,7 +11,7 @@ describe('getPartsOfSpeech', () => {
   }
 
   it('returns successful result', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'looked up',
       language: 'en',
     });
@@ -19,11 +19,18 @@ describe('getPartsOfSpeech', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual(['verb']);
+    expect(result.value).toEqual([
+      {
+        source: 'looked up',
+        partOfSpeech: 'phrasal verb',
+        lemma: 'look up',
+        lemmaPos: 'phrasal verb',
+      },
+    ]);
   });
 
   it('returns parts of speech for norwegian', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'katt',
       language: 'no',
     });
@@ -31,11 +38,19 @@ describe('getPartsOfSpeech', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual(['noun']);
+
+    expect(result.value).toEqual([
+      {
+        lemma: 'katt',
+        lemmaPos: 'noun',
+        partOfSpeech: 'noun',
+        source: 'katt',
+      },
+    ]);
   });
 
   it('returns parts of speech in English', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'regel',
       language: 'nl',
     });
@@ -43,11 +58,18 @@ describe('getPartsOfSpeech', () => {
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual(['noun']);
+    expect(result.value).toEqual([
+      {
+        lemma: 'regel',
+        lemmaPos: 'noun',
+        partOfSpeech: 'noun',
+        source: 'regel',
+      },
+    ]);
   });
 
   it('verzamelde', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'verzamelde',
       language: 'nl',
     });
@@ -55,10 +77,18 @@ describe('getPartsOfSpeech', () => {
     if (!result.success) {
       return;
     }
+    expect(result.value).toEqual([
+      {
+        lemma: 'verzamelen',
+        lemmaPos: 'verb',
+        partOfSpeech: 'verb',
+        source: 'verzamelde',
+      },
+    ]);
   });
 
   it('что-то', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'что-то',
       language: 'nl',
     });
@@ -66,12 +96,18 @@ describe('getPartsOfSpeech', () => {
     if (!result.success) {
       return;
     }
-
-    expect(result.value.length).toEqual(0);
+    expect(result.value).toEqual([
+      {
+        lemma: 'что-то',
+        lemmaPos: 'unknown',
+        partOfSpeech: 'unknown',
+        source: 'что-то',
+      },
+    ]);
   });
 
   it('bad(nl)', async () => {
-    const result = await gptGetPartsOfSpeechNoCache({
+    const result = await getPartsOfSpeechGpt({
       source: 'bad',
       language: 'nl',
     });
@@ -80,7 +116,13 @@ describe('getPartsOfSpeech', () => {
       return;
     }
 
-    expect(result.value.length).toEqual(1);
-    expect(result.value[0]).toHaveSomeOf('noun');
+    expect(result.value).toEqual([
+      {
+        lemma: 'bad',
+        lemmaPos: 'noun',
+        partOfSpeech: 'noun',
+        source: 'bad',
+      },
+    ]);
   });
 });

@@ -1,40 +1,14 @@
-import {
-  chatGptRequest,
-  GPT_4O,
-  nodeFetchS3File,
-  nodePutS3File,
-} from '@vocably/lambda-shared';
+import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { languageList, Result } from '@vocably/model';
-import { uniq } from 'lodash-es';
-import { ChatModel } from 'openai/resources';
-import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
-import { config } from './config';
-import { GetPartsOfSpeechPayload } from './getPartsOfSpeech';
+import { GetPartsOfSpeechPayload, PartOfSpeechGpt } from './getPartsOfSpeech';
 
-type PartsOfSpeechChatGptBody = {
-  messages: Array<ChatCompletionMessageParam>;
-  model: ChatModel;
-};
-
-export const getPartsOfSpeechGptBody = ({
-  source,
-  language,
-}: GetPartsOfSpeechPayload): PartsOfSpeechChatGptBody => {
-  const prompt = [
-    `You are a smart ${languageList[language]} dictionary`,
-    `User provides a word in ${languageList[language]}. Provide its parts of speech`,
-    `Only respond in text format with each part of speech in English on a separate line`,
-  ]
-    .filter((s) => !!s)
-    .join('\n');
-
-  return {
-    messages: [
-      { role: 'system', content: prompt },
-      { role: 'user', content: source },
-    ],
-    model: GPT_4O,
-  };
+const isGptPartOfSpeech = (v: any): v is PartOfSpeechGpt => {
+  return (
+    typeof v['source'] === 'string' &&
+    typeof v['partOfSpeech'] === 'string' &&
+    typeof v['lemma'] === 'string' &&
+    typeof v['lemmaPos'] === 'string'
+  );
 };
 
 export const mapPartOfSpeech = (pos: string): string => {
@@ -47,24 +21,32 @@ export const mapPartOfSpeech = (pos: string): string => {
   return prepared;
 };
 
-export const parsePartsOfSpeechGptResult = (result: string): string[] => {
-  return uniq(
-    result
-      .split('\n')
-      .filter((s: string) => s.length < 25)
-      .map(mapPartOfSpeech)
-  ) as string[];
-};
-
-export const gptGetPartsOfSpeechNoCache = async ({
+export const getPartsOfSpeechGpt = async ({
   source,
   language,
-}: GetPartsOfSpeechPayload): Promise<Result<string[]>> => {
+}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeechGpt[]>> => {
+  const prompt = [
+    `You are a smart ${languageList[language]} dictionary`,
+    `User provides a word`,
+    `Response with an array of possible parts of speech for the word`,
+    `Each element of array is a json object that must contain the following fields:`,
+    `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
+    `- partOfSpeech - the part of speech of the word or phrase in English`,
+    `- lemma - lemma of the word or phrase`,
+    `- lemmaPos - part of speech of the lemma in English`,
+  ]
+    .filter((s) => !!s)
+    .join('\n');
+
   const responseResult = await chatGptRequest({
-    ...getPartsOfSpeechGptBody({ source, language }),
+    messages: [
+      { role: 'system', content: prompt },
+      { role: 'user', content: source },
+    ],
+    model: GPT_4O,
     timeoutMs: 5000,
     responseFormat: {
-      type: 'text',
+      type: 'json_object',
     },
   });
 
@@ -72,61 +54,32 @@ export const gptGetPartsOfSpeechNoCache = async ({
     return responseResult;
   }
 
-  return {
-    success: true,
-    value: parsePartsOfSpeechGptResult(responseResult.value),
-  };
-};
-
-export const getPartsOfSpeechCacheFileName = ({
-  source,
-  language,
-}: GetPartsOfSpeechPayload): string => {
-  return `parts-of-speech/${language.toLowerCase()}/${source.toLowerCase()}.txt`;
-};
-
-export const getPartsOfSpeechGpt = async ({
-  source,
-  language,
-}: GetPartsOfSpeechPayload): Promise<Result<string[]>> => {
-  const fileName = getPartsOfSpeechCacheFileName({ source, language });
-
-  const s3FetchResult = await nodeFetchS3File(
-    config.unitsOfSpeechBucket,
-    fileName
-  );
-
-  if (s3FetchResult.success && s3FetchResult.value !== null) {
-    const partsOfSpeech = s3FetchResult.value
-      .split('\n')
-      .filter((s) => s.length > 0);
+  if (isGptPartOfSpeech(responseResult.value)) {
     return {
       success: true,
-      value: partsOfSpeech,
+      value: [responseResult.value],
     };
   }
 
-  const partsOfSpeechResult = await gptGetPartsOfSpeechNoCache({
-    source,
-    language,
-  });
-
-  if (!partsOfSpeechResult.success) {
-    return partsOfSpeechResult;
+  if (Array.isArray(responseResult.value) === false) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: 'The GPT request responded with the malformed response',
+    };
   }
 
-  const putResult = await nodePutS3File(
-    config.unitsOfSpeechBucket,
-    fileName,
-    partsOfSpeechResult.value.join('\n')
-  );
-
-  if (!putResult.success) {
-    console.error(
-      'Failed to put GPT parts of speech the result to S3',
-      putResult
-    );
+  const analysisItems = responseResult.value.filter(isGptPartOfSpeech);
+  if (analysisItems.length === 0) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: 'No valid analysis items returned from Gemini',
+    };
   }
 
-  return partsOfSpeechResult;
+  return {
+    success: true,
+    value: analysisItems,
+  };
 };
