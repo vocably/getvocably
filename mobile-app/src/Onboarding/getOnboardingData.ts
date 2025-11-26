@@ -48,6 +48,8 @@ const getOnboardingCollection = (
       return require('./data/pl').onboardingCollection;
     case 'pt':
       return require('./data/pt').onboardingCollection;
+    case 'pt-PT':
+      return require('./data/pt-PT').onboardingCollection;
     case 'ru':
       return require('./data/ru').onboardingCollection;
     case 'sv':

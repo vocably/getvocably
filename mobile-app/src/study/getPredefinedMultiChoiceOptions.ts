@@ -1223,6 +1223,102 @@ export const getPredefinedMultiChoiceOptions = (
     case 'pt-zh-TW':
       return require('./predefinedMultiChoiceOptions/pt-zh-TW.ts')
         .predefinedMultiChoiceOptions;
+    case 'pt-PT-ar':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ar.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-az':
+      return require('./predefinedMultiChoiceOptions/pt-PT-az.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-da':
+      return require('./predefinedMultiChoiceOptions/pt-PT-da.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-de':
+      return require('./predefinedMultiChoiceOptions/pt-PT-de.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-el':
+      return require('./predefinedMultiChoiceOptions/pt-PT-el.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-en':
+      return require('./predefinedMultiChoiceOptions/pt-PT-en.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-es':
+      return require('./predefinedMultiChoiceOptions/pt-PT-es.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-fa':
+      return require('./predefinedMultiChoiceOptions/pt-PT-fa.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-fi':
+      return require('./predefinedMultiChoiceOptions/pt-PT-fi.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-fr':
+      return require('./predefinedMultiChoiceOptions/pt-PT-fr.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-he':
+      return require('./predefinedMultiChoiceOptions/pt-PT-he.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-hi':
+      return require('./predefinedMultiChoiceOptions/pt-PT-hi.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-hy':
+      return require('./predefinedMultiChoiceOptions/pt-PT-hy.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-id':
+      return require('./predefinedMultiChoiceOptions/pt-PT-id.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-it':
+      return require('./predefinedMultiChoiceOptions/pt-PT-it.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-ja':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ja.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-ka':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ka.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-kk':
+      return require('./predefinedMultiChoiceOptions/pt-PT-kk.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-ko':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ko.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-ms':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ms.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-nl':
+      return require('./predefinedMultiChoiceOptions/pt-PT-nl.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-no':
+      return require('./predefinedMultiChoiceOptions/pt-PT-no.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-pl':
+      return require('./predefinedMultiChoiceOptions/pt-PT-pl.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-pt':
+      return require('./predefinedMultiChoiceOptions/pt-PT-pt.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-ru':
+      return require('./predefinedMultiChoiceOptions/pt-PT-ru.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-sv':
+      return require('./predefinedMultiChoiceOptions/pt-PT-sv.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-th':
+      return require('./predefinedMultiChoiceOptions/pt-PT-th.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-tr':
+      return require('./predefinedMultiChoiceOptions/pt-PT-tr.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-uk':
+      return require('./predefinedMultiChoiceOptions/pt-PT-uk.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-vi':
+      return require('./predefinedMultiChoiceOptions/pt-PT-vi.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-zh':
+      return require('./predefinedMultiChoiceOptions/pt-PT-zh.ts')
+        .predefinedMultiChoiceOptions;
+    case 'pt-PT-zh-TW':
+      return require('./predefinedMultiChoiceOptions/pt-PT-zh-TW.ts')
+        .predefinedMultiChoiceOptions;
     case 'sv-ar':
       return require('./predefinedMultiChoiceOptions/sv-ar.ts')
         .predefinedMultiChoiceOptions;
