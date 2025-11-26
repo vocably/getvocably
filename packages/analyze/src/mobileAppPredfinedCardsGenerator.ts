@@ -2,7 +2,6 @@ import { makeCreate } from '@vocably/crud';
 import {
   AnalysisItem,
   CardItem,
-  ChatGPTLanguages,
   GoogleLanguage,
   SrsCard,
 } from '@vocably/model';
@@ -37,6 +36,58 @@ const languageWords: Partial<Record<GoogleLanguage, string[]>> = {
     'cautious',
     'reluctant',
     'significant',
+  ],
+  pt: [
+    'integridade',
+    'resiliência',
+    'limite',
+    'disposição',
+    'repercussão',
+    'resultado',
+    'reconhecer',
+    'considerar',
+    'dedicar',
+    'justificar',
+    'negligência',
+    'persuadir',
+    'gradualmente',
+    'implicitamente',
+    'notavelmente',
+    'prontamente',
+    'aproximadamente',
+    'suficientemente',
+    'persistente',
+    'abrangente',
+    'delicioso',
+    'cauteloso',
+    'relutante',
+    'significativo',
+  ],
+  'pt-PT': [
+    'integridade',
+    'resiliência',
+    'limite',
+    'disposição',
+    'repercussão',
+    'resultado',
+    'reconhecer',
+    'considerar',
+    'dedicar',
+    'justificar',
+    'negligência',
+    'persuadir',
+    'gradualmente',
+    'implicitamente',
+    'notavelmente',
+    'prontamente',
+    'aproximadamente',
+    'suficientemente',
+    'persistente',
+    'abrangente',
+    'delicioso',
+    'cauteloso',
+    'relutante',
+    'significativo',
   ],
   es: [
     'integridad',
@@ -218,32 +269,6 @@ const languageWords: Partial<Record<GoogleLanguage, string[]>> = {
     'delizioso',
     'cauto',
     'riluttante',
-    'significativo',
-  ],
-  pt: [
-    'integridade',
-    'resiliência',
-    'limite',
-    'disposição',
-    'repercussão',
-    'resultado',
-    'reconhecer',
-    'considerar',
-    'dedicar',
-    'justificar',
-    'negligência',
-    'persuadir',
-    'gradualmente',
-    'implicitamente',
-    'notavelmente',
-    'prontamente',
-    'aproximadamente',
-    'suficientemente',
-    'persistente',
-    'abrangente',
-    'delicioso',
-    'cauteloso',
-    'relutante',
     'significativo',
   ],
   ar: [
@@ -555,7 +580,8 @@ const analyzeItemToCardItem = (
 export const generateAppPredefinedCards = async () => {
   for (let [sourceLanguage, words] of Object.entries(languageWords)) {
     console.log({ sourceLanguage, words });
-    for (let targetLanguage of [...ChatGPTLanguages, 'hy', 'ka', 'kk', 'az']) {
+    // for (let targetLanguage of [...ChatGPTLanguages, 'hy', 'ka', 'kk', 'az']) {
+    for (let targetLanguage of ['ru', 'en', 'uk']) {
       const fileName = `${__dirname}/mobileAppPredefinedCardsGenerator/${sourceLanguage}-${targetLanguage}.ts`;
 
       if (existsSync(fileName)) {
@@ -577,7 +603,9 @@ export const generateAppPredefinedCards = async () => {
         )
       );
 
-      console.log('direct translation results generated');
+      console.log(
+        `direct translation results generated for ${sourceLanguage} -> ${targetLanguage}`
+      );
 
       for (let directTranslationResult of directTranslationResults) {
         if (directTranslationResult.success === false) {
