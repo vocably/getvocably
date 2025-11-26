@@ -76,6 +76,7 @@ export const sortedTargetLanguages: GoogleLanguage[] = [
   'ps',
   'fa',
   'pl',
+  'pt-PT',
   'pa',
   'ro',
   'ru',
