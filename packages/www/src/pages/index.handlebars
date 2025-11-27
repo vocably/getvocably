@@ -889,6 +889,7 @@
     .review-header {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
       margin-bottom: 10px;
     }
@@ -951,7 +952,7 @@
       <div class="wall-wrapper" id="wallWrapper">
         <div class="wall-grid">
           {{#each htmlWebpackPlugin.options.environment.reviews}}
-            <div class="review-card">
+            <div class="review-card {{#if (is-greater @index 10)}}d-none d-md-block{{/if}}">
               <div class="review-header">
                 <a href="{{this.url}}" class="name" target="_blank">{{this.name}}</a>
                 <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -961,8 +962,12 @@
           {{/each}}
         </div>
 
+        <div class="mt-4 pt-5 pb-4 w-100 w-md-50 mx-auto">
+          {{> cta }}
+        </div>
+
         <div class="wall-fade-overlay" id="wallOverlay">
-          <button class="btn btn-secondary btn-sm rounded-pill px-5 text-sm" id="showMoreBtn">Show more reviews</button>
+          <button class="btn btn-dark btn-sm rounded-pill px-5 text-sm" id="showMoreBtn">Show more reviews</button>
         </div>
       </div>
 

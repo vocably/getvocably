@@ -40,6 +40,7 @@ module.exports = (env) => {
               loader: 'handlebars-loader',
               options: {
                 partialDirs: [`${__dirname}/src/partials`],
+                helperDirs: [`${__dirname}/src/helpers`],
               },
             },
           ],
