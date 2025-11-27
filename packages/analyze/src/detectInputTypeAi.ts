@@ -18,8 +18,17 @@ export const inputTypes = [
   'other',
 ] as const;
 
+export type DetectedInputType = typeof inputTypes[number];
+
+export const unitOfSpeechTypes: DetectedInputType[] = [
+  'word',
+  'compound word',
+  'phrasal verb',
+  'idiom',
+];
+
 export type InputAnalysis = {
-  type: typeof inputTypes[number];
+  type: DetectedInputType;
   isDirect: boolean;
 };
 

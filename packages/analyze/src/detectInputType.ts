@@ -1,5 +1,9 @@
 import { DirectAnalyzePayload, GoogleLanguage, Result } from '@vocably/model';
-import { detectInputTypeAi, InputAnalysis } from './detectInputTypeAi';
+import {
+  detectInputTypeAi,
+  InputAnalysis,
+  unitOfSpeechTypes,
+} from './detectInputTypeAi';
 
 export type ContextAnalysisRequest = {
   type: 'context-analysis';
@@ -76,7 +80,11 @@ export const detectInputType = async (
     return detectedTypeResult;
   }
 
-  if (payload.context && payload.context.length > payload.source.length) {
+  if (
+    payload.context &&
+    payload.context.length > payload.source.length &&
+    unitOfSpeechTypes.includes(detectedTypeResult.value.type)
+  ) {
     return {
       success: true,
       value: {
@@ -91,11 +99,7 @@ export const detectInputType = async (
     };
   }
 
-  if (
-    ['word', 'phrasal verb', 'idiom', 'compound word'].includes(
-      detectedTypeResult.value.type
-    )
-  ) {
+  if (unitOfSpeechTypes.includes(detectedTypeResult.value.type)) {
     return {
       success: true,
       value: {
