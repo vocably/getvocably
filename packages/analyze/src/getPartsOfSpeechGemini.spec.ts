@@ -84,4 +84,25 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
     expect(responseResult.value[0].source).toEqual('Apfel');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
+
+  it('duck', async () => {
+    const responseResult = await getPartsOfSpeechGemini({
+      language: 'en',
+      source: 'duck',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value[0].source).toEqual('duck');
+    expect(responseResult.value[0].partOfSpeech).toEqual('noun');
+
+    expect(responseResult.value[1].source).toEqual('duck');
+    expect(responseResult.value[1].partOfSpeech).toEqual('verb');
+  });
 });

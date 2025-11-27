@@ -1,5 +1,6 @@
 import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { languageList, Result } from '@vocably/model';
+import { isArray } from 'lodash-es';
 import { GetPartsOfSpeechPayload, PartOfSpeechGpt } from './getPartsOfSpeech';
 
 const isGptPartOfSpeech = (v: any): v is PartOfSpeechGpt => {
@@ -28,7 +29,7 @@ export const getPartsOfSpeechGpt = async ({
   const prompt = [
     `You are a smart ${languageList[language]} dictionary`,
     `User provides a word`,
-    `Response with an array of possible parts of speech for the word`,
+    `Detect the possible parts of speech of the word and response with an array`,
     `Each element of array is a json object that must contain the following fields:`,
     `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
     `- partOfSpeech - the part of speech of the word or phrase in English`,
@@ -61,7 +62,7 @@ export const getPartsOfSpeechGpt = async ({
     };
   }
 
-  if (Array.isArray(responseResult.value) === false) {
+  if (!isArray(responseResult.value)) {
     return {
       success: false,
       errorCode: 'FUCKING_ERROR',

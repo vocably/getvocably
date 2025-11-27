@@ -1,4 +1,5 @@
 import '@vocably/jest';
+import { inspect } from 'node:util';
 import { getPartsOfSpeechGpt } from './getPartsOfSpeechGpt';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
@@ -124,5 +125,26 @@ describe('getPartsOfSpeech', () => {
         source: 'bad',
       },
     ]);
+  });
+
+  it('duck', async () => {
+    const responseResult = await getPartsOfSpeechGpt({
+      language: 'en',
+      source: 'duck',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value[0].source).toEqual('duck');
+    expect(responseResult.value[0].partOfSpeech).toEqual('noun');
+
+    expect(responseResult.value[1].source).toEqual('duck');
+    expect(responseResult.value[1].partOfSpeech).toEqual('verb');
   });
 });
