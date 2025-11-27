@@ -33452,6 +33452,42 @@ var AuthClass = /** @class */ (function () {
 var Auth = new AuthClass(null);
 Amplify.register(Auth);
 //# sourceMappingURL=Auth.js.map
+;// CONCATENATED MODULE: ../model-operations/dist/esm/buildTagMap.js
+const buildTagMap = (tags) => {
+    return tags.reduce((acc, tag) => ({
+        ...acc,
+        [tag.id]: tag,
+    }), {});
+};
+
+;// CONCATENATED MODULE: ../model-operations/dist/esm/compareCards.js
+const equalCards = (a) => (b) => a.source.toLowerCase() === b.source.toLowerCase() &&
+    a.partOfSpeech === b.partOfSpeech;
+const byCard = (card) => (item) => equalCards(card)(item.data);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayMap.js
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+/* harmony default export */ const _arrayMap = (arrayMap);
+
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_listCacheClear.js
 /**
  * Removes all key-value entries from the list cache.
@@ -33889,12 +33925,12 @@ function baseGetTag(value) {
  * _.isObject(null);
  * // => false
  */
-function isObject_isObject(value) {
+function isObject(value) {
   var type = typeof value;
   return value != null && (type == 'object' || type == 'function');
 }
 
-/* harmony default export */ const lodash_es_isObject = (isObject_isObject);
+/* harmony default export */ const lodash_es_isObject = (isObject);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/isFunction.js
 
@@ -34484,6 +34520,30 @@ Stack.prototype.set = _stackSet;
 
 /* harmony default export */ const _Stack = (Stack);
 
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayEach.js
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+/* harmony default export */ const _arrayEach = (arrayEach);
+
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_defineProperty.js
 
 
@@ -34524,272 +34584,99 @@ function baseAssignValue(object, key, value) {
 
 /* harmony default export */ const _baseAssignValue = (baseAssignValue);
 
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_assignMergeValue.js
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_assignValue.js
 
 
+
+/** Used for built-in method references. */
+var _assignValue_objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var _assignValue_hasOwnProperty = _assignValue_objectProto.hasOwnProperty;
 
 /**
- * This function is like `assignValue` except that it doesn't assign
- * `undefined` values.
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
  *
  * @private
  * @param {Object} object The object to modify.
  * @param {string} key The key of the property to assign.
  * @param {*} value The value to assign.
  */
-function assignMergeValue(object, key, value) {
-  if ((value !== undefined && !lodash_es_eq(object[key], value)) ||
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(_assignValue_hasOwnProperty.call(object, key) && lodash_es_eq(objValue, value)) ||
       (value === undefined && !(key in object))) {
     _baseAssignValue(object, key, value);
   }
 }
 
-/* harmony default export */ const _assignMergeValue = (assignMergeValue);
+/* harmony default export */ const _assignValue = (assignValue);
 
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_createBaseFor.js
-/**
- * Creates a base function for methods like `_.forIn` and `_.forOwn`.
- *
- * @private
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Function} Returns the new base function.
- */
-function createBaseFor(fromRight) {
-  return function(object, iteratee, keysFunc) {
-    var index = -1,
-        iterable = Object(object),
-        props = keysFunc(object),
-        length = props.length;
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_copyObject.js
 
-    while (length--) {
-      var key = props[fromRight ? length : ++index];
-      if (iteratee(iterable[key], key, iterable) === false) {
-        break;
-      }
-    }
-    return object;
-  };
-}
-
-/* harmony default export */ const _createBaseFor = (createBaseFor);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseFor.js
 
 
 /**
- * The base implementation of `baseForOwn` which iterates over `object`
- * properties returned by `keysFunc` and invokes `iteratee` for each property.
- * Iteratee functions may exit iteration early by explicitly returning `false`.
+ * Copies properties of `source` to `object`.
  *
  * @private
- * @param {Object} object The object to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
  * @returns {Object} Returns `object`.
  */
-var baseFor = _createBaseFor();
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
 
-/* harmony default export */ const _baseFor = (baseFor);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneBuffer.js
-
-
-/** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports = freeModule && freeModule.exports === freeExports;
-
-/** Built-in value references. */
-var Buffer = moduleExports ? _root.Buffer : undefined,
-    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
-
-/**
- * Creates a clone of  `buffer`.
- *
- * @private
- * @param {Buffer} buffer The buffer to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Buffer} Returns the cloned buffer.
- */
-function cloneBuffer(buffer, isDeep) {
-  if (isDeep) {
-    return buffer.slice();
-  }
-  var length = buffer.length,
-      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
-
-  buffer.copy(result);
-  return result;
-}
-
-/* harmony default export */ const _cloneBuffer = (cloneBuffer);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_Uint8Array.js
-
-
-/** Built-in value references. */
-var _Uint8Array_Uint8Array = _root.Uint8Array;
-
-/* harmony default export */ const _Uint8Array = (_Uint8Array_Uint8Array);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneArrayBuffer.js
-
-
-/**
- * Creates a clone of `arrayBuffer`.
- *
- * @private
- * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
- * @returns {ArrayBuffer} Returns the cloned array buffer.
- */
-function cloneArrayBuffer(arrayBuffer) {
-  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
-  return result;
-}
-
-/* harmony default export */ const _cloneArrayBuffer = (cloneArrayBuffer);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneTypedArray.js
-
-
-/**
- * Creates a clone of `typedArray`.
- *
- * @private
- * @param {Object} typedArray The typed array to clone.
- * @param {boolean} [isDeep] Specify a deep clone.
- * @returns {Object} Returns the cloned typed array.
- */
-function cloneTypedArray(typedArray, isDeep) {
-  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-}
-
-/* harmony default export */ const _cloneTypedArray = (cloneTypedArray);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_copyArray.js
-/**
- * Copies the values of `source` to `array`.
- *
- * @private
- * @param {Array} source The array to copy values from.
- * @param {Array} [array=[]] The array to copy values to.
- * @returns {Array} Returns `array`.
- */
-function copyArray(source, array) {
   var index = -1,
-      length = source.length;
+      length = props.length;
 
-  array || (array = Array(length));
   while (++index < length) {
-    array[index] = source[index];
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    if (newValue === undefined) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      _baseAssignValue(object, key, newValue);
+    } else {
+      _assignValue(object, key, newValue);
+    }
   }
-  return array;
+  return object;
 }
 
-/* harmony default export */ const _copyArray = (copyArray);
+/* harmony default export */ const _copyObject = (copyObject);
 
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseCreate.js
-
-
-/** Built-in value references. */
-var objectCreate = Object.create;
-
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseTimes.js
 /**
- * The base implementation of `_.create` without support for assigning
- * properties to the created object.
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
  *
  * @private
- * @param {Object} proto The object to inherit from.
- * @returns {Object} Returns the new object.
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
  */
-var baseCreate = (function() {
-  function object() {}
-  return function(proto) {
-    if (!lodash_es_isObject(proto)) {
-      return {};
-    }
-    if (objectCreate) {
-      return objectCreate(proto);
-    }
-    object.prototype = proto;
-    var result = new object;
-    object.prototype = undefined;
-    return result;
-  };
-}());
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
 
-/* harmony default export */ const _baseCreate = (baseCreate);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_overArg.js
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
 }
 
-/* harmony default export */ const _overArg = (overArg);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_getPrototype.js
-
-
-/** Built-in value references. */
-var getPrototype = _overArg(Object.getPrototypeOf, Object);
-
-/* harmony default export */ const _getPrototype = (getPrototype);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isPrototype.js
-/** Used for built-in method references. */
-var _isPrototype_objectProto = Object.prototype;
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || _isPrototype_objectProto;
-
-  return value === proto;
-}
-
-/* harmony default export */ const _isPrototype = (isPrototype);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_initCloneObject.js
-
-
-
-
-/**
- * Initializes an object clone.
- *
- * @private
- * @param {Object} object The object to clone.
- * @returns {Object} Returns the initialized clone.
- */
-function initCloneObject(object) {
-  return (typeof object.constructor == 'function' && !_isPrototype(object))
-    ? _baseCreate(_getPrototype(object))
-    : {};
-}
-
-/* harmony default export */ const _initCloneObject = (initCloneObject);
+/* harmony default export */ const _baseTimes = (baseTimes);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/isObjectLike.js
 /**
@@ -34904,13 +34791,100 @@ var isArguments = _baseIsArguments(function() { return arguments; }()) ? _baseIs
  * _.isArray(_.noop);
  * // => false
  */
-var isArray_isArray = Array.isArray;
+var isArray = Array.isArray;
 
-/* harmony default export */ const lodash_es_isArray = (isArray_isArray);
+/* harmony default export */ const lodash_es_isArray = (isArray);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/stubFalse.js
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+/* harmony default export */ const lodash_es_stubFalse = (stubFalse);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/isBuffer.js
+
+
+
+/** Detect free variable `exports`. */
+var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? _root.Buffer : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || lodash_es_stubFalse;
+
+/* harmony default export */ const lodash_es_isBuffer = (isBuffer);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isIndex.js
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  var type = typeof value;
+  length = length == null ? MAX_SAFE_INTEGER : length;
+
+  return !!length &&
+    (type == 'number' ||
+      (type != 'symbol' && reIsUint.test(value))) &&
+        (value > -1 && value % 1 == 0 && value < length);
+}
+
+/* harmony default export */ const _isIndex = (isIndex);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/isLength.js
 /** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
+var isLength_MAX_SAFE_INTEGER = 9007199254740991;
 
 /**
  * Checks if `value` is a valid array-like length.
@@ -34940,204 +34914,10 @@ var MAX_SAFE_INTEGER = 9007199254740991;
  */
 function isLength(value) {
   return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+    value > -1 && value % 1 == 0 && value <= isLength_MAX_SAFE_INTEGER;
 }
 
 /* harmony default export */ const lodash_es_isLength = (isLength);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/isArrayLike.js
-
-
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && lodash_es_isLength(value.length) && !lodash_es_isFunction(value);
-}
-
-/* harmony default export */ const lodash_es_isArrayLike = (isArrayLike);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/isArrayLikeObject.js
-
-
-
-/**
- * This method is like `_.isArrayLike` except that it also checks if `value`
- * is an object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array-like object,
- *  else `false`.
- * @example
- *
- * _.isArrayLikeObject([1, 2, 3]);
- * // => true
- *
- * _.isArrayLikeObject(document.body.children);
- * // => true
- *
- * _.isArrayLikeObject('abc');
- * // => false
- *
- * _.isArrayLikeObject(_.noop);
- * // => false
- */
-function isArrayLikeObject(value) {
-  return lodash_es_isObjectLike(value) && lodash_es_isArrayLike(value);
-}
-
-/* harmony default export */ const lodash_es_isArrayLikeObject = (isArrayLikeObject);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/stubFalse.js
-/**
- * This method returns `false`.
- *
- * @static
- * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {boolean} Returns `false`.
- * @example
- *
- * _.times(2, _.stubFalse);
- * // => [false, false]
- */
-function stubFalse() {
-  return false;
-}
-
-/* harmony default export */ const lodash_es_stubFalse = (stubFalse);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/isBuffer.js
-
-
-
-/** Detect free variable `exports`. */
-var isBuffer_freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var isBuffer_freeModule = isBuffer_freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var isBuffer_moduleExports = isBuffer_freeModule && isBuffer_freeModule.exports === isBuffer_freeExports;
-
-/** Built-in value references. */
-var isBuffer_Buffer = isBuffer_moduleExports ? _root.Buffer : undefined;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeIsBuffer = isBuffer_Buffer ? isBuffer_Buffer.isBuffer : undefined;
-
-/**
- * Checks if `value` is a buffer.
- *
- * @static
- * @memberOf _
- * @since 4.3.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
- * @example
- *
- * _.isBuffer(new Buffer(2));
- * // => true
- *
- * _.isBuffer(new Uint8Array(2));
- * // => false
- */
-var isBuffer = nativeIsBuffer || lodash_es_stubFalse;
-
-/* harmony default export */ const lodash_es_isBuffer = (isBuffer);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/isPlainObject.js
-
-
-
-
-/** `Object#toString` result references. */
-var objectTag = '[object Object]';
-
-/** Used for built-in method references. */
-var isPlainObject_funcProto = Function.prototype,
-    isPlainObject_objectProto = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var isPlainObject_funcToString = isPlainObject_funcProto.toString;
-
-/** Used to check objects for own properties. */
-var isPlainObject_hasOwnProperty = isPlainObject_objectProto.hasOwnProperty;
-
-/** Used to infer the `Object` constructor. */
-var objectCtorString = isPlainObject_funcToString.call(Object);
-
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * @static
- * @memberOf _
- * @since 0.8.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- * }
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject(value) {
-  if (!lodash_es_isObjectLike(value) || _baseGetTag(value) != objectTag) {
-    return false;
-  }
-  var proto = _getPrototype(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = isPlainObject_hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-    isPlainObject_funcToString.call(Ctor) == objectCtorString;
-}
-
-/* harmony default export */ const lodash_es_isPlainObject = (isPlainObject);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseIsTypedArray.js
 
@@ -35153,7 +34933,7 @@ var _baseIsTypedArray_argsTag = '[object Arguments]',
     _baseIsTypedArray_funcTag = '[object Function]',
     mapTag = '[object Map]',
     numberTag = '[object Number]',
-    _baseIsTypedArray_objectTag = '[object Object]',
+    objectTag = '[object Object]',
     regexpTag = '[object RegExp]',
     setTag = '[object Set]',
     stringTag = '[object String]',
@@ -35183,7 +34963,7 @@ typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
 typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
 typedArrayTags[errorTag] = typedArrayTags[_baseIsTypedArray_funcTag] =
 typedArrayTags[mapTag] = typedArrayTags[numberTag] =
-typedArrayTags[_baseIsTypedArray_objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
 typedArrayTags[setTag] = typedArrayTags[stringTag] =
 typedArrayTags[weakMapTag] = false;
 
@@ -35278,150 +35058,6 @@ var isTypedArray = nodeIsTypedArray ? _baseUnary(nodeIsTypedArray) : _baseIsType
 
 /* harmony default export */ const lodash_es_isTypedArray = (isTypedArray);
 
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_safeGet.js
-/**
- * Gets the value at `key`, unless `key` is "__proto__" or "constructor".
- *
- * @private
- * @param {Object} object The object to query.
- * @param {string} key The key of the property to get.
- * @returns {*} Returns the property value.
- */
-function safeGet(object, key) {
-  if (key === 'constructor' && typeof object[key] === 'function') {
-    return;
-  }
-
-  if (key == '__proto__') {
-    return;
-  }
-
-  return object[key];
-}
-
-/* harmony default export */ const _safeGet = (safeGet);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_assignValue.js
-
-
-
-/** Used for built-in method references. */
-var _assignValue_objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var _assignValue_hasOwnProperty = _assignValue_objectProto.hasOwnProperty;
-
-/**
- * Assigns `value` to `key` of `object` if the existing value is not equivalent
- * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * for equality comparisons.
- *
- * @private
- * @param {Object} object The object to modify.
- * @param {string} key The key of the property to assign.
- * @param {*} value The value to assign.
- */
-function assignValue(object, key, value) {
-  var objValue = object[key];
-  if (!(_assignValue_hasOwnProperty.call(object, key) && lodash_es_eq(objValue, value)) ||
-      (value === undefined && !(key in object))) {
-    _baseAssignValue(object, key, value);
-  }
-}
-
-/* harmony default export */ const _assignValue = (assignValue);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_copyObject.js
-
-
-
-/**
- * Copies properties of `source` to `object`.
- *
- * @private
- * @param {Object} source The object to copy properties from.
- * @param {Array} props The property identifiers to copy.
- * @param {Object} [object={}] The object to copy properties to.
- * @param {Function} [customizer] The function to customize copied values.
- * @returns {Object} Returns `object`.
- */
-function copyObject(source, props, object, customizer) {
-  var isNew = !object;
-  object || (object = {});
-
-  var index = -1,
-      length = props.length;
-
-  while (++index < length) {
-    var key = props[index];
-
-    var newValue = customizer
-      ? customizer(object[key], source[key], key, object, source)
-      : undefined;
-
-    if (newValue === undefined) {
-      newValue = source[key];
-    }
-    if (isNew) {
-      _baseAssignValue(object, key, newValue);
-    } else {
-      _assignValue(object, key, newValue);
-    }
-  }
-  return object;
-}
-
-/* harmony default export */ const _copyObject = (copyObject);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseTimes.js
-/**
- * The base implementation of `_.times` without support for iteratee shorthands
- * or max array length checks.
- *
- * @private
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- */
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-
-/* harmony default export */ const _baseTimes = (baseTimes);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isIndex.js
-/** Used as references for various `Number` constants. */
-var _isIndex_MAX_SAFE_INTEGER = 9007199254740991;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  var type = typeof value;
-  length = length == null ? _isIndex_MAX_SAFE_INTEGER : length;
-
-  return !!length &&
-    (type == 'number' ||
-      (type != 'symbol' && reIsUint.test(value))) &&
-        (value > -1 && value % 1 == 0 && value < length);
-}
-
-/* harmony default export */ const _isIndex = (isIndex);
-
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayLikeKeys.js
 
 
@@ -35472,6 +35108,176 @@ function arrayLikeKeys(value, inherited) {
 }
 
 /* harmony default export */ const _arrayLikeKeys = (arrayLikeKeys);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isPrototype.js
+/** Used for built-in method references. */
+var _isPrototype_objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || _isPrototype_objectProto;
+
+  return value === proto;
+}
+
+/* harmony default export */ const _isPrototype = (isPrototype);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_overArg.js
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/* harmony default export */ const _overArg = (overArg);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_nativeKeys.js
+
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = _overArg(Object.keys, Object);
+
+/* harmony default export */ const _nativeKeys = (nativeKeys);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseKeys.js
+
+
+
+/** Used for built-in method references. */
+var _baseKeys_objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var _baseKeys_hasOwnProperty = _baseKeys_objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!_isPrototype(object)) {
+    return _nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (_baseKeys_hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/* harmony default export */ const _baseKeys = (baseKeys);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/isArrayLike.js
+
+
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && lodash_es_isLength(value.length) && !lodash_es_isFunction(value);
+}
+
+/* harmony default export */ const lodash_es_isArrayLike = (isArrayLike);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/keys.js
+
+
+
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return lodash_es_isArrayLike(object) ? _arrayLikeKeys(object) : _baseKeys(object);
+}
+
+/* harmony default export */ const lodash_es_keys = (keys);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseAssign.js
+
+
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && _copyObject(source, lodash_es_keys(source), object);
+}
+
+/* harmony default export */ const _baseAssign = (baseAssign);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_nativeKeysIn.js
 /**
@@ -35564,822 +35370,6 @@ function keysIn(object) {
 
 /* harmony default export */ const lodash_es_keysIn = (keysIn);
 
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/toPlainObject.js
-
-
-
-/**
- * Converts `value` to a plain object flattening inherited enumerable string
- * keyed properties of `value` to own properties of the plain object.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {Object} Returns the converted plain object.
- * @example
- *
- * function Foo() {
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.assign({ 'a': 1 }, new Foo);
- * // => { 'a': 1, 'b': 2 }
- *
- * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
- * // => { 'a': 1, 'b': 2, 'c': 3 }
- */
-function toPlainObject(value) {
-  return _copyObject(value, lodash_es_keysIn(value));
-}
-
-/* harmony default export */ const lodash_es_toPlainObject = (toPlainObject);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseMergeDeep.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * A specialized version of `baseMerge` for arrays and objects which performs
- * deep merges and tracks traversed objects enabling objects with circular
- * references to be merged.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @param {string} key The key of the value to merge.
- * @param {number} srcIndex The index of `source`.
- * @param {Function} mergeFunc The function to merge values.
- * @param {Function} [customizer] The function to customize assigned values.
- * @param {Object} [stack] Tracks traversed source values and their merged
- *  counterparts.
- */
-function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
-  var objValue = _safeGet(object, key),
-      srcValue = _safeGet(source, key),
-      stacked = stack.get(srcValue);
-
-  if (stacked) {
-    _assignMergeValue(object, key, stacked);
-    return;
-  }
-  var newValue = customizer
-    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
-    : undefined;
-
-  var isCommon = newValue === undefined;
-
-  if (isCommon) {
-    var isArr = lodash_es_isArray(srcValue),
-        isBuff = !isArr && lodash_es_isBuffer(srcValue),
-        isTyped = !isArr && !isBuff && lodash_es_isTypedArray(srcValue);
-
-    newValue = srcValue;
-    if (isArr || isBuff || isTyped) {
-      if (lodash_es_isArray(objValue)) {
-        newValue = objValue;
-      }
-      else if (lodash_es_isArrayLikeObject(objValue)) {
-        newValue = _copyArray(objValue);
-      }
-      else if (isBuff) {
-        isCommon = false;
-        newValue = _cloneBuffer(srcValue, true);
-      }
-      else if (isTyped) {
-        isCommon = false;
-        newValue = _cloneTypedArray(srcValue, true);
-      }
-      else {
-        newValue = [];
-      }
-    }
-    else if (lodash_es_isPlainObject(srcValue) || lodash_es_isArguments(srcValue)) {
-      newValue = objValue;
-      if (lodash_es_isArguments(objValue)) {
-        newValue = lodash_es_toPlainObject(objValue);
-      }
-      else if (!lodash_es_isObject(objValue) || lodash_es_isFunction(objValue)) {
-        newValue = _initCloneObject(srcValue);
-      }
-    }
-    else {
-      isCommon = false;
-    }
-  }
-  if (isCommon) {
-    // Recursively merge objects and arrays (susceptible to call stack limits).
-    stack.set(srcValue, newValue);
-    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
-    stack['delete'](srcValue);
-  }
-  _assignMergeValue(object, key, newValue);
-}
-
-/* harmony default export */ const _baseMergeDeep = (baseMergeDeep);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseMerge.js
-
-
-
-
-
-
-
-
-/**
- * The base implementation of `_.merge` without support for multiple sources.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @param {number} srcIndex The index of `source`.
- * @param {Function} [customizer] The function to customize merged values.
- * @param {Object} [stack] Tracks traversed source values and their merged
- *  counterparts.
- */
-function baseMerge(object, source, srcIndex, customizer, stack) {
-  if (object === source) {
-    return;
-  }
-  _baseFor(source, function(srcValue, key) {
-    stack || (stack = new _Stack);
-    if (lodash_es_isObject(srcValue)) {
-      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
-    }
-    else {
-      var newValue = customizer
-        ? customizer(_safeGet(object, key), srcValue, (key + ''), object, source, stack)
-        : undefined;
-
-      if (newValue === undefined) {
-        newValue = srcValue;
-      }
-      _assignMergeValue(object, key, newValue);
-    }
-  }, lodash_es_keysIn);
-}
-
-/* harmony default export */ const _baseMerge = (baseMerge);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/identity.js
-/**
- * This method returns the first argument it receives.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'a': 1 };
- *
- * console.log(_.identity(object) === object);
- * // => true
- */
-function identity(value) {
-  return value;
-}
-
-/* harmony default export */ const lodash_es_identity = (identity);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_apply.js
-/**
- * A faster alternative to `Function#apply`, this function invokes `func`
- * with the `this` binding of `thisArg` and the arguments of `args`.
- *
- * @private
- * @param {Function} func The function to invoke.
- * @param {*} thisArg The `this` binding of `func`.
- * @param {Array} args The arguments to invoke `func` with.
- * @returns {*} Returns the result of `func`.
- */
-function apply(func, thisArg, args) {
-  switch (args.length) {
-    case 0: return func.call(thisArg);
-    case 1: return func.call(thisArg, args[0]);
-    case 2: return func.call(thisArg, args[0], args[1]);
-    case 3: return func.call(thisArg, args[0], args[1], args[2]);
-  }
-  return func.apply(thisArg, args);
-}
-
-/* harmony default export */ const _apply = (apply);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_overRest.js
-
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * A specialized version of `baseRest` which transforms the rest array.
- *
- * @private
- * @param {Function} func The function to apply a rest parameter to.
- * @param {number} [start=func.length-1] The start position of the rest parameter.
- * @param {Function} transform The rest array transform.
- * @returns {Function} Returns the new function.
- */
-function overRest(func, start, transform) {
-  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
-  return function() {
-    var args = arguments,
-        index = -1,
-        length = nativeMax(args.length - start, 0),
-        array = Array(length);
-
-    while (++index < length) {
-      array[index] = args[start + index];
-    }
-    index = -1;
-    var otherArgs = Array(start + 1);
-    while (++index < start) {
-      otherArgs[index] = args[index];
-    }
-    otherArgs[start] = transform(array);
-    return _apply(func, this, otherArgs);
-  };
-}
-
-/* harmony default export */ const _overRest = (overRest);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/constant.js
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Util
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new constant function.
- * @example
- *
- * var objects = _.times(2, _.constant({ 'a': 1 }));
- *
- * console.log(objects);
- * // => [{ 'a': 1 }, { 'a': 1 }]
- *
- * console.log(objects[0] === objects[1]);
- * // => true
- */
-function constant(value) {
-  return function() {
-    return value;
-  };
-}
-
-/* harmony default export */ const lodash_es_constant = (constant);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseSetToString.js
-
-
-
-
-/**
- * The base implementation of `setToString` without support for hot loop shorting.
- *
- * @private
- * @param {Function} func The function to modify.
- * @param {Function} string The `toString` result.
- * @returns {Function} Returns `func`.
- */
-var baseSetToString = !_defineProperty ? lodash_es_identity : function(func, string) {
-  return _defineProperty(func, 'toString', {
-    'configurable': true,
-    'enumerable': false,
-    'value': lodash_es_constant(string),
-    'writable': true
-  });
-};
-
-/* harmony default export */ const _baseSetToString = (baseSetToString);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_shortOut.js
-/** Used to detect hot functions by number of calls within a span of milliseconds. */
-var HOT_COUNT = 800,
-    HOT_SPAN = 16;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeNow = Date.now;
-
-/**
- * Creates a function that'll short out and invoke `identity` instead
- * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
- * milliseconds.
- *
- * @private
- * @param {Function} func The function to restrict.
- * @returns {Function} Returns the new shortable function.
- */
-function shortOut(func) {
-  var count = 0,
-      lastCalled = 0;
-
-  return function() {
-    var stamp = nativeNow(),
-        remaining = HOT_SPAN - (stamp - lastCalled);
-
-    lastCalled = stamp;
-    if (remaining > 0) {
-      if (++count >= HOT_COUNT) {
-        return arguments[0];
-      }
-    } else {
-      count = 0;
-    }
-    return func.apply(undefined, arguments);
-  };
-}
-
-/* harmony default export */ const _shortOut = (shortOut);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_setToString.js
-
-
-
-/**
- * Sets the `toString` method of `func` to return `string`.
- *
- * @private
- * @param {Function} func The function to modify.
- * @param {Function} string The `toString` result.
- * @returns {Function} Returns `func`.
- */
-var setToString = _shortOut(_baseSetToString);
-
-/* harmony default export */ const _setToString = (setToString);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseRest.js
-
-
-
-
-/**
- * The base implementation of `_.rest` which doesn't validate or coerce arguments.
- *
- * @private
- * @param {Function} func The function to apply a rest parameter to.
- * @param {number} [start=func.length-1] The start position of the rest parameter.
- * @returns {Function} Returns the new function.
- */
-function baseRest(func, start) {
-  return _setToString(_overRest(func, start, lodash_es_identity), func + '');
-}
-
-/* harmony default export */ const _baseRest = (baseRest);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isIterateeCall.js
-
-
-
-
-
-/**
- * Checks if the given arguments are from an iteratee call.
- *
- * @private
- * @param {*} value The potential iteratee value argument.
- * @param {*} index The potential iteratee index or key argument.
- * @param {*} object The potential iteratee object argument.
- * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
- *  else `false`.
- */
-function isIterateeCall(value, index, object) {
-  if (!lodash_es_isObject(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-        ? (lodash_es_isArrayLike(object) && _isIndex(index, object.length))
-        : (type == 'string' && index in object)
-      ) {
-    return lodash_es_eq(object[index], value);
-  }
-  return false;
-}
-
-/* harmony default export */ const _isIterateeCall = (isIterateeCall);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_createAssigner.js
-
-
-
-/**
- * Creates a function like `_.assign`.
- *
- * @private
- * @param {Function} assigner The function to assign values.
- * @returns {Function} Returns the new assigner function.
- */
-function createAssigner(assigner) {
-  return _baseRest(function(object, sources) {
-    var index = -1,
-        length = sources.length,
-        customizer = length > 1 ? sources[length - 1] : undefined,
-        guard = length > 2 ? sources[2] : undefined;
-
-    customizer = (assigner.length > 3 && typeof customizer == 'function')
-      ? (length--, customizer)
-      : undefined;
-
-    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
-      customizer = length < 3 ? undefined : customizer;
-      length = 1;
-    }
-    object = Object(object);
-    while (++index < length) {
-      var source = sources[index];
-      if (source) {
-        assigner(object, source, index, customizer);
-      }
-    }
-    return object;
-  });
-}
-
-/* harmony default export */ const _createAssigner = (createAssigner);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/merge.js
-
-
-
-/**
- * This method is like `_.assign` except that it recursively merges own and
- * inherited enumerable string keyed properties of source objects into the
- * destination object. Source properties that resolve to `undefined` are
- * skipped if a destination value exists. Array and plain object properties
- * are merged recursively. Other objects and value types are overridden by
- * assignment. Source objects are applied from left to right. Subsequent
- * sources overwrite property assignments of previous sources.
- *
- * **Note:** This method mutates `object`.
- *
- * @static
- * @memberOf _
- * @since 0.5.0
- * @category Object
- * @param {Object} object The destination object.
- * @param {...Object} [sources] The source objects.
- * @returns {Object} Returns `object`.
- * @example
- *
- * var object = {
- *   'a': [{ 'b': 2 }, { 'd': 4 }]
- * };
- *
- * var other = {
- *   'a': [{ 'c': 3 }, { 'e': 5 }]
- * };
- *
- * _.merge(object, other);
- * // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
- */
-var merge = _createAssigner(function(object, source, srcIndex) {
-  _baseMerge(object, source, srcIndex);
-});
-
-/* harmony default export */ const lodash_es_merge = (merge);
-
-;// CONCATENATED MODULE: ../api/dist/esm/config.js
-let apiOptions = {
-    baseUrl: '',
-    region: '',
-    cardsBucket: '',
-    getJwtToken: () => Promise.resolve(''),
-};
-const configureApi = (options) => {
-    apiOptions = options;
-};
-
-;// CONCATENATED MODULE: ../api/dist/esm/restClient.js
-
-
-const restClient_request = async (url, init) => {
-    try {
-        const headers = {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${await apiOptions.getJwtToken()}`,
-        };
-        const response = await fetch(apiOptions.baseUrl + url, lodash_es_merge(init, {
-            headers,
-        }));
-        if (!response.ok) {
-            console.error('API error', await response.text());
-            return {
-                success: false,
-                errorCode: 'API_REQUEST_NOT_OK',
-                reason: 'The API has returned failed status.',
-                extra: response,
-            };
-        }
-        if (response.headers.has('Content-Type') &&
-            response.headers.get('Content-Type') === 'application/json' &&
-            response.headers.get('Content-Length') !== '0') {
-            return {
-                success: true,
-                value: await response.json(),
-            };
-        }
-        return {
-            success: true,
-            value: await response.text(),
-        };
-    }
-    catch (e) {
-        if (e.name === 'AbortError') {
-            return {
-                success: false,
-                errorCode: 'API_REQUEST_ABORTED',
-                reason: 'The request was aboarted by another user operation.',
-                extra: e,
-            };
-        }
-        if (e.message === 'Failed to fetch' ||
-            e.message === 'Network request failed') {
-            return {
-                success: false,
-                errorCode: 'NETWORK_REQUEST_ERROR',
-                reason: 'Network request failed',
-                extra: e,
-            };
-        }
-        return {
-            success: false,
-            errorCode: 'API_REQUEST_UNHANDLED_ERROR',
-            reason: 'Un unexpected error has occurred during the request.',
-            extra: e,
-        };
-    }
-};
-
-;// CONCATENATED MODULE: ../api/dist/esm/analyze.js
-
-const analyze = async (payload, abortController) => {
-    try {
-        return await restClient_request('/analyze', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            signal: abortController?.signal,
-        });
-    }
-    catch (e) {
-        return {
-            success: false,
-            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
-            reason: 'The translation request has failed.',
-            extra: e,
-        };
-    }
-};
-
-;// CONCATENATED MODULE: ../api/dist/esm/bulkAnalyze.js
-
-const bulkAnalyze = async (payload, abortController) => {
-    if (payload.sources.length === 0) {
-        return {
-            success: true,
-            value: {
-                sourceLanguage: payload.sourceLanguage,
-                analysis: [],
-            },
-        };
-    }
-    try {
-        return await request('/bulk-analyze', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            signal: abortController?.signal,
-        });
-    }
-    catch (e) {
-        return {
-            success: false,
-            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
-            reason: 'The translation request has failed.',
-            extra: e,
-        };
-    }
-};
-
-;// CONCATENATED MODULE: ../api/dist/esm/chat-with-card.js
-
-const chatWithCard = async (payload, abortController) => {
-    try {
-        return await request('/chat-with-card', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            signal: abortController?.signal,
-        });
-    }
-    catch (e) {
-        return {
-            success: false,
-            errorCode: 'FUCKING_ERROR',
-            reason: 'The mnemonic generation request has failed.',
-            extra: e,
-        };
-    }
-};
-
-;// CONCATENATED MODULE: ../api/dist/esm/explain.js
-
-const explain = async (payload, abortController) => {
-    try {
-        return await restClient_request('/explain', {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            signal: abortController?.signal,
-        });
-    }
-    catch (e) {
-        return {
-            success: false,
-            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
-            reason: 'The translation request has failed.',
-            extra: e,
-        };
-    }
-};
-
-;// CONCATENATED MODULE: ../model-operations/dist/esm/buildTagMap.js
-const buildTagMap = (tags) => {
-    return tags.reduce((acc, tag) => ({
-        ...acc,
-        [tag.id]: tag,
-    }), {});
-};
-
-;// CONCATENATED MODULE: ../model-operations/dist/esm/compareCards.js
-const equalCards = (a) => (b) => a.source.toLowerCase() === b.source.toLowerCase() &&
-    a.partOfSpeech === b.partOfSpeech;
-const byCard = (card) => (item) => equalCards(card)(item.data);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayMap.js
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-/* harmony default export */ const _arrayMap = (arrayMap);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayEach.js
-/**
- * A specialized version of `_.forEach` for arrays without support for
- * iteratee shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns `array`.
- */
-function arrayEach(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length;
-
-  while (++index < length) {
-    if (iteratee(array[index], index, array) === false) {
-      break;
-    }
-  }
-  return array;
-}
-
-/* harmony default export */ const _arrayEach = (arrayEach);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_nativeKeys.js
-
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeKeys = _overArg(Object.keys, Object);
-
-/* harmony default export */ const _nativeKeys = (nativeKeys);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseKeys.js
-
-
-
-/** Used for built-in method references. */
-var _baseKeys_objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var _baseKeys_hasOwnProperty = _baseKeys_objectProto.hasOwnProperty;
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!_isPrototype(object)) {
-    return _nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (_baseKeys_hasOwnProperty.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/* harmony default export */ const _baseKeys = (baseKeys);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/keys.js
-
-
-
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return lodash_es_isArrayLike(object) ? _arrayLikeKeys(object) : _baseKeys(object);
-}
-
-/* harmony default export */ const lodash_es_keys = (keys);
-
-;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseAssign.js
-
-
-
-/**
- * The base implementation of `_.assign` without support for multiple sources
- * or `customizer` functions.
- *
- * @private
- * @param {Object} object The destination object.
- * @param {Object} source The source object.
- * @returns {Object} Returns `object`.
- */
-function baseAssign(object, source) {
-  return object && _copyObject(source, lodash_es_keys(source), object);
-}
-
-/* harmony default export */ const _baseAssign = (baseAssign);
-
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseAssignIn.js
 
 
@@ -36398,6 +35388,65 @@ function baseAssignIn(object, source) {
 }
 
 /* harmony default export */ const _baseAssignIn = (baseAssignIn);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneBuffer.js
+
+
+/** Detect free variable `exports`. */
+var _cloneBuffer_freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var _cloneBuffer_freeModule = _cloneBuffer_freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var _cloneBuffer_moduleExports = _cloneBuffer_freeModule && _cloneBuffer_freeModule.exports === _cloneBuffer_freeExports;
+
+/** Built-in value references. */
+var _cloneBuffer_Buffer = _cloneBuffer_moduleExports ? _root.Buffer : undefined,
+    allocUnsafe = _cloneBuffer_Buffer ? _cloneBuffer_Buffer.allocUnsafe : undefined;
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var length = buffer.length,
+      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+
+  buffer.copy(result);
+  return result;
+}
+
+/* harmony default export */ const _cloneBuffer = (cloneBuffer);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_copyArray.js
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/* harmony default export */ const _copyArray = (copyArray);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_arrayFilter.js
 /**
@@ -36522,6 +35571,14 @@ function arrayPush(array, values) {
 }
 
 /* harmony default export */ const _arrayPush = (arrayPush);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_getPrototype.js
+
+
+/** Built-in value references. */
+var getPrototype = _overArg(Object.getPrototypeOf, Object);
+
+/* harmony default export */ const _getPrototype = (getPrototype);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_getSymbolsIn.js
 
@@ -36751,6 +35808,32 @@ function initCloneArray(array) {
 
 /* harmony default export */ const _initCloneArray = (initCloneArray);
 
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_Uint8Array.js
+
+
+/** Built-in value references. */
+var _Uint8Array_Uint8Array = _root.Uint8Array;
+
+/* harmony default export */ const _Uint8Array = (_Uint8Array_Uint8Array);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneArrayBuffer.js
+
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new _Uint8Array(result).set(new _Uint8Array(arrayBuffer));
+  return result;
+}
+
+/* harmony default export */ const _cloneArrayBuffer = (cloneArrayBuffer);
+
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneDataView.js
 
 
@@ -36807,6 +35890,24 @@ function cloneSymbol(symbol) {
 }
 
 /* harmony default export */ const _cloneSymbol = (cloneSymbol);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_cloneTypedArray.js
+
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+/* harmony default export */ const _cloneTypedArray = (cloneTypedArray);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_initCloneByTag.js
 
@@ -36886,6 +35987,58 @@ function initCloneByTag(object, tag, isDeep) {
 }
 
 /* harmony default export */ const _initCloneByTag = (initCloneByTag);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseCreate.js
+
+
+/** Built-in value references. */
+var objectCreate = Object.create;
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} proto The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!lodash_es_isObject(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = proto;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
+
+/* harmony default export */ const _baseCreate = (baseCreate);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_initCloneObject.js
+
+
+
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !_isPrototype(object))
+    ? _baseCreate(_getPrototype(object))
+    : {};
+}
+
+/* harmony default export */ const _initCloneObject = (initCloneObject);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseIsMap.js
 
@@ -37583,6 +36736,70 @@ function baseUnset(object, path) {
 
 /* harmony default export */ const _baseUnset = (baseUnset);
 
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/isPlainObject.js
+
+
+
+
+/** `Object#toString` result references. */
+var isPlainObject_objectTag = '[object Object]';
+
+/** Used for built-in method references. */
+var isPlainObject_funcProto = Function.prototype,
+    isPlainObject_objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var isPlainObject_funcToString = isPlainObject_funcProto.toString;
+
+/** Used to check objects for own properties. */
+var isPlainObject_hasOwnProperty = isPlainObject_objectProto.hasOwnProperty;
+
+/** Used to infer the `Object` constructor. */
+var objectCtorString = isPlainObject_funcToString.call(Object);
+
+/**
+ * Checks if `value` is a plain object, that is, an object created by the
+ * `Object` constructor or one with a `[[Prototype]]` of `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.8.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ * }
+ *
+ * _.isPlainObject(new Foo);
+ * // => false
+ *
+ * _.isPlainObject([1, 2, 3]);
+ * // => false
+ *
+ * _.isPlainObject({ 'x': 0, 'y': 0 });
+ * // => true
+ *
+ * _.isPlainObject(Object.create(null));
+ * // => true
+ */
+function isPlainObject(value) {
+  if (!lodash_es_isObjectLike(value) || _baseGetTag(value) != isPlainObject_objectTag) {
+    return false;
+  }
+  var proto = _getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = isPlainObject_hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+    isPlainObject_funcToString.call(Ctor) == objectCtorString;
+}
+
+/* harmony default export */ const lodash_es_isPlainObject = (isPlainObject);
+
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_customOmitClone.js
 
 
@@ -37686,6 +36903,197 @@ function flatten(array) {
 }
 
 /* harmony default export */ const lodash_es_flatten = (flatten);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_apply.js
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+
+/* harmony default export */ const _apply = (apply);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_overRest.js
+
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * A specialized version of `baseRest` which transforms the rest array.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @param {Function} transform The rest array transform.
+ * @returns {Function} Returns the new function.
+ */
+function overRest(func, start, transform) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = transform(array);
+    return _apply(func, this, otherArgs);
+  };
+}
+
+/* harmony default export */ const _overRest = (overRest);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/constant.js
+/**
+ * Creates a function that returns `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Util
+ * @param {*} value The value to return from the new function.
+ * @returns {Function} Returns the new constant function.
+ * @example
+ *
+ * var objects = _.times(2, _.constant({ 'a': 1 }));
+ *
+ * console.log(objects);
+ * // => [{ 'a': 1 }, { 'a': 1 }]
+ *
+ * console.log(objects[0] === objects[1]);
+ * // => true
+ */
+function constant(value) {
+  return function() {
+    return value;
+  };
+}
+
+/* harmony default export */ const lodash_es_constant = (constant);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/identity.js
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+/* harmony default export */ const lodash_es_identity = (identity);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseSetToString.js
+
+
+
+
+/**
+ * The base implementation of `setToString` without support for hot loop shorting.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var baseSetToString = !_defineProperty ? lodash_es_identity : function(func, string) {
+  return _defineProperty(func, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': lodash_es_constant(string),
+    'writable': true
+  });
+};
+
+/* harmony default export */ const _baseSetToString = (baseSetToString);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_shortOut.js
+/** Used to detect hot functions by number of calls within a span of milliseconds. */
+var HOT_COUNT = 800,
+    HOT_SPAN = 16;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeNow = Date.now;
+
+/**
+ * Creates a function that'll short out and invoke `identity` instead
+ * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+ * milliseconds.
+ *
+ * @private
+ * @param {Function} func The function to restrict.
+ * @returns {Function} Returns the new shortable function.
+ */
+function shortOut(func) {
+  var count = 0,
+      lastCalled = 0;
+
+  return function() {
+    var stamp = nativeNow(),
+        remaining = HOT_SPAN - (stamp - lastCalled);
+
+    lastCalled = stamp;
+    if (remaining > 0) {
+      if (++count >= HOT_COUNT) {
+        return arguments[0];
+      }
+    } else {
+      count = 0;
+    }
+    return func.apply(undefined, arguments);
+  };
+}
+
+/* harmony default export */ const _shortOut = (shortOut);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_setToString.js
+
+
+
+/**
+ * Sets the `toString` method of `func` to return `string`.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var setToString = _shortOut(_baseSetToString);
+
+/* harmony default export */ const _setToString = (setToString);
 
 ;// CONCATENATED MODULE: ../../node_modules/lodash-es/_flatRest.js
 
@@ -37808,6 +37216,12 @@ const getLastAdded = (cards) => {
 };
 
 ;// CONCATENATED MODULE: ../model/dist/esm/analysis.js
+const isAiTranslation = (translation) => {
+    return (translation.partOfSpeech !== undefined &&
+        translation.lemma !== undefined &&
+        translation.lemmaPos !== undefined &&
+        translation.transcript !== undefined);
+};
 const isDirectAnalyzePayload = (o) => {
     return !(!o || !o.source || !o.targetLanguage);
 };
@@ -37816,404 +37230,6 @@ const isReverseAnalyzePayload = (o) => {
 };
 const isReverseAnalysis = (o) => {
     return !(!o || !o.target || !o.reverseTranslations);
-};
-
-;// CONCATENATED MODULE: ../model/dist/esm/language.js
-const GoogleLanguages = (/* unused pure expression or super */ null && ([
-    'af',
-    'sq',
-    'am',
-    'ar',
-    'hy',
-    'az',
-    'eu',
-    'be',
-    'bn',
-    'bs',
-    'bg',
-    'ca',
-    'zh',
-    'co',
-    'haw',
-    'hr',
-    'cs',
-    'da',
-    'nl',
-    'en',
-    'eo',
-    'et',
-    'fi',
-    'fr',
-    'fy',
-    'gl',
-    'ka',
-    'de',
-    'el',
-    'gu',
-    'ht',
-    'ha',
-    'he',
-    'hi',
-    'hu',
-    'hmn',
-    'is',
-    'ig',
-    'id',
-    'ga',
-    'it',
-    'ja',
-    'jv',
-    'kn',
-    'kk',
-    'km',
-    'rw',
-    'ko',
-    'ku',
-    'ky',
-    'lo',
-    'lv',
-    'lt',
-    'lb',
-    'mk',
-    'mg',
-    'ms',
-    'ml',
-    'mt',
-    'mi',
-    'mr',
-    'mn',
-    'my',
-    'ne',
-    'no',
-    'ny',
-    'or',
-    'ps',
-    'fa',
-    'pl',
-    'pt',
-    'pa',
-    'ro',
-    'ru',
-    'sm',
-    'gd',
-    'sr',
-    'st',
-    'sn',
-    'sd',
-    'si',
-    'sk',
-    'sl',
-    'so',
-    'es',
-    'su',
-    'sw',
-    'sv',
-    'tl',
-    'tg',
-    'ta',
-    'tt',
-    'te',
-    'th',
-    'tr',
-    'tk',
-    'zh-TW',
-    'uk',
-    'ur',
-    'ug',
-    'uz',
-    'vi',
-    'cy',
-    'xh',
-    'yi',
-    'yo',
-    'zu',
-]));
-const ChatGPTLanguages = (/* unused pure expression or super */ null && ([
-    'af',
-    'sq',
-    'am',
-    'ar',
-    'hy',
-    'az',
-    'eu',
-    'be',
-    'bn',
-    'bs',
-    'bg',
-    'ca',
-    'zh',
-    'co',
-    'haw',
-    'hr',
-    'cs',
-    'da',
-    'nl',
-    'en',
-    'eo',
-    'et',
-    'fi',
-    'fr',
-    'fy',
-    'gl',
-    'ka',
-    'de',
-    'el',
-    'gu',
-    'ht',
-    'ha',
-    'he',
-    'hi',
-    'hu',
-    'hmn',
-    'is',
-    'ig',
-    'id',
-    'ga',
-    'it',
-    'ja',
-    'jv',
-    'kn',
-    'kk',
-    'km',
-    'rw',
-    'ko',
-    'ku',
-    'ky',
-    'lo',
-    'lv',
-    'lt',
-    'lb',
-    'mk',
-    'mg',
-    'ms',
-    'ml',
-    'mt',
-    'mi',
-    'mr',
-    'mn',
-    'my',
-    'ne',
-    'no',
-    'ny',
-    'or',
-    'ps',
-    'fa',
-    'pl',
-    'pt',
-    'pa',
-    'ro',
-    'ru',
-    'sm',
-    'gd',
-    'sr',
-    'st',
-    'sn',
-    'sd',
-    'si',
-    'sk',
-    'sl',
-    'so',
-    'es',
-    'su',
-    'sw',
-    'sv',
-    'tl',
-    'tg',
-    'ta',
-    'tt',
-    'te',
-    'th',
-    'tr',
-    'tk',
-    'zh-TW',
-    'uk',
-    'ur',
-    'ug',
-    'uz',
-    'vi',
-    'cy',
-    'xh',
-    'yi',
-    'yo',
-    'zu',
-]));
-const NLPLanguages = (/* unused pure expression or super */ null && ([
-    'af',
-    'sq',
-    'am',
-    'ar',
-    'hy',
-    'az',
-    'eu',
-    'be',
-    'bn',
-    'bs',
-    'bg',
-    'my',
-    'ca',
-    'ny',
-    'zh-CN',
-    'zh-TW',
-    'co',
-    'hr',
-    'cs',
-    'da',
-    'nl',
-    'en',
-    'eo',
-    'et',
-    'fi',
-    'fr',
-    'fy',
-    'gl',
-    'ka',
-    'de',
-    'el',
-    'gu',
-    'ht',
-    'ha',
-    'haw',
-    'iw',
-    'hi',
-    'hmn',
-    'hu',
-    'is',
-    'ig',
-    'id',
-    'ga',
-    'it',
-    'ja',
-    'kn',
-    'kk',
-    'km',
-    'ko',
-    'ku',
-    'ky',
-    'lo',
-    'lv',
-    'lt',
-    'lb',
-    'mk',
-    'mg',
-    'ms',
-    'ml',
-    'mt',
-    'mi',
-    'mr',
-    'mn',
-    'ne',
-    'no',
-    'ps',
-    'fa',
-    'pl',
-    'pt',
-    'pa',
-    'ro',
-    'ru',
-    'sm',
-    'gd',
-    'sr',
-    'st',
-    'sn',
-    'sd',
-    'si',
-    'sk',
-    'sl',
-    'so',
-    'es',
-    'su',
-    'sw',
-    'sv',
-    'tl',
-    'tg',
-    'ta',
-    'tt',
-    'te',
-    'th',
-    'tr',
-    'uk',
-    'ur',
-    'uz',
-    'vi',
-    'cy',
-    'xh',
-    'yi',
-    'yo',
-    'zu',
-]));
-const language_LexicalaLanguages = (/* unused pure expression or super */ null && ([
-    'ar',
-    'br',
-    'cs',
-    'de',
-    'da',
-    'el',
-    'en',
-    'es',
-    'fr',
-    'he',
-    'hi',
-    'it',
-    'ja',
-    'ko',
-    'la',
-    'nl',
-    'no',
-    'pl',
-    'pt',
-    'ru',
-    'sv',
-    'th',
-    'tr',
-    'tw',
-    'zh',
-]));
-const GoogleNLPLanguageMap = {
-    he: 'iw',
-    zh: 'zh-CN',
-};
-const googleToNlp = (googleLanguage) => {
-    if (GoogleNLPLanguageMap[googleLanguage] !== undefined) {
-        return GoogleNLPLanguageMap[googleLanguage];
-    }
-    return (NLPLanguages.find((nlpLanguage) => nlpLanguage === googleLanguage) ?? null);
-};
-const language_isGoogleLanguage = (language) => GoogleLanguages.indexOf(language) !== -1;
-const isChatGPTLanguage = (language) => ChatGPTLanguages.indexOf(language) !== -1;
-
-;// CONCATENATED MODULE: ../model/dist/esm/bulk-analysis.js
-
-
-const isBulkAnalysisPayload = (data) => {
-    if (!isObject(data)) {
-        return false;
-    }
-    if (!isGoogleLanguage(data['sourceLanguage'])) {
-        return false;
-    }
-    if (!isArray(data['sources'])) {
-        return false;
-    }
-    return data['sources'].every((source) => isString(source));
-};
-
-;// CONCATENATED MODULE: ../model/dist/esm/explain.js
-
-
-const isExplainPayload = (data) => {
-    if (!isObject(data)) {
-        return false;
-    }
-    if (!isGoogleLanguage(data['sourceLanguage'])) {
-        return false;
-    }
-    if (!isGoogleLanguage(data['targetLanguage'])) {
-        return false;
-    }
-    if (!isString(data['source'])) {
-        return false;
-    }
-    return true;
 };
 
 ;// CONCATENATED MODULE: ../model/dist/esm/language-list.js
@@ -38289,7 +37305,8 @@ const languageList = {
     ps: 'Pashto',
     fa: 'Persian',
     pl: 'Polish',
-    pt: 'Portuguese (Portugal, Brazil)',
+    pt: 'Portuguese (Brazilian)',
+    'pt-PT': 'Portuguese (European)',
     pa: 'Punjabi',
     ro: 'Romanian',
     ru: 'Russian',
@@ -38329,6 +37346,14 @@ const languageList = {
 const getFullLanguageName = (code) => {
     // @ts-ignore
     return languageList[code] ?? code;
+};
+
+;// CONCATENATED MODULE: ../model/dist/esm/study-stats.js
+const study_stats_defaultStudyStreak = {
+    days: 0,
+    longestStreak: 0,
+    lastStudyDay: '0000-01-01',
+    lastStudyTimezone: 'Asia/Jerusalem',
 };
 
 ;// CONCATENATED MODULE: ../model/dist/esm/translation-cards.js
@@ -38459,10 +37484,7 @@ const defaultUserMetadata = {
         chromeExtension: undefined,
         safariExtension: undefined,
     },
-    usageStats: {
-        lastLookupTimestamp: 0,
-        totalLookups: 0,
-    },
+    lastUpdated: 0,
 };
 const mergeUserMetadata = (md1, md2) => {
     return {
@@ -38475,10 +37497,6 @@ const mergeUserMetadata = (md1, md2) => {
         onboardingFlow: {
             ...md1.onboardingFlow,
             ...md2.onboardingFlow,
-        },
-        usageStats: {
-            ...md1.usageStats,
-            ...md2.usageStats,
         },
     };
 };
@@ -38542,6 +37560,496 @@ const languageToLexicalaLanguage = (language) => {
     return (LexicalaLanguages.find((lexicalaLanguage) => lexicalaLanguage === language) ?? null);
 };
 
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_assignMergeValue.js
+
+
+
+/**
+ * This function is like `assignValue` except that it doesn't assign
+ * `undefined` values.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignMergeValue(object, key, value) {
+  if ((value !== undefined && !lodash_es_eq(object[key], value)) ||
+      (value === undefined && !(key in object))) {
+    _baseAssignValue(object, key, value);
+  }
+}
+
+/* harmony default export */ const _assignMergeValue = (assignMergeValue);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_createBaseFor.js
+/**
+ * Creates a base function for methods like `_.forIn` and `_.forOwn`.
+ *
+ * @private
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {Function} Returns the new base function.
+ */
+function createBaseFor(fromRight) {
+  return function(object, iteratee, keysFunc) {
+    var index = -1,
+        iterable = Object(object),
+        props = keysFunc(object),
+        length = props.length;
+
+    while (length--) {
+      var key = props[fromRight ? length : ++index];
+      if (iteratee(iterable[key], key, iterable) === false) {
+        break;
+      }
+    }
+    return object;
+  };
+}
+
+/* harmony default export */ const _createBaseFor = (createBaseFor);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseFor.js
+
+
+/**
+ * The base implementation of `baseForOwn` which iterates over `object`
+ * properties returned by `keysFunc` and invokes `iteratee` for each property.
+ * Iteratee functions may exit iteration early by explicitly returning `false`.
+ *
+ * @private
+ * @param {Object} object The object to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @returns {Object} Returns `object`.
+ */
+var baseFor = _createBaseFor();
+
+/* harmony default export */ const _baseFor = (baseFor);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/isArrayLikeObject.js
+
+
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return lodash_es_isObjectLike(value) && lodash_es_isArrayLike(value);
+}
+
+/* harmony default export */ const lodash_es_isArrayLikeObject = (isArrayLikeObject);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_safeGet.js
+/**
+ * Gets the value at `key`, unless `key` is "__proto__" or "constructor".
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function safeGet(object, key) {
+  if (key === 'constructor' && typeof object[key] === 'function') {
+    return;
+  }
+
+  if (key == '__proto__') {
+    return;
+  }
+
+  return object[key];
+}
+
+/* harmony default export */ const _safeGet = (safeGet);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/toPlainObject.js
+
+
+
+/**
+ * Converts `value` to a plain object flattening inherited enumerable string
+ * keyed properties of `value` to own properties of the plain object.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {Object} Returns the converted plain object.
+ * @example
+ *
+ * function Foo() {
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.assign({ 'a': 1 }, new Foo);
+ * // => { 'a': 1, 'b': 2 }
+ *
+ * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
+ * // => { 'a': 1, 'b': 2, 'c': 3 }
+ */
+function toPlainObject(value) {
+  return _copyObject(value, lodash_es_keysIn(value));
+}
+
+/* harmony default export */ const lodash_es_toPlainObject = (toPlainObject);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseMergeDeep.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A specialized version of `baseMerge` for arrays and objects which performs
+ * deep merges and tracks traversed objects enabling objects with circular
+ * references to be merged.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @param {string} key The key of the value to merge.
+ * @param {number} srcIndex The index of `source`.
+ * @param {Function} mergeFunc The function to merge values.
+ * @param {Function} [customizer] The function to customize assigned values.
+ * @param {Object} [stack] Tracks traversed source values and their merged
+ *  counterparts.
+ */
+function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
+  var objValue = _safeGet(object, key),
+      srcValue = _safeGet(source, key),
+      stacked = stack.get(srcValue);
+
+  if (stacked) {
+    _assignMergeValue(object, key, stacked);
+    return;
+  }
+  var newValue = customizer
+    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
+    : undefined;
+
+  var isCommon = newValue === undefined;
+
+  if (isCommon) {
+    var isArr = lodash_es_isArray(srcValue),
+        isBuff = !isArr && lodash_es_isBuffer(srcValue),
+        isTyped = !isArr && !isBuff && lodash_es_isTypedArray(srcValue);
+
+    newValue = srcValue;
+    if (isArr || isBuff || isTyped) {
+      if (lodash_es_isArray(objValue)) {
+        newValue = objValue;
+      }
+      else if (lodash_es_isArrayLikeObject(objValue)) {
+        newValue = _copyArray(objValue);
+      }
+      else if (isBuff) {
+        isCommon = false;
+        newValue = _cloneBuffer(srcValue, true);
+      }
+      else if (isTyped) {
+        isCommon = false;
+        newValue = _cloneTypedArray(srcValue, true);
+      }
+      else {
+        newValue = [];
+      }
+    }
+    else if (lodash_es_isPlainObject(srcValue) || lodash_es_isArguments(srcValue)) {
+      newValue = objValue;
+      if (lodash_es_isArguments(objValue)) {
+        newValue = lodash_es_toPlainObject(objValue);
+      }
+      else if (!lodash_es_isObject(objValue) || lodash_es_isFunction(objValue)) {
+        newValue = _initCloneObject(srcValue);
+      }
+    }
+    else {
+      isCommon = false;
+    }
+  }
+  if (isCommon) {
+    // Recursively merge objects and arrays (susceptible to call stack limits).
+    stack.set(srcValue, newValue);
+    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
+    stack['delete'](srcValue);
+  }
+  _assignMergeValue(object, key, newValue);
+}
+
+/* harmony default export */ const _baseMergeDeep = (baseMergeDeep);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseMerge.js
+
+
+
+
+
+
+
+
+/**
+ * The base implementation of `_.merge` without support for multiple sources.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @param {number} srcIndex The index of `source`.
+ * @param {Function} [customizer] The function to customize merged values.
+ * @param {Object} [stack] Tracks traversed source values and their merged
+ *  counterparts.
+ */
+function baseMerge(object, source, srcIndex, customizer, stack) {
+  if (object === source) {
+    return;
+  }
+  _baseFor(source, function(srcValue, key) {
+    stack || (stack = new _Stack);
+    if (lodash_es_isObject(srcValue)) {
+      _baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
+    }
+    else {
+      var newValue = customizer
+        ? customizer(_safeGet(object, key), srcValue, (key + ''), object, source, stack)
+        : undefined;
+
+      if (newValue === undefined) {
+        newValue = srcValue;
+      }
+      _assignMergeValue(object, key, newValue);
+    }
+  }, lodash_es_keysIn);
+}
+
+/* harmony default export */ const _baseMerge = (baseMerge);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_baseRest.js
+
+
+
+
+/**
+ * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ */
+function baseRest(func, start) {
+  return _setToString(_overRest(func, start, lodash_es_identity), func + '');
+}
+
+/* harmony default export */ const _baseRest = (baseRest);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_isIterateeCall.js
+
+
+
+
+
+/**
+ * Checks if the given arguments are from an iteratee call.
+ *
+ * @private
+ * @param {*} value The potential iteratee value argument.
+ * @param {*} index The potential iteratee index or key argument.
+ * @param {*} object The potential iteratee object argument.
+ * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
+ *  else `false`.
+ */
+function isIterateeCall(value, index, object) {
+  if (!lodash_es_isObject(object)) {
+    return false;
+  }
+  var type = typeof index;
+  if (type == 'number'
+        ? (lodash_es_isArrayLike(object) && _isIndex(index, object.length))
+        : (type == 'string' && index in object)
+      ) {
+    return lodash_es_eq(object[index], value);
+  }
+  return false;
+}
+
+/* harmony default export */ const _isIterateeCall = (isIterateeCall);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/_createAssigner.js
+
+
+
+/**
+ * Creates a function like `_.assign`.
+ *
+ * @private
+ * @param {Function} assigner The function to assign values.
+ * @returns {Function} Returns the new assigner function.
+ */
+function createAssigner(assigner) {
+  return _baseRest(function(object, sources) {
+    var index = -1,
+        length = sources.length,
+        customizer = length > 1 ? sources[length - 1] : undefined,
+        guard = length > 2 ? sources[2] : undefined;
+
+    customizer = (assigner.length > 3 && typeof customizer == 'function')
+      ? (length--, customizer)
+      : undefined;
+
+    if (guard && _isIterateeCall(sources[0], sources[1], guard)) {
+      customizer = length < 3 ? undefined : customizer;
+      length = 1;
+    }
+    object = Object(object);
+    while (++index < length) {
+      var source = sources[index];
+      if (source) {
+        assigner(object, source, index, customizer);
+      }
+    }
+    return object;
+  });
+}
+
+/* harmony default export */ const _createAssigner = (createAssigner);
+
+;// CONCATENATED MODULE: ../../node_modules/lodash-es/merge.js
+
+
+
+/**
+ * This method is like `_.assign` except that it recursively merges own and
+ * inherited enumerable string keyed properties of source objects into the
+ * destination object. Source properties that resolve to `undefined` are
+ * skipped if a destination value exists. Array and plain object properties
+ * are merged recursively. Other objects and value types are overridden by
+ * assignment. Source objects are applied from left to right. Subsequent
+ * sources overwrite property assignments of previous sources.
+ *
+ * **Note:** This method mutates `object`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.5.0
+ * @category Object
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @returns {Object} Returns `object`.
+ * @example
+ *
+ * var object = {
+ *   'a': [{ 'b': 2 }, { 'd': 4 }]
+ * };
+ *
+ * var other = {
+ *   'a': [{ 'c': 3 }, { 'e': 5 }]
+ * };
+ *
+ * _.merge(object, other);
+ * // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
+ */
+var merge = _createAssigner(function(object, source, srcIndex) {
+  _baseMerge(object, source, srcIndex);
+});
+
+/* harmony default export */ const lodash_es_merge = (merge);
+
+;// CONCATENATED MODULE: ../model-operations/dist/esm/restClient.js
+
+const restClient_request = async (url, init) => {
+    try {
+        const headers = {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        };
+        const response = await fetch(url, lodash_es_merge(init, {
+            headers,
+        }));
+        if (!response.ok) {
+            console.error('API error', await response.text());
+            return {
+                success: false,
+                errorCode: 'API_REQUEST_NOT_OK',
+                reason: 'The API has returned failed status.',
+                extra: response,
+            };
+        }
+        if (response.headers.has('Content-Type') &&
+            response.headers.get('Content-Type') === 'application/json' &&
+            response.headers.get('Content-Length') !== '0') {
+            return {
+                success: true,
+                value: await response.json(),
+            };
+        }
+        return {
+            success: true,
+            value: await response.text(),
+        };
+    }
+    catch (e) {
+        if (e.name === 'AbortError') {
+            return {
+                success: false,
+                errorCode: 'API_REQUEST_ABORTED',
+                reason: 'The request was aboarted by another user operation.',
+                extra: e,
+            };
+        }
+        if (e.message === 'Failed to fetch' ||
+            e.message === 'Network request failed') {
+            return {
+                success: false,
+                errorCode: 'NETWORK_REQUEST_ERROR',
+                reason: 'Network request failed',
+                extra: e,
+            };
+        }
+        return {
+            success: false,
+            errorCode: 'API_REQUEST_UNHANDLED_ERROR',
+            reason: 'Un unexpected error has occurred during the request.',
+            extra: e,
+        };
+    }
+};
+
 ;// CONCATENATED MODULE: ../model-operations/dist/esm/retry.js
 
 const retry_retry = async (func, attempts = 3, delay = 100) => {
@@ -38601,6 +38109,121 @@ const setStreak = (existingStreak, today, timezone) => {
 
 
 
+
+
+;// CONCATENATED MODULE: ../api/dist/esm/config.js
+let apiOptions = {
+    baseUrl: '',
+    region: '',
+    cardsBucket: '',
+    getJwtToken: () => Promise.resolve(''),
+};
+const configureApi = (options) => {
+    apiOptions = options;
+};
+
+;// CONCATENATED MODULE: ../api/dist/esm/restClient.js
+
+
+
+const esm_restClient_request = async (url, init) => {
+    const headers = {
+        Authorization: `Bearer ${await apiOptions.getJwtToken()}`,
+    };
+    return restClient_request(apiOptions.baseUrl + url, lodash_es_merge(init, {
+        headers,
+    }));
+};
+
+;// CONCATENATED MODULE: ../api/dist/esm/analyze.js
+
+const analyze = async (payload, abortController) => {
+    try {
+        return await esm_restClient_request('/analyze', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            signal: abortController?.signal,
+        });
+    }
+    catch (e) {
+        return {
+            success: false,
+            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
+            reason: 'The translation request has failed.',
+            extra: e,
+        };
+    }
+};
+
+;// CONCATENATED MODULE: ../api/dist/esm/bulkAnalyze.js
+
+const bulkAnalyze = async (payload, abortController) => {
+    if (payload.sources.length === 0) {
+        return {
+            success: true,
+            value: {
+                sourceLanguage: payload.sourceLanguage,
+                analysis: [],
+            },
+        };
+    }
+    try {
+        return await request('/bulk-analyze', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            signal: abortController?.signal,
+        });
+    }
+    catch (e) {
+        return {
+            success: false,
+            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
+            reason: 'The translation request has failed.',
+            extra: e,
+        };
+    }
+};
+
+;// CONCATENATED MODULE: ../api/dist/esm/chat-with-card.js
+
+const chatWithCard = async (payload, abortController) => {
+    try {
+        return await request('/chat-with-card', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            signal: abortController?.signal,
+        });
+    }
+    catch (e) {
+        return {
+            success: false,
+            errorCode: 'FUCKING_ERROR',
+            reason: 'The mnemonic generation request has failed.',
+            extra: e,
+        };
+    }
+};
+
+;// CONCATENATED MODULE: ../api/dist/esm/explain.js
+
+const explain = async (payload, abortController) => {
+    try {
+        return await esm_restClient_request('/explain', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            signal: abortController?.signal,
+        });
+    }
+    catch (e) {
+        return {
+            success: false,
+            errorCode: 'API_TRANSLATION_REQUEST_FAILED',
+            reason: 'The translation request has failed.',
+            extra: e,
+        };
+    }
+};
+
 // EXTERNAL MODULE: ../../node_modules/fast-xml-parser/src/fxp.js
 var fxp = __webpack_require__(2215);
 ;// CONCATENATED MODULE: ../api/dist/esm/languageDecks.js
@@ -38610,7 +38233,7 @@ var fxp = __webpack_require__(2215);
 const parser = new fxp.XMLParser();
 const saveLanguageDeck = async (languageDeck) => {
     try {
-        return await restClient_request(`/languages/${languageDeck.language}`, {
+        return await esm_restClient_request(`/languages/${languageDeck.language}`, {
             method: 'PUT',
             body: JSON.stringify(serializeDeck(languageDeck)),
         });
@@ -38626,7 +38249,7 @@ const saveLanguageDeck = async (languageDeck) => {
 };
 const loadLanguageDeck = async (language) => {
     try {
-        const result = await restClient_request(`/languages/${language}`, {
+        const result = await esm_restClient_request(`/languages/${language}`, {
             method: 'GET',
         });
         if (result.success === false) {
@@ -38658,7 +38281,7 @@ const loadLanguageDeck = async (language) => {
 };
 const listLanguages = async () => {
     try {
-        const result = await restClient_request(`/languages`, {
+        const result = await esm_restClient_request(`/languages`, {
             method: 'GET',
         });
         if (result.success === false) {
@@ -38688,7 +38311,7 @@ const listLanguages = async () => {
 };
 const deleteLanguageDeck = async (language) => {
     try {
-        return await restClient_request(`/languages/${language}`, {
+        return await esm_restClient_request(`/languages/${language}`, {
             method: 'DELETE',
         });
     }
@@ -38858,7 +38481,7 @@ const recalibrateNotifications = async (payload) => {
 ;// CONCATENATED MODULE: ../api/dist/esm/onboarding.js
 
 const postOnboardingAction = async (action) => {
-    return await restClient_request('/onboard', {
+    return await esm_restClient_request('/onboard', {
         method: 'POST',
         body: JSON.stringify(action),
     });
@@ -38868,7 +38491,7 @@ const postOnboardingAction = async (action) => {
 
 const playSound = async (payload) => {
     try {
-        return await restClient_request('/audio?' + new URLSearchParams(payload), {
+        return await esm_restClient_request('/audio?' + new URLSearchParams(payload), {
             method: 'GET',
         });
     }
@@ -38884,6 +38507,7 @@ const playSound = async (payload) => {
 
 ;// CONCATENATED MODULE: ../api/dist/esm/studyStats.js
 
+
 const fetchStudyStreak = async () => {
     const response = await request('/files/study-streak.json', {
         method: 'GET',
@@ -38893,12 +38517,7 @@ const fetchStudyStreak = async () => {
     }
     return {
         success: true,
-        value: response.value || {
-            days: 0,
-            longestStreak: 0,
-            lastPracticeDay: '0000-01-01',
-            lastPracticeTimezone: 'Asia/Jerusalem',
-        },
+        value: response.value || defaultStudyStreak,
     };
 };
 const putStudyStreak = async (studyStreak) => {
@@ -38959,28 +38578,19 @@ var isString_stringTag = '[object String]';
  * _.isString(1);
  * // => false
  */
-function isString_isString(value) {
+function isString(value) {
   return typeof value == 'string' ||
     (!lodash_es_isArray(value) && lodash_es_isObjectLike(value) && _baseGetTag(value) == isString_stringTag);
 }
 
-/* harmony default export */ const lodash_es_isString = (isString_isString);
+/* harmony default export */ const lodash_es_isString = (isString);
 
 ;// CONCATENATED MODULE: ../api/dist/esm/parseJson.js
 const parseJson = (text) => {
-    const start = text.indexOf('{');
-    const end = text.lastIndexOf('}') + 1;
-    if (start === -1 || end === 0) {
-        return {
-            success: false,
-            errorCode: 'JSON_PARSE_ERROR',
-            reason: `Unable to find { or } in the provided string`,
-        };
-    }
     try {
         return {
             success: true,
-            value: JSON.parse(text.substring(start, end)),
+            value: JSON.parse(text),
         };
     }
     catch (e) {
@@ -38988,7 +38598,10 @@ const parseJson = (text) => {
             success: false,
             errorCode: 'JSON_PARSE_ERROR',
             reason: 'Unable to parse the JSON string',
-            extra: e,
+            extra: {
+                error: e,
+                text,
+            },
         };
     }
 };
@@ -38999,7 +38612,7 @@ const parseJson = (text) => {
 
 
 const getUserMetadata = async () => {
-    const response = await restClient_request('/files/metadata.json', {
+    const response = await esm_restClient_request('/files/metadata.json', {
         method: 'GET',
     });
     if (response.success === false) {
@@ -39023,8 +38636,11 @@ const saveUserMetadata = async (metadata) => {
     if (userMetadataResult.success === false) {
         return userMetadataResult;
     }
-    const toBeSaved = mergeUserMetadata(userMetadataResult.value, metadata);
-    const saveResult = await restClient_request('/files/metadata.json', {
+    const toBeSaved = mergeUserMetadata(userMetadataResult.value, {
+        ...metadata,
+        lastUpdated: new Date().getTime(),
+    });
+    const saveResult = await esm_restClient_request('/files/metadata.json', {
         method: 'PUT',
         body: JSON.stringify(toBeSaved),
     });
@@ -39043,7 +38659,7 @@ const saveUserMetadata = async (metadata) => {
 
 
 const getUserStaticMetadata = async () => {
-    const response = await restClient_request('/static-files/static-metadata.json', {
+    const response = await esm_restClient_request('/static-files/static-metadata.json', {
         method: 'GET',
     });
     if (response.success === false) {
@@ -42381,7 +41997,6 @@ const registerServiceWorker = (registerServiceWorkerOptions) => {
             await loadLanguageDeck(analysisResult.value.translation.sourceLanguage),
         ];
     };
-    let updateMetadataTimeout = undefined;
     onExplainRequest(async (sendResponse, payload) => {
         const explainResult = await explain(payload);
         return sendResponse(explainResult);
@@ -42399,7 +42014,6 @@ const registerServiceWorker = (registerServiceWorkerOptions) => {
             targetLanguage: payload.targetLanguage ?? (await proxyLanguage_getProxyLanguage()) ?? 'en',
         };
         Fo.capture('analyze_requested', analyzePayload);
-        clearTimeout(updateMetadataTimeout);
         try {
             const [analysisResult, loadLanguageDeckResult] = await getAnalysisAndCards(analyzePayload);
             if (analysisResult.success === false) {
@@ -42423,20 +42037,6 @@ const registerServiceWorker = (registerServiceWorkerOptions) => {
                 lastAdded: getLastAdded(loadLanguageDeckResult.value.cards),
             };
             addLanguage(value.translation.sourceLanguage);
-            updateMetadataTimeout = setTimeout(async () => {
-                const metadataResult = await userMetadata_getUserMetadata();
-                if (metadataResult.success === false) {
-                    return;
-                }
-                console.log('Updating usage stats', metadataResult.value.usageStats);
-                await userMetadata_saveUserMetadata({
-                    ...metadataResult.value,
-                    usageStats: {
-                        lastLookupTimestamp: new Date().getTime(),
-                        totalLookups: metadataResult.value.usageStats.totalLookups + 1,
-                    },
-                });
-            }, 10000);
             return sendResponse({
                 success: true,
                 value,
