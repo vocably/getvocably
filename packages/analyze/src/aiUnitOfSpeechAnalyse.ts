@@ -1,3 +1,4 @@
+import { createUserContent, GoogleGenAI } from '@google/genai';
 import { parseJson } from '@vocably/api';
 import {
   chatGptRequest,
@@ -5,12 +6,18 @@ import {
   nodeFetchS3File,
   nodePutS3File,
 } from '@vocably/lambda-shared';
-import { GoogleLanguage, languageList, Result } from '@vocably/model';
+import {
+  GoogleLanguage,
+  languageList,
+  Result,
+  resultify,
+} from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
 import { isArray } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
+import { fallback } from './fallback';
 import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
 import { transformSource } from './transformSource';
@@ -54,7 +61,7 @@ const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   sw: ['noun-class'], // Swahili (nominal classes instead of gender)
 };
 
-export type GptAnalyseResult = {
+export type AiAnalyseResult = {
   source: string;
   definitions: string[];
   examples: string[];
@@ -66,7 +73,7 @@ export type GptAnalyseResult = {
   gender?: string;
 };
 
-const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
+const isAiAnalyseResult = (result: any): result is AiAnalyseResult => {
   if (!isSafeObject(result)) {
     return false;
   }
@@ -84,12 +91,13 @@ const isGptAnalyseResult = (result: any): result is GptAnalyseResult => {
   );
 };
 
-type GptAnalysePayload = {
+type AiAnalysePayload = {
   source: string;
   partOfSpeech: string;
   sourceLanguage: GoogleLanguage;
 };
 
+// ChatGPT
 type GptAnalyseChatGptBody = {
   messages: Array<ChatCompletionMessageParam>;
   model: ChatModel;
@@ -99,7 +107,7 @@ export const getGptAnalyseChatGptBody = ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: GptAnalysePayload): GptAnalyseChatGptBody => {
+}: AiAnalysePayload): GptAnalyseChatGptBody => {
   const isTranscriptionNeeded = source.length <= 20;
   const languageName = languageList[sourceLanguage];
 
@@ -148,8 +156,8 @@ export const getGptAnalyseResult = ({
   sourceLanguage,
   partOfSpeech,
   response,
-}: GptAnalyseResultPayload): Result<GptAnalyseResult> => {
-  if (!isGptAnalyseResult(response)) {
+}: GptAnalyseResultPayload): Result<AiAnalyseResult> => {
+  if (!isAiAnalyseResult(response)) {
     return {
       success: false,
       errorCode: 'FUCKING_ERROR',
@@ -184,11 +192,11 @@ export const getGptAnalyseResult = ({
   };
 };
 
-export const gptAnalyseNoCache = async ({
+export const gptAnalyse = async ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: GptAnalysePayload): Promise<Result<GptAnalyseResult>> => {
+}: AiAnalysePayload): Promise<Result<AiAnalyseResult>> => {
   const responseResult = await chatGptRequest({
     ...getGptAnalyseChatGptBody({ source, partOfSpeech, sourceLanguage }),
     timeoutMs: 100000,
@@ -205,6 +213,88 @@ export const gptAnalyseNoCache = async ({
   });
 };
 
+// End Of ChatGPT
+
+// Gemini
+
+export const geminiAnalyse = async ({
+  source,
+  partOfSpeech,
+  sourceLanguage,
+}: AiAnalysePayload): Promise<Result<AiAnalyseResult>> => {
+  const genAI = new GoogleGenAI({
+    apiKey: config.geminiApiKey,
+  });
+
+  const isTranscriptionNeeded = source.length <= 20;
+  const languageName = languageList[sourceLanguage];
+
+  const genders = genderLanguages[sourceLanguage] ?? [];
+
+  const transcriptionType = getTranscriptionName(sourceLanguage);
+
+  const result = await resultify(
+    genAI.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: createUserContent([source]),
+      config: {
+        systemInstruction: [
+          `You are a smart language dictionary.`,
+          `User provides a ${partOfSpeech} in ${languageName} and its part of speech.`,
+          `Only respond in JSON format with an object containing the following properties:`,
+          isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
+          `source - ${partOfSpeech} provided by user. Capitalize only when appropriate.`,
+          `definitions - list of definitions in ${languageName}.${
+            partOfSpeech.includes('verb')
+              ? ` Consider tense of the provided ${partOfSpeech}.`
+              : ''
+          }`,
+          `examples - list of extremely concise examples`,
+          `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
+          `lemmaPos - part of speech of the lemma in English`,
+          `synonyms - list of synonyms`,
+          `number - plural or singular English only`,
+          genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
+        ],
+        thinkingConfig: {
+          thinkingBudget: 0, // Disables thinking
+        },
+        temperature: 0,
+        responseMimeType: 'application/json',
+      },
+    }),
+    {
+      errorCode: 'FUCKING_ERROR',
+      reason: 'Unable to perform Gemini analyse.',
+    }
+  );
+
+  if (result.success === false) {
+    return result;
+  }
+
+  const parseResult = parseJson(result.value.text ?? '');
+  if (parseResult.success === false) {
+    return parseResult;
+  }
+
+  if (isAiAnalyseResult(parseResult.value) === false) {
+    return {
+      success: false,
+      errorCode: 'FUCKING_ERROR',
+      reason: 'The Gemini request responded with the malformed response',
+      extra: parseResult.value,
+    };
+  }
+
+  return {
+    success: true,
+    value: parseResult.value,
+  };
+};
+
+// End of Gemini
+
 export const getAnalyseCacheFileName = (
   sourceLanguage: GoogleLanguage,
   source: string,
@@ -213,9 +303,9 @@ export const getAnalyseCacheFileName = (
   return `analyze/${sourceLanguage.toLowerCase()}/${source.toLowerCase()}/${partOfSpeech.toLowerCase()}.json`;
 };
 
-export const gptAnalyse = async (
-  payload: GptAnalysePayload
-): Promise<Result<GptAnalyseResult>> => {
+export const aiAnalyse = async (
+  payload: AiAnalysePayload
+): Promise<Result<AiAnalyseResult>> => {
   const fileName = getAnalyseCacheFileName(
     payload.sourceLanguage,
     payload.source,
@@ -229,7 +319,7 @@ export const gptAnalyse = async (
   if (s3FetchResult.success && s3FetchResult.value !== null) {
     const parseResult = parseJson(s3FetchResult.value);
 
-    if (parseResult.success && isGptAnalyseResult(parseResult.value)) {
+    if (parseResult.success && isAiAnalyseResult(parseResult.value)) {
       return {
         success: true,
         value: parseResult.value,
@@ -237,7 +327,9 @@ export const gptAnalyse = async (
     }
   }
 
-  const analyseResult = await gptAnalyseNoCache(payload);
+  const analyseResult = await fallback(geminiAnalyse(payload), () =>
+    gptAnalyse(payload)
+  );
 
   if (!analyseResult.success) {
     return analyseResult;

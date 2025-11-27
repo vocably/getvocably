@@ -1,6 +1,6 @@
 import { GoogleLanguage } from '@vocably/model';
 import { isFunction } from 'lodash-es';
-import { GptAnalyseResult } from './gptAnalyse';
+import { AiAnalyseResult } from './aiUnitOfSpeechAnalyse';
 import { vowels } from './vowels';
 
 type ArticleRules = {
@@ -120,12 +120,12 @@ export const addArticle = (
   language: GoogleLanguage,
   source: string,
   partOfSpeech: string,
-  gptAnalysisResult: GptAnalyseResult
+  aiAnalysisResult: AiAnalyseResult
 ): string => {
   if (
     partOfSpeech !== 'noun' ||
-    !gptAnalysisResult.gender ||
-    gptAnalysisResult.number !== 'singular'
+    !aiAnalysisResult.gender ||
+    aiAnalysisResult.number !== 'singular'
   ) {
     return source;
   }
@@ -139,15 +139,15 @@ export const addArticle = (
   if (isFunction(rules)) {
     return (
       rules({
-        gender: gptAnalysisResult.gender,
+        gender: aiAnalysisResult.gender,
         word: source,
-        pronunciation: gptAnalysisResult.transcript,
-        number: gptAnalysisResult.number,
+        pronunciation: aiAnalysisResult.transcript,
+        number: aiAnalysisResult.number,
       }) + source
     );
   }
 
-  const article = rules[gptAnalysisResult.gender] ?? rules.fallback;
+  const article = rules[aiAnalysisResult.gender] ?? rules.fallback;
 
   return `${article}${source}`;
 };
