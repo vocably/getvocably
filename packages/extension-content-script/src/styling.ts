@@ -52,16 +52,26 @@ const calculateDisplacement = (
 
 export const applyTransform = (element: HTMLElement, position: Position) => {
   const displacement = calculateDisplacement(element, position);
+
   if (displacement !== 0) {
     const animationDuration = 200;
     const originalTransition = element.style.transition;
-    element.style.transition = `${
-      originalTransition ? `${originalTransition}, ` : ''
-    }transform ${animationDuration}ms`;
+
+    if (originalTransition) {
+      const prev = originalTransition
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => !t.startsWith('transform'));
+      element.style.transition = [...prev, `transform ${animationDuration}ms`].join(', ');
+    } else {
+      element.style.transition = `transform ${animationDuration}ms`;
+    }
+
     setTimeout(() => {
       element.style.transition = originalTransition;
     }, animationDuration);
   }
+
   element.style.setProperty('--horizontal-displacement', `${displacement}px`);
 
   if (isTop(position)) {
