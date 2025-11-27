@@ -186,6 +186,7 @@ export class SecondPageComponent implements OnInit, OnDestroy {
             'pl',
             'ps',
             'pt',
+            'pt-PT',
             'ro',
             'ru',
             'rw',
