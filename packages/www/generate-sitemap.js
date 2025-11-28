@@ -1,7 +1,12 @@
 const { readdirSync, writeFileSync } = require('node:fs');
 const { execSync } = require('node:child_process');
 
-const exclude = ['index.handlebars', 'ad-creator.handlebars', 'app.handlebars'];
+const exclude = [
+  'index.handlebars',
+  'app.handlebars',
+  'search.handlebars',
+  'console.handlebars',
+];
 const pages = readdirSync('./src/pages').filter(
   (page) => !exclude.includes(page)
 );

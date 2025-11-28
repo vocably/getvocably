@@ -1,2 +1,6 @@
 User-agent: *
+
+Disallow: /search.html$
+Disallow: /console.html$
+
 Allow: /
