@@ -183,6 +183,23 @@ document.querySelectorAll('#searchForm').forEach((searchForm) => {
 
   sourceLanguageSelect.value = getSourceLanguage();
   targetLanguageSelect.value = getTargetLanguage();
+  const textInput = searchForm.querySelector('[name=text]') as HTMLInputElement;
+
+  const updatePlaceholder = () => {
+    if (window.innerWidth < 600) {
+      textInput.placeholder = 'Search...';
+      return;
+    }
+
+    if (sourceLanguageSelect.value === targetLanguageSelect.value) {
+      textInput.placeholder = 'Search for any word...';
+      return;
+    }
+
+    textInput.placeholder = 'Search for any word or phrase...';
+  };
+
+  updatePlaceholder();
 
   searchForm
     .querySelectorAll('.language-selector-wrapper')
@@ -194,7 +211,10 @@ document.querySelectorAll('#searchForm').forEach((searchForm) => {
         label.innerHTML = select.value.slice(0, 2);
       };
 
-      select.addEventListener('change', setLabel);
+      select.addEventListener('change', () => {
+        setLabel();
+        updatePlaceholder();
+      });
 
       setLabel();
     });
