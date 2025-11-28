@@ -157,6 +157,15 @@ module.exports = {
           'https://lh3.googleusercontent.com/a-/ALV-UjVF-uKjVQnNTu0WtXdi7YBrgNrqcEVGU7QB_FwKhAZYLEoftrMl=s48-w48-h48',
       },
       {
+        name: 'Vitalii',
+        date: '7 Apr 2025',
+        text: "Дуже класна пріложуха. Особливо коли працює у зв'язці App в смартфоні та Extension в Хром браузері. Це ніби Комбо фаталіті.",
+        stars: 5,
+        url: 'https://chromewebstore.google.com/reviews/590977f3-5ef5-41fd-8a68-d58a5748766f',
+        image:
+          'https://lh3.googleusercontent.com/a/ACg8ocKbUus4_PNl4ZNbM1XwozKj63f1Qc6MwcRcRsUbt7Iz-05MeQ=s48-w48-h48',
+      },
+      {
         name: 'CAIO VICTOR FERREIRA DO NASCIMENTO',
         date: '13 Sept 2025',
         text: 'Simply the best Chrome extension to learn any language!',
@@ -308,15 +317,6 @@ module.exports = {
         url: 'https://chromewebstore.google.com/reviews/4436916b-ff1f-4688-b2ef-9663b1f4bb38',
         image:
           'https://lh3.googleusercontent.com/a-/ALV-UjXpWWjCh-UoOoZqQ0Gf65RmvSoBBipCNBgN6HqtIiEsjqy9LswK=s48-w48-h48',
-      },
-      {
-        name: 'Vitalii',
-        date: '7 Apr 2025',
-        text: "Дуже класна пріложуха. Особливо коли працює у зв'язці App в смартфоні та Extension в Хром браузері. Це ніби Комбо фаталіті.",
-        stars: 5,
-        url: 'https://chromewebstore.google.com/reviews/590977f3-5ef5-41fd-8a68-d58a5748766f',
-        image:
-          'https://lh3.googleusercontent.com/a/ACg8ocKbUus4_PNl4ZNbM1XwozKj63f1Qc6MwcRcRsUbt7Iz-05MeQ=s48-w48-h48',
       },
       {
         name: 'Марiя Тищенко',
