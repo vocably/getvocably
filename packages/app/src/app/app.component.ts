@@ -5,8 +5,6 @@ import { getPaddleInstance } from '@paddle/paddle-js';
 import * as Sentry from '@sentry/browser';
 import * as PullToRefresh from 'pulltorefreshjs';
 import { distinct, firstValueFrom, map } from 'rxjs';
-import { environment } from '../environments/environment';
-import { setUp, setUserId } from '../piwik';
 import { AuthService } from './auth/auth.service';
 import { RefreshService } from './refresh.service';
 import { RouterParamsService } from './router-params.service';
@@ -33,7 +31,6 @@ export class AppComponent implements OnInit {
       this.disabledRefresher = data['disabledRefresher'] ?? false;
     });
 
-    let isPiwikSet = false;
     this.auth.userData$
       .pipe(
         map((data) => data.email),
@@ -52,15 +49,6 @@ export class AppComponent implements OnInit {
             },
           });
         }
-
-        if (!isPiwikSet) {
-          setUp(environment.piwikId);
-          isPiwikSet = true;
-        }
-
-        setTimeout(() => {
-          setUserId(email);
-        }, 2000);
       });
   }
 

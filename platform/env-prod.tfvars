@@ -14,5 +14,4 @@ chrome_extension_id                              = "baocigmmhhdemijfjnjdidbkfgpg
 alarm_email                               = "prod@vocably.pro"
 sentry_environment                        = "prod"
 endtest_latest_env_suite                  = "non-existing"
-piwik_app_id                              = "0546e67b-2206-4213-8455-5254afd7b683"
-piwik_www_id                              = "92a6897c-8ca1-4fcb-b3d8-75dd35ad9fcd"
+umami_website_id                                  = "8792afdd-a74f-4780-8dde-9b48b3963c44"

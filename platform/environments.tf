@@ -10,7 +10,6 @@ export const environmentLocal = {
   chromeExtensionId: '${var.chrome_extension_id}',
   safariExtensionId: '${var.safari_extension_id}',
   iosSafariExtensionId: '${var.ios_safari_extension_id}',
-  piwikId: '${var.piwik_app_id}',
   sentryEnvironment: '${var.sentry_environment}',
   wwwBaseUrl: '${local.www_base_url}',
   paddleClientSideToken: '${var.paddle_client_side_token}',

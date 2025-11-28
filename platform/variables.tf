@@ -78,11 +78,7 @@ variable "sentry_environment" {
   type = string
 }
 
-variable "piwik_app_id" {
-  type = string
-}
-
-variable "piwik_www_id" {
+variable "umami_website_id" {
   type = string
 }
 
