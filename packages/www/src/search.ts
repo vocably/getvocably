@@ -120,6 +120,9 @@ const createTranslationCards = (
 const loadSearchValues = async (searchValues: SearchValues) => {
   resultsContainer.innerHTML = `<div class="text-center" style="font-size:16px;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
 
+  localStorage.setItem('sourceLanguage', searchValues.sourceLanguage);
+  localStorage.setItem('targetLanguage', searchValues.targetLanguage);
+
   const analyzeResult = await analyze(
     searchValuesToAnalyzePayload(searchValues)
   );

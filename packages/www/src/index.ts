@@ -1,5 +1,6 @@
 import '@sneas/telephone/iphone-16-max';
 import '@sneas/telephone/pixel-9-pro';
+import { isGoogleLanguage } from '@vocably/model';
 import * as Bowser from 'bowser';
 import './bootstrap.scss';
 import './styles.scss';
@@ -144,3 +145,57 @@ if (!browser.satisfies({ safari: '>=0' })) {
     .querySelectorAll('.cta-button')
     .forEach((button) => button.classList.add('cta-button-non-safari'));
 }
+
+// Search form
+
+const getSourceLanguage = () => {
+  return localStorage.getItem('sourceLanguage') ?? 'en';
+};
+
+const getTargetLanguage = () => {
+  const localStorageTargetLanguage = localStorage.getItem('targetLanguage');
+  if (localStorageTargetLanguage) {
+    return localStorageTargetLanguage;
+  }
+
+  const navigatorLanguage = navigator.languages.find((language) =>
+    isGoogleLanguage(language)
+  );
+  if (navigatorLanguage) {
+    return navigatorLanguage;
+  }
+
+  const anotherNavigatorLanguage = navigator.language.split('-')[0];
+  if (isGoogleLanguage(anotherNavigatorLanguage)) {
+    return anotherNavigatorLanguage;
+  }
+
+  return 'en';
+};
+
+document.querySelectorAll('#searchForm').forEach((searchForm) => {
+  const sourceLanguageSelect = searchForm.querySelector(
+    '[name=sourceLanguage]'
+  ) as HTMLSelectElement;
+  const targetLanguageSelect = searchForm.querySelector(
+    '[name=targetLanguage]'
+  ) as HTMLSelectElement;
+
+  sourceLanguageSelect.value = getSourceLanguage();
+  targetLanguageSelect.value = getTargetLanguage();
+
+  searchForm
+    .querySelectorAll('.language-selector-wrapper')
+    .forEach((languageSelectorWrapper) => {
+      const label = languageSelectorWrapper.querySelector('.label');
+      const select = languageSelectorWrapper.querySelector('select');
+
+      const setLabel = () => {
+        label.innerHTML = select.value.slice(0, 2);
+      };
+
+      select.addEventListener('change', setLabel);
+
+      setLabel();
+    });
+});

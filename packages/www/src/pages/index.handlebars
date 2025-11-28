@@ -764,81 +764,142 @@
   </div>
 
   <style>
-    :root {
-      --language-container-color-byte: 255;
-    }
-    .languages-container {
-      background-color: rgb(
-        var(--language-container-color-byte),
-        var(--language-container-color-byte),
-        var(--language-container-color-byte)
-      );
-      color: #333;
+    .search-form {
+      --border-radius: 3rem;
+      --height: 4rem;
 
-      .languages-swiper {
-        --swiper-theme-color: #333;
-        --swiper-navigation-sides-offset: 0px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--bs-gray-500);
+      border-radius: var(--border-radius);
+      height: var(--height);
+      background: #fff;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 1px 12px 0 rgba(0,0,0,0.5);
 
-        &::part(button-next) {
-          background: linear-gradient(
-            to right,
-            rgba(
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              0
-            ) 0,
-            rgba(
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              1
-            ) 50%
-          );
+      &:has(:focus) {
+        box-shadow: 0 1px 12px 0 var(--bs-primary);
+      }
+
+      .language-selector-wrapper {
+        padding: 0 1rem;
+        font-size: 60%;
+        font-weight: bold;
+
+        &:first-child {
+          border-radius: var(--border-radius) 0 0 var(--border-radius);
+          padding-left: 1.5rem;
         }
 
-        &::part(button-prev) {
-          background: linear-gradient(
-            to left,
-            rgba(
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              0
-            ) 0,
-            rgba(
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              var(--language-container-color-byte),
-              1
-            ) 50%
-          );
+        &:has(:focus) {
+          outline: none;
+        }
+
+        &:has(:focus-visible) {
+          outline: auto;
+          outline-color: Highlight;
+          outline-color: -webkit-focus-ring-color;
+        }
+
+        position: relative;
+
+        .label {
+          text-transform: uppercase;
+          width: 2rem;
+          text-align: center;
+          height: var(--height);
+          line-height: var(--height);
+        }
+
+        select {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+        }
+
+        &.delimiter {
+          border-right: 1px solid var(--bs-gray-500);
+          padding-left: 1rem;
+          margin-right: 1rem;
         }
       }
 
-      .language-slide {
-        display: inline-flex;
-        width: fit-content;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        pointer-events: none;
-        font-size: 1rem;
-        line-height: 2.5rem;
+      .text-input {
+        flex: 1;
+        border: none;
+        font-weight: 300;
+        outline: none;
+        background: none;
+        position: relative;
+        top: -1px;
+        min-width: 0;
+      }
+
+      .submit-button {
+        background: none;
+        border: none;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        height: var(--height);
+        line-height: var(--height);
+        padding: 0 1rem;
+        text-align: center;
+        color: inherit;
+
+        &:focus-visible {
+          outline: auto;
+          outline-color: Highlight;
+          outline-color: -webkit-focus-ring-color;
+        }
+      }
+
+      @media (max-width: 600px) {
+        gap: 0.1rem;
+
+        .language-selector-wrapper {
+          padding: 0 0.2rem;
+
+          &.delimiter {
+            padding-left: 0.4rem;
+            margin-right: 0.4rem;
+          }
+
+          &:first-child {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            padding-left: 0.8rem;
+          }
+        }
       }
     }
   </style>
 
-  <div class="languages-container mb-5 px-3 mt-md-5">
-    <div class="container-lg text-center">
-      <swiper-container class="languages-swiper" slides-per-view="auto" space-between="20" navigation="true" slides-offset-before="40" slides-offset-after="40" slides-per-group="2">
-        {{#each htmlWebpackPlugin.options.environment.languages}}
-          <swiper-slide class="language-slide">
-            <img alt="{{ this.name }} flag" class="flag" src="assets/language-flags/{{this.code}}.svg?1" />
-            <span class="language">{{this.name}}</span>
-          </swiper-slide>
-        {{/each}}
-      </swiper-container>
+  <div class="languages-container mb-5 mt-md-5">
+    <div class="container-lg px-4 text-center">
+      <form class="search-form" id="searchForm" action="/search.html">
+        <div class="language-selector-wrapper">
+          <div class="label"></div>
+          <select name="sourceLanguage">
+            {{#each htmlWebpackPlugin.options.environment.languages}}
+              <option value="{{this.code}}">{{this.label}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <i class="bi bi-chevron-compact-right"></i>
+        <div class="language-selector-wrapper delimiter">
+          <div class="label"></div>
+          <select name="targetLanguage">
+            {{#each htmlWebpackPlugin.options.environment.languages}}
+              <option value="{{this.code}}">{{this.label}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <input type="text" class="text-input" name="text" placeholder="Search..." />
+        <input type="hidden" name="isReversed" value="false" />
+        <button type="submit" class="submit-button"><i class="bi bi-search"></i></button>
+      </form>
     </div>
   </div>
 
@@ -865,7 +926,7 @@
     /* Masonry Layout using CSS Columns */
     .wall-grid {
       column-count: 3;
-      column-gap: 20px;
+      column-gap: 0.5rem;
     }
 
     /* Responsive columns */
@@ -881,7 +942,7 @@
       background: #fff;
       border-radius: 8px;
       padding: 20px;
-      margin-bottom: 20px; /* Bottom spacing for flow */
+      margin-bottom: 0.5rem;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       break-inside: avoid; /* Prevents card from splitting across columns */
     }
