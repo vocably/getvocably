@@ -69,7 +69,6 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
           if (error) {
             resolve({
               success: false,
-              errorCode: 'FUCKING_ERROR',
               reason: 'Unable to load sound resource',
             });
             Sentry.captureException(new Error(`Play sound error`), {
@@ -110,7 +109,6 @@ export const PlaySound = forwardRef<PlaySoundRef, Props>(
           } else {
             resolve({
               success: false,
-              errorCode: 'FUCKING_ERROR',
               reason: 'Play sound ended up with error.',
             });
           }

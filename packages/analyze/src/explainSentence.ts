@@ -38,7 +38,6 @@ export const explainGemini = async ({
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );

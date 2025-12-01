@@ -36,7 +36,6 @@ export const detectInputTypeGemini = async ({
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );
@@ -48,7 +47,6 @@ export const detectInputTypeGemini = async ({
   if (!result.value.text) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'No text returned from Gemini',
     };
   }
@@ -62,7 +60,6 @@ export const detectInputTypeGemini = async ({
   if (!isInputAnalysis(jsonResult.value)) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason:
         'Unsupported input type returned from Gemini: ' + result.value.text,
     };

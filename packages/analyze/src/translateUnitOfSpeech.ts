@@ -67,7 +67,6 @@ export const translateUnitOfSpeechGemini = async ({
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );
@@ -84,7 +83,6 @@ export const translateUnitOfSpeechGemini = async ({
   if (!isArray(parseResult.value)) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: `The provided result is not an array`,
       extra: {
         result: result.value.text,
@@ -99,7 +97,6 @@ export const translateUnitOfSpeechGemini = async ({
   if (translations.length === 0) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: `The translations list is empty`,
       extra: {
         result: result.value.text,

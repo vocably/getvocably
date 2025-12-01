@@ -21,7 +21,6 @@ export const getSub = async (email: string): Promise<Result<string>> => {
     if (response.Users.length === 0) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: `Unable to find the user with email '${email}' in the user pool.`,
       };
     }
@@ -33,7 +32,6 @@ export const getSub = async (email: string): Promise<Result<string>> => {
     if (!sub) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: `The sub of the user with email '${email}' does not exist.`,
       };
     }
@@ -45,7 +43,6 @@ export const getSub = async (email: string): Promise<Result<string>> => {
   } catch (err) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: `Exception while getting the sub of '${email}'`,
       extra: err,
     };

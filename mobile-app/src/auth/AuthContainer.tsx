@@ -74,7 +74,6 @@ const getAttributes = async (): Promise<
     if (!flatAttributes || !flatAttributes['sub'] || !flatAttributes['email']) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: 'The flat attributes have no sufficient data',
         extra: flatAttributes,
       };
@@ -90,7 +89,6 @@ const getAttributes = async (): Promise<
   } catch (error) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to get flat attributes.',
       extra: error,
     };
@@ -144,7 +142,6 @@ export const AuthContainer: FC<{
 
   const defineAuthStatus = async () => {
     const currentUserResult = await resultify(getCurrentUser(), {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to get current user.',
     });
 
@@ -162,7 +159,6 @@ export const AuthContainer: FC<{
         forceRefresh: false,
       }),
       {
-        errorCode: 'FUCKING_ERROR',
         reason: 'Unable to fetch auth session.',
       }
     );
@@ -284,7 +280,6 @@ export const AuthContainer: FC<{
           forceRefresh: false,
         }),
         {
-          errorCode: 'FUCKING_ERROR',
           reason: 'Unable to fetch auth session.',
         }
       );

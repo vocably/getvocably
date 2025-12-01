@@ -134,7 +134,6 @@ export const LanguagesContext = createContext<Languages>({
   selectLanguage: () =>
     Promise.resolve({
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'Select language is not defined',
     }),
   syncDecks: () => Promise.resolve(),
@@ -142,32 +141,26 @@ export const LanguagesContext = createContext<Languages>({
   addNewLanguage: () => Promise.resolve({ success: true, value: null }),
   addCard: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Add card is not defined',
   }),
   updateCard: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Update card is not defined',
   }),
   removeCard: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Remove card is not defined',
   }),
   addTag: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Add tag is not defined',
   }),
   updateTag: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Update tag is not defined',
   }),
   removeTag: async () => ({
     success: false,
-    errorCode: 'FUCKING_ERROR',
     reason: 'Remove tag is not defined',
   }),
 });
@@ -206,7 +199,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to store deck while decks are not loaded from the memory yet.',
       };
@@ -363,7 +355,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to add new language while decks are not loaded from the memory yet.',
       };
@@ -373,7 +364,6 @@ export const LanguagesContainer: FC<Props> = ({
       await selectLanguage(language);
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: 'Unable to add new language because it is already added.',
       };
     }
@@ -463,7 +453,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to add card while decks are not loaded from the memory yet.',
       };
@@ -514,7 +503,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to update card while decks are not loaded from the memory yet.',
       };
@@ -547,7 +535,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (!cardItem) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: `Unable to find card with id ${id}`,
       };
     }
@@ -572,7 +559,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to remove card while decks are not loaded from the memory yet.',
       };
@@ -618,7 +604,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to add tag while decks are not loaded from the memory yet.',
       };
@@ -669,7 +654,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to update tag while decks are not loaded from the memory yet.',
       };
@@ -701,7 +685,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (!tagItem) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: `Unable to find tag with id ${id}`,
       };
     }
@@ -726,7 +709,6 @@ export const LanguagesContainer: FC<Props> = ({
     if (decks.status !== 'loaded') {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason:
           'Unable to remove tag while decks are not loaded from the memory yet.',
       };

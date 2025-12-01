@@ -18,7 +18,6 @@ export const chatWithCard = async (
   } catch (e) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'The mnemonic generation request has failed.',
       extra: e,
     };

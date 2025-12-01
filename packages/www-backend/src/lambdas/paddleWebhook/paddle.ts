@@ -10,7 +10,6 @@ export const paddle = new Paddle(process.env.PADDLE_API_KEY, {
 //   customerId: string
 // ): Promise<Result<CustomerPortalSession>> => {
 //   return resultify(paddle.customerPortalSessions.create(customerId, []), {
-//     errorCode: 'FUCKING_ERROR',
-//     reason: 'Exception while creating the portal session',
+////     reason: 'Exception while creating the portal session',
 //   });
 // };

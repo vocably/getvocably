@@ -11,7 +11,6 @@ export const getCurrentUserSub = async (): Promise<Result<string>> => {
   } else {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to get current user',
     };
   }

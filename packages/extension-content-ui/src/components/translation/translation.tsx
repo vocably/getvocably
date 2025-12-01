@@ -151,7 +151,6 @@ export class VocablyTranslation {
       if (!this.result) {
         return {
           success: false,
-          errorCode: 'FUCKING_ERROR',
           reason: 'Result is not set',
         };
       }

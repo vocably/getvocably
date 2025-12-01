@@ -102,7 +102,6 @@ export const useAsync = <T>(
 
         return {
           success: false,
-          errorCode: 'FUCKING_ERROR',
           reason: 'Unable to save the mutation',
           extra: error,
         };

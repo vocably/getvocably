@@ -14,7 +14,6 @@ export const extractPayload = (
     if (!isChatWithCardPayload(payload)) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: 'The chat-with-card payload is not valid.',
         extra: payload,
       };
@@ -27,7 +26,6 @@ export const extractPayload = (
   } catch (e) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to parse payload.',
       extra: e,
     };

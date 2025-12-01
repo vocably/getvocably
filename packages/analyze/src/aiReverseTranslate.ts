@@ -71,7 +71,6 @@ const translateWithGemini = async (
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );
@@ -166,7 +165,6 @@ const sanitizeModelResponse = (data: any): Result<AiTranslationResult> => {
   if (!isArray(translationCandidates)) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: `The provided result is not an array`,
       extra: { data },
     };
@@ -178,7 +176,6 @@ const sanitizeModelResponse = (data: any): Result<AiTranslationResult> => {
   if (translationCandidates.length === 0) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: `There are no valid translation variants`,
       extra: { data },
     };

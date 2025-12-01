@@ -48,7 +48,6 @@ export const getPartsOfSpeechGemini = async ({
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );
@@ -66,7 +65,6 @@ export const getPartsOfSpeechGemini = async ({
   if (analysisItems.length === 0) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'No valid analysis items returned from Gemini',
     };
   }

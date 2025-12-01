@@ -97,7 +97,6 @@ export const translateFromContextGemini = async (
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini translation.',
     }
   );

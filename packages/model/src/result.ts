@@ -2,8 +2,8 @@ import { Errors, VocablyErrorCode } from './errors';
 
 export type Error = {
   success: false;
-  errorCode: VocablyErrorCode;
   reason: string;
+  errorCode?: VocablyErrorCode | string;
   extra?: any;
 };
 
@@ -31,7 +31,7 @@ export const isError = (object: any): object is Error => {
 
 export const resultify = async <T>(
   p: Promise<T>,
-  failureReason: { errorCode: VocablyErrorCode; reason: string }
+  failureReason: { errorCode?: VocablyErrorCode | string; reason: string }
 ): Promise<Result<T>> => {
   try {
     const value = await p;

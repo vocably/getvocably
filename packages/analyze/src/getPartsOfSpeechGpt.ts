@@ -65,7 +65,6 @@ export const getPartsOfSpeechGpt = async ({
   if (!isArray(responseResult.value)) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'The GPT request responded with the malformed response',
     };
   }
@@ -74,7 +73,6 @@ export const getPartsOfSpeechGpt = async ({
   if (analysisItems.length === 0) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'No valid analysis items returned from Gemini',
     };
   }

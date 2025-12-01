@@ -160,7 +160,6 @@ export const getGptAnalyseResult = ({
   if (!isAiAnalyseResult(response)) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'The GPT request responded with the malformed response',
       extra: { response },
     };
@@ -264,7 +263,6 @@ export const geminiAnalyse = async ({
       },
     }),
     {
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to perform Gemini analyse.',
     }
   );
@@ -281,7 +279,6 @@ export const geminiAnalyse = async ({
   if (isAiAnalyseResult(parseResult.value) === false) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'The Gemini request responded with the malformed response',
       extra: parseResult.value,
     };

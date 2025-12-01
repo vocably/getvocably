@@ -20,7 +20,6 @@ export const extractPayload = (
     ) {
       return {
         success: false,
-        errorCode: 'FUCKING_ERROR',
         reason: 'The generate-mnemonic payload is not valid.',
         extra: payload,
       };
@@ -33,7 +32,6 @@ export const extractPayload = (
   } catch (e) {
     return {
       success: false,
-      errorCode: 'FUCKING_ERROR',
       reason: 'Unable to parse payload.',
       extra: e,
     };
