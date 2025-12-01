@@ -126,7 +126,7 @@ export const getGptAnalyseChatGptBody = ({
         ? ` Consider tense of the provided word.`
         : ''
     }`,
-    `examples - list of extremely concise examples`,
+    `examples - list of extremely concise examples. Omit translations`,
     `lemma - lemma or infinitive`,
     `lemmaPos - part of speech of the lemma in English`,
     `synonyms - list of synonyms`,
@@ -248,7 +248,7 @@ export const geminiAnalyse = async ({
               ? ` Consider tense of the provided ${partOfSpeech}.`
               : ''
           }`,
-          `examples - list of extremely concise examples`,
+          `examples - list of extremely concise examples. Omit translations`,
           `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
           `lemmaPos - part of speech of the lemma in English`,
           `synonyms - list of synonyms`,
