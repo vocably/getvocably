@@ -1025,11 +1025,13 @@
         </div>
 
         <div class="mt-4 pt-5 pb-4 w-100 w-md-50 mx-auto">
-          {{> cta }}
+          {{> cta eventPrefix="Reviews " }}
         </div>
 
         <div class="wall-fade-overlay" id="wallOverlay">
-          <button class="btn btn-dark btn-sm rounded-pill px-5 text-sm" id="showMoreBtn">Show more reviews</button>
+          <button class="btn btn-dark btn-sm rounded-pill px-5 text-sm" id="showMoreBtn"
+            data-umami-event='Show more reviews'
+          >Show more reviews</button>
         </div>
       </div>
 

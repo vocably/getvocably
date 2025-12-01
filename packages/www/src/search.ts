@@ -11,6 +11,7 @@ import {
 } from '@vocably/model';
 import { join } from '@vocably/sulna';
 import { isObject } from 'lodash-es';
+import { track } from './analytics';
 import { analyze } from './search/analyze';
 import { playAudioPronunciation } from './search/playAudioPronunciation';
 import translation = google.cloud.translation;
@@ -118,6 +119,8 @@ const createTranslationCards = (
 };
 
 const loadSearchValues = async (searchValues: SearchValues) => {
+  track('Search', searchValues);
+
   resultsContainer.innerHTML = `<div class="text-center" style="font-size:16px;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
 
   localStorage.setItem('sourceLanguage', searchValues.sourceLanguage);
