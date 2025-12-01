@@ -121,7 +121,7 @@ const createTranslationCards = (
 const loadSearchValues = async (searchValues: SearchValues) => {
   track('Search', searchValues);
 
-  resultsContainer.innerHTML = `<div class="text-center" style="font-size:16px;">Generating <vocably-inline-loader></vocably-inline-loader></div>`;
+  resultsContainer.innerHTML = `<vocably-skeleton-loader></vocably-skeleton-loader>`;
 
   localStorage.setItem('sourceLanguage', searchValues.sourceLanguage);
   localStorage.setItem('targetLanguage', searchValues.targetLanguage);

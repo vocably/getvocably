@@ -204,6 +204,8 @@ export namespace Components {
     }
     interface VocablySignIn {
     }
+    interface VocablySkeletonLoader {
+    }
     interface VocablySpinner {
     }
     interface VocablySubscribe {
@@ -736,6 +738,12 @@ declare global {
         prototype: HTMLVocablySignInElement;
         new (): HTMLVocablySignInElement;
     };
+    interface HTMLVocablySkeletonLoaderElement extends Components.VocablySkeletonLoader, HTMLStencilElement {
+    }
+    var HTMLVocablySkeletonLoaderElement: {
+        prototype: HTMLVocablySkeletonLoaderElement;
+        new (): HTMLVocablySkeletonLoaderElement;
+    };
     interface HTMLVocablySpinnerElement extends Components.VocablySpinner, HTMLStencilElement {
     }
     var HTMLVocablySpinnerElement: {
@@ -846,6 +854,7 @@ declare global {
         "vocably-rate": HTMLVocablyRateElement;
         "vocably-search-form": HTMLVocablySearchFormElement;
         "vocably-sign-in": HTMLVocablySignInElement;
+        "vocably-skeleton-loader": HTMLVocablySkeletonLoaderElement;
         "vocably-spinner": HTMLVocablySpinnerElement;
         "vocably-subscribe": HTMLVocablySubscribeElement;
         "vocably-tag-form": HTMLVocablyTagFormElement;
@@ -1058,6 +1067,8 @@ declare namespace LocalJSX {
     interface VocablySignIn {
         "onConfirm"?: (event: VocablySignInCustomEvent<any>) => void;
     }
+    interface VocablySkeletonLoader {
+    }
     interface VocablySpinner {
     }
     interface VocablySubscribe {
@@ -1245,6 +1256,7 @@ declare namespace LocalJSX {
         "vocably-rate": VocablyRate;
         "vocably-search-form": VocablySearchForm;
         "vocably-sign-in": VocablySignIn;
+        "vocably-skeleton-loader": VocablySkeletonLoader;
         "vocably-spinner": VocablySpinner;
         "vocably-subscribe": VocablySubscribe;
         "vocably-tag-form": VocablyTagForm;
@@ -1296,6 +1308,7 @@ declare module "@stencil/core" {
             "vocably-rate": LocalJSX.VocablyRate & JSXBase.HTMLAttributes<HTMLVocablyRateElement>;
             "vocably-search-form": LocalJSX.VocablySearchForm & JSXBase.HTMLAttributes<HTMLVocablySearchFormElement>;
             "vocably-sign-in": LocalJSX.VocablySignIn & JSXBase.HTMLAttributes<HTMLVocablySignInElement>;
+            "vocably-skeleton-loader": LocalJSX.VocablySkeletonLoader & JSXBase.HTMLAttributes<HTMLVocablySkeletonLoaderElement>;
             "vocably-spinner": LocalJSX.VocablySpinner & JSXBase.HTMLAttributes<HTMLVocablySpinnerElement>;
             "vocably-subscribe": LocalJSX.VocablySubscribe & JSXBase.HTMLAttributes<HTMLVocablySubscribeElement>;
             "vocably-tag-form": LocalJSX.VocablyTagForm & JSXBase.HTMLAttributes<HTMLVocablyTagFormElement>;

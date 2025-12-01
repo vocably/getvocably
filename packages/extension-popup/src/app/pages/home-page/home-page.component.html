@@ -40,11 +40,14 @@
       [autoFocus]="true"
       [languagePairs]="languagePairs"
     ></vocably-search-form>
+    <vocably-skeleton-loader
+      *ngIf="isSearching && !searchResult"
+      style="margin-top: 1rem"
+    ></vocably-skeleton-loader>
     <div
-      *ngIf="isSearching"
-      class="text-center"
+      *ngIf="isSearching && searchResult"
+      class="text-center floating-loading"
       style="margin-top: 1rem; font-size: 0.9rem"
-      [class.floating-loading]="searchResult"
     >
       <ion-spinner name="dots"></ion-spinner> Requesting ChatGPT
     </div>
