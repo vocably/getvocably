@@ -149,6 +149,10 @@ if (!browser.satisfies({ safari: '>=0' })) {
 // Search form
 
 const getSourceLanguage = () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('l') && isGoogleLanguage(params.get('l') ?? '')) {
+    return params.get('l');
+  }
   return localStorage.getItem('sourceLanguage') ?? 'en';
 };
 
