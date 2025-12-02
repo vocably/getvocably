@@ -90,3 +90,21 @@ resource "aws_lambda_permission" "public_analyze" {
 
   source_arn = "${aws_apigatewayv2_api.public_api.execution_arn}/*/*"
 }
+
+resource "aws_cloudwatch_event_rule" "public_analyze" {
+  name                = "vocably-${terraform.workspace}-analyze"
+  schedule_expression = "rate(1 minute)"
+}
+
+resource "aws_cloudwatch_event_target" "public_analyze" {
+  arn  = aws_lambda_function.public_analyze.arn
+  rule = aws_cloudwatch_event_rule.public_analyze.name
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_public_analyze_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.public_analyze.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.public_analyze.arn
+}
