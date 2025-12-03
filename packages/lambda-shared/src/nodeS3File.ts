@@ -63,7 +63,7 @@ export const nodePutS3File = async (
   file: string,
   body: string
 ): Promise<Result<null>> => {
-  if (file.includes('//')) {
+  if (file.includes('//') || file.includes('/.')) {
     return {
       success: false,
       errorCode: 'NODE_S3_FILE_INVALID_NAME',
