@@ -63,6 +63,14 @@ export const nodePutS3File = async (
   file: string,
   body: string
 ): Promise<Result<null>> => {
+  if (file.includes('//')) {
+    return {
+      success: false,
+      errorCode: 'NODE_S3_FILE_INVALID_NAME',
+      reason: `File name ${file} contains double slash`,
+    };
+  }
+
   try {
     const command = new PutObjectCommand({
       Bucket: bucket,
