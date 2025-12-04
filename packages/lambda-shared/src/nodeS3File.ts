@@ -71,6 +71,20 @@ export const nodePutS3File = async (
     };
   }
 
+  if (
+    file
+      .split('/')
+      .some(
+        (part) => part.includes('..') || part.length === 0 || part.length > 200
+      )
+  ) {
+    return {
+      success: false,
+      errorCode: 'NODE_S3_FILE_INVALID_NAME',
+      reason: `File name ${file} contains invalid part`,
+    };
+  }
+
   try {
     const command = new PutObjectCommand({
       Bucket: bucket,

@@ -1,6 +1,7 @@
 import '@vocably/jest';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 import {
+  getFileName,
   translateUnitOfSpeechChatGpt,
   translateUnitOfSpeechGemini,
   translateUnitOfSpeechNoCache,
@@ -192,4 +193,30 @@ describe('translateUnitOfSpeech', () => {
       'объявил',
     ]);
   }, 60_000);
+
+  describe('get file name', () => {
+    it('replaces slashes', () => {
+      expect(
+        getFileName({
+          source: 'some/wrong/file/name',
+          sourceLanguage: 'en',
+          partOfSpeech: 'noun/and/something/else',
+          targetLanguage: 'nl',
+        })
+      ).toEqual(
+        'en/translations/some-wrong-file-name/noun-and-something-else/nl.txt'
+      );
+    });
+
+    it('works fine', () => {
+      expect(
+        getFileName({
+          source: 'խնձոր',
+          sourceLanguage: 'hy',
+          partOfSpeech: 'noun',
+          targetLanguage: 'en',
+        })
+      ).toEqual('hy/translations/խնձոր/noun/en.txt');
+    });
+  });
 });

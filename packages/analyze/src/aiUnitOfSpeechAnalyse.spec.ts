@@ -1,5 +1,10 @@
 import '@vocably/jest';
-import { aiAnalyse, geminiAnalyse, gptAnalyse } from './aiUnitOfSpeechAnalyse';
+import {
+  aiAnalyse,
+  geminiAnalyse,
+  getAnalyseCacheFileName,
+  gptAnalyse,
+} from './aiUnitOfSpeechAnalyse';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -198,5 +203,23 @@ describe('unit of speech analyze', () => {
       }
       expect(result.value.gender).toEqual('feminine');
     }, 10_000_000);
+  });
+
+  describe('filename', () => {
+    it('removes slashes', () => {
+      const result = getAnalyseCacheFileName(
+        'en',
+        'some/file/name',
+        'noun/verb'
+      );
+      expect(result).toEqual(
+        'en/units-of-speech/some-file-name/noun-verb.json'
+      );
+    });
+
+    it('woks okay', () => {
+      const result = getAnalyseCacheFileName('hy', 'խնձոր', 'noun');
+      expect(result).toEqual('hy/units-of-speech/խնձոր/noun.json');
+    });
   });
 });

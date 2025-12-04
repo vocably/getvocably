@@ -297,7 +297,11 @@ export const getAnalyseCacheFileName = (
   source: string,
   partOfSpeech: string
 ): string => {
-  return `${sourceLanguage.toLowerCase()}/units-of-speech/${source.toLowerCase()}/${partOfSpeech.toLowerCase()}.json`;
+  return `${sourceLanguage.toLowerCase()}/units-of-speech/${source
+    .toLowerCase()
+    .replace(/\//g, '-')}/${partOfSpeech
+    .toLowerCase()
+    .replace(/\//g, '-')}.json`;
 };
 
 export const aiAnalyse = async (

@@ -178,10 +178,18 @@ export const translateUnitOfSpeechNoCache = async (
   );
 };
 
+export const getFileName = (payload: Payload): string => {
+  return `${payload.sourceLanguage.toLowerCase()}/translations/${payload.source
+    .toLowerCase()
+    .replace(/\//g, '-')}/${payload.partOfSpeech
+    .toLowerCase()
+    .replace(/\//g, '-')}/${payload.targetLanguage.toLowerCase()}.txt`;
+};
+
 export const translateUnitOfSpeech = async (
   payload: Payload
 ): Promise<Result<string[]>> => {
-  const fileName = `${payload.sourceLanguage.toLowerCase()}/translations/${payload.source.toLowerCase()}/${payload.partOfSpeech.toLowerCase()}/${payload.targetLanguage.toLowerCase()}.txt`;
+  const fileName = getFileName(payload);
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName
