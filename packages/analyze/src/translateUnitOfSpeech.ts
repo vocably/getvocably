@@ -16,6 +16,7 @@ import { tokenize } from '@vocably/sulna';
 import { isArray, uniq } from 'lodash-es';
 import { config } from './config';
 import { fallback } from './fallback';
+import { validateSource } from './validateSource';
 
 type Payload = {
   sourceLanguage: ChatGPTLanguage;
@@ -189,6 +190,7 @@ export const getFileName = (payload: Payload): string => {
 export const translateUnitOfSpeech = async (
   payload: Payload
 ): Promise<Result<string[]>> => {
+  const isValidSource = validateSource(payload.source);
   const fileName = getFileName(payload);
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
@@ -210,14 +212,16 @@ export const translateUnitOfSpeech = async (
     return translationResult;
   }
 
-  const putResult = await nodePutS3File(
-    config.unitsOfSpeechBucket,
-    fileName,
-    translationResult.value.join('\n')
-  );
+  if (isValidSource) {
+    const putResult = await nodePutS3File(
+      config.unitsOfSpeechBucket,
+      fileName,
+      translationResult.value.join('\n')
+    );
 
-  if (!putResult.success) {
-    console.error('Failed to put the translation result to S3', putResult);
+    if (!putResult.success) {
+      console.error('Failed to put the translation result to S3', putResult);
+    }
   }
 
   return translationResult;

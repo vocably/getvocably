@@ -22,6 +22,7 @@ import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { sanitizeTranscript } from './sanitizeTranscript';
 import { transformSource } from './transformSource';
+import { validateSource } from './validateSource';
 
 const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   ar: ['masculine', 'feminine'], // Arabic
@@ -308,11 +309,14 @@ export const getAnalyseCacheFileName = (
 export const aiAnalyse = async (
   payload: AiAnalysePayload
 ): Promise<Result<AiAnalyseResult>> => {
+  const isSourceValid = validateSource(payload.source);
   const fileName = getAnalyseCacheFileName(
     payload.sourceLanguage,
     payload.source,
     payload.partOfSpeech
   );
+
+  //@ToDo: don't check for cache when source is not valid
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName
@@ -337,14 +341,16 @@ export const aiAnalyse = async (
     return analyseResult;
   }
 
-  const putResult = await nodePutS3File(
-    config.unitsOfSpeechBucket,
-    fileName,
-    JSON.stringify(analyseResult.value)
-  );
+  if (isSourceValid) {
+    const putResult = await nodePutS3File(
+      config.unitsOfSpeechBucket,
+      fileName,
+      JSON.stringify(analyseResult.value)
+    );
 
-  if (!putResult.success) {
-    console.error('Failed to put GPT analyse the result to S3', putResult);
+    if (!putResult.success) {
+      console.error('Failed to put GPT analyse the result to S3', putResult);
+    }
   }
 
   return analyseResult;
