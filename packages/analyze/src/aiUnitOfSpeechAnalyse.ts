@@ -247,7 +247,7 @@ export const geminiAnalyse = async ({
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
           `source - ${partOfSpeech} provided by user. Capitalize only when appropriate.`,
-          `definitions - list of definitions in ${languageName}.${
+          `definitions - list of definitions of the ${partOfSpeech} "${source}" in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
               : ''
@@ -290,7 +290,10 @@ export const geminiAnalyse = async ({
 
   return {
     success: true,
-    value: parseResult.value,
+    value: {
+      ...parseResult.value,
+      transcript: sanitizeTranscript(parseResult.value.transcript ?? ''),
+    },
   };
 };
 

@@ -103,6 +103,20 @@ describe('unit of speech analyze', () => {
   });
 
   describe('gemini', () => {
+    xit('backwash', async () => {
+      const result = await geminiAnalyse({
+        source: 'backwash',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('backwash');
+    }, 10_000_000);
+
     it('returns successful result', async () => {
       const result = await geminiAnalyse({
         source: 'die Frage',
