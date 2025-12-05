@@ -234,6 +234,8 @@ export const geminiAnalyse = async ({
 
   const transcriptionType = getTranscriptionName(sourceLanguage);
 
+  // ToDo: secure the source before using it in prompt
+
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -241,7 +243,7 @@ export const geminiAnalyse = async ({
       config: {
         systemInstruction: [
           `You are a smart language dictionary.`,
-          `User provides a ${partOfSpeech} in ${languageName} and its part of speech.`,
+          `User provides a ${partOfSpeech} in ${languageName}.`,
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
           `source - ${partOfSpeech} provided by user. Capitalize only when appropriate.`,
@@ -250,7 +252,7 @@ export const geminiAnalyse = async ({
               ? ` Consider tense of the provided ${partOfSpeech}.`
               : ''
           }`,
-          `examples - list of extremely concise examples. Omit translations`,
+          `examples - list of extremely concise examples with "${source}" used as ${partOfSpeech}.`,
           `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
           `lemmaPos - part of speech of the lemma in English`,
           `synonyms - list of synonyms`,
@@ -353,5 +355,11 @@ export const aiAnalyse = async (
     }
   }
 
-  return analyseResult;
+  return {
+    success: true,
+    value: {
+      ...analyseResult.value,
+      transcript: sanitizeTranscript(analyseResult.value.transcript ?? ''),
+    },
+  };
 };
