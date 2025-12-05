@@ -12,6 +12,7 @@ describe('prependTranslation', () => {
     expect(items).toEqual([
       {
         source: 'hello',
+        ipa: '',
         translation: 'привет',
         definitions: [],
         examples: [],
