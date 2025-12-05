@@ -1,4 +1,5 @@
 import { AnalysisItem, Translation } from '@vocably/model';
+import { sanitizeTranscript } from './sanitizeTranscript';
 
 export const translationToAnalysisItem = (
   translation: Translation
@@ -7,7 +8,7 @@ export const translationToAnalysisItem = (
     source: translation.source,
     translation: translation.target,
     partOfSpeech: translation.partOfSpeech,
-    ipa: translation.transcript,
+    ipa: sanitizeTranscript(translation.transcript ?? ''),
     definitions: [],
     examples: [],
   };

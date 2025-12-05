@@ -1,6 +1,7 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
 import { addArticle } from './addArticle';
 import { aiAnalyse } from './aiUnitOfSpeechAnalyse';
+import { sanitizeTranscript } from './sanitizeTranscript';
 import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 export type AnalyseAndTranslatePayload = {
@@ -49,7 +50,7 @@ export const analyseAndTranslate = async (
       definitions: aiAnalyseResult.value.definitions,
       examples: aiAnalyseResult.value.examples,
       partOfSpeech: payload.partOfSpeech,
-      ipa: aiAnalyseResult.value.transcript,
+      ipa: sanitizeTranscript(aiAnalyseResult.value.transcript),
       g: aiAnalyseResult.value.gender,
     },
   };

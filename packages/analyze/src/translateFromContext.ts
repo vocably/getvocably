@@ -14,6 +14,7 @@ import { config } from './config';
 import { InputAnalysis } from './detectInputTypeAi';
 import { fallback } from './fallback';
 import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
+import { sanitizeTranscript } from './sanitizeTranscript';
 
 type Payload = {
   source: string;
@@ -126,7 +127,7 @@ export const translateFromContextGemini = async (
       targetLanguage: payload.targetLanguage,
       target: parseResult.value.target,
       partOfSpeech: mapPartOfSpeech(parseResult.value.partOfSpeech ?? ''),
-      transcript: parseResult.value.transcript ?? '',
+      transcript: sanitizeTranscript(parseResult.value.transcript ?? ''),
       lemma: parseResult.value.lemma,
       lemmaPos: mapPartOfSpeech(parseResult.value.lemmaPos ?? ''),
     },

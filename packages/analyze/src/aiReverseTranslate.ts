@@ -207,7 +207,7 @@ const sanitizeTranslationVariant =
       return {
         ...translationVariant,
         translation: translationVariant.translation.replace(/to /i, ''),
-        transcript: translationVariant.translation.replace(/tu /i, ''),
+        transcript: translationVariant.transcript.replace(/tu /i, ''),
       };
     }
 

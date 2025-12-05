@@ -20,6 +20,7 @@ import { config } from './config';
 import { fallback } from './fallback';
 import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
+import { sanitizeTranscript } from './sanitizeTranscript';
 import { transformSource } from './transformSource';
 
 const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
@@ -181,7 +182,7 @@ export const getGptAnalyseResult = ({
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,
-      transcript: (response.transcript ?? '').replace(/\//gm, ''),
+      transcript: sanitizeTranscript(response.transcript ?? ''),
       ...(genders.includes(response.gender ?? '')
         ? {
             gender: response.gender,

@@ -9,6 +9,7 @@ import { createSrsItem } from '@vocably/srs';
 import { join } from '@vocably/sulna';
 import { existsSync, writeFileSync } from 'node:fs';
 import { buildDirectResult } from './buildDirectResult';
+import { sanitizeTranscript } from './sanitizeTranscript';
 
 const languageWords: Partial<Record<GoogleLanguage, string[]>> = {
   en: [
@@ -566,7 +567,7 @@ const analyzeItemToCardItem = (
   return {
     language,
     source: analyzeItem.source,
-    ipa: analyzeItem.ipa ?? '',
+    ipa: sanitizeTranscript(analyzeItem.ipa ?? ''),
     example: join(analyzeItem.examples ?? []),
     definition: join(analyzeItem.definitions),
     translation: analyzeItem.translation,
