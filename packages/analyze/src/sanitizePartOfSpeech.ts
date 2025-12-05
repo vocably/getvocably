@@ -5,6 +5,10 @@ export const sanitizePartOfSpeech = (rawPartOfSpeech: string): string => {
     return partOfSpeech;
   }
 
+  if (/^verb/.test(partOfSpeech)) {
+    return 'verb';
+  }
+
   if (partOfSpeech.includes(' verb')) {
     return 'verb';
   }

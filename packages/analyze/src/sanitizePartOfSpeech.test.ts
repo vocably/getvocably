@@ -12,4 +12,8 @@ describe('sanitizePartOfSpeech', () => {
   it('substantiv', () => {
     expect(sanitizePartOfSpeech('substantiv')).toEqual('noun');
   });
+
+  it('adverb', () => {
+    expect(sanitizePartOfSpeech('adverb')).toEqual('adverb');
+  });
 });
