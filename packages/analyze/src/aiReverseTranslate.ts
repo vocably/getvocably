@@ -12,8 +12,9 @@ import { isSafeObject } from '@vocably/sulna';
 import { get, isArray } from 'lodash-es';
 import { config } from './config';
 import { fallback } from './fallback';
-import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
+import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
+import { sanitizeTranscript } from './sanitizeTranscript';
 
 type Payload = {
   target: string;
@@ -145,10 +146,10 @@ export const aiReverseTranslate = async (
       sourceLanguage: payload.targetLanguage,
       targetLanguage: payload.sourceLanguage,
       target: translationVariant.translation,
-      partOfSpeech: mapPartOfSpeech(translationVariant.partOfSpeech ?? ''),
-      transcript: translationVariant.transcript,
+      partOfSpeech: sanitizePartOfSpeech(translationVariant.partOfSpeech ?? ''),
+      transcript: sanitizeTranscript(translationVariant.transcript),
       lemma: translationVariant.lemma,
-      lemmaPos: mapPartOfSpeech(translationVariant.lemmaPos ?? ''),
+      lemmaPos: sanitizePartOfSpeech(translationVariant.lemmaPos ?? ''),
     }));
 
   return {

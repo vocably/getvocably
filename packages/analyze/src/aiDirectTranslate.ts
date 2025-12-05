@@ -9,8 +9,9 @@ import {
 import { ChatModel } from 'openai/resources';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
-import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
+import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
+import { sanitizeTranscript } from './sanitizeTranscript';
 
 type Payload = {
   source: string;
@@ -77,10 +78,10 @@ const internalAiDirectTranslate = async (
       target: response.target,
       sourceLanguage: payload.sourceLanguage,
       targetLanguage: payload.targetLanguage,
-      partOfSpeech: mapPartOfSpeech(response.partOfSpeech),
-      transcript: response.transcript,
+      partOfSpeech: sanitizePartOfSpeech(response.partOfSpeech),
+      transcript: sanitizeTranscript(response.transcript ?? ''),
       lemma: response.lemma,
-      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
+      lemmaPos: sanitizePartOfSpeech(response.lemmaPos ?? ''),
     },
   };
 };

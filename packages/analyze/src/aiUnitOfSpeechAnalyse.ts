@@ -18,8 +18,8 @@ import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 import { fallback } from './fallback';
-import { mapPartOfSpeech } from './getPartsOfSpeechGpt';
 import { getTranscriptionName } from './getTranscriptionName';
+import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { sanitizeTranscript } from './sanitizeTranscript';
 import { transformSource } from './transformSource';
 
@@ -178,7 +178,7 @@ export const getGptAnalyseResult = ({
       }),
       number: response.number,
       lemma: response.lemma,
-      lemmaPos: mapPartOfSpeech(response.lemmaPos ?? ''),
+      lemmaPos: sanitizePartOfSpeech(response.lemmaPos ?? ''),
       definitions: response.definitions,
       examples: response.examples,
       synonyms: response.synonyms,

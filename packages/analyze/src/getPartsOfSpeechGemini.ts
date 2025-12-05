@@ -3,12 +3,9 @@ import { createUserContent, GoogleGenAI } from '@google/genai';
 import { parseJson } from '@vocably/api';
 import { languageList, Result, resultify } from '@vocably/model';
 import { config } from './config';
-import {
-  GetPartsOfSpeechPayload,
-  PartOfSpeechGemini,
-} from './getPartsOfSpeech';
+import { GetPartsOfSpeechPayload, PartOfSpeech } from './getPartsOfSpeech';
 
-const isGeminiPartOfSpeech = (v: any): v is PartOfSpeechGemini => {
+const isGeminiPartOfSpeech = (v: any): v is PartOfSpeech => {
   return (
     typeof v['source'] === 'string' &&
     typeof v['partOfSpeech'] === 'string' &&
@@ -20,7 +17,7 @@ const isGeminiPartOfSpeech = (v: any): v is PartOfSpeechGemini => {
 export const getPartsOfSpeechGemini = async ({
   source,
   language,
-}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeechGemini[]>> => {
+}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeech[]>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });

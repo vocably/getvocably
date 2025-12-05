@@ -1,9 +1,9 @@
 import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { languageList, Result } from '@vocably/model';
 import { isArray } from 'lodash-es';
-import { GetPartsOfSpeechPayload, PartOfSpeechGpt } from './getPartsOfSpeech';
+import { GetPartsOfSpeechPayload, PartOfSpeech } from './getPartsOfSpeech';
 
-const isGptPartOfSpeech = (v: any): v is PartOfSpeechGpt => {
+const isGptPartOfSpeech = (v: any): v is PartOfSpeech => {
   return (
     typeof v['source'] === 'string' &&
     typeof v['partOfSpeech'] === 'string' &&
@@ -12,20 +12,10 @@ const isGptPartOfSpeech = (v: any): v is PartOfSpeechGpt => {
   );
 };
 
-export const mapPartOfSpeech = (pos: string): string => {
-  const prepared = pos.trim().replace(/^-/, '').trim().toLowerCase();
-
-  if (/substantiv[^,]*/i.test(prepared)) {
-    return 'noun';
-  }
-
-  return prepared;
-};
-
 export const getPartsOfSpeechGpt = async ({
   source,
   language,
-}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeechGpt[]>> => {
+}: GetPartsOfSpeechPayload): Promise<Result<PartOfSpeech[]>> => {
   const prompt = [
     `You are a smart ${languageList[language]} dictionary`,
     `User provides a word`,
