@@ -807,4 +807,19 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].source).toEqual('comboio');
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
   });
+
+  it('sla rechts af', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+      source: 'sla rechts af',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items[0].source).toEqual('comboio');
+    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+  });
 });

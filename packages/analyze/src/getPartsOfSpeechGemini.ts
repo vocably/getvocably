@@ -28,9 +28,9 @@ export const getPartsOfSpeechGemini = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a smart ${languageList[language]} dictionary`,
+          `You are a ${languageList[language]} dictionary`,
           `User provides a word`,
-          `Provide an array parts of speech for the word`,
+          `Provide an array parts of speech for the word. Avoid splitting the word.`,
           `Each object of array must contain the following fields:`,
           `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
           `- partOfSpeech - the part of speech of the word or phrase in English`,

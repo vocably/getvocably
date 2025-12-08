@@ -125,4 +125,24 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
     expect(responseResult.value[0].source).toEqual('icicle');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
+
+  it('avoid splitting the word', async () => {
+    const responseResult = await getPartsOfSpeechGemini({
+      language: 'nl',
+      source: 'sla rechts af',
+    });
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value.length).toEqual(1);
+
+    expect(responseResult.value[0].source).toEqual('sla rechts af');
+    expect(responseResult.value[0].partOfSpeech).toEqual('verb');
+    expect(responseResult.value[0].lemma).toEqual('afslaan');
+    expect(responseResult.value[0].lemmaPos).toEqual('verb');
+  });
 });

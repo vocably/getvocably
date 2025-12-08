@@ -19,6 +19,7 @@ export const getPartsOfSpeechGpt = async ({
   const prompt = [
     `You are a smart ${languageList[language]} dictionary`,
     `User provides a word`,
+    `Treat the provided word as a single unit of speech. Avoid splitting the word.`,
     `Detect the possible parts of speech of the word and response with an array`,
     `Each element of array is a json object that must contain the following fields:`,
     `- source - the word or phrase in ${languageList[language]} spelling fixed.`,

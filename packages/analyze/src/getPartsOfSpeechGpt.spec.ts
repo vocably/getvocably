@@ -167,4 +167,27 @@ describe('getPartsOfSpeech', () => {
     expect(responseResult.value[0].source).toEqual('icicle');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
+
+  it('avoid splitting the word', async () => {
+    const responseResult = await getPartsOfSpeechGpt({
+      language: 'nl',
+      source: 'sla rechts af',
+    });
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value.length).toEqual(1);
+
+    expect(responseResult.value[0].source).toEqual('sla rechts af');
+    expect(responseResult.value[0].partOfSpeech).toHaveSomeOf([
+      'verb',
+      'verb phrase',
+    ]);
+    expect(responseResult.value[0].lemma).toEqual('afslaan');
+    expect(responseResult.value[0].lemmaPos).toEqual('verb');
+  });
 });
