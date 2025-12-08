@@ -243,7 +243,7 @@ export const geminiAnalyse = async ({
       contents: createUserContent([source]),
       config: {
         systemInstruction: [
-          `You are a smart language dictionary.`,
+          `You are a language dictionary.`,
           `User provides a ${partOfSpeech} in ${languageName}.`,
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
@@ -256,7 +256,7 @@ export const geminiAnalyse = async ({
           `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}.`,
           `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
           `lemmaPos - part of speech of the lemma in English`,
-          `synonyms - list of synonyms`,
+          `synonyms - short list of synonyms`,
           `number - plural or singular English only`,
           genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
         ],
