@@ -147,4 +147,24 @@ describe('getPartsOfSpeech', () => {
     expect(responseResult.value[1].source).toEqual('duck');
     expect(responseResult.value[1].partOfSpeech).toEqual('verb');
   });
+
+  it('omits insane verbs', async () => {
+    const responseResult = await getPartsOfSpeechGpt({
+      language: 'en',
+      source: 'icicle',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value.length).toEqual(1);
+
+    expect(responseResult.value[0].source).toEqual('icicle');
+    expect(responseResult.value[0].partOfSpeech).toEqual('noun');
+  });
 });
