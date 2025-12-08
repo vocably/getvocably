@@ -107,7 +107,7 @@ export const translateUnitOfSpeechGemini = async ({
 
   return {
     success: true,
-    value: translations,
+    value: translations.length > 10 ? translations.slice(0, 5) : translations,
   };
 };
 

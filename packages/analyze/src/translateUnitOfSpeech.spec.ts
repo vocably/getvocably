@@ -247,6 +247,23 @@ describe('translateUnitOfSpeech', () => {
     );
   });
 
+  it('gemini avoids insane tranlations', async () => {
+    const translationResult = await translateUnitOfSpeechGemini({
+      source: 'afslaan',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+      definitions: ['van richting veranderen', 'weigeren', 'niet accepteren'],
+    });
+
+    expect(translationResult.success).toEqual(true);
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(translationResult.value.length).not.toBeGreaterThanOrEqual(10);
+  });
+
   it('chatgpt properly translates duck', async () => {
     const translationResult = await translateUnitOfSpeechChatGpt({
       source: 'duck',
