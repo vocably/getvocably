@@ -116,6 +116,7 @@ export const translateUnitOfSpeechChatGpt = async ({
   targetLanguage,
   source,
   partOfSpeech,
+  definitions = [],
 }: Payload): Promise<Result<string[]>> => {
   const safeSource = tokenize(source).join(' ');
   const safeSourceLanguage = languageList[sourceLanguage];
@@ -133,10 +134,24 @@ export const translateUnitOfSpeechChatGpt = async ({
     messages: [
       {
         role: 'system',
-        content:
-          'You are a smart language assistant. Only respond to questions about vocabulary and translations.',
+        content: [
+          `You are ${safeSourceLanguage}-${safeTargetLanguage} dictionary`,
+          `User provides ${safeSourceLanguage} ${partOfSpeech}${
+            definitions?.length > 0 ? ' and its definitions' : ''
+          }.`,
+          `Give several relevant translations into ${safeTargetLanguage}${
+            definitions?.length > 0 ? ' in the context of definitions' : ''
+          }.`,
+          `Only respond in text format with each translation on a separate line`,
+          partOfSpeech.includes('verb')
+            ? `Consider tense of the provided ${partOfSpeech}`
+            : '',
+          `Omit explanations`,
+          `Sort results by commonality`,
+        ].join('\n'),
       },
-      { role: 'user', content: prompt },
+      { role: 'user', content: source },
+      { role: 'user', content: definitions.join('\n') },
     ],
     model: GPT_4O,
     responseFormat: {
@@ -174,8 +189,8 @@ export const translateUnitOfSpeechChatGpt = async ({
 export const translateUnitOfSpeechNoCache = async (
   payload: Payload
 ): Promise<Result<string[]>> => {
-  return fallback(translateUnitOfSpeechChatGpt(payload), () =>
-    translateUnitOfSpeechGemini(payload)
+  return fallback(translateUnitOfSpeechGemini(payload), () =>
+    translateUnitOfSpeechChatGpt(payload)
   );
 };
 

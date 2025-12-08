@@ -183,6 +183,7 @@ describe('translateUnitOfSpeech', () => {
       sourceLanguage: 'nl',
       targetLanguage: 'ru',
     });
+    expect(translationResult.success).toEqual(true);
     if (!translationResult.success) {
       return;
     }
@@ -218,5 +219,57 @@ describe('translateUnitOfSpeech', () => {
         })
       ).toEqual('hy/translations/խնձոր/noun/en.txt');
     });
+  });
+
+  it('gemeni properly translates duck', async () => {
+    const translationResult = await translateUnitOfSpeechGemini({
+      source: 'duck',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      definitions: [
+        'to lower the head or body quickly to avoid being hit or seen',
+        'to evade or avoid a task, responsibility, or difficult situation',
+      ],
+    });
+
+    expect(translationResult.success).toEqual(true);
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(
+      translationResult.value.some((v) => v.includes('пригибаться'))
+    ).toEqual(true);
+
+    expect(translationResult.value.some((v) => v.includes('утка'))).toEqual(
+      false
+    );
+  });
+
+  it('chatgpt properly translates duck', async () => {
+    const translationResult = await translateUnitOfSpeechChatGpt({
+      source: 'duck',
+      partOfSpeech: 'verb',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      definitions: [
+        'to lower the head or body quickly to avoid being hit or seen',
+        'to evade or avoid a task, responsibility, or difficult situation',
+      ],
+    });
+
+    expect(translationResult.success).toEqual(true);
+    if (!translationResult.success) {
+      return;
+    }
+
+    expect(
+      translationResult.value.some((v) => v.includes('пригнуться'))
+    ).toEqual(true);
+
+    expect(translationResult.value.some((v) => v.includes('утка'))).toEqual(
+      false
+    );
   });
 });
