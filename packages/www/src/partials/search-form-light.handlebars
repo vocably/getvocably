@@ -1,0 +1,24 @@
+<form class='search-form' id='searchForm' action='/search.html'>
+  <div class='language-selector-wrapper'>
+    <div class='label'></div>
+    <select name='sourceLanguage'>
+      {{#each htmlWebpackPlugin.options.environment.languages}}
+        <option value='{{this.code}}'>{{this.label}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <i class='bi bi-chevron-compact-right'></i>
+  <div class='language-selector-wrapper delimiter'>
+    <div class='label'></div>
+    <select name='targetLanguage'>
+      {{#each htmlWebpackPlugin.options.environment.languages}}
+        <option value='{{this.code}}'>{{this.label}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <input type='text' class='text-input' name='text' />
+  <input type='hidden' name='isReversed' value='false' />
+  <button type='submit' class='submit-button'><i
+      class='bi bi-search'
+    ></i></button>
+</form>
