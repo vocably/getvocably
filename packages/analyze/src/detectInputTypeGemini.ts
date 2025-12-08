@@ -24,7 +24,7 @@ export const detectInputTypeGemini = async ({
         systemInstruction: [
           `User provides an input`,
           `Respond with an object`,
-          `- type - ${inputTypes.join(', ')}`,
+          `- type - can be ${inputTypes.join(', ')}`,
           `- isDirect - true if the input is ${languageList[language]}`,
         ],
         thinkingConfig: {
