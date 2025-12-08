@@ -70,6 +70,25 @@ export type AnalysisItem = {
 
 export type ValidAnalysisItems = [AnalysisItem, ...AnalysisItem[]];
 
+export const inputTypes = [
+  'word',
+  'compound word',
+  'phrasal verb',
+  'phrase',
+  'sentence',
+  'idiom',
+  'other',
+] as const;
+
+export type DetectedInputType = typeof inputTypes[number];
+
+export const unitOfSpeechTypes: DetectedInputType[] = [
+  'word',
+  'compound word',
+  'phrasal verb',
+  'idiom',
+];
+
 export type DirectAnalysis = {
   source: string;
   sourceLanguage: GoogleLanguage;
@@ -78,6 +97,9 @@ export type DirectAnalysis = {
   // ToDo: Remove
   translation: Translation;
   items: ValidAnalysisItems;
+  isDirect?: boolean;
+  detectedInputType?: DetectedInputType;
+  aiThinksItIs?: string;
 };
 
 export type ReverseAnalysis = DirectAnalysis & {

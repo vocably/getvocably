@@ -1,11 +1,10 @@
 import { createUserContent, GoogleGenAI } from '@google/genai';
 import { parseJson } from '@vocably/api';
-import { languageList, Result, resultify } from '@vocably/model';
+import { inputTypes, languageList, Result, resultify } from '@vocably/model';
 import { config } from './config';
 import {
   DetectInputTypeAiPayload,
   InputAnalysis,
-  inputTypes,
   isInputAnalysis,
 } from './detectInputTypeAi';
 

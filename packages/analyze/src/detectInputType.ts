@@ -1,9 +1,10 @@
-import { DirectAnalyzePayload, GoogleLanguage, Result } from '@vocably/model';
 import {
-  detectInputTypeAi,
-  InputAnalysis,
+  DirectAnalyzePayload,
+  GoogleLanguage,
+  Result,
   unitOfSpeechTypes,
-} from './detectInputTypeAi';
+} from '@vocably/model';
+import { detectInputTypeAi, InputAnalysis } from './detectInputTypeAi';
 
 export type ContextAnalysisRequest = {
   type: 'context-analysis';

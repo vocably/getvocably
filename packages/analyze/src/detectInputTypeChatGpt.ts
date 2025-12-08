@@ -1,9 +1,8 @@
 import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
-import { languageList, Result } from '@vocably/model';
+import { inputTypes, languageList, Result } from '@vocably/model';
 import {
   DetectInputTypeAiPayload,
   InputAnalysis,
-  inputTypes,
   isInputAnalysis,
 } from './detectInputTypeAi';
 

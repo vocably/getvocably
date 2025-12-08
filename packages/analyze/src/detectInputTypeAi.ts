@@ -1,4 +1,9 @@
-import { ChatGPTLanguage, Result } from '@vocably/model';
+import {
+  ChatGPTLanguage,
+  DetectedInputType,
+  inputTypes,
+  Result,
+} from '@vocably/model';
 import { detectInputTypeChatGpt } from './detectInputTypeChatGpt';
 import { detectInputTypeGemini } from './detectInputTypeGemini';
 import { fallback } from './fallback';
@@ -7,25 +12,6 @@ export type DetectInputTypeAiPayload = {
   source: string;
   language: ChatGPTLanguage;
 };
-
-export const inputTypes = [
-  'word',
-  'compound word',
-  'phrasal verb',
-  'phrase',
-  'sentence',
-  'idiom',
-  'other',
-] as const;
-
-export type DetectedInputType = typeof inputTypes[number];
-
-export const unitOfSpeechTypes: DetectedInputType[] = [
-  'word',
-  'compound word',
-  'phrasal verb',
-  'idiom',
-];
 
 export type InputAnalysis = {
   type: DetectedInputType;
