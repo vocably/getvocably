@@ -100,6 +100,34 @@ type AiAnalysePayload = {
   sourceLanguage: GoogleLanguage;
 };
 
+export const sanitizeAiAnalyseResult = (
+  language: GoogleLanguage,
+  partOfSpeech: string,
+  result: AiAnalyseResult
+): AiAnalyseResult => {
+  const genders = genderLanguages[language] ?? [];
+
+  return {
+    source: transformSource({
+      source: result.source,
+      sourceLanguage: language,
+      partOfSpeech,
+    }),
+    number: result.number,
+    lemma: result.lemma,
+    lemmaPos: sanitizePartOfSpeech(result.lemmaPos ?? ''),
+    definitions: result.definitions,
+    examples: result.examples,
+    synonyms: result.synonyms,
+    transcript: sanitizeTranscript(result.transcript ?? ''),
+    ...(genders.includes(result.gender ?? '')
+      ? {
+          gender: result.gender,
+        }
+      : {}),
+  };
+};
+
 // ChatGPT
 type GptAnalyseChatGptBody = {
   messages: Array<ChatCompletionMessageParam>;
@@ -156,8 +184,6 @@ type GptAnalyseResultPayload = {
 };
 
 export const getGptAnalyseResult = ({
-  sourceLanguage,
-  partOfSpeech,
   response,
 }: GptAnalyseResultPayload): Result<AiAnalyseResult> => {
   if (!isAiAnalyseResult(response)) {
@@ -168,29 +194,9 @@ export const getGptAnalyseResult = ({
     };
   }
 
-  const genders = genderLanguages[sourceLanguage] ?? [];
-
   return {
     success: true,
-    value: {
-      source: transformSource({
-        source: response.source,
-        sourceLanguage,
-        partOfSpeech,
-      }),
-      number: response.number,
-      lemma: response.lemma,
-      lemmaPos: sanitizePartOfSpeech(response.lemmaPos ?? ''),
-      definitions: response.definitions,
-      examples: response.examples,
-      synonyms: response.synonyms,
-      transcript: sanitizeTranscript(response.transcript ?? ''),
-      ...(genders.includes(response.gender ?? '')
-        ? {
-            gender: response.gender,
-          }
-        : {}),
-    },
+    value: response,
   };
 };
 
@@ -291,10 +297,7 @@ export const geminiAnalyse = async ({
 
   return {
     success: true,
-    value: {
-      ...parseResult.value,
-      transcript: sanitizeTranscript(parseResult.value.transcript ?? ''),
-    },
+    value: parseResult.value,
   };
 };
 
@@ -346,11 +349,17 @@ export const aiAnalyse = async (
     return analyseResult;
   }
 
+  const sanitizedAiAnalyzeResult = sanitizeAiAnalyseResult(
+    payload.sourceLanguage,
+    payload.partOfSpeech,
+    analyseResult.value
+  );
+
   if (isSourceValid) {
     const putResult = await nodePutS3File(
       config.unitsOfSpeechBucket,
       fileName,
-      JSON.stringify(analyseResult.value)
+      JSON.stringify(sanitizedAiAnalyzeResult)
     );
 
     if (!putResult.success) {
@@ -360,9 +369,6 @@ export const aiAnalyse = async (
 
   return {
     success: true,
-    value: {
-      ...analyseResult.value,
-      transcript: sanitizeTranscript(analyseResult.value.transcript ?? ''),
-    },
+    value: sanitizedAiAnalyzeResult,
   };
 };
