@@ -336,7 +336,11 @@ export const aiAnalyse = async (
     if (parseResult.success && isAiAnalyseResult(parseResult.value)) {
       return {
         success: true,
-        value: parseResult.value,
+        value: sanitizeAiAnalyseResult(
+          payload.sourceLanguage,
+          payload.partOfSpeech,
+          parseResult.value
+        ),
       };
     }
   }
