@@ -21,6 +21,7 @@ import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { sanitizeTranscript } from './sanitizeTranscript';
+import { secureSource } from './secureSource';
 import { transformSource } from './transformSource';
 import { validateSource } from './validateSource';
 
@@ -234,7 +235,7 @@ export const geminiAnalyse = async ({
 
   const transcriptionType = getTranscriptionName(sourceLanguage);
 
-  // ToDo: secure the source before using it in prompt
+  const securedSource = secureSource(source);
 
   const result = await resultify(
     genAI.models.generateContent({
@@ -247,12 +248,12 @@ export const geminiAnalyse = async ({
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
           `source - ${partOfSpeech} provided by user. Capitalize only when appropriate.`,
-          `definitions - list of definitions of the ${partOfSpeech} "${source}" in ${languageName}.${
+          `definitions - list of definitions of the ${partOfSpeech} "${securedSource}" in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
               : ''
           }`,
-          `examples - list of extremely concise examples with "${source}" used as ${partOfSpeech}.`,
+          `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}.`,
           `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
           `lemmaPos - part of speech of the lemma in English`,
           `synonyms - list of synonyms`,
@@ -321,7 +322,6 @@ export const aiAnalyse = async (
     payload.partOfSpeech
   );
 
-  //@ToDo: don't check for cache when source is not valid
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
     fileName
