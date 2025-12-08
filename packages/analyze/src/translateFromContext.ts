@@ -15,6 +15,7 @@ import { InputAnalysis } from './detectInputTypeAi';
 import { fallback } from './fallback';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { sanitizeTranscript } from './sanitizeTranscript';
+import { secureSource } from './secureSource';
 
 type Payload = {
   source: string;
@@ -64,20 +65,22 @@ export const translateFromContextGemini = async (
   const safeSourceLanguage = languageList[payload.sourceLanguage];
   const safeTargetLanguage = languageList[payload.targetLanguage];
 
+  const safeSource = secureSource(payload.source);
+
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: createUserContent([payload.context, payload.source]),
+      contents: createUserContent([payload.context, safeSource]),
       config: {
         systemInstruction: [
-          `You are a smart language dictionary.`,
+          `You are a language dictionary.`,
           `User provides two inputs:`,
           `The first input is context`,
           `The second input is a ${payload.inputType}`,
           `Only respond in JSON format with an object containing the following properties:`,
-          `- source - ${payload.inputType} translated in ${safeSourceLanguage}`,
-          `- target - ${payload.inputType} in ${safeTargetLanguage}`,
-          `- partOfSpeech - part of speech in English`,
+          `- source - "${safeSource}" translated in ${safeSourceLanguage}`,
+          `- target - "${safeSource}" in ${safeTargetLanguage}`,
+          `- partOfSpeech - part of speech of "${safeSource}" in English`,
           `- lemma - ${safeSourceLanguage} lemma or infinitive`,
           `- lemmaPos - part of speech of the lemma in English`,
           isTranscriptionNeeded

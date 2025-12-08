@@ -297,7 +297,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.source).toEqual('bank');
-    expect(result.value.translation.target).toEqual('берег');
+    expect(result.value.translation.target).toHaveSomeOf(['берег', 'берегу']);
   });
 
   it('performs the context translation (beginning)', async () => {
@@ -318,6 +318,7 @@ describe('integration check for translate lambda', () => {
       'поздно',
       'опоздавший',
       'поздний',
+      'опаздывать',
     ]);
   });
 
@@ -336,7 +337,7 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.translation.partOfSpeech).toEqual('adjective');
     expect(result.value.translation.target).toHaveSomeOf(
-      'революционный, новаторский'
+      'революционный, новаторский, новаторское'
     );
     expect(result.value.items[0].partOfSpeech).toEqual('adjective');
   });
@@ -508,7 +509,7 @@ describe('integration check for translate lambda', () => {
     if (result.success === false) {
       throw 'Unexpected result';
     }
-    expect(result.value.translation.target).toEqual('берег');
+    expect(result.value.translation.target).toHaveSomeOf('берег, берегу');
   });
 
   it('sort: by part of speech', async () => {

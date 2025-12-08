@@ -124,7 +124,7 @@ export const reverseContextAnalysis = async ({
     sourceLanguage,
     targetLanguage,
     inputType,
-    isDirect: true,
+    isDirect: false,
   });
 
   if (contextAnalysisResult.success === false) {
