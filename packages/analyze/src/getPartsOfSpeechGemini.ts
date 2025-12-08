@@ -30,7 +30,7 @@ export const getPartsOfSpeechGemini = async ({
         systemInstruction: [
           `You are a smart ${languageList[language]} dictionary`,
           `User provides a word`,
-          `Provide an array of common parts of speech for the word`,
+          `Provide an array parts of speech for the word`,
           `Each object of array must contain the following fields:`,
           `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
           `- partOfSpeech - the part of speech of the word or phrase in English`,
