@@ -1,5 +1,8 @@
 import '@vocably/jest';
-import { aiReverseTranslate, truncateText } from './aiReverseTranslate';
+import {
+  aiFetchPossibleTranslations,
+  truncateText,
+} from './aiFetchPossibleTranslations';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
 
 configureTestAnalyzer();
@@ -11,10 +14,10 @@ describe('aiReverseTranslate', () => {
   }
 
   it('gets all the Dutch meanings of the word or phrase "cover"', async () => {
-    const result = await aiReverseTranslate({
-      target: 'cover',
-      sourceLanguage: 'nl',
-      targetLanguage: 'en',
+    const result = await aiFetchPossibleTranslations({
+      source: 'cover',
+      targetLanguage: 'nl',
+      sourceLanguage: 'en',
     });
 
     if (result.success !== true) {
@@ -23,7 +26,7 @@ describe('aiReverseTranslate', () => {
     }
 
     const variants =
-      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken, hoes, kaft, hoever, dekking, afdekken';
+      'deksel, cover, bedekking, omslag, bedekken, coveren, dekken, hoes, kaft, hoever, dekking, afdekken, omslaan';
 
     expect(result.value.length).toBeGreaterThanOrEqual(3);
     expect(result.value[0].target).toHaveSomeOf(variants);
@@ -32,10 +35,10 @@ describe('aiReverseTranslate', () => {
   });
 
   it('gets all the Dutch meanings of the word or phrase "phone case"', async () => {
-    const result = await aiReverseTranslate({
-      target: 'phone case',
-      sourceLanguage: 'nl',
-      targetLanguage: 'en',
+    const result = await aiFetchPossibleTranslations({
+      source: 'phone case',
+      targetLanguage: 'nl',
+      sourceLanguage: 'en',
     });
 
     if (result.success !== true) {
@@ -53,10 +56,10 @@ describe('aiReverseTranslate', () => {
   });
 
   it('translates questions', async () => {
-    const result = await aiReverseTranslate({
-      target: 'Всё в силе?',
-      sourceLanguage: 'en',
-      targetLanguage: 'ru',
+    const result = await aiFetchPossibleTranslations({
+      source: 'Всё в силе?',
+      targetLanguage: 'en',
+      sourceLanguage: 'ru',
     });
 
     expect(result.success).toBeTruthy();
@@ -76,10 +79,10 @@ describe('aiReverseTranslate', () => {
   });
 
   it('translates from ukrainian to german', async () => {
-    const result = await aiReverseTranslate({
-      target: 'гостра їжа',
-      sourceLanguage: 'de',
-      targetLanguage: 'uk',
+    const result = await aiFetchPossibleTranslations({
+      source: 'гостра їжа',
+      targetLanguage: 'de',
+      sourceLanguage: 'uk',
     });
 
     if (result.success !== true) {
@@ -110,10 +113,10 @@ describe('aiReverseTranslate', () => {
 
   describe('pinyin', () => {
     it('chinese traditional', async () => {
-      const result = await aiReverseTranslate({
-        target: 'Tuesday',
-        sourceLanguage: 'zh-TW',
-        targetLanguage: 'ru',
+      const result = await aiFetchPossibleTranslations({
+        source: 'Tuesday',
+        targetLanguage: 'zh-TW',
+        sourceLanguage: 'ru',
       });
 
       if (result.success !== true) {
@@ -128,10 +131,10 @@ describe('aiReverseTranslate', () => {
     });
 
     it('chinese simplified', async () => {
-      const result = await aiReverseTranslate({
-        target: 'Tuesday',
-        sourceLanguage: 'zh',
-        targetLanguage: 'ru',
+      const result = await aiFetchPossibleTranslations({
+        source: 'Tuesday',
+        targetLanguage: 'zh',
+        sourceLanguage: 'ru',
       });
 
       if (result.success !== true) {

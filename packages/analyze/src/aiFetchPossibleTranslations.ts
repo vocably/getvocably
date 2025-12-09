@@ -8,16 +8,17 @@ import {
   resultify,
   Translation,
 } from '@vocably/model';
-import { isSafeObject } from '@vocably/sulna';
-import { get, isArray } from 'lodash-es';
+import { isSafeObject, trimArticle } from '@vocably/sulna';
+import { get, isArray, uniqBy } from 'lodash-es';
 import { config } from './config';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { sanitizeTranscript } from './sanitizeTranscript';
+import { secureSource } from './secureSource';
 
 type Payload = {
-  target: string;
+  source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
 };
@@ -44,23 +45,25 @@ const translateWithGemini = async (
     apiKey: config.geminiApiKey,
   });
 
-  const target = truncateText(payload.target, 100);
+  const source = secureSource(payload.source);
 
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: createUserContent(target),
+      contents: createUserContent(source),
       config: {
         systemInstruction: [
           `User provides a word or phrase in ${
+            languageList[payload.sourceLanguage]
+          }.`,
+          `Provide possible translations into ${
             languageList[payload.targetLanguage]
           }.`,
-          `Provide translations into ${languageList[payload.sourceLanguage]}.`,
           `Avoid splitting.`,
           `Response JSON array. Each item:`,
           `- translation - the translation of the word/phrase`,
           `- partOfSpeech - the part of speech of the translation in English`,
-          `- transcript - ${getTranscriptionName(payload.sourceLanguage)}`,
+          `- transcript - ${getTranscriptionName(payload.targetLanguage)}`,
           `- lemma - lemma of translation`,
           `- lemmaPos - part of speech of lemma in English`,
         ],
@@ -75,7 +78,7 @@ const translateWithGemini = async (
     }
   );
 
-  if (!result.success) {
+  if (result.success === false) {
     return result;
   }
 
@@ -91,13 +94,13 @@ const translateWithGemini = async (
 const translateWithChatGpt = async (
   payload: Payload
 ): Promise<Result<AiTranslationResult>> => {
-  const target = truncateText(payload.target, 100);
+  const source = secureSource(payload.source);
   const prompt = [
     `Provide all the possible translations of the ${
       languageList[payload.targetLanguage]
     } word/phrase`,
-    `<input>${target}</input>`,
-    `into ${languageList[payload.sourceLanguage]}.`,
+    `<input>${source}</input>`,
+    `into ${languageList[payload.targetLanguage]}.`,
     `Response in JSON object with translations array. Each item:`,
     `- translation - the translation of the word/phrase`,
     `- partOfSpeech - the part of speech of the translation in English`,
@@ -125,36 +128,6 @@ const translateWithChatGpt = async (
   const translationData = responseResult.value;
 
   return sanitizeModelResponse(translationData);
-};
-
-export const aiReverseTranslate = async (
-  payload: Payload
-): Promise<Result<ValidTranslations>> => {
-  const result = await fallback(translateWithGemini(payload), () =>
-    translateWithChatGpt(payload)
-  );
-
-  if (!result.success) {
-    return result;
-  }
-
-  const translations = result.value
-    .map(sanitizeTranslationVariant(payload))
-    .map((translationVariant) => ({
-      source: payload.target,
-      sourceLanguage: payload.targetLanguage,
-      targetLanguage: payload.sourceLanguage,
-      target: translationVariant.translation,
-      partOfSpeech: sanitizePartOfSpeech(translationVariant.partOfSpeech ?? ''),
-      transcript: sanitizeTranscript(translationVariant.transcript),
-      lemma: translationVariant.lemma,
-      lemmaPos: sanitizePartOfSpeech(translationVariant.lemmaPos ?? ''),
-    }));
-
-  return {
-    success: true,
-    value: [translations[0], ...translations.slice(1)],
-  };
 };
 
 const sanitizeModelResponse = (data: any): Result<AiTranslationResult> => {
@@ -202,7 +175,7 @@ const sanitizeTranslationVariant =
   (payload: Payload) =>
   (translationVariant: AiTranslationVariant): AiTranslationVariant => {
     if (
-      payload.sourceLanguage === 'en' &&
+      payload.targetLanguage === 'en' &&
       translationVariant.partOfSpeech === 'verb'
     ) {
       return {
@@ -214,3 +187,47 @@ const sanitizeTranslationVariant =
 
     return translationVariant;
   };
+
+export const aiFetchPossibleTranslations = async (
+  payload: Payload
+): Promise<Result<ValidTranslations>> => {
+  const result = await fallback(translateWithGemini(payload), () =>
+    translateWithChatGpt(payload)
+  );
+
+  if (result.success === false) {
+    return result;
+  }
+
+  const translations = uniqBy(
+    result.value
+      .map(sanitizeTranslationVariant(payload))
+      .map((translationVariant) => ({
+        source: payload.source,
+        sourceLanguage: payload.sourceLanguage,
+        targetLanguage: payload.targetLanguage,
+        target: translationVariant.translation,
+        partOfSpeech: sanitizePartOfSpeech(
+          translationVariant.partOfSpeech ?? ''
+        ),
+        transcript: sanitizeTranscript(translationVariant.transcript),
+        lemma: translationVariant.lemma,
+        lemmaPos: sanitizePartOfSpeech(translationVariant.lemmaPos ?? ''),
+      }))
+      .map((translationVariant) => {
+        return {
+          ...translationVariant,
+          target: trimArticle(payload.targetLanguage, translationVariant.target)
+            .source,
+        };
+      }),
+    (itemToCompare) => {
+      return itemToCompare.target + itemToCompare.partOfSpeech;
+    }
+  );
+
+  return {
+    success: true,
+    value: [translations[0], ...translations.slice(1)],
+  };
+};

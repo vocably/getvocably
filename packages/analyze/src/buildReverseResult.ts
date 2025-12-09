@@ -11,8 +11,11 @@ import { trimArticle } from '@vocably/sulna';
 import { sentenceAnalysis } from './buildDirectResult/sentenceAnalysis';
 import { unitOfSpeechAnalysis } from './buildDirectResult/unitOfSpeechAnalysis';
 import { detectInputTypeAi, InputAnalysis } from './detectInputTypeAi';
+import {
+  fetchPossibleTranslations,
+  ValidTranslations,
+} from './fetchPossibleTranslations';
 import { PartOfSpeech } from './getPartsOfSpeech';
-import { reverseTranslate, ValidTranslations } from './reverseTranslate';
 
 export const buildReverseResultYes = async (
   payload: ReverseAnalyzePayload,
@@ -117,7 +120,11 @@ export const buildReverseResult = async (
       source: payload.target,
       language: payload.targetLanguage,
     }),
-    reverseTranslate(payload),
+    fetchPossibleTranslations({
+      source: payload.target,
+      sourceLanguage: payload.targetLanguage,
+      targetLanguage: payload.sourceLanguage,
+    }),
   ]);
 
   if (!detectedTypeResult.success) {

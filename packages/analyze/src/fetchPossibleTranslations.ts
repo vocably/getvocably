@@ -1,28 +1,28 @@
 import { GoogleLanguage, Result, Translation } from '@vocably/model';
-import { aiReverseTranslate } from './aiReverseTranslate';
+import { aiFetchPossibleTranslations } from './aiFetchPossibleTranslations';
 import { googleTranslate } from './googleTranslate';
 
 type Payload = {
-  target: string;
+  source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
 };
 
 export type ValidTranslations = [Translation, ...Translation[]];
 
-export const reverseTranslate = async (
+export const fetchPossibleTranslations = async (
   payload: Payload
 ): Promise<Result<ValidTranslations>> => {
-  const aiTranslationResult = await aiReverseTranslate(payload);
+  const aiTranslationResult = await aiFetchPossibleTranslations(payload);
 
-  if (aiTranslationResult.success === true) {
+  if (aiTranslationResult.success) {
     return aiTranslationResult;
   }
 
   const googleResult = await googleTranslate(
-    payload.target,
-    payload.targetLanguage,
-    payload.sourceLanguage
+    payload.source,
+    payload.sourceLanguage,
+    payload.targetLanguage
   );
 
   if (googleResult.success === false) {
