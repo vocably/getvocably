@@ -1,5 +1,7 @@
 import {
+  DetectedInputType,
   DirectAnalysis,
+  GoogleLanguage,
   Result,
   Translation,
   ValidAnalysisItems,
@@ -10,9 +12,17 @@ import {
 } from '../analyseAndTranslate';
 
 import { trimArticle } from '@vocably/sulna';
-import { ContextAnalysisRequest } from '../detectInputType';
 import { translateFromContext } from '../translateFromContext';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
+
+type Payload = {
+  source: string;
+  sourceLanguage: GoogleLanguage;
+  targetLanguage: GoogleLanguage;
+  context: string;
+  inputType: DetectedInputType;
+  isDirect: boolean;
+};
 
 export const directContextAnalysis = async ({
   source: rawSource,
@@ -20,7 +30,7 @@ export const directContextAnalysis = async ({
   targetLanguage,
   context,
   inputType,
-}: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+}: Payload): Promise<Result<DirectAnalysis>> => {
   const source =
     inputType === 'word'
       ? trimArticle(sourceLanguage, rawSource).source
@@ -115,7 +125,7 @@ export const reverseContextAnalysis = async ({
   targetLanguage,
   context,
   inputType,
-}: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+}: Payload): Promise<Result<DirectAnalysis>> => {
   const source = rawSource.trim();
 
   const contextAnalysisResult = await translateFromContext({
@@ -208,10 +218,9 @@ export const contextAnalysis = async ({
   context,
   isDirect,
   inputType,
-}: ContextAnalysisRequest): Promise<Result<DirectAnalysis>> => {
+}: Payload): Promise<Result<DirectAnalysis>> => {
   if (isDirect) {
     return directContextAnalysis({
-      type: 'context-analysis',
       source,
       sourceLanguage,
       targetLanguage,
@@ -221,7 +230,6 @@ export const contextAnalysis = async ({
     });
   } else {
     return reverseContextAnalysis({
-      type: 'context-analysis',
       source,
       sourceLanguage,
       targetLanguage,

@@ -8,7 +8,7 @@ type Payload = {
   targetLanguage: GoogleLanguage;
 };
 
-type ValidTranslations = [Translation, ...Translation[]];
+export type ValidTranslations = [Translation, ...Translation[]];
 
 export const reverseTranslate = async (
   payload: Payload

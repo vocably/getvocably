@@ -55,9 +55,7 @@ const translateWithGemini = async (
           `User provides a word or phrase in ${
             languageList[payload.targetLanguage]
           }.`,
-          `Provide all the possible translations into ${
-            languageList[payload.sourceLanguage]
-          }.`,
+          `Provide translations into ${languageList[payload.sourceLanguage]}.`,
           `Avoid splitting.`,
           `Response JSON array. Each item:`,
           `- translation - the translation of the word/phrase`,
@@ -172,10 +170,11 @@ const sanitizeModelResponse = (data: any): Result<AiTranslationResult> => {
     };
   }
 
-  const translationVariants =
-    translationCandidates.filter(isTranslationVariant);
+  const translationVariants = translationCandidates
+    .filter(isTranslationVariant)
+    .slice(0, 6);
 
-  if (translationCandidates.length === 0) {
+  if (translationVariants.length === 0) {
     return {
       success: false,
       reason: `There are no valid translation variants`,

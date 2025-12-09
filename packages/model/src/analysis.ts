@@ -1,6 +1,4 @@
-import { google } from '@google-cloud/translate/build/protos/protos';
 import { GoogleLanguage } from './language';
-import translation = google.cloud.translation;
 
 export type Translation = {
   source: string;
@@ -32,14 +30,9 @@ export const isAiTranslation = (
 
 export type DirectAnalyzePayload = {
   source: string;
-  target?: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
-  partOfSpeech?: string;
-  transcript?: string;
   context?: string;
-  lemma?: string;
-  lemmaPos?: string;
 };
 
 export type ReverseAnalyzePayload = {
@@ -77,7 +70,6 @@ export const inputTypes = [
   'phrase',
   'sentence',
   'idiom',
-  'other',
 ] as const;
 
 export type DetectedInputType = typeof inputTypes[number];
@@ -93,6 +85,7 @@ export type DirectAnalysis = {
   source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
+  // ToDo: Remove
   explanation?: string;
   // ToDo: Remove
   translation: Translation;
@@ -104,11 +97,10 @@ export type DirectAnalysis = {
 
 export type ReverseAnalysis = DirectAnalysis & {
   target: string;
-  reverseTranslations: Translation[];
 };
 
 export type Analysis = DirectAnalysis | ReverseAnalysis;
 
 export const isReverseAnalysis = (o: any): o is ReverseAnalysis => {
-  return !(!o || !o.target || !o.reverseTranslations);
+  return !(!o || !o.target);
 };

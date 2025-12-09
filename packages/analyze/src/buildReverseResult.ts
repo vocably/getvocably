@@ -1,79 +1,138 @@
 import {
   AnalysisItem,
-  DirectAnalysis,
+  isSuccess,
   Result,
   ReverseAnalysis,
   ReverseAnalyzePayload,
-  Translation,
+  unitOfSpeechTypes,
   ValidAnalysisItems,
 } from '@vocably/model';
 import { trimArticle } from '@vocably/sulna';
-import { buildDirectResult } from './buildDirectResult';
-import { makeUniqueItems } from './makeUniqueItems';
-import { reverseTranslate } from './reverseTranslate';
-import { sortByTarget } from './sortByTarget';
+import { sentenceAnalysis } from './buildDirectResult/sentenceAnalysis';
+import { unitOfSpeechAnalysis } from './buildDirectResult/unitOfSpeechAnalysis';
+import { detectInputTypeAi, InputAnalysis } from './detectInputTypeAi';
+import { PartOfSpeech } from './getPartsOfSpeech';
+import { reverseTranslate, ValidTranslations } from './reverseTranslate';
 
-type TranslationDirectResult = {
-  translation: Translation;
-  directTranslationResult: Result<DirectAnalysis>;
+export const buildReverseResultYes = async (
+  payload: ReverseAnalyzePayload,
+  inputAnalysis: InputAnalysis,
+  reverseTranslations: ValidTranslations
+): Promise<Result<ReverseAnalysis>> => {
+  const directResults = await Promise.all(
+    reverseTranslations.map((reverseTranslation) => {
+      let predefinedPartsOfSpeech: PartOfSpeech[] = [];
+
+      if (
+        reverseTranslation.target &&
+        reverseTranslation.partOfSpeech &&
+        reverseTranslation.lemma &&
+        reverseTranslation.lemmaPos
+      ) {
+        predefinedPartsOfSpeech.push({
+          source: reverseTranslation.target,
+          lemma: reverseTranslation.lemma,
+          lemmaPos: reverseTranslation.lemmaPos,
+          partOfSpeech: reverseTranslation.partOfSpeech,
+        });
+      }
+
+      if (unitOfSpeechTypes.includes(inputAnalysis.type)) {
+        return unitOfSpeechAnalysis({
+          source: reverseTranslation.target,
+          sourceLanguage: payload.sourceLanguage,
+          targetLanguage: payload.targetLanguage,
+          predefinedPartsOfSpeech,
+        });
+      }
+
+      return sentenceAnalysis({
+        source: reverseTranslation.target,
+        sourceLanguage: payload.sourceLanguage,
+        targetLanguage: payload.targetLanguage,
+        inputType: inputAnalysis.type,
+        translation: {
+          source: reverseTranslation.target,
+          target: reverseTranslation.source,
+          transcript: reverseTranslation.transcript,
+          sourceLanguage: payload.sourceLanguage,
+          targetLanguage: payload.targetLanguage,
+        },
+      });
+    })
+  );
+
+  const directAnalysisResults = directResults
+    .filter(isSuccess)
+    .map((result) => result.value);
+
+  if (directAnalysisResults.length === 0) {
+    return {
+      success: false,
+      reason: 'No valid analysis items returned from direct analysis',
+    };
+  }
+
+  const initialResult = directAnalysisResults.at(0);
+
+  if (initialResult === undefined) {
+    return {
+      success: false,
+      reason: 'No valid analysis items returned from direct analysis',
+    };
+  }
+
+  const theRest = directAnalysisResults.slice(1);
+
+  const initialItems = initialResult.items;
+  const restOfTheItems = theRest.flatMap((result) => result.items);
+
+  const items = restOfTheItems.reduce<ValidAnalysisItems>((acc, item) => {
+    return mergeItems(payload.sourceLanguage, item, acc);
+  }, initialItems);
+
+  return {
+    success: true,
+    value: {
+      source: reverseTranslations[0].target,
+      target: payload.target,
+      sourceLanguage: payload.sourceLanguage,
+      targetLanguage: payload.targetLanguage,
+      translation: {
+        source: reverseTranslations[0].target,
+        target: payload.target,
+        sourceLanguage: payload.sourceLanguage,
+        targetLanguage: payload.targetLanguage,
+      },
+      items,
+    },
+  };
 };
 
 export const buildReverseResult = async (
   payload: ReverseAnalyzePayload
 ): Promise<Result<ReverseAnalysis>> => {
-  const translationResults = await reverseTranslate(payload);
+  const [detectedTypeResult, translationResults] = await Promise.all([
+    detectInputTypeAi({
+      source: payload.target,
+      language: payload.targetLanguage,
+    }),
+    reverseTranslate(payload),
+  ]);
 
-  if (translationResults.success === false) {
+  if (!detectedTypeResult.success) {
+    return detectedTypeResult;
+  }
+
+  if (!translationResults.success) {
     return translationResults;
   }
 
-  const directResults = await Promise.all(
-    translationResults.value.map(
-      async (translation): Promise<TranslationDirectResult> => {
-        return {
-          translation,
-          directTranslationResult: await buildDirectResult({
-            payload: {
-              source: translation.target,
-              target: translation.source,
-              sourceLanguage: payload.sourceLanguage,
-              targetLanguage: payload.targetLanguage,
-              partOfSpeech: translation.partOfSpeech,
-              transcript: translation.transcript,
-              lemma: translation.lemma,
-              lemmaPos: translation.lemmaPos,
-            },
-          }),
-        };
-      }
-    )
+  return buildReverseResultYes(
+    payload,
+    detectedTypeResult.value,
+    translationResults.value
   );
-
-  const translationItems = builtTranslationItems([
-    directResults[0],
-    ...directResults.slice(1),
-  ]);
-
-  return {
-    success: true,
-    value: {
-      target: payload.target,
-      source: directResults[0].translation.target,
-      sourceLanguage: payload.sourceLanguage,
-      targetLanguage: payload.targetLanguage,
-      translation: {
-        source: directResults[0].translation.target,
-        sourceLanguage: payload.sourceLanguage,
-        target: payload.target,
-        targetLanguage: payload.targetLanguage,
-        partOfSpeech: directResults[0].translation.partOfSpeech,
-      },
-      reverseTranslations: translationResults.value,
-      items: makeUniqueItems(translationItems).sort(
-        sortByTarget(payload.target)
-      ),
-    },
-  };
 };
 
 const mergeItems = (
@@ -89,38 +148,8 @@ const mergeItems = (
   );
 
   if (itemThatIsMatchedWithTheCandidate === undefined) {
-    return [candidate, ...items];
+    return [...items, candidate];
   }
 
   return [items[0], ...items.slice(1)];
-};
-
-const builtTranslationItems = (
-  translationDirectResults: [
-    TranslationDirectResult,
-    ...TranslationDirectResult[]
-  ]
-): ValidAnalysisItems => {
-  const results = translationDirectResults.flatMap((result): AnalysisItem[] => {
-    const itemCandidate: AnalysisItem = {
-      source: result.translation.target,
-      translation: result.translation.source,
-      partOfSpeech: result.translation.partOfSpeech,
-      definitions: [],
-    };
-
-    const language = result.translation.targetLanguage;
-
-    if (result.directTranslationResult.success) {
-      return mergeItems(
-        language,
-        itemCandidate,
-        result.directTranslationResult.value.items
-      );
-    }
-
-    return [itemCandidate];
-  });
-
-  return [results[0], ...results.slice(1)];
 };

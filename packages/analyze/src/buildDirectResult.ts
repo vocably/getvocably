@@ -1,9 +1,15 @@
-import { DirectAnalysis, DirectAnalyzePayload, Result } from '@vocably/model';
+import {
+  DirectAnalysis,
+  DirectAnalyzePayload,
+  Result,
+  unitOfSpeechTypes,
+} from '@vocably/model';
+import { isString } from 'lodash-es';
 import { contextAnalysis } from './buildDirectResult/contextAnalysis';
 import { reverseAnalysis } from './buildDirectResult/reverseAnalysis';
 import { sentenceAnalysis } from './buildDirectResult/sentenceAnalysis';
 import { unitOfSpeechAnalysis } from './buildDirectResult/unitOfSpeechAnalysis';
-import { detectInputType } from './detectInputType';
+import { detectInputTypeAi } from './detectInputTypeAi';
 import { sanitizePayload } from './sanitizePayload';
 
 type Options = {
@@ -15,26 +21,46 @@ export const buildDirectResult = async ({
 }: Options): Promise<Result<DirectAnalysis>> => {
   const payload = sanitizePayload(rawPayload);
 
-  const detectedAnalysisTypeResult = await detectInputType(payload);
+  const detectedTypeResult = await detectInputTypeAi({
+    language: payload.sourceLanguage,
+    source: payload.source,
+  });
 
-  if (detectedAnalysisTypeResult.success === false) {
-    return detectedAnalysisTypeResult;
+  if (!detectedTypeResult.success) {
+    return detectedTypeResult;
   }
 
-  if (detectedAnalysisTypeResult.value.type === 'reverse-translate') {
-    return reverseAnalysis(detectedAnalysisTypeResult.value);
+  if (
+    isString(payload.context) &&
+    payload.context.length > payload.source.length
+  ) {
+    return contextAnalysis({
+      source: payload.source,
+      context: payload.context,
+      sourceLanguage: payload.sourceLanguage,
+      targetLanguage: payload.targetLanguage,
+      isDirect: detectedTypeResult.value.isDirect,
+      inputType: detectedTypeResult.value.type,
+    });
   }
 
-  if (detectedAnalysisTypeResult.value.type === 'context-analysis') {
-    return contextAnalysis(detectedAnalysisTypeResult.value);
+  if (detectedTypeResult.value.isDirect === false) {
+    return reverseAnalysis({
+      payload: {
+        target: payload.source,
+        sourceLanguage: payload.sourceLanguage,
+        targetLanguage: payload.targetLanguage,
+      },
+      inputAnalysis: detectedTypeResult.value,
+    });
   }
 
-  if (detectedAnalysisTypeResult.value.type === 'sentence-analysis') {
-    return sentenceAnalysis(detectedAnalysisTypeResult.value);
+  if (unitOfSpeechTypes.includes(detectedTypeResult.value.type)) {
+    return unitOfSpeechAnalysis(payload);
   }
 
-  return unitOfSpeechAnalysis({
-    ...detectedAnalysisTypeResult.value,
-    type: 'unit-of-speech-analysis',
+  return sentenceAnalysis({
+    ...payload,
+    inputType: detectedTypeResult.value.type,
   });
 };

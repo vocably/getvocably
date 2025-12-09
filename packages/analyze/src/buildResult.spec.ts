@@ -108,8 +108,12 @@ describe('integration check for translate lambda', () => {
     expect(result.value.translation).toBeDefined();
     expect(result.value.translation.target).toEqual('five days');
     expect(result.value.items[0].source).toEqual('vijf dagen');
-    expect(result.value.items[0].translation).toHaveSomeOf('five days, 5 days');
-    expect(result.value.items[0].partOfSpeech).toHaveSomeOf('phrase');
+    expect(result.value.items[0].translation).toHaveSomeOf(
+      'five days, 5 days, workweek, five-day period, five-day week'
+    );
+    expect(result.value.items[0].partOfSpeech).toHaveSomeOf(
+      'noun phrase, phrase, noun'
+    );
   });
 
   it('performs reverse analyze', async () => {
@@ -132,7 +136,6 @@ describe('integration check for translate lambda', () => {
     expect(result.value.target).toEqual('правило');
     expect(result.value.source).toEqual('regel');
     expect(result.value.translation).toBeDefined();
-    expect(result.value.reverseTranslations).toBeDefined();
     expect(result.value.items[0].source).toEqual('de regel');
     expect(result.value.items[0].translation).toHaveSomeOf(
       'строка, норма, правило, условие, линия, строка, регламент'
@@ -187,7 +190,7 @@ describe('integration check for translate lambda', () => {
       'трюк, прием, приём, уловка, фокус, хитрость'
     );
     expect(result.value.items[1].translation).toHaveSomeOf(
-      'обманывать, одурачить, провести, перехитрить, обмануть'
+      'обманывать, одурачить, провести, перехитрить, обмануть, хитрить, надувать, проделывать, обмануть, проделать'
     );
   });
 
@@ -406,7 +409,9 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].translation).toEqual('портной, швея');
+    expect(result.value.items[0].translation).toEqual(
+      'портной, закройщик, швея'
+    );
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
     expect(result.value.items[1].translation).toContain('шить, подгонять');
@@ -425,7 +430,9 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].translation).toEqual('кравець, швець');
+    expect(result.value.items[0].translation).toEqual(
+      'кравець, кравчиня, швець'
+    );
 
     expect(result.value.items[1].partOfSpeech).toEqual('verb');
     expect(result.value.items[1].translation).toHaveSomeOf(
@@ -819,8 +826,8 @@ describe('integration check for translate lambda', () => {
       throw 'Unexpected result';
     }
 
-    expect(result.value.items[0].source).toEqual('comboio');
-    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+    expect(result.value.items[0].source).toEqual('sla rechts af');
+    expect(result.value.items[0].partOfSpeech).toEqual('verb');
   });
 
   it('single unit of speech', async () => {
@@ -842,5 +849,19 @@ describe('integration check for translate lambda', () => {
     expect(
       result.value.items[1].source.split(' ').length
     ).toBeGreaterThanOrEqual(4);
+  });
+
+  it('великолепно', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      source: 'великолепно',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items.length).toEqual(4);
   });
 });

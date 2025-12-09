@@ -1,41 +1,49 @@
-import { DirectAnalysis, Result, Translation } from '@vocably/model';
+import {
+  DetectedInputType,
+  DirectAnalysis,
+  GoogleLanguage,
+  Result,
+  Translation,
+} from '@vocably/model';
 
-import { SentenceAnalysisRequest } from '../detectInputType';
 import { googleTranslate } from '../googleTranslate';
 import { translationToAnalysisItem } from '../translationToAnalyzeItem';
+
+type Payload = {
+  source: string;
+  sourceLanguage: GoogleLanguage;
+  targetLanguage: GoogleLanguage;
+  inputType: DetectedInputType;
+  translation?: Translation;
+};
 
 export const sentenceAnalysis = async ({
   source,
   sourceLanguage,
   targetLanguage,
   inputType,
-  isDirect,
-}: SentenceAnalysisRequest): Promise<Result<DirectAnalysis>> => {
-  const [
-    translationIntoSourceLanguageResult,
-    translationIntoTargetLanguageResult,
-  ] = await Promise.all([
-    googleTranslate(source, null, sourceLanguage),
-    googleTranslate(source, null, targetLanguage),
-  ]);
+  translation: preTranslatedTranslation,
+}: Payload): Promise<Result<DirectAnalysis>> => {
+  let translation: Translation | undefined = preTranslatedTranslation;
 
-  if (translationIntoSourceLanguageResult.success === false) {
-    return translationIntoSourceLanguageResult;
+  if (!translation) {
+    const translationIntoTargetLanguageResult = await googleTranslate(
+      source,
+      null,
+      targetLanguage
+    );
+
+    if (translationIntoTargetLanguageResult.success === false) {
+      return translationIntoTargetLanguageResult;
+    }
+
+    translation = {
+      source: source,
+      target: translationIntoTargetLanguageResult.value.target,
+      sourceLanguage: sourceLanguage,
+      targetLanguage: targetLanguage,
+    };
   }
-
-  if (translationIntoTargetLanguageResult.success === false) {
-    return translationIntoTargetLanguageResult;
-  }
-
-  const translation: Translation = {
-    source: source,
-    target: isDirect
-      ? translationIntoTargetLanguageResult.value.target
-      : translationIntoSourceLanguageResult.value.target,
-    sourceLanguage: sourceLanguage,
-    targetLanguage: targetLanguage,
-    isDirect,
-  };
 
   return {
     success: true,
@@ -47,12 +55,11 @@ export const sentenceAnalysis = async ({
       items: [
         {
           ...translationToAnalysisItem({
-            source: isDirect
-              ? source
-              : translationIntoSourceLanguageResult.value.target,
-            target: translationIntoTargetLanguageResult.value.target,
+            source,
+            target: translation.target,
             sourceLanguage: sourceLanguage,
             targetLanguage: targetLanguage,
+            transcript: translation.transcript,
           }),
           partOfSpeech: inputType,
         },

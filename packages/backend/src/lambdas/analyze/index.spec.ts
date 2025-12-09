@@ -161,7 +161,6 @@ describe('integration check for translate lambda', () => {
     expect(resultBody.target).toEqual('правило');
     expect(resultBody.source).toEqual('regel');
     expect(resultBody.translation).toBeDefined();
-    expect(resultBody.reverseTranslations).toBeDefined();
     expect(resultBody.items[0].source).toEqual('de regel');
     expect(resultBody.items[0].translation).toHaveSomeOf(
       'строка, правило, норма, условие, линия'
