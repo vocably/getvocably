@@ -58,6 +58,7 @@ const translateWithGemini = async (
           `Provide all the possible translations into ${
             languageList[payload.sourceLanguage]
           }.`,
+          `Avoid splitting.`,
           `Response JSON array. Each item:`,
           `- translation - the translation of the word/phrase`,
           `- partOfSpeech - the part of speech of the translation in English`,

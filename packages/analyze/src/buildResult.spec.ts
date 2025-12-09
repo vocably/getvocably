@@ -822,4 +822,25 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].source).toEqual('comboio');
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
   });
+
+  it('single unit of speech', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'pt',
+      targetLanguage: 'ru',
+      target: 'португальцы глупые и ленивые',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items.length).toEqual(2);
+
+    expect(
+      result.value.items[0].source.split(' ').length
+    ).toBeGreaterThanOrEqual(4);
+    expect(
+      result.value.items[1].source.split(' ').length
+    ).toBeGreaterThanOrEqual(4);
+  });
 });
