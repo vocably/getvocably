@@ -6,6 +6,8 @@ export const languageToGoogleTranslateLanguage = (
   switch (language) {
     case 'pt':
       return 'pt-BR';
+    case 'hyw':
+      return 'hy';
     default:
       return language;
   }

@@ -10,6 +10,7 @@ export const GoogleTTSLanguages = [
   'nl',
   'no',
   'en',
+  'en-GB',
   'fi',
   'fr',
   'gl',
