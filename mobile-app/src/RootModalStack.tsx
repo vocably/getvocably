@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
+import { Button, IconButton, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChatWithCardModal } from './ChatWithCard/ChatWithCardModal';
 import { EditCardScreen } from './EditCardScreen';
@@ -48,7 +48,31 @@ export const RootModalStack = () => {
           }}
         />
         <Stack.Screen name="Study" component={StudyScreen} />
-        <Stack.Screen name="EditCardModal" component={EditCardScreen} />
+        <Stack.Screen
+          name="EditCardModal"
+          component={EditCardScreen}
+          options={{
+            headerShown: true,
+            headerTitle: 'Edit card',
+            headerStyle: {
+              minHeight: 48,
+            },
+            headerTitleStyle: {
+              fontSize: 22,
+              color: theme.colors.onBackground,
+            },
+            headerTitleAlign: 'left',
+            headerLeft: () => (
+              <IconButton
+                icon={'close'}
+                onPress={() => navigation.goBack()}
+                style={{
+                  marginLeft: 8,
+                }}
+              />
+            ),
+          }}
+        />
         <Stack.Screen name="ChatWithCardModal" component={ChatWithCardModal} />
         <Stack.Screen
           name="PaymentSuccessModal"

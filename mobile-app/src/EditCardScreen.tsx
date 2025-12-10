@@ -3,9 +3,15 @@ import { NavigationProp, Route } from '@react-navigation/native';
 import { CardItem, TagItem } from '@vocably/model';
 import { createSrsItem } from '@vocably/srs';
 import { isNew } from '@vocably/srs/dist/esm/isNew';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { Alert, View } from 'react-native';
-import { Appbar, Button, Chip, Text, useTheme } from 'react-native-paper';
+import { Button, Chip, Text, useTheme } from 'react-native-paper';
 import { CardForm } from './CardForm';
 import { useLanguageDeck } from './languageDeck/useLanguageDeck';
 import { Loader } from './loaders/Loader';
@@ -53,6 +59,22 @@ export const EditCardScreen: FC<Props> = ({ route, navigation }) => {
     }
     navigation.goBack();
   }, [cardData, deck.update, card]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          loading={isUpdating}
+          disabled={isUpdating}
+          onPress={onUpdate}
+          style={{ marginRight: 8 }}
+          labelStyle={{ fontSize: 16 }}
+        >
+          Save
+        </Button>
+      ),
+    });
+  }, [navigation, isUpdating, onUpdate]);
 
   const onTagsChange = async (tags: TagItem[]) => {
     cardData.tags = tags;
@@ -140,127 +162,110 @@ export const EditCardScreen: FC<Props> = ({ route, navigation }) => {
   };
 
   return (
-    <>
-      <Appbar.Header statusBarHeight={0} elevated={true}>
-        <Appbar.Action
-          icon={'close'}
-          size={24}
-          onPress={() => navigation.goBack()}
-          style={{ backgroundColor: 'transparent' }}
-        />
-        <Appbar.Content
-          style={{ alignItems: 'flex-start' }}
-          title="Edit card"
-        />
-        <Button loading={isUpdating} disabled={isUpdating} onPress={onUpdate}>
-          Save
-        </Button>
-      </Appbar.Header>
-      <CustomScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View style={{ gap: 16 }}>
-          <View
-            style={{
-              alignItems: 'flex-start',
-            }}
-          >
-            <TagsSelector
-              value={cardData.tags}
-              onChange={onTagsChange}
-              deck={deck}
-              renderAnchor={({ openMenu, disabled }) => (
-                <Button
-                  onPress={openMenu}
-                  disabled={disabled}
-                  icon={'tag'}
-                  loading={savingTags}
-                >
-                  Add or remove card tags (folders)
-                </Button>
-              )}
-            />
-            {cardData.tags.length > 0 && (
-              <View
-                style={{
-                  marginTop: 8,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  gap: 8,
-                  minHeight: 36,
-                }}
-              >
-                {cardData.tags.map((tag) => (
-                  <Chip
-                    key={tag.id}
-                    selectedColor={theme.colors.outlineVariant}
-                    mode="outlined"
-                    onClose={() =>
-                      onTagsChange(cardData.tags.filter((t) => t.id !== tag.id))
-                    }
-                  >
-                    {tag.data.title}
-                  </Chip>
-                ))}
-              </View>
-            )}
-          </View>
-
-          <CardForm
-            card={cardData}
-            onChange={(newCardData) => {
-              setCardData({
-                ...cardData,
-                ...newCardData,
-              });
-            }}
-          />
-
-          <View style={{ flexDirection: 'row', marginTop: 24 }}>
-            <Button
-              icon={'delete'}
-              textColor={theme.colors.error}
-              onPress={onDelete}
-            >
-              Delete
-            </Button>
-            {
+    <CustomScrollView automaticallyAdjustKeyboardInsets={true}>
+      <View style={{ gap: 16 }}>
+        <View
+          style={{
+            alignItems: 'flex-start',
+          }}
+        >
+          <TagsSelector
+            value={cardData.tags}
+            onChange={onTagsChange}
+            deck={deck}
+            renderAnchor={({ openMenu, disabled }) => (
               <Button
-                style={{ marginLeft: 'auto' }}
-                disabled={isNew(card) || hasReset || isResettingStudyProgress}
-                loading={isResettingStudyProgress}
-                onPress={resetStudyProgress}
+                onPress={openMenu}
+                disabled={disabled}
+                icon={'tag'}
+                loading={savingTags}
               >
-                Reset study progress
+                Add or remove card tags (folders)
               </Button>
-            }
-          </View>
-          {SHOW_SRS_STATS === 'true' && (
-            <CustomSurface
+            )}
+          />
+          {cardData.tags.length > 0 && (
+            <View
               style={{
                 marginTop: 8,
-                backgroundColor: theme.colors.elevation.level2,
-                padding: 16,
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: 8,
+                minHeight: 36,
               }}
-              elevation={0}
             >
-              <Text>Raw Card Data (Visible in Dev Mode only)</Text>
-
-              <Text>
-                {JSON.stringify(
-                  {
-                    ...card,
-                    createdIso: new Date(card.created).toISOString(),
-                    updatedIso:
-                      card.updated && new Date(card.updated).toISOString(),
-                  },
-                  null,
-                  4
-                )}
-              </Text>
-            </CustomSurface>
+              {cardData.tags.map((tag) => (
+                <Chip
+                  key={tag.id}
+                  selectedColor={theme.colors.outlineVariant}
+                  mode="outlined"
+                  onClose={() =>
+                    onTagsChange(cardData.tags.filter((t) => t.id !== tag.id))
+                  }
+                >
+                  {tag.data.title}
+                </Chip>
+              ))}
+            </View>
           )}
         </View>
-      </CustomScrollView>
-    </>
+
+        <CardForm
+          card={cardData}
+          onChange={(newCardData) => {
+            setCardData({
+              ...cardData,
+              ...newCardData,
+            });
+          }}
+        />
+
+        <View style={{ flexDirection: 'row', marginTop: 24 }}>
+          <Button
+            icon={'delete'}
+            textColor={theme.colors.error}
+            onPress={onDelete}
+          >
+            Delete
+          </Button>
+          {
+            <Button
+              style={{ marginLeft: 'auto' }}
+              disabled={isNew(card) || hasReset || isResettingStudyProgress}
+              loading={isResettingStudyProgress}
+              onPress={resetStudyProgress}
+            >
+              Reset study progress
+            </Button>
+          }
+        </View>
+        {SHOW_SRS_STATS === 'true' && (
+          <CustomSurface
+            style={{
+              marginTop: 8,
+              backgroundColor: theme.colors.elevation.level2,
+              padding: 16,
+            }}
+            elevation={0}
+          >
+            <Text>Raw Card Data (Visible in Dev Mode only)</Text>
+
+            <Text>
+              {JSON.stringify(
+                {
+                  ...card,
+                  createdIso: new Date(card.created).toISOString(),
+                  updatedIso:
+                    card.updated && new Date(card.updated).toISOString(),
+                },
+                null,
+                4
+              )}
+            </Text>
+          </CustomSurface>
+        )}
+      </View>
+    </CustomScrollView>
   );
 };
