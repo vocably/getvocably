@@ -38,13 +38,10 @@ const simpletonTranslationResult: Result<TranslationCards> = {
   value: {
     explanation: '',
     source: 'gemaakt',
-    translation: {
-      source: 'gemaakt',
-      sourceLanguage: 'nl',
-      target: 'created',
-      targetLanguage: 'en',
-      partOfSpeech: 'verb',
-    },
+    sourceLanguage: 'nl',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'created',
     cards: [
       {
         data: {
@@ -99,12 +96,10 @@ const successfulTranslationResult: Result<TranslationCards> = {
     lastAdded: 0,
     explanation: '',
     source: 'gemaakt',
-    translation: {
-      source: 'gemaakt',
-      sourceLanguage: 'nl',
-      target: 'created',
-      targetLanguage: 'en',
-    },
+    sourceLanguage: 'nl',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'created',
     cards: [
       {
         id: 'NYS4L',
@@ -173,12 +168,10 @@ const englishTranslationResult: Result<TranslationCards> = {
       },
     ],
     source: 'bringing',
-    translation: {
-      source: 'bringing',
-      sourceLanguage: 'en',
-      target: 'bringing',
-      targetLanguage: 'en',
-    },
+    sourceLanguage: 'en',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'bringing',
     tags: [],
   },
 };

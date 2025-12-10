@@ -1,4 +1,5 @@
-import { Translation } from './analysis';
+import { DetectedInputType } from './analysis';
+import { GoogleLanguage } from './language';
 import { Card, CardItem, TagItem } from './language-deck';
 
 export type DetachedCard = Omit<
@@ -14,7 +15,10 @@ export type TranslationCard = CardItem | DetachedCardItem;
 export type TranslationCards = {
   source: string;
   explanation: string;
-  translation: Translation;
+  sourceLanguage: GoogleLanguage;
+  targetLanguage: GoogleLanguage;
+  detectedInputType?: DetectedInputType;
+  aiThinksItIs?: string;
   cards: TranslationCard[];
   tags: TagItem[];
   collectionLength: number;

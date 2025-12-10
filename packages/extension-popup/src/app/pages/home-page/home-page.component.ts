@@ -152,9 +152,7 @@ export class HomePageComponent implements OnInit {
         state: 'loading',
       };
 
-      if (
-        analyzeResult.value.translation.source.trim().split(' ').length === 1
-      ) {
+      if (analyzeResult.value.source.trim().split(' ').length === 1) {
         this.explanationAnimationDelay = 2000;
       } else {
         this.explanationAnimationDelay = 0;
@@ -163,12 +161,12 @@ export class HomePageComponent implements OnInit {
       const source =
         analyzeResult.value.cards.length === 1
           ? analyzeResult.value.cards[0].data.source
-          : analyzeResult.value.translation.source;
+          : analyzeResult.value.source;
 
       environment
         .explain({
-          sourceLanguage: analyzeResult.value.translation.sourceLanguage,
-          targetLanguage: analyzeResult.value.translation.targetLanguage,
+          sourceLanguage: analyzeResult.value.sourceLanguage,
+          targetLanguage: analyzeResult.value.targetLanguage,
           source: source,
         })
         .then((explanationResult) => {

@@ -1,4 +1,3 @@
-import { google } from '@google-cloud/translate/build/protos/protos';
 import { defineCustomElements } from '@vocably/extension-content-ui/loader';
 import { SearchValues } from '@vocably/extension-content-ui/src/components/search-form/types';
 import {
@@ -14,7 +13,6 @@ import { isObject } from 'lodash-es';
 import { track } from './analytics';
 import { analyze } from './search/analyze';
 import { playAudioPronunciation } from './search/playAudioPronunciation';
-import translation = google.cloud.translation;
 
 document.body.classList.add('vocably-extension-disabled');
 defineCustomElements();
@@ -96,7 +94,10 @@ const createTranslationCards = (
     success: true,
     value: {
       source: analyzeResult.value.source,
-      translation: analyzeResult.value.translation,
+      sourceLanguage: analyzeResult.value.sourceLanguage,
+      targetLanguage: analyzeResult.value.targetLanguage,
+      detectedInputType: analyzeResult.value.detectedInputType,
+      aiThinksItIs: analyzeResult.value.aiThinksItIs,
       tags: [],
       cards: analyzeResult.value.items.map<TranslationCard>((item) => ({
         data: {

@@ -37,7 +37,6 @@ import {
 import { isToday } from '@vocably/sulna';
 import showdown from 'showdown';
 import { getSelectedTagIds } from './getSelectedTagIds';
-import { isDirectNecessary } from './isDirectNecessary';
 import { sortLanguages } from './sortLanguages';
 
 const mdConverter = new showdown.Converter();
@@ -407,7 +406,7 @@ export class VocablyTranslation {
       !this.hideChatGpt &&
       this.result &&
       this.result.success &&
-      isDirectNecessary(this.result.value);
+      this.result.value.aiThinksItIs;
 
     const canAdd =
       this.maxCards === 'unlimited' ||
@@ -492,18 +491,16 @@ export class VocablyTranslation {
                     AI thinks that{' '}
                   </div>
                   <span class="vocably-emphasized">
-                    {isGoogleTTSLanguage(
-                      this.result.value.translation.sourceLanguage
-                    ) && (
+                    {isGoogleTTSLanguage(this.result.value.sourceLanguage) && (
                       <vocably-play-sound
                         text={this.phrase}
-                        language={this.result.value.translation.sourceLanguage}
+                        language={this.result.value.sourceLanguage}
                         playAudioPronunciation={this.playAudioPronunciation}
                       />
                     )}
                     {this.phrase}
                   </span>{' '}
-                  means <i>{this.result.value.translation.target}</i>
+                  means <i>{this.result.value.aiThinksItIs}</i>
                 </div>
               )}
               {this.result.value.cards.map((card, itemIndex, cardsArray) => (

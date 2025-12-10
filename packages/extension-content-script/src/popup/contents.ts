@@ -105,11 +105,9 @@ export const setContents = async ({
 
       translation.result = translationResult;
       if (translationResult.success === true) {
-        translation.sourceLanguage =
-          translationResult.value.translation.sourceLanguage;
+        translation.sourceLanguage = translationResult.value.sourceLanguage;
 
-        translation.targetLanguage =
-          translationResult.value.translation.targetLanguage;
+        translation.targetLanguage = translationResult.value.targetLanguage;
 
         if (autoPlay) {
           setTimeout(() => {
@@ -120,20 +118,17 @@ export const setContents = async ({
         const source =
           translationResult.value.cards.length === 1
             ? translationResult.value.cards[0].data.source
-            : translationResult.value.translation.source;
+            : translationResult.value.source;
 
         translation.explanation = { state: 'loading' };
-        if (
-          translationResult.value.translation.source.trim().split(' ')
-            .length === 1
-        ) {
+        if (translationResult.value.source.trim().split(' ').length === 1) {
           translation.explanationAnimationDelay = 2000;
         }
 
         api
           .explain({
-            sourceLanguage: translationResult.value.translation.sourceLanguage,
-            targetLanguage: translationResult.value.translation.targetLanguage,
+            sourceLanguage: translationResult.value.sourceLanguage,
+            targetLanguage: translationResult.value.targetLanguage,
             source: source,
           })
           .then((result) => {

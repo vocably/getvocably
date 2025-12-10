@@ -7,13 +7,10 @@ const simpletonTranslationResult: Result<TranslationCards> = {
   value: {
     explanation: '',
     source: 'gemaakt',
-    translation: {
-      source: 'gemaakt',
-      sourceLanguage: 'nl',
-      target: 'created',
-      targetLanguage: 'en',
-      partOfSpeech: 'verb',
-    },
+    sourceLanguage: 'nl',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'created',
     cards: [
       {
         data: {
@@ -68,12 +65,10 @@ const successfulTranslationResult: Result<TranslationCards> = {
     lastAdded: 0,
     explanation: '',
     source: 'gemaakt',
-    translation: {
-      source: 'gemaakt',
-      sourceLanguage: 'nl',
-      target: 'created',
-      targetLanguage: 'en',
-    },
+    sourceLanguage: 'nl',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'created',
     cards: [
       {
         id: 'NYS4L',
@@ -142,12 +137,10 @@ const englishTranslationResult: Result<TranslationCards> = {
       },
     ],
     source: 'bringing',
-    translation: {
-      source: 'bringing',
-      sourceLanguage: 'en',
-      target: 'bringing',
-      targetLanguage: 'en',
-    },
+    sourceLanguage: 'en',
+    targetLanguage: 'en',
+    detectedInputType: 'word',
+    aiThinksItIs: 'bringing',
     tags: [],
   },
 };
@@ -164,12 +157,10 @@ translationFirstTime.result = {
     collectionLength: 50,
     lastAdded: 0,
     source: 'Alice was beginning to get very tired of sitting',
-    translation: {
-      source: 'Alice was beginning to get very tired of sitting',
-      sourceLanguage: 'en',
-      target: 'Алиса начала сильно уставать сидеть',
-      targetLanguage: 'ru',
-    },
+    sourceLanguage: 'en',
+    targetLanguage: 'ru',
+    detectedInputType: 'sentence',
+    aiThinksItIs: 'Алиса начала сильно уставать сидеть',
     explanation:
       'При переводе английского предложения на русский язык следует обратить внимание на несколько моментов:\n' +
       '\n' +

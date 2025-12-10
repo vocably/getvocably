@@ -251,7 +251,7 @@ export const registerServiceWorker = (
 
     return [
       analysisResult,
-      await loadLanguageDeck(analysisResult.value.translation.sourceLanguage),
+      await loadLanguageDeck(analysisResult.value.sourceLanguage),
     ];
   };
 
@@ -308,13 +308,16 @@ export const registerServiceWorker = (
         cards,
         explanation: analysisResult.value.explanation ?? '',
         source: analysisResult.value.source,
-        translation: analysisResult.value.translation,
+        sourceLanguage: analysisResult.value.sourceLanguage,
+        targetLanguage: analysisResult.value.targetLanguage,
+        detectedInputType: analysisResult.value.detectedInputType,
+        aiThinksItIs: analysisResult.value.aiThinksItIs,
         tags: loadLanguageDeckResult.value.tags,
         collectionLength: loadLanguageDeckResult.value.cards.length,
         lastAdded: getLastAdded(loadLanguageDeckResult.value.cards),
       };
 
-      addLanguage(value.translation.sourceLanguage);
+      addLanguage(value.sourceLanguage);
 
       return sendResponse({
         success: true,
@@ -334,7 +337,7 @@ export const registerServiceWorker = (
 
   onRemoveCardRequest(async (sendResponse, payload) => {
     const getLanguageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (getLanguageDeckResult.success === false) {
@@ -370,7 +373,7 @@ export const registerServiceWorker = (
 
   onAddCardRequest(async (sendResponse, payload) => {
     const getLanguageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     posthog.capture('addCard', {
@@ -421,7 +424,7 @@ export const registerServiceWorker = (
     console.info(`Clean up has been requested.`, payload);
     try {
       const loadLanguageDeckResult = await loadLanguageDeck(
-        payload.translation.sourceLanguage
+        payload.sourceLanguage
       );
 
       if (loadLanguageDeckResult.success === false) {
@@ -565,7 +568,7 @@ export const registerServiceWorker = (
     }
 
     const counter = await getAskForRatingCounter(
-      payload.translationResult.value.translation.sourceLanguage
+      payload.translationResult.value.sourceLanguage
     );
 
     await storeAskForRatingCounter(counter + 1);
@@ -693,8 +696,8 @@ export const registerServiceWorker = (
   onUpdateCard(async (sendResponse, payload) => {
     if (payload.data.translation) {
       posthog.capture('cardTranslationUpdated', {
-        sourceLanguage: payload.translationCards.translation.sourceLanguage,
-        targetLanguage: payload.translationCards.translation.targetLanguage,
+        sourceLanguage: payload.translationCards.sourceLanguage,
+        targetLanguage: payload.translationCards.targetLanguage,
         source: payload.translationCards.source,
         originalTranslation: payload.card.data.translation,
         newTranslation: payload.data.translation,
@@ -711,7 +714,7 @@ export const registerServiceWorker = (
     }
 
     const languageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (languageDeckResult.success === false) {
@@ -754,7 +757,7 @@ export const registerServiceWorker = (
 
   onAttachTag(async (sendResponse, payload) => {
     const languageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (languageDeckResult.success === false) {
@@ -833,7 +836,7 @@ export const registerServiceWorker = (
 
   onDetachTag(async (sendResponse, payload) => {
     const languageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (languageDeckResult.success === false) {
@@ -894,7 +897,7 @@ export const registerServiceWorker = (
 
   onUpdateTag(async (sendResponse, payload) => {
     const languageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (languageDeckResult.success === false) {
@@ -938,7 +941,7 @@ export const registerServiceWorker = (
 
   onDeleteTag(async (sendResponse, payload) => {
     const languageDeckResult = await loadLanguageDeck(
-      payload.translationCards.translation.sourceLanguage
+      payload.translationCards.sourceLanguage
     );
 
     if (languageDeckResult.success === false) {
