@@ -349,7 +349,10 @@ export const getAnalyseCacheFileName = (
 export const aiAnalyse = async (
   payload: AiAnalysePayload
 ): Promise<Result<AiAnalysis>> => {
-  const isSourceValid = validateSource(payload.source);
+  const isSourceValid = validateSource({
+    source: payload.source,
+    partOfSpeech: payload.partOfSpeech,
+  });
   const fileName = getAnalyseCacheFileName(
     payload.sourceLanguage,
     payload.source,

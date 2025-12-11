@@ -205,7 +205,10 @@ export const getFileName = (payload: Payload): string => {
 export const translateUnitOfSpeech = async (
   payload: Payload
 ): Promise<Result<string[]>> => {
-  const isValidSource = validateSource(payload.source);
+  const isValidSource = validateSource({
+    source: payload.source,
+    partOfSpeech: payload.partOfSpeech,
+  });
   const fileName = getFileName(payload);
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,
