@@ -1,6 +1,16 @@
+import { hasArticle } from './addArticle';
+
 describe('addArticle', () => {
   it('stab', () => {
     expect(true).toEqual(true);
+  });
+
+  it('has article', () => {
+    expect(hasArticle('nl', 'de test')).toEqual(true);
+    expect(hasArticle('nl', 'test')).toEqual(false);
+    expect(hasArticle('nl', 'Het test')).toEqual(true);
+    expect(hasArticle('de', 'DAS TEST')).toEqual(true);
+    expect(hasArticle('de', 'dasas')).toEqual(false);
   });
   // it('nl', () => {
   //   expect(

@@ -31,10 +31,9 @@ export const directContextAnalysis = async ({
   context,
   inputType,
 }: Payload): Promise<Result<DirectAnalysis>> => {
-  const source =
-    inputType === 'word'
-      ? trimArticle(sourceLanguage, rawSource).source
-      : rawSource.trim();
+  const source = ['word', 'compound word'].includes(inputType)
+    ? trimArticle(sourceLanguage, rawSource).source
+    : rawSource.trim();
 
   const contextAnalysisResult = await translateFromContext({
     source,

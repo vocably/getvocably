@@ -1,4 +1,5 @@
 import { GoogleLanguage } from '@vocably/model';
+import { trimArticle } from '@vocably/sulna';
 import { isFunction } from 'lodash-es';
 import { AiAnalysis } from './aiUnitOfSpeechAnalyse';
 import { vowels } from './vowels';
@@ -130,6 +131,10 @@ export const addArticle = (
     return source;
   }
 
+  if (hasArticle(language, source)) {
+    return source;
+  }
+
   const rules = languageArticles[language];
 
   if (rules === undefined) {
@@ -150,4 +155,11 @@ export const addArticle = (
   const article = rules[aiAnalysisResult.gender] ?? rules.fallback;
 
   return `${article}${source}`;
+};
+
+export const hasArticle = (
+  language: GoogleLanguage,
+  source: string
+): boolean => {
+  return trimArticle(language, source).source.length < source.length;
 };

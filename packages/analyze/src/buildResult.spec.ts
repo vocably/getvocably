@@ -874,4 +874,24 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items.length).toBeGreaterThanOrEqual(4);
   });
+
+  it('trims de het', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'nl',
+      targetLanguage: 'en',
+      source: 'de naam',
+      context: 'Ze noemt de naam van het schip niet.',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items.some((i) => i.source === 'de naam')).toEqual(
+      true
+    );
+    expect(result.value.items.some((i) => i.source === 'de de naam')).toEqual(
+      false
+    );
+  });
 });
