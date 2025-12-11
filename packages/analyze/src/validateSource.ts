@@ -4,7 +4,7 @@ type Payload = {
 };
 
 export const validateSource = ({ source, partOfSpeech }: Payload): boolean => {
-  if (/[\d@()\[\]]/g.test(source)) {
+  if (/[\d@()\[\]\\]/g.test(source)) {
     return false;
   }
 
