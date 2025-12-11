@@ -38,7 +38,7 @@ export const truncateText = (text: string, length: number): string => {
   return text.replace(/[<>]/gm, '').slice(0, length);
 };
 
-const translateWithGemini = async (
+export const translateWithGemini = async (
   payload: Payload
 ): Promise<Result<AiTranslationResult>> => {
   const genAI = new GoogleGenAI({
@@ -53,7 +53,7 @@ const translateWithGemini = async (
       contents: createUserContent(source),
       config: {
         systemInstruction: [
-          `User provides a word or phrase in ${
+          `User provides a word or phrase in any language, but most likely in ${
             languageList[payload.sourceLanguage]
           }.`,
           `Provide possible translations into ${
@@ -61,8 +61,10 @@ const translateWithGemini = async (
           }.`,
           `Avoid splitting.`,
           `Response JSON array. Each item:`,
-          `- translation - the translation of the word/phrase`,
-          `- partOfSpeech - the part of speech of the translation in English`,
+          `- translation - the translation of the word/phrase into ${
+            languageList[payload.targetLanguage]
+          }`,
+          `- partOfSpeech - the part of speech. Should be in English`,
           `- transcript - ${getTranscriptionName(payload.targetLanguage)}`,
           `- lemma - lemma of translation`,
           `- lemmaPos - part of speech of lemma in English`,
@@ -91,7 +93,7 @@ const translateWithGemini = async (
   return sanitizeModelResponse(parseResult.value);
 };
 
-const translateWithChatGpt = async (
+export const translateWithChatGpt = async (
   payload: Payload
 ): Promise<Result<AiTranslationResult>> => {
   const source = secureSource(payload.source);

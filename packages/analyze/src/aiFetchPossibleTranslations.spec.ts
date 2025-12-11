@@ -1,6 +1,8 @@
 import '@vocably/jest';
+import { inspect } from '@vocably/node-sulna';
 import {
   aiFetchPossibleTranslations,
+  translateWithGemini,
   truncateText,
 } from './aiFetchPossibleTranslations';
 import { configureTestAnalyzer } from './test/configureTestAnalyzer';
@@ -147,5 +149,23 @@ describe('aiReverseTranslate', () => {
         "xīngqī èr, xīngqī'èr, xīng qī èr"
       );
     });
+  });
+
+  it('follows the direction of translation', async () => {
+    const result = await translateWithGemini({
+      sourceLanguage: 'ru',
+      targetLanguage: 'en',
+      source: 'get along',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    console.log(inspect(result.value));
+
+    expect(result.value.every((e) => /^[a-z ]+$/.test(e.translation))).toEqual(
+      true
+    );
   });
 });

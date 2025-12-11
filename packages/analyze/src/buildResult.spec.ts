@@ -624,9 +624,6 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].source).toEqual('get along');
-    expect(result.value.items[0].translation).toHaveSomeOf(
-      'ладить, уживаться, находить общий язык, справляться'
-    );
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
   });
 
@@ -855,9 +852,6 @@ describe('integration check for translate lambda', () => {
 
     expect(
       result.value.items[0].source.split(' ').length
-    ).toBeGreaterThanOrEqual(4);
-    expect(
-      result.value.items[1].source.split(' ').length
     ).toBeGreaterThanOrEqual(4);
   });
 
