@@ -103,11 +103,11 @@ describe('unit of speech analyze', () => {
   });
 
   describe('gemini', () => {
-    xit('backwash', async () => {
+    it('lowercase when possible', async () => {
       const result = await geminiAnalyse({
-        source: 'backwash',
-        partOfSpeech: 'verb',
-        sourceLanguage: 'en',
+        source: 'Backwash',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
       });
       expect(result.success).toBeTruthy();
 
@@ -115,6 +115,34 @@ describe('unit of speech analyze', () => {
         return;
       }
       expect(result.value.source).toEqual('backwash');
+    }, 10_000_000);
+
+    it('avoid decapitalization when necessary', async () => {
+      const result = await geminiAnalyse({
+        source: 'wednesday',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('Wednesday');
+    }, 10_000_000);
+
+    it('capitalize abbreviations', async () => {
+      const result = await geminiAnalyse({
+        source: 'IPA',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('IPA');
     }, 10_000_000);
 
     it('returns successful result', async () => {

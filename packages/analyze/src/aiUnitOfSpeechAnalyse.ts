@@ -13,7 +13,7 @@ import {
   resultify,
 } from '@vocably/model';
 import { isSafeObject } from '@vocably/sulna';
-import { isArray } from 'lodash-es';
+import { isArray, omit } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
@@ -64,7 +64,7 @@ const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   sw: ['noun-class'], // Swahili (nominal classes instead of gender)
 };
 
-export type AiAnalyseResult = {
+export type AiAnalysis = {
   source: string;
   definitions: string[];
   examples: string[];
@@ -76,7 +76,7 @@ export type AiAnalyseResult = {
   gender?: string;
 };
 
-const isAiAnalyseResult = (result: any): result is AiAnalyseResult => {
+const isAiAnalysis = (result: any): result is AiAnalysis => {
   if (!isSafeObject(result)) {
     return false;
   }
@@ -94,6 +94,37 @@ const isAiAnalyseResult = (result: any): result is AiAnalyseResult => {
   );
 };
 
+type InternalAiAnalysis = Omit<AiAnalysis, 'source'> & {
+  headword: string;
+};
+
+const isInternalAiAnalysis = (result: any): result is InternalAiAnalysis => {
+  if (!isSafeObject(result)) {
+    return false;
+  }
+  return (
+    'headword' in result &&
+    'definitions' in result &&
+    'examples' in result &&
+    'lemma' in result &&
+    'lemmaPos' in result &&
+    'synonyms' in result &&
+    'number' in result &&
+    isArray(result['definitions']) &&
+    isArray(result['examples']) &&
+    isArray(result['synonyms'])
+  );
+};
+
+const convertInternalToExternal = (
+  internal: InternalAiAnalysis
+): AiAnalysis => {
+  return {
+    ...omit(internal, 'headword'),
+    source: internal.headword,
+  };
+};
+
 type AiAnalysePayload = {
   source: string;
   partOfSpeech: string;
@@ -103,8 +134,8 @@ type AiAnalysePayload = {
 export const sanitizeAiAnalyseResult = (
   language: GoogleLanguage,
   partOfSpeech: string,
-  result: AiAnalyseResult
-): AiAnalyseResult => {
+  result: AiAnalysis
+): AiAnalysis => {
   const genders = genderLanguages[language] ?? [];
 
   return {
@@ -151,7 +182,7 @@ export const getGptAnalyseChatGptBody = ({
     `User provides a word in ${languageName} and its part of speech.`,
     `Only respond in JSON format with an object containing the following properties:`,
     isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-    `source - word provided by user. Capitalize only when appropriate.`,
+    `headword - word provided by user. Capitalize only when appropriate.`,
     `definitions - list of definitions in ${languageName}.${
       partOfSpeech.includes('verb')
         ? ` Consider tense of the provided word.`
@@ -185,8 +216,8 @@ type GptAnalyseResultPayload = {
 
 export const getGptAnalyseResult = ({
   response,
-}: GptAnalyseResultPayload): Result<AiAnalyseResult> => {
-  if (!isAiAnalyseResult(response)) {
+}: GptAnalyseResultPayload): Result<AiAnalysis> => {
+  if (!isInternalAiAnalysis(response)) {
     return {
       success: false,
       reason: 'The GPT request responded with the malformed response',
@@ -196,7 +227,7 @@ export const getGptAnalyseResult = ({
 
   return {
     success: true,
-    value: response,
+    value: convertInternalToExternal(response),
   };
 };
 
@@ -204,7 +235,7 @@ export const gptAnalyse = async ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: AiAnalysePayload): Promise<Result<AiAnalyseResult>> => {
+}: AiAnalysePayload): Promise<Result<AiAnalysis>> => {
   const responseResult = await chatGptRequest({
     ...getGptAnalyseChatGptBody({ source, partOfSpeech, sourceLanguage }),
     timeoutMs: 100000,
@@ -229,7 +260,7 @@ export const geminiAnalyse = async ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: AiAnalysePayload): Promise<Result<AiAnalyseResult>> => {
+}: AiAnalysePayload): Promise<Result<AiAnalysis>> => {
   const genAI = new GoogleGenAI({
     apiKey: config.geminiApiKey,
   });
@@ -250,10 +281,10 @@ export const geminiAnalyse = async ({
       config: {
         systemInstruction: [
           `You are a language dictionary.`,
-          `User provides a ${partOfSpeech} in ${languageName}.`,
+          `User provides a ${partOfSpeech} in ${languageName}. The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).`,
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-          `source - ${partOfSpeech} provided by user. Capitalize only when appropriate.`,
+          `headword - ${partOfSpeech} provided by user. Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.`,
           `definitions - list of definitions of the ${partOfSpeech} "${securedSource}" in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
@@ -287,7 +318,7 @@ export const geminiAnalyse = async ({
     return parseResult;
   }
 
-  if (isAiAnalyseResult(parseResult.value) === false) {
+  if (!isInternalAiAnalysis(parseResult.value)) {
     return {
       success: false,
       reason: 'The Gemini request responded with the malformed response',
@@ -297,7 +328,7 @@ export const geminiAnalyse = async ({
 
   return {
     success: true,
-    value: parseResult.value,
+    value: convertInternalToExternal(parseResult.value),
   };
 };
 
@@ -317,7 +348,7 @@ export const getAnalyseCacheFileName = (
 
 export const aiAnalyse = async (
   payload: AiAnalysePayload
-): Promise<Result<AiAnalyseResult>> => {
+): Promise<Result<AiAnalysis>> => {
   const isSourceValid = validateSource(payload.source);
   const fileName = getAnalyseCacheFileName(
     payload.sourceLanguage,
@@ -333,7 +364,7 @@ export const aiAnalyse = async (
   if (s3FetchResult.success && s3FetchResult.value !== null) {
     const parseResult = parseJson(s3FetchResult.value);
 
-    if (parseResult.success && isAiAnalyseResult(parseResult.value)) {
+    if (parseResult.success && isAiAnalysis(parseResult.value)) {
       return {
         success: true,
         value: sanitizeAiAnalyseResult(

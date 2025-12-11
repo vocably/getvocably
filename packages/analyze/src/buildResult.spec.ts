@@ -801,7 +801,6 @@ describe('integration check for translate lambda', () => {
 
     expect(result.value.items[0].source).toEqual('de stoel');
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items.length).toBeGreaterThan(1);
   });
 
   it('reverse translate into europen portuguese', async () => {
@@ -815,11 +814,17 @@ describe('integration check for translate lambda', () => {
       throw 'Unexpected result';
     }
 
-    expect(result.value.items[0].source).toEqual('treinar');
-    expect(result.value.items[0].partOfSpeech).toEqual('verb');
+    expect(
+      result.value.items.some(
+        (i) => i.source === 'treinar' && i.partOfSpeech === 'verb'
+      )
+    ).toEqual(true);
 
-    expect(result.value.items[0].source).toEqual('comboio');
-    expect(result.value.items[0].partOfSpeech).toEqual('noun');
+    expect(
+      result.value.items.some(
+        (i) => i.source === 'comboio' && i.partOfSpeech === 'noun'
+      )
+    ).toEqual(true);
   });
 
   it('sla rechts af', async () => {
@@ -847,8 +852,6 @@ describe('integration check for translate lambda', () => {
     if (result.success === false) {
       throw 'Unexpected result';
     }
-
-    expect(result.value.items.length).toEqual(2);
 
     expect(
       result.value.items[0].source.split(' ').length

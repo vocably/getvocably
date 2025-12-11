@@ -1,6 +1,6 @@
 import { GoogleLanguage } from '@vocably/model';
 import { isFunction } from 'lodash-es';
-import { AiAnalyseResult } from './aiUnitOfSpeechAnalyse';
+import { AiAnalysis } from './aiUnitOfSpeechAnalyse';
 import { vowels } from './vowels';
 
 type ArticleRules = {
@@ -120,7 +120,7 @@ export const addArticle = (
   language: GoogleLanguage,
   source: string,
   partOfSpeech: string,
-  aiAnalysisResult: AiAnalyseResult
+  aiAnalysisResult: AiAnalysis
 ): string => {
   if (
     partOfSpeech !== 'noun' ||
