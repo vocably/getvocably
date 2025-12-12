@@ -6,7 +6,7 @@ import 'zx/globals';
 
 config();
 
-const langDir = '../../vocably-languages';
+const langDir = '../../vocably-languages/fr';
 
 const unitsOfSpeechDir = langDir + '/units-of-speech';
 const translationsDir = langDir + '/translations';

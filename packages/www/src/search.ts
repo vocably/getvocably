@@ -4,6 +4,7 @@ import {
   Analysis,
   AnalyzePayload,
   GoogleLanguage,
+  isGoogleLanguage,
   Result,
   TranslationCard,
   TranslationCards,
@@ -16,6 +17,17 @@ import { playAudioPronunciation } from './search/playAudioPronunciation';
 
 document.body.classList.add('vocably-extension-disabled');
 defineCustomElements();
+
+const updateRepoUrls = (language: string) => {
+  let repoUrl = `https://github.com/vocably`;
+  if (isGoogleLanguage(language)) {
+    repoUrl += `/${language}`;
+  }
+
+  document.querySelectorAll('.repo-link').forEach((link) => {
+    link['href'] = repoUrl;
+  });
+};
 
 const isSearchValues = (value: any): value is SearchValues => {
   return (
@@ -73,7 +85,10 @@ const searchForm = document.createElement(
   'vocably-search-form'
 ) as HTMLVocablySearchFormElement;
 
-searchForm.values = getInitialSearchValues();
+const initialSearchValues = getInitialSearchValues();
+searchForm.values = initialSearchValues;
+updateRepoUrls(initialSearchValues.sourceLanguage);
+
 searchContainer.appendChild(searchForm);
 searchContainer.appendChild(resultsContainer);
 
@@ -122,6 +137,8 @@ const createTranslationCards = (
 const loadSearchValues = async (searchValues: SearchValues) => {
   track('Search', searchValues);
 
+  updateRepoUrls(searchValues.sourceLanguage);
+
   resultsContainer.innerHTML = `<vocably-skeleton-loader></vocably-skeleton-loader>`;
 
   localStorage.setItem('sourceLanguage', searchValues.sourceLanguage);
@@ -158,6 +175,14 @@ searchForm.addEventListener('formSubmit', async (e) => {
   }
 
   await loadSearchValues(e.detail);
+});
+
+searchForm.addEventListener('valuesChange', async (e) => {
+  if (!isSearchValues(e.detail)) {
+    return;
+  }
+
+  updateRepoUrls(e.detail.sourceLanguage);
 });
 
 if (searchForm.values.text.length) {
