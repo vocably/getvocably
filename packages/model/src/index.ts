@@ -13,7 +13,14 @@ export * from './mnemonics';
 export * from './mobile-onboarding';
 export * from './notifications';
 export * from './onboarding';
-export { isError, isSuccess, Result, resultify } from './result';
+export {
+  Error as ResultError,
+  isError,
+  isSuccess,
+  Result,
+  resultify,
+  Success as ResultSuccess,
+} from './result';
 export * from './sorted-languages';
 export * from './study-flow';
 export * from './study-stats';

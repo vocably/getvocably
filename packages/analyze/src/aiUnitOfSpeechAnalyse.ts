@@ -436,7 +436,7 @@ export const aiAnalyse = async (
     analyseResult.value
   );
 
-  if (isSourceValid) {
+  if (isSourceValid && !analyseResult.fallenBack) {
     const putResult = await nodePutS3File(
       config.unitsOfSpeechBucket,
       fileName,

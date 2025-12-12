@@ -15,7 +15,7 @@ import {
 import { tokenize } from '@vocably/sulna';
 import { isArray, uniq } from 'lodash-es';
 import { config } from './config';
-import { fallback } from './fallback';
+import { fallback, FallbackResult } from './fallback';
 import { validateSource } from './validateSource';
 
 type Payload = {
@@ -188,7 +188,7 @@ export const translateUnitOfSpeechChatGpt = async ({
 
 export const translateUnitOfSpeechNoCache = async (
   payload: Payload
-): Promise<Result<string[]>> => {
+): Promise<FallbackResult<string[]>> => {
   return fallback(translateUnitOfSpeechGemini(payload), () =>
     translateUnitOfSpeechChatGpt(payload)
   );
@@ -230,7 +230,7 @@ export const translateUnitOfSpeech = async (
     return translationResult;
   }
 
-  if (isValidSource) {
+  if (isValidSource && !translationResult.fallenBack) {
     const putResult = await nodePutS3File(
       config.unitsOfSpeechBucket,
       fileName,
