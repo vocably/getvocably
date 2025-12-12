@@ -1,4 +1,5 @@
 import '@vocably/jest';
+import { inspect } from '@vocably/node-sulna';
 import {
   aiAnalyse,
   geminiAnalyse,
@@ -198,6 +199,29 @@ describe('unit of speech analyze', () => {
         return;
       }
       expect(result.value.transcript[0]).toHaveSomeOf(['ˈ', "'"]);
+    }, 10_000_000);
+
+    it('does not translate definitions and examples', async () => {
+      const result = await geminiAnalyse({
+        source: 'երկիր',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'hyw',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      console.log(inspect(result.value));
+
+      expect(
+        result.value.definitions.some((definition) => /[a-z]/i.test(definition))
+      ).toEqual(false);
+
+      expect(
+        result.value.examples.some((example) => /[a-z]/i.test(example))
+      ).toEqual(false);
     }, 10_000_000);
 
     it('adds number', async () => {
