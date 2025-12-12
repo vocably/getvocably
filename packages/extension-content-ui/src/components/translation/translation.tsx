@@ -439,6 +439,7 @@ export class VocablyTranslation {
           )}
           {this.result && this.result.success === false && (
             <div
+              class="padding-left-12"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
