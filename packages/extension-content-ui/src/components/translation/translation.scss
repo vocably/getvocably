@@ -259,9 +259,22 @@ vocably-play-sound {
 }
 
 .vocably-list {
-  list-style: outside;
+  list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 0 0 0 $base-font-size;
+
+  li {
+    padding-left: 18px;
+    position: relative;
+
+    &::before {
+      content: '•';
+      font-size: 18px;
+      position: absolute;
+      left: 6px;
+      top: 0;
+    }
+  }
 }
 
 .vocably-italic {
