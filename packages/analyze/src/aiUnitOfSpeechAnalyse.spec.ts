@@ -224,6 +224,25 @@ describe('unit of speech analyze', () => {
       ).toEqual(false);
     }, 10_000_000);
 
+    it('uppercase when appropriate', async () => {
+      const result = await geminiAnalyse({
+        source: 'aarde',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      console.log(inspect(result.value));
+
+      expect(
+        result.value.examples.some((example) => example.includes('Aarde'))
+      ).toEqual(true);
+    }, 10_000_000);
+
     it('adds number', async () => {
       const result = await geminiAnalyse({
         source: 'вши',

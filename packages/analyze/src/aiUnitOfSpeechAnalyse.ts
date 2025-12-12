@@ -328,12 +328,16 @@ export const geminiAnalyse = async ({
               ? ' Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.'
               : ''
           }`,
-          `definitions - list of concise definitions of the ${partOfSpeech} "${securedSource}" in ${languageName}.${
+          `definitions - list of concise definitions of the ${partOfSpeech} "${securedSource}". Should be in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
               : ''
           }`,
-          `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}. Omit translations.`,
+          `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}. Omit translations.${
+            isCaseSensitive && partOfSpeech.includes('noun')
+              ? ' Uppercase when appropriate.'
+              : ''
+          }`,
           `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
           `lemmaPos - part of speech of the lemma in English`,
           `synonyms - short list of synonyms`,
