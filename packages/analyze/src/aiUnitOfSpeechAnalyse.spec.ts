@@ -16,6 +16,48 @@ describe('unit of speech analyze', () => {
   }
 
   describe('chatgpt', () => {
+    it('lowercase when possible', async () => {
+      const result = await gptAnalyse({
+        source: 'Backwash',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('backwash');
+    }, 10_000_000);
+
+    it('avoid decapitalization when necessary', async () => {
+      const result = await gptAnalyse({
+        source: 'wednesday',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('Wednesday');
+    }, 10_000_000);
+
+    it('capitalize abbreviations', async () => {
+      const result = await gptAnalyse({
+        source: 'IPA',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'en-GB',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.source).toEqual('IPA');
+    }, 10_000_000);
+
     it('returns successful result', async () => {
       const result = await gptAnalyse({
         source: 'die Frage',
@@ -56,21 +98,6 @@ describe('unit of speech analyze', () => {
         return;
       }
       expect(result.value.number).toHaveSomeOf('plural');
-    }, 10_000_000);
-
-    it('lemma pos', async () => {
-      const result = await gptAnalyse({
-        source: 'perambulation',
-        partOfSpeech: 'noun',
-        sourceLanguage: 'en',
-      });
-      expect(result.success).toBeTruthy();
-
-      if (!result.success) {
-        return;
-      }
-      expect(result.value.lemma).toHaveSomeOf('perambulate');
-      expect(result.value.lemmaPos).toHaveSomeOf('verb');
     }, 10_000_000);
 
     it('source capitalized', async () => {

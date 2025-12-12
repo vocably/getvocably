@@ -64,6 +64,39 @@ const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
   sw: ['noun-class'], // Swahili (nominal classes instead of gender)
 };
 
+const caseInsensitiveLanguages: GoogleLanguage[] = [
+  'am',
+  'ar',
+  'bn',
+  'fa',
+  'gu',
+  'he',
+  'hi',
+  'ja',
+  'ka',
+  'km',
+  'kn',
+  'ko',
+  'lo',
+  'ml',
+  'mr',
+  'my',
+  'ne',
+  'or',
+  'pa',
+  'ps',
+  'sd',
+  'si',
+  'ta',
+  'te',
+  'th',
+  'ug',
+  'ur',
+  'yi',
+  'zh',
+  'zh-TW',
+];
+
 export type AiAnalysis = {
   source: string;
   definitions: string[];
@@ -274,6 +307,8 @@ export const geminiAnalyse = async ({
 
   const securedSource = secureSource(source);
 
+  const isCaseSensitive = !caseInsensitiveLanguages.includes(sourceLanguage);
+
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -281,10 +316,18 @@ export const geminiAnalyse = async ({
       config: {
         systemInstruction: [
           `You are a language dictionary.`,
-          `User provides a ${partOfSpeech} in ${languageName}. The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).`,
+          `User provides a ${partOfSpeech} in ${languageName}.${
+            isCaseSensitive
+              ? ' The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).'
+              : ''
+          }`,
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-          `headword - ${partOfSpeech} provided by user. Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.`,
+          `headword - ${partOfSpeech} provided by user.${
+            isCaseSensitive
+              ? ' Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.'
+              : ''
+          }`,
           `definitions - list of definitions of the ${partOfSpeech} "${securedSource}" in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
