@@ -1,7 +1,7 @@
 import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 import { addArticle } from './addArticle';
 import { aiAnalyse } from './aiUnitOfSpeechAnalyse';
-import { sanitizeTranscript } from './sanitizeTranscript';
 import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 export type AnalyseAndTranslatePayload = {

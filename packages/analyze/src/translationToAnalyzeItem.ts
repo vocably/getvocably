@@ -1,5 +1,5 @@
 import { AnalysisItem, Translation } from '@vocably/model';
-import { sanitizeTranscript } from './sanitizeTranscript';
+import { sanitizeTranscript } from '@vocably/sulna';
 
 export const translationToAnalysisItem = (
   translation: Translation

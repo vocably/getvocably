@@ -4,6 +4,7 @@ export * from './getAttributeValue';
 export * from './isSafeObject';
 export * from './isToday';
 export * from './queue';
+export * from './sanitizeTranscript';
 export * from './stringArray';
 export * from './tokenize';
 export * from './trimArticle';

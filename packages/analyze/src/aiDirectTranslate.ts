@@ -6,12 +6,12 @@ import {
   Result,
   Translation,
 } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 import { ChatModel } from 'openai/resources';
 import { isAiTranslation } from './aiDirectTranslateConstants';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
-import { sanitizeTranscript } from './sanitizeTranscript';
 
 type Payload = {
   source: string;

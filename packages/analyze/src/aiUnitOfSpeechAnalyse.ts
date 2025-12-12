@@ -12,7 +12,7 @@ import {
   Result,
   resultify,
 } from '@vocably/model';
-import { isSafeObject } from '@vocably/sulna';
+import { isSafeObject, sanitizeTranscript } from '@vocably/sulna';
 import { isArray, omit } from 'lodash-es';
 import { ChatModel } from 'openai/resources';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
@@ -20,7 +20,6 @@ import { config } from './config';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
-import { sanitizeTranscript } from './sanitizeTranscript';
 import { secureSource } from './secureSource';
 import { transformSource } from './transformSource';
 import { validateSource } from './validateSource';

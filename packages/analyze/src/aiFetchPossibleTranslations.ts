@@ -8,13 +8,12 @@ import {
   resultify,
   Translation,
 } from '@vocably/model';
-import { isSafeObject, trimArticle } from '@vocably/sulna';
+import { isSafeObject, sanitizeTranscript, trimArticle } from '@vocably/sulna';
 import { get, isArray, uniqBy } from 'lodash-es';
 import { config } from './config';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
-import { sanitizeTranscript } from './sanitizeTranscript';
 import { secureSource } from './secureSource';
 
 type Payload = {

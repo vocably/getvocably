@@ -9,12 +9,12 @@ import {
   Result,
   resultify,
 } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 import { get } from 'lodash-es';
 import { config } from './config';
 import { InputAnalysis } from './detectInputTypeAi';
 import { fallback } from './fallback';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
-import { sanitizeTranscript } from './sanitizeTranscript';
 import { secureSource } from './secureSource';
 
 type Payload = {

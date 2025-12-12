@@ -5,6 +5,7 @@ import {
   Result,
   TranslationCard,
 } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 
 @Component({
   tag: 'vocably-card-source',
@@ -32,7 +33,7 @@ export class VocablyCardSource {
           <Fragment>
             <span class="vocably-invisible-space">&nbsp;</span>
             <span class="vocably-translation-margin-left vocably-muted">
-              [{this.card.data.ipa}]
+              /{sanitizeTranscript(this.card.data.ipa)}/
             </span>
           </Fragment>
         )}
