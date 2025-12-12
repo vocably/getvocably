@@ -2,7 +2,6 @@ import {
   Component,
   Event,
   EventEmitter,
-  Fragment,
   h,
   Host,
   Prop,
@@ -283,45 +282,8 @@ export class VocablySearchForm {
           </div>
           {!this.hideHint && (
             <div class="hint">
-              {!this.values.isReversed && (
-                <Fragment>
-                  For the improved search of{' '}
-                  {this.languageName(this.values.sourceLanguage)} words in{' '}
-                  {this.languageName(this.values.targetLanguage)} click the{' '}
-                  <button
-                    class="hint-icon-button"
-                    type="button"
-                    onClick={() => {
-                      this.valuesChange.emit({
-                        ...this.values,
-                        isReversed: true,
-                      });
-                    }}
-                  >
-                    <vocably-icon-arrow-right></vocably-icon-arrow-right>
-                  </button>{' '}
-                  button.
-                </Fragment>
-              )}
-              {this.values.isReversed && (
-                <Fragment>
-                  Click{' '}
-                  <button
-                    class="hint-icon-button reversed"
-                    type="button"
-                    onClick={() => {
-                      this.valuesChange.emit({
-                        ...this.values,
-                        isReversed: false,
-                      });
-                    }}
-                  >
-                    <vocably-icon-arrow-right></vocably-icon-arrow-right>
-                  </button>{' '}
-                  button to search for cards in{' '}
-                  {this.languageName(this.values.sourceLanguage)}.
-                </Fragment>
-              )}
+              Type any word or phrase in any language. Vocably will create{' '}
+              {this.languageName(this.values.sourceLanguage)} cards for you.
             </div>
           )}
         </form>
