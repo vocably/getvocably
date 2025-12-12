@@ -14,11 +14,13 @@ export const sortedTargetLanguages: GoogleLanguage[] = [
   'da',
   'tr',
   // -------------------
+  'en-GB',
   'af',
   'sq',
   'am',
   'ar',
   'hy',
+  'hyw',
   'az',
   'eu',
   'be',
