@@ -888,4 +888,19 @@ describe('integration check for translate lambda', () => {
       false
     );
   });
+
+  it('filters out nonsense', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'en',
+      targetLanguage: 'nl',
+      source: 'employee',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items.length).toEqual(1);
+    expect(result.value.items[0].source).toEqual('employee');
+  });
 });

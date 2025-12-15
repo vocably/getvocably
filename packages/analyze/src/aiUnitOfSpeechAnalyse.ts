@@ -106,6 +106,7 @@ export type AiAnalysis = {
   transcript: string;
   number: string;
   gender?: string;
+  exists?: boolean;
 };
 
 const isAiAnalysis = (result: any): result is AiAnalysis => {
@@ -320,6 +321,7 @@ export const geminiAnalyse = async ({
               ? ' The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).'
               : ''
           }`,
+          `Take the fact that the provided word is ${partOfSpeech} very seriously`,
           `Only respond in JSON format with an object containing the following properties:`,
           isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
           `headword - ${partOfSpeech} provided by user.${
@@ -327,6 +329,7 @@ export const geminiAnalyse = async ({
               ? ' Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.'
               : ''
           }`,
+          `exists - does the ${partOfSpeech} "${securedSource}" exist in ${languageName}? true or false`,
           `definitions - list of concise definitions of the ${partOfSpeech} "${securedSource}". Should be in ${languageName}.${
             partOfSpeech.includes('verb')
               ? ` Consider tense of the provided ${partOfSpeech}.`
@@ -439,7 +442,11 @@ export const aiAnalyse = async (
     analyseResult.value
   );
 
-  if (isSourceValid && !analyseResult.fallenBack) {
+  if (
+    isSourceValid &&
+    !analyseResult.fallenBack &&
+    analyseResult.value.exists === true
+  ) {
     const putResult = await nodePutS3File(
       config.unitsOfSpeechBucket,
       fileName,

@@ -1,4 +1,9 @@
-import { AnalysisItem, GoogleLanguage, Result } from '@vocably/model';
+import {
+  AnalysisItem,
+  GoogleLanguage,
+  languageList,
+  Result,
+} from '@vocably/model';
 import { sanitizeTranscript } from '@vocably/sulna';
 import { addArticle } from './addArticle';
 import { aiAnalyse } from './aiUnitOfSpeechAnalyse';
@@ -17,6 +22,17 @@ export const analyseAndTranslate = async (
   const aiAnalyseResult = await aiAnalyse(payload);
   if (aiAnalyseResult.success === false) {
     return aiAnalyseResult;
+  }
+
+  if (aiAnalyseResult.value.exists === false) {
+    return {
+      success: false,
+      reason: `The requested word/phrase "${
+        payload.source
+      }" does not exist in ${
+        languageList[payload.sourceLanguage]
+      } (according to AI).`,
+    };
   }
 
   let translation = '';

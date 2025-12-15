@@ -243,6 +243,23 @@ describe('unit of speech analyze', () => {
       ).toEqual(true);
     }, 10_000_000);
 
+    it('does not exist', async () => {
+      const result = await geminiAnalyse({
+        source: 'employee',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      console.log(inspect(result.value));
+
+      expect(result.value.exists).toEqual(false);
+    }, 10_000_000);
+
     it('adds number', async () => {
       const result = await geminiAnalyse({
         source: 'вши',
