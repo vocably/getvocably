@@ -7,7 +7,7 @@ import { GetPartsOfSpeechPayload, PartOfSpeech } from './getPartsOfSpeech';
 
 const isGeminiPartOfSpeech = (v: any): v is PartOfSpeech => {
   return (
-    typeof v['source'] === 'string' &&
+    typeof v['headword'] === 'string' &&
     typeof v['partOfSpeech'] === 'string' &&
     typeof v['lemma'] === 'string' &&
     typeof v['lemmaPos'] === 'string'
@@ -32,7 +32,7 @@ export const getPartsOfSpeechGemini = async ({
           `User provides a word`,
           `Provide an array parts of speech for the word. Avoid splitting the word.`,
           `Each object of array must contain the following fields:`,
-          `- source - the word or phrase in ${languageList[language]} spelling fixed.`,
+          `- headword - the word or phrase in ${languageList[language]} spelling fixed`,
           `- partOfSpeech - the part of speech of the word or phrase in English`,
           `- lemma - lemma of the word or phrase`,
           `- lemmaPos - part of speech of the lemma in English`,

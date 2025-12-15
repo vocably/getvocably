@@ -17,12 +17,12 @@ export const buildDirectAnalyseBatch = ({
         (partOfSpeech.partOfSpeech.toLowerCase() !==
           partOfSpeech.lemmaPos.toLowerCase() ||
           partOfSpeech.lemma.toLowerCase() !==
-            partOfSpeech.source.toLowerCase())
+            partOfSpeech.headword.toLowerCase())
       ) {
         return [
           ...acc,
           {
-            source: partOfSpeech.source,
+            source: partOfSpeech.headword,
             partOfSpeech: partOfSpeech.partOfSpeech,
             sourceLanguage: translation.sourceLanguage,
             targetLanguage: translation.targetLanguage,
@@ -39,7 +39,7 @@ export const buildDirectAnalyseBatch = ({
       return [
         ...acc,
         {
-          source: partOfSpeech.source,
+          source: partOfSpeech.headword,
           partOfSpeech: partOfSpeech.partOfSpeech,
           sourceLanguage: translation.sourceLanguage,
           targetLanguage: translation.targetLanguage,

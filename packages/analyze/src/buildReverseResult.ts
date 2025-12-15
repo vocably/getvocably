@@ -33,7 +33,7 @@ export const buildReverseResultYes = async (
         reverseTranslation.lemmaPos
       ) {
         predefinedPartsOfSpeech.push({
-          source: reverseTranslation.target,
+          headword: reverseTranslation.target,
           lemma: reverseTranslation.lemma,
           lemmaPos: reverseTranslation.lemmaPos,
           partOfSpeech: reverseTranslation.partOfSpeech,

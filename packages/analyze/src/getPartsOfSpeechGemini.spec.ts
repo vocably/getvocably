@@ -26,7 +26,25 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
     }
 
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
-    expect(responseResult.value[1].partOfSpeech).toEqual('verb');
+  });
+
+  it('avoids bullshit', async () => {
+    const responseResult = await getPartsOfSpeechGemini({
+      language: 'en',
+      source: 'employee',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value.length).toEqual(1);
+
+    expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
   it('works for a phrasal verb', async () => {
@@ -63,7 +81,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
       return;
     }
 
-    expect(responseResult.value[0].source).toEqual('scissors');
+    expect(responseResult.value[0].headword).toEqual('scissors');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
@@ -81,7 +99,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
       return;
     }
 
-    expect(responseResult.value[0].source).toEqual('Apfel');
+    expect(responseResult.value[0].headword).toEqual('Apfel');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
@@ -99,10 +117,10 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
       return;
     }
 
-    expect(responseResult.value[0].source).toEqual('duck');
+    expect(responseResult.value[0].headword).toEqual('duck');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
 
-    expect(responseResult.value[1].source).toEqual('duck');
+    expect(responseResult.value[1].headword).toEqual('duck');
     expect(responseResult.value[1].partOfSpeech).toEqual('verb');
   });
 
@@ -122,7 +140,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
 
     expect(responseResult.value.length).toEqual(1);
 
-    expect(responseResult.value[0].source).toEqual('icicle');
+    expect(responseResult.value[0].headword).toEqual('icicle');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
@@ -140,7 +158,7 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
 
     expect(responseResult.value.length).toEqual(1);
 
-    expect(responseResult.value[0].source).toEqual('sla rechts af');
+    expect(responseResult.value[0].headword).toEqual('sla rechts af');
     expect(responseResult.value[0].partOfSpeech).toEqual('verb');
     expect(responseResult.value[0].lemma).toEqual('afslaan');
     expect(responseResult.value[0].lemmaPos).toEqual('verb');

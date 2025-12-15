@@ -10,7 +10,7 @@ export type GetPartsOfSpeechPayload = {
 };
 
 export type PartOfSpeech = {
-  source: string;
+  headword: string;
   partOfSpeech: string;
   lemma: string;
   lemmaPos: string;

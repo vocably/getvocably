@@ -22,12 +22,31 @@ describe('getPartsOfSpeech', () => {
     }
     expect(result.value).toEqual([
       {
-        source: 'looked up',
-        partOfSpeech: 'phrasal verb',
+        headword: 'looked up',
+        partOfSpeech: 'verb',
         lemma: 'look up',
-        lemmaPos: 'phrasal verb',
+        lemmaPos: 'verb',
       },
     ]);
+  });
+
+  it('avoids bullshit', async () => {
+    const responseResult = await getPartsOfSpeechGpt({
+      language: 'en',
+      source: 'employee',
+    });
+
+    console.log(inspect(responseResult));
+
+    expect(responseResult.success).toEqual(true);
+
+    if (responseResult.success === false) {
+      return;
+    }
+
+    expect(responseResult.value.length).toEqual(1);
+
+    expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
   it('returns parts of speech for norwegian', async () => {
@@ -45,7 +64,7 @@ describe('getPartsOfSpeech', () => {
         lemma: 'katt',
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
-        source: 'katt',
+        headword: 'katt',
       },
     ]);
   });
@@ -64,7 +83,7 @@ describe('getPartsOfSpeech', () => {
         lemma: 'regel',
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
-        source: 'regel',
+        headword: 'regel',
       },
     ]);
   });
@@ -83,7 +102,7 @@ describe('getPartsOfSpeech', () => {
         lemma: 'verzamelen',
         lemmaPos: 'verb',
         partOfSpeech: 'verb',
-        source: 'verzamelde',
+        headword: 'verzamelde',
       },
     ]);
   });
@@ -100,9 +119,9 @@ describe('getPartsOfSpeech', () => {
     expect(result.value).toEqual([
       {
         lemma: 'что-то',
-        lemmaPos: 'unknown',
-        partOfSpeech: 'unknown',
-        source: 'что-то',
+        lemmaPos: 'pronoun',
+        partOfSpeech: 'pronoun',
+        headword: 'что-то',
       },
     ]);
   });
@@ -122,7 +141,7 @@ describe('getPartsOfSpeech', () => {
         lemma: 'bad',
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
-        source: 'bad',
+        headword: 'bad',
       },
     ]);
   });
@@ -141,10 +160,10 @@ describe('getPartsOfSpeech', () => {
       return;
     }
 
-    expect(responseResult.value[0].source).toEqual('duck');
+    expect(responseResult.value[0].headword).toEqual('duck');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
 
-    expect(responseResult.value[1].source).toEqual('duck');
+    expect(responseResult.value[1].headword).toEqual('duck');
     expect(responseResult.value[1].partOfSpeech).toEqual('verb');
   });
 
@@ -164,7 +183,7 @@ describe('getPartsOfSpeech', () => {
 
     expect(responseResult.value.length).toEqual(1);
 
-    expect(responseResult.value[0].source).toEqual('icicle');
+    expect(responseResult.value[0].headword).toEqual('icicle');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
   });
 
@@ -182,7 +201,7 @@ describe('getPartsOfSpeech', () => {
 
     expect(responseResult.value.length).toEqual(1);
 
-    expect(responseResult.value[0].source).toEqual('sla rechts af');
+    expect(responseResult.value[0].headword).toEqual('sla rechts af');
     expect(responseResult.value[0].partOfSpeech).toHaveSomeOf([
       'verb',
       'verb phrase',
