@@ -124,6 +124,20 @@ describe('geminiAnalyzeUnitOfSpeech', () => {
     expect(responseResult.value[1].partOfSpeech).toEqual('verb');
   });
 
+  it('mather', async () => {
+    const responseResult = await getPartsOfSpeechGemini({
+      language: 'en',
+      source: 'mather',
+    });
+
+    expect(responseResult.success).toEqual(true);
+    if (responseResult.success === false) {
+      return;
+    }
+    expect(responseResult.value.length).toEqual(1);
+    expect(responseResult.value[0].exists).toEqual(false);
+  });
+
   it('omits insane verbs', async () => {
     const responseResult = await getPartsOfSpeechGemini({
       language: 'en',

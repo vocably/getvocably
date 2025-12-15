@@ -627,6 +627,20 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items[0].definitions.length).toBeGreaterThan(0);
   });
 
+  it('non existing word', async () => {
+    const result = await buildResult({
+      source: 'mather',
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+    });
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items[0].source).toEqual('mather');
+    expect(result.value.items[0].definitions.length).toEqual(0);
+  });
+
   it('fixes diacritic marks', async () => {
     const result = await buildResult({
       source: 'frere',

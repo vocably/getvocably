@@ -26,6 +26,7 @@ describe('getPartsOfSpeech', () => {
         partOfSpeech: 'verb',
         lemma: 'look up',
         lemmaPos: 'verb',
+        exists: true,
       },
     ]);
   });
@@ -65,6 +66,7 @@ describe('getPartsOfSpeech', () => {
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
         headword: 'katt',
+        exists: true,
       },
     ]);
   });
@@ -84,6 +86,7 @@ describe('getPartsOfSpeech', () => {
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
         headword: 'regel',
+        exists: true,
       },
     ]);
   });
@@ -103,6 +106,7 @@ describe('getPartsOfSpeech', () => {
         lemmaPos: 'verb',
         partOfSpeech: 'verb',
         headword: 'verzamelde',
+        exists: true,
       },
     ]);
   });
@@ -112,18 +116,11 @@ describe('getPartsOfSpeech', () => {
       source: 'что-то',
       language: 'nl',
     });
-    expect(result.success).toBeTruthy();
+    expect(result.success).toBeFalsy();
     if (!result.success) {
       return;
     }
-    expect(result.value).toEqual([
-      {
-        lemma: 'что-то',
-        lemmaPos: 'pronoun',
-        partOfSpeech: 'pronoun',
-        headword: 'что-то',
-      },
-    ]);
+    expect(result.value[0].exists).toBeFalsy();
   });
 
   it('bad(nl)', async () => {
@@ -142,6 +139,7 @@ describe('getPartsOfSpeech', () => {
         lemmaPos: 'noun',
         partOfSpeech: 'noun',
         headword: 'bad',
+        exists: true,
       },
     ]);
   });
@@ -185,6 +183,15 @@ describe('getPartsOfSpeech', () => {
 
     expect(responseResult.value[0].headword).toEqual('icicle');
     expect(responseResult.value[0].partOfSpeech).toEqual('noun');
+  });
+
+  it('mather', async () => {
+    const responseResult = await getPartsOfSpeechGpt({
+      language: 'en',
+      source: 'mather',
+    });
+
+    expect(responseResult.success).toEqual(true);
   });
 
   it('avoid splitting the word', async () => {

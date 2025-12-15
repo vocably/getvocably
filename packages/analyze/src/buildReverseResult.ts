@@ -37,6 +37,7 @@ export const buildReverseResultYes = async (
           lemma: reverseTranslation.lemma,
           lemmaPos: reverseTranslation.lemmaPos,
           partOfSpeech: reverseTranslation.partOfSpeech,
+          exists: true,
         });
       }
 

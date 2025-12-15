@@ -50,7 +50,7 @@ export const unitOfSpeechAnalysis = async ({
     });
 
     partsOfSpeech = partsOfSpeechResult.success
-      ? partsOfSpeechResult.value
+      ? partsOfSpeechResult.value.filter((p) => p.exists)
       : [];
   }
 

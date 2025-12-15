@@ -1,16 +1,11 @@
 import { chatGptRequest, GPT_4O } from '@vocably/lambda-shared';
 import { languageList, Result } from '@vocably/model';
 import { isArray } from 'lodash-es';
-import { GetPartsOfSpeechPayload, PartOfSpeech } from './getPartsOfSpeech';
-
-const isGptPartOfSpeech = (v: any): v is PartOfSpeech => {
-  return (
-    typeof v['headword'] === 'string' &&
-    typeof v['partOfSpeech'] === 'string' &&
-    typeof v['lemma'] === 'string' &&
-    typeof v['lemmaPos'] === 'string'
-  );
-};
+import {
+  GetPartsOfSpeechPayload,
+  isPartOfSpeech,
+  PartOfSpeech,
+} from './getPartsOfSpeech';
 
 export const getPartsOfSpeechGpt = async ({
   source,
@@ -23,6 +18,7 @@ export const getPartsOfSpeechGpt = async ({
     `Detect the possible parts of speech of the word and response with an array`,
     `Each element of array is a json object that must contain the following fields:`,
     `- headword - the word or phrase in ${languageList[language]} spelling fixed.`,
+    `- exists - true or false`,
     `- partOfSpeech - the part of speech of the word or phrase in English`,
     `- lemma - lemma of the word or phrase`,
     `- lemmaPos - part of speech of the lemma in English`,
@@ -46,7 +42,7 @@ export const getPartsOfSpeechGpt = async ({
     return responseResult;
   }
 
-  if (isGptPartOfSpeech(responseResult.value)) {
+  if (isPartOfSpeech(responseResult.value)) {
     return {
       success: true,
       value: [responseResult.value],
@@ -60,7 +56,7 @@ export const getPartsOfSpeechGpt = async ({
     };
   }
 
-  const analysisItems = responseResult.value.filter(isGptPartOfSpeech);
+  const analysisItems = responseResult.value.filter(isPartOfSpeech);
   if (analysisItems.length === 0) {
     return {
       success: false,
