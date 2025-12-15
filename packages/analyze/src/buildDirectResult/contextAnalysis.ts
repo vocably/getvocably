@@ -2,6 +2,7 @@ import {
   DetectedInputType,
   DirectAnalysis,
   GoogleLanguage,
+  isSuccess,
   Result,
   Translation,
   ValidAnalysisItems,
@@ -83,23 +84,32 @@ export const directContextAnalysis = async ({
     });
   }
 
-  const analyseResults = await Promise.all(
-    analysePayloads.map((payload) => analyseAndTranslate(payload))
-  );
+  const analyseResults = (
+    await Promise.all(
+      analysePayloads.map((payload) => analyseAndTranslate(payload))
+    )
+  ).filter(isSuccess);
 
   const resultItems: ValidAnalysisItems = [
     translationToAnalysisItem(contextAnalysisResult.value),
   ];
 
-  if (analyseResults[0].success === true) {
-    resultItems[0] = analyseResults[0].value;
+  if (analyseResults.length === 0) {
+    return {
+      success: true,
+      value: {
+        source: source,
+        targetLanguage: targetLanguage,
+        sourceLanguage: sourceLanguage,
+        translation: translation,
+        items: resultItems,
+      },
+    };
   }
 
-  analyseResults.slice(1).forEach((result) => {
-    if (result.success === false) {
-      return;
-    }
+  resultItems[0] = analyseResults[0].value;
 
+  analyseResults.slice(1).forEach((result) => {
     resultItems.push(result.value);
   });
 
