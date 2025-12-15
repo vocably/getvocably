@@ -63,13 +63,14 @@ $input-padding: 12px;
 
 .search-input {
   $height: 40px;
+  $submit-width: 40px;
   $border: none;
 
   position: relative;
 
   .input {
     padding-left: $input-padding;
-    padding-right: $input-padding;
+    padding-right: $submit-width;
     color: $v-light-color-body;
     border: $border;
     border-radius: $v-border-radius;
@@ -93,7 +94,7 @@ $input-padding: 12px;
     right: 0;
     top: 0;
     height: $height;
-    width: $height;
+    width: $submit-width;
     display: flex;
     align-items: center;
     justify-content: center;
