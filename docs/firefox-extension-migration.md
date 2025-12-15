@@ -2,6 +2,74 @@
 
 2025/12/15 Aiuanyu/GJRobert x Claude Code Opus 4.5 (@Antigravity)
 
+---
+
+## 實作進度
+
+### Phase 1: 基礎相容性修改 ✅ 完成 (2025/12/16 05:09)
+
+| 任務 | 狀態 | 說明 |
+|------|------|------|
+| 建立 Firefox Manifest | ✅ | `packages/extension/src/manifest.firefox.json.txt` |
+| 統一 service-worker.ts API | ✅ | `chrome.*` → `browserEnv` |
+| 統一 extension-stay-alive API | ✅ | `chrome.*` → `browserEnv` |
+| 確認 Offscreen fallback | ✅ | 已有完善機制，無需修改 |
+| 修改 Webpack 多目標建置 | ✅ | 支援 `TARGET_BROWSER=firefox` |
+| 新增建置指令 | ✅ | `npm run build:firefox` |
+
+**Commits:**
+- `e6af5bdc` docs: add Firefox extension migration evaluation
+- `b75b7ecc` feat(extension): add Firefox extension support (Phase 1)
+
+### 建置測試 ✅ 成功
+
+```bash
+# 安裝依賴
+npm install
+
+# 建置內部 packages (依序)
+npm run build --workspace=@vocably/sulna
+npm run build --workspace=@vocably/model
+npm run build --workspace=@vocably/webpack
+npm run build --workspace=@vocably/extension-messages
+npm run build --workspace=@vocably/extension-stay-alive
+npm run build --workspace=@vocably/extension-service-worker
+npm run build --workspace=@vocably/extension-content-ui
+npm run build --workspace=@vocably/extension-content-script
+cd packages/extension-popup && npm run build-dev && cd ../..
+
+# 建置 Firefox extension
+cd packages/extension && npm run build:firefox
+```
+
+**輸出目錄**: `packages/extension/dist-firefox/`
+
+```
+dist-firefox/
+├── manifest.json       # Firefox 專用 manifest
+├── content-script.js   # 909 KB
+├── service-worker.js   # 2.04 MB
+├── play-audio.js
+├── play-audio.html
+├── popup/              # Angular popup UI
+└── images/             # 擴充套件圖示
+```
+
+### Phase 2: External Communication 替代方案 ⏳ 待定
+
+`externally_connectable` 用於讓 `app.vocably.pro` 偵測是否安裝擴充套件。
+此為輔助功能，可視需求決定是否實作。
+
+### Phase 4: 測試 ⏳ 待進行
+
+在 Firefox 載入測試：
+1. 開啟 `about:debugging`
+2. 點擊「This Firefox」
+3. 點擊「Load Temporary Add-on...」
+4. 選擇 `packages/extension/dist-firefox/manifest.json`
+
+---
+
 ## 一、Chrome Extension 原始碼位置
 
 本專案的 Chrome Extension 採用模組化架構，分散在多個 packages 中：
@@ -142,37 +210,35 @@ if (details.reason === 'install') {
 
 ## 四、轉換步驟規劃
 
-### Phase 1: 基礎相容性修改
+### Phase 1: 基礎相容性修改 ✅
 
-#### Step 1.1: 建立 Firefox Manifest
-- [ ] 複製 `manifest.json.txt` 為 `manifest.firefox.json.txt`
-- [ ] 移除 `externally_connectable` 欄位
-- [ ] 移除 `offscreen` 權限
-- [ ] 新增 Firefox 特有欄位：
+#### Step 1.1: 建立 Firefox Manifest ✅
+- [x] 複製 `manifest.json.txt` 為 `manifest.firefox.json.txt`
+- [x] 移除 `externally_connectable` 欄位
+- [x] 移除 `offscreen` 權限
+- [x] 新增 Firefox 特有欄位：
   ```json
   "browser_specific_settings": {
     "gecko": {
-      "id": "vocably@vocably.pro",
+      "id": "{{ process.env.FIREFOX_EXTENSION_ID }}",
       "strict_min_version": "109.0"
     }
   }
   ```
 
-#### Step 1.2: 統一 Browser API 抽象
-- [ ] 修改 `packages/extension/src/service-worker.ts`
+#### Step 1.2: 統一 Browser API 抽象 ✅
+- [x] 修改 `packages/extension/src/service-worker.ts`
   - 將 `chrome.runtime.onInstalled` 改為 `browserEnv.runtime.onInstalled`
   - 將 `chrome.runtime.setUninstallURL` 改為 `browserEnv.runtime.setUninstallURL`
   - 將 `chrome.storage.sync` 改為 `browserEnv.storage.sync`
   - 將 `chrome.runtime.OnInstalledReason.INSTALL` 改為字串 `'install'`
 
-- [ ] 修改 `packages/extension-stay-alive/src/index.ts`
+- [x] 修改 `packages/extension-stay-alive/src/index.ts`
   - 將所有 `chrome.*` 呼叫改為 `browserEnv`
 
-#### Step 1.3: Offscreen API 適配
-- [ ] 修改 `packages/extension/src/browserEnv.ts`
-  - 增強 `hasOffscreen` 檢查，確保 Firefox 環境回傳 `false`
-
-- [ ] 確認 `canPlayOffScreen` 邏輯在 Firefox 正確運作
+#### Step 1.3: Offscreen API 適配 ✅
+- [x] 確認 `hasOffscreen` 檢查已正確實作（檢查 `browserEnv['offscreen']` 是否存在）
+- [x] 確認 `canPlayOffScreen` 邏輯在 Firefox 正確運作（Firefox 會回傳 `false`，自動使用 fallback）
 
 ### Phase 2: External Communication 替代方案
 
@@ -185,27 +251,28 @@ if (details.reason === 'install') {
 - [ ] 修改 app.vocably.pro 與擴充套件的通訊方式
 - [ ] 使用 `postMessage` 取代 `chrome.runtime.sendMessage`
 
-### Phase 3: 建置流程調整
+### Phase 3: 建置流程調整 ✅
 
-#### Step 3.1: 修改 Webpack 設定
-- [ ] 新增 Firefox 建置目標
-- [ ] 建立環境變數切換機制 (`TARGET_BROWSER=firefox`)
+#### Step 3.1: 修改 Webpack 設定 ✅
+- [x] 新增 Firefox 建置目標
+- [x] 建立環境變數切換機制 (`TARGET_BROWSER=firefox`)
+- [x] 新增 `dist-firefox/` 到 `.gitignore`
 
 ```javascript
-// webpack.config.js 修改建議
-const isFirefox = process.env.TARGET_BROWSER === 'firefox';
-const manifestFile = isFirefox
-  ? 'manifest.firefox.json.txt'
-  : 'manifest.json.txt';
+// webpack.config.js (已實作)
+const targetBrowser = process.env.TARGET_BROWSER || 'chrome';
+const isFirefox = targetBrowser === 'firefox';
+const manifestFile = isFirefox ? 'manifest.firefox.json.txt' : 'manifest.json.txt';
+const outputDir = isFirefox ? 'dist-firefox' : 'dist';
 ```
 
-#### Step 3.2: 新增建置指令
-- [ ] 在 `package.json` 新增：
+#### Step 3.2: 新增建置指令 ✅
+- [x] 在 `package.json` 新增：
   ```json
   {
     "scripts": {
       "build:firefox": "TARGET_BROWSER=firefox webpack --env production",
-      "build:chrome": "webpack --env production"
+      "start:firefox": "TARGET_BROWSER=firefox webpack --watch --env development"
     }
   }
   ```
