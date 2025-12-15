@@ -12,6 +12,12 @@ const webpack = require('webpack');
 
 const environmentVariables = getEnvironmentVariables();
 
+// Support for building Firefox extension via TARGET_BROWSER env variable
+const targetBrowser = process.env.TARGET_BROWSER || 'chrome';
+const isFirefox = targetBrowser === 'firefox';
+const manifestFile = isFirefox ? 'manifest.firefox.json.txt' : 'manifest.json.txt';
+const outputDir = isFirefox ? 'dist-firefox' : 'dist';
+
 const prodConfig = {
   mode: 'production',
   entry: {
@@ -37,7 +43,7 @@ const prodConfig = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, outputDir),
   },
   plugins: [
     new webpack.BannerPlugin(
@@ -63,7 +69,7 @@ const prodConfig = {
         },
         { from: '.', to: '.', context: 'assets' },
         {
-          from: 'manifest.json.txt',
+          from: manifestFile,
           to: 'manifest.json',
           context: 'src',
           transform(content) {

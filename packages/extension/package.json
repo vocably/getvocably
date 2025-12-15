@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "build": "webpack --env production",
+    "build:firefox": "TARGET_BROWSER=firefox webpack --env production",
     "start": "webpack --watch --env development",
+    "start:firefox": "TARGET_BROWSER=firefox webpack --watch --env development",
     "test": "echo '@vocably/extension has no tests.'",
     "extension": "npm start"
   },
