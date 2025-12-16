@@ -40,7 +40,9 @@ export class VocablyCardDefinitions {
       <ul class="vocably-list">
         {this.card.data.translation && <li>{this.renderTranslation()}</li>}
         {definitions.map((item) => (
-          <li>{item}</li>
+          <li>
+            <vocably-translated-line line={item}></vocably-translated-line>
+          </li>
         ))}
       </ul>
     );

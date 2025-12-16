@@ -50,9 +50,9 @@ const simpletonTranslationResult: Result<TranslationCards> = {
           ipa: "xə'mak",
           translation: 'created, done',
           definition:
-            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
+            '* (iets dat nog niet bestond) laten ontstaan [to bring into existence something that did not yet exist]\n* (iets dat kapot is) zorgen dat het weer heel is [(something that is broken) to make it whole again]',
           example:
-            '* Bij een gemaakte glimlach lachen onze ogen niet mee.\n* De klok is weer gemaakt.',
+            "Bij een gemaakte glimlach lachen onze ogen niet mee. [When we fake a smile, our eyes don't smile along with us.]",
           partOfSpeech: 'verb',
           g: 'n',
           tags: [],
@@ -108,9 +108,10 @@ const successfulTranslationResult: Result<TranslationCards> = {
           language: 'nl',
           source: 'maken',
           ipa: "'makə(n)",
-          example: '* winst maken\n* De klok is weer gemaakt.',
+          example:
+            '* winst maken [make a profit]\n* De klok is weer gemaakt. [The clock has been repaired again.]',
           definition:
-            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
+            '* (iets dat nog niet bestond) laten ontstaan [to bring into existence something that did not yet exist]\n* (iets dat kapot is) zorgen dat het weer heel is [(something that is broken) to make it whole again]',
           translation: 'to make',
           partOfSpeech: 'verb',
           tags: [
@@ -124,8 +125,10 @@ const successfulTranslationResult: Result<TranslationCards> = {
           language: 'nl',
           source: 'gemaakt',
           ipa: "xə'mak",
-          example: 'Bij een gemaakte glimlach lachen onze ogen niet mee.',
-          definition: 'als iets niet natuurlijk is of gebeurt',
+          example:
+            "Bij een gemaakte glimlach lachen onze ogen niet mee. [When we fake a smile, our eyes don't smile along with us.]",
+          definition:
+            'als iets niet natuurlijk is of gebeurt [if something is not natural or does not happen]',
           translation: 'created, done',
           partOfSpeech: 'adjective',
           tags: [],

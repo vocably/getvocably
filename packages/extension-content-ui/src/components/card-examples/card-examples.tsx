@@ -13,11 +13,15 @@ export class VocablyCardExamples {
 
     return (
       <div>
-        {examples.length === 1 && examples[0]}
+        {examples.length === 1 && (
+          <vocably-translated-line line={examples[0]}></vocably-translated-line>
+        )}
         {examples.length > 1 && (
           <ul class="vocably-list">
             {examples.map((item) => (
-              <li>{item}</li>
+              <li>
+                <vocably-translated-line line={item}></vocably-translated-line>
+              </li>
             ))}
           </ul>
         )}

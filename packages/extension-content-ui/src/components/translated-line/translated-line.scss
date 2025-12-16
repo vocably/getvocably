@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+:host {
+  display: inline-block;
+}
+
+.translation {
+  &::before {
+    content: ' - ';
+  }
+
+  font-style: italic;
+}
