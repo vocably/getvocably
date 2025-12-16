@@ -55,10 +55,18 @@ dist-firefox/
 └── images/             # 擴充套件圖示
 ```
 
-### Phase 2: External Communication 替代方案 ⏳ 待定
+### Phase 2: External Communication 替代方案 ✅ 完成 (2025/12/16 21:30)
 
-`externally_connectable` 用於讓 `app.vocably.pro` 偵測是否安裝擴充套件。
-此為輔助功能，可視需求決定是否實作。
+實作 Content Script Bridge 解決 Firefox 不支援 `externally_connectable` 的問題。
+
+**新增/修改檔案**：
+- `packages/extension/src/external-bridge.ts` (新增) - Content Script 橋接器
+- `packages/extension/src/manifest.firefox.json.txt` - 加入 external-bridge content script
+- `packages/extension/webpack.config.js` - 加入 external-bridge entry point
+- `packages/app/src/firefox-auth-storage.ts` (新增) - Firefox 專用的 Auth Storage
+- `packages/app/src/browser.ts` - 加入 `isFirefox` 檢測
+- `packages/app/src/auth-config.ts` - Firefox 使用 `FirefoxAppAuthStorage`
+- `packages/app/src/extension.ts` - `canExtensionBeInstalled` 加入 Firefox
 
 ### Phase 4: 測試 ⏳ 待進行
 

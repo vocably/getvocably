@@ -31,7 +31,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["content-script.js", "play-audio.js"],
+      "js": ["external-bridge.js", "content-script.js", "play-audio.js"],
       "all_frames": true
     }
   ],

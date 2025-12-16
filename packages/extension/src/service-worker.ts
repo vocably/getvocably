@@ -60,3 +60,58 @@ browserEnv.runtime.setUninstallURL('https://app.vocably.pro/page/uninstall');
 window.clearStorage = () => {
   browserEnv.storage.local.clear();
 };
+
+// Firefox: Handle messages from content script bridge (external-bridge.ts)
+// This is needed because Firefox doesn't support externally_connectable
+browserEnv.runtime.onMessage.addListener(
+  (
+    message: { identifier: string; data: unknown },
+    _sender: chrome.runtime.MessageSender,
+    sendResponse: (response: unknown) => void
+  ) => {
+    const { identifier, data } = message;
+
+    // Handle authStorage messages
+    if (identifier === 'authStorage.setItem') {
+      const { key, value } = data as { key: string; value: string };
+      browserEnv.storage.local.set({ [key]: value }).then(() => {
+        console.log('[ServiceWorker] authStorage.setItem:', key);
+        sendResponse({ success: true });
+      });
+      return true; // Keep the message channel open for async response
+    }
+
+    if (identifier === 'authStorage.removeItem') {
+      const key = data as string;
+      browserEnv.storage.local.remove(key).then(() => {
+        console.log('[ServiceWorker] authStorage.removeItem:', key);
+        sendResponse({ success: true });
+      });
+      return true;
+    }
+
+    if (identifier === 'authStorage.clear') {
+      browserEnv.storage.local.clear().then(() => {
+        console.log('[ServiceWorker] authStorage.clear');
+        sendResponse({ success: true });
+      });
+      return true;
+    }
+
+    if (identifier === 'authStorage.getAll') {
+      browserEnv.storage.local.get(null).then((items) => {
+        console.log('[ServiceWorker] authStorage.getAll:', Object.keys(items));
+        sendResponse(items);
+      });
+      return true;
+    }
+
+    if (identifier === 'ping') {
+      sendResponse('pong');
+      return false;
+    }
+
+    // Let other handlers process the message
+    return false;
+  }
+);

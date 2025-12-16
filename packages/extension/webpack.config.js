@@ -18,13 +18,22 @@ const isFirefox = targetBrowser === 'firefox';
 const manifestFile = isFirefox ? 'manifest.firefox.json.txt' : 'manifest.json.txt';
 const outputDir = isFirefox ? 'dist-firefox' : 'dist';
 
+// Firefox needs external-bridge for web page ↔ extension communication
+// (Chrome uses externally_connectable instead)
+const baseEntries = {
+  'content-script': './src/content-script.ts',
+  'service-worker': './src/service-worker.ts',
+  'play-audio': './src/play-audio.ts',
+};
+
+const firefoxEntries = {
+  ...baseEntries,
+  'external-bridge': './src/external-bridge.ts',
+};
+
 const prodConfig = {
   mode: 'production',
-  entry: {
-    'content-script': './src/content-script.ts',
-    'service-worker': './src/service-worker.ts',
-    'play-audio': './src/play-audio.ts',
-  },
+  entry: isFirefox ? firefoxEntries : baseEntries,
   module: {
     rules: [
       {
