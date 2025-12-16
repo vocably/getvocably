@@ -343,3 +343,186 @@ import browser from 'webextension-polyfill';
 3. **External Communication 替代** - 若需要 `externally_connectable` 功能
 
 建議優先完成 Phase 1，即可產出可運作的 Firefox 版本，再根據實際需求決定是否實作 Phase 2。
+
+## Debugging
+
+### 1. 載入暫時附加元件錯誤
+```
+安裝暫用附加元件時發生錯誤。
+錯誤詳細資訊
+
+Extension is invalid
+
+Reading manifest: Error processing browser_specific_settings.gecko.id: Value "{{ process.env.FIREFOX_EXTENSION_ID }}" must either: match the pattern /^\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}$/i, or match the pattern /^[a-z0-9-._]*@[a-z0-9-._]+$/i
+```
+
+**原因**：`FIREFOX_EXTENSION_ID` 環境變數未設定，模板字串未被替換。
+
+**解決**：將 `manifest.firefox.json.txt` 中的 `gecko.id` 改為固定值：
+```json
+"browser_specific_settings": {
+  "gecko": {
+    "id": "vocably-extension@vocably.pro",
+    "strict_min_version": "109.0"
+  }
+}
+```
+
+Firefox extension ID 必須符合以下格式之一：
+- UUID: `{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}`
+- Email-like: `name@domain`
+
+### 2. background.service_worker is currently disabled
+
+**原因**：Firefox MV3 使用 `background.scripts` 而非 Chrome 的 `background.service_worker`。
+
+**解決**：修改 `manifest.firefox.json.txt`：
+```json
+// Chrome (manifest.json.txt)
+"background": {
+  "service_worker": "service-worker.js"
+}
+
+// Firefox (manifest.firefox.json.txt)
+"background": {
+  "scripts": ["service-worker.js"]
+}
+```
+
+### 3. content_scripts.0.exclude_matches
+
+> Extension is invalid
+>
+> Reading manifest: Error processing content_scripts.0.exclude_matches: Array requires at least 1 items; you have 0
+
+**原因**：`CONTENT_SCRIPT_EXCLUDED_MATCHES` 環境變數未設定，產生空陣列 `[]`。Firefox 不允許空的 `exclude_matches`。
+
+**解決**：從 Firefox manifest 移除 `exclude_matches` 欄位：
+```json
+"content_scripts": [
+  {
+    "matches": ["*://*/*"],
+    "js": ["content-script.js", "play-audio.js"],
+    "all_frames": true
+  }
+]
+```
+
+### 4. 登入導到開發頁面
+<sup>20251216 8:00</sup> 來測試 Claude 做好的初版！
+1. 工具列按鈕可以用！
+2. 可以導到登入頁面！
+3. 登入卻是空頁面 → https://app.dev.env.vocably.pro/welcome 是因為這是開發版嗎？而且，工具列按鈕也沒有變成已登入的狀態
+
+**原因**：Popup 使用 `npm run build-dev` 建置，導致環境變數指向開發環境 (`app.dev.env.vocably.pro`)。
+
+查看 `packages/extension-popup/package.json` 中的建置指令：
+```json
+"build-dev": "ng build --configuration development",
+"build-prod": "ng build --configuration production"
+```
+
+開發環境的設定檔 (`packages/extension-popup/src/environments/environmentLocal.ts`) 使用：
+```typescript
+appBaseUrl: 'https://app.dev.env.vocably.pro'
+```
+
+**解決**：使用 production 建置指令重新編譯 popup：
+```bash
+cd packages/extension-popup && npm run build-prod && cd ../..
+cd packages/extension && npm run build:firefox
+```
+
+這樣 popup 會使用 `environment.prod.ts` 中正確的 production URL (`https://app.vocably.pro`)。
+
+### 5. 順利導到 production 頁面登入，但工具列按鈕沒有變成已登入的狀態
+
+**原因**：
+
+**可能原因**：
+
+Chrome 與 Firefox 的 `storage.sync` 和 background script 行為差異：
+
+1. **Background Script 類型差異**：
+   - Chrome MV3: 使用 `service_worker`，每次啟動都是全新的執行環境
+   - Firefox: 使用 `background.scripts`，可能保持較長的生命週期
+   
+2. **Storage.sync API 差異**：
+   - Firefox 的 `browser.storage.sync` 需要額外權限或配置
+   - Chrome 的 `chrome.storage.sync` 會自動與 Google 帳號同步
+   - Firefox 可能需要 Firefox Account 登入或使用 `storage.local` 替代
+
+3. **AWS Amplify Auth 狀態儲存問題**：
+   - `registerExtensionStorage('sync')` 使用 `storage.sync` 儲存 AWS Cognito tokens
+   - Firefox 的 `storage.sync` 可能無法正確寫入或讀取 auth tokens
+   - Auth session 無法正確恢復，導致 `Auth.currentSession()` 失敗
+
+4. **`isLoggedIn$` Observable 輪詢機制**：
+   ```typescript
+   export const isLoggedIn$: Observable<boolean> = timer(0, 2000).pipe(
+     switchMap(async () => {
+       return await Auth.currentSession()
+         .then(() => true)
+         .catch(() => false);
+     }),
+     distinctUntilChanged()
+   );
+   ```
+   每 2 秒檢查一次登入狀態，但如果 storage 無法正確讀取，會一直回傳 `false`。
+
+**調查步驟**：
+
+1. 開啟 Firefox DevTools → Storage → Extension Storage，檢查是否有 AWS Cognito 相關的 keys
+2. 查看 service-worker console 是否有錯誤訊息
+3. 測試 `browser.storage.sync` vs `browser.storage.local` 的讀寫
+
+**建議解決方案**：
+
+#### 方案 A：改用 `storage.local`（推薦）
+
+修改 `packages/extension/src/service-worker.ts`：
+
+```typescript
+// 將 'sync' 改為 'local'
+const storage = registerExtensionStorage('local');
+```
+
+Firefox 的 `storage.local` 更穩定，且不需要額外的同步帳號配置。
+
+#### 方案 B：確保 Firefox 支援 `storage.sync`
+
+在 `manifest.firefox.json.txt` 中確認 `storage` 權限已正確設定：
+
+```json
+"permissions": [
+  "storage",
+  "contextMenus"
+]
+```
+
+並在 Firefox 中測試 storage.sync 是否可用：
+
+```javascript
+// 在 service-worker console 測試
+await browser.storage.sync.set({ test: 'value' });
+const result = await browser.storage.sync.get('test');
+console.log(result); // 應該顯示 { test: 'value' }
+```
+
+#### 方案 C：建立 Firefox 專用的 storage 配置
+
+建立條件判斷，根據瀏覽器選擇 storage 類型：
+
+```typescript
+const isFirefox = typeof browser !== 'undefined' && typeof chrome === 'undefined';
+const storage = registerExtensionStorage(isFirefox ? 'local' : 'sync');
+```
+
+**驗證方法**：
+
+登入後，在 service-worker console 執行：
+```javascript
+Auth.currentSession()
+  .then(session => console.log('✅ Logged in:', session))
+  .catch(err => console.error('❌ Not logged in:', err));
+```
