@@ -144,9 +144,12 @@ const loadSearchValues = async (searchValues: SearchValues) => {
   localStorage.setItem('sourceLanguage', searchValues.sourceLanguage);
   localStorage.setItem('targetLanguage', searchValues.targetLanguage);
 
-  const analyzeResult = await analyze(
-    searchValuesToAnalyzePayload(searchValues)
-  );
+  const analyzeResult = await analyze({
+    ...searchValuesToAnalyzePayload(searchValues),
+    settings: {
+      translateDefinitionsAndExamples: true,
+    },
+  });
 
   const translation = document.createElement(
     'vocably-translation'

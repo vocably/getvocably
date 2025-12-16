@@ -12,13 +12,9 @@ import { unitOfSpeechAnalysis } from './buildDirectResult/unitOfSpeechAnalysis';
 import { detectInputTypeAi } from './detectInputTypeAi';
 import { sanitizePayload } from './sanitizePayload';
 
-type Options = {
-  payload: DirectAnalyzePayload;
-};
-
-export const buildDirectResult = async ({
-  payload: rawPayload,
-}: Options): Promise<Result<DirectAnalysis>> => {
+export const buildDirectResult = async (
+  rawPayload: DirectAnalyzePayload
+): Promise<Result<DirectAnalysis>> => {
   const payload = sanitizePayload(rawPayload);
 
   const detectedTypeResult = await detectInputTypeAi({

@@ -28,17 +28,23 @@ export const isAiTranslation = (
   );
 };
 
+type TranslationSettings = {
+  translateDefinitionsAndExamples?: boolean;
+};
+
 export type DirectAnalyzePayload = {
   source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
   context?: string;
+  settings?: TranslationSettings;
 };
 
 export type ReverseAnalyzePayload = {
   target: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
+  settings?: TranslationSettings;
 };
 
 export type AnalyzePayload = DirectAnalyzePayload | ReverseAnalyzePayload;
