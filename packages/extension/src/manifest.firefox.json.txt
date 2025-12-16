@@ -38,6 +38,13 @@
 
   "permissions": ["storage", "contextMenus"{{ process.env.EXTRA_PERMISSIONS }}],
 
+  "web_accessible_resources": [
+    {
+      "resources": ["popup-frame.html", "popup-frame.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
   {{ process.env.HOST_PERMISSIONS }}
   "background": {
     "scripts": ["service-worker.js"]

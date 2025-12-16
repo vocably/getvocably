@@ -443,6 +443,8 @@ cd packages/extension && npm run build:firefox
 
 這樣 popup 會使用 `environment.prod.ts` 中正確的 production URL (`https://app.vocably.pro`)。
 
+> ![tip] 12/16 8:00 多 Claude Code Opus 4.5 用爆 5 小時額度，這之後換用 Antigravity Opus 4.5
+
 ### 5. 順利導到 production 頁面登入，但工具列按鈕沒有變成已登入的狀態
 
 **原因**：
@@ -854,10 +856,11 @@ Promise { <state>: "pending" }
 
 Auth keys: 0
 ```
-
+> ![tip] 12/16 16:11 從 Antigravity Opus 4.5 換回 Claude Opus 4.5
+> 以下是 Claude Code 那邊寫的
 ---
 
-### 🔴 根本原因分析 (Claude Opus 4.5) <sup>20251216 21:00</sup>
+### 🔴 根本原因分析 (Claude Opus 4.5) <sup>20251216 16:11</sup>
 
 經過深入調查，這是一個**架構層級的問題**，不是簡單的 API 差異。
 
@@ -1163,7 +1166,7 @@ export const authConfig = {
 
 ---
 
-## 🔧 17:41 Opus 接力 (Gemini Sonnet → Opus)
+## 🔧 17:41 Opus 接力 (Claude Code Opus 4.5 → Antigravity Opus 4.5)
 
 ### 問題
 Claude Code Opus 4.5 在修改 `service-worker.ts` 加入 `authStorage.*` 訊息處理器後，因用量限制未完成建置。
@@ -1511,6 +1514,8 @@ Firefox 不支援 Chrome 的 `externally_connectable` API，在 Chrome 中：
   - 加入啟動、註冊、成功/失敗 logging
   - 加入 try-catch error handling
 
+> ![tip] 這之後是 Antigravity 串的 Sonnet 4.5
+
 ### 6️⃣ Custom Elements 時序問題 (測試中)
 **問題**：`NotSupportedError: Cannot execute callback from a nuked compartment`  
 **假設**：`defineCustomElements()` 是 async 但沒有 await  
@@ -1669,3 +1674,668 @@ const button = targetDocument.createElement(
 1. 檢查 custom elements 是否成功註冊（`customElements.get('vocably-button')`）
 2. 嘗試在 wrappedJSObject context 中註冊 custom elements
 3. 考慮徹底重構為不使用 custom elements 的方案
+
+---
+
+## 🔴 決定性診斷：DeadObject (2025-12-16 21:17)
+
+### 診斷結果
+在 Firefox console 執行 `customElements.get('vocably-button')` 返回：
+```
+DeadObject { }
+```
+
+### 🚨 結論：Stencil.js 與 Firefox Content Script **根本不相容**
+
+**DeadObject 的意義**：
+- Firefox 特有的錯誤類型
+- 表示物件已經在其原始 compartment 中失效
+- Custom element 註冊後**立即**變成 DeadObject
+- **無法**通過 wrappedJSObject 或其他 workaround 修復
+
+**技術原因**：
+1. Stencil.js `defineCustomElements()` 在 content script 的 isolated world 中執行
+2. Custom elements 被註冊到 content script 的 `customElements` registry
+3. Firefox 的 compartment isolation 導致這些 custom elements 立即失效
+4. 創建元素時觸發 DeadObject 的方法調用 → "nuked compartment" 錯誤
+
+### 📊 可行方案評估
+
+#### ❌ 已嘗試且失敗的方案
+1. ✗ await defineCustomElements() - 時序問題（無效）
+2. ✗ wrappedJSObject workaround - DeadObject 無法繞過（無效）
+3. ✗ Firefox polyfills - 無法解決根本架構問題（無效）
+
+#### ✅ 剩餘可行方案
+
+**方案 1：注入到頁面 context (最快)**
+- 將 Stencil.js components 注入到頁面的 main world
+- 使用 `<script>` tag injection 或 Firefox `scripting.executeScript` with `world: MAIN`
+- ⚠️ 缺點：失去 extension API 訪問權限
+- ⏱️ 實作時間：1-2 小時
+- 🎯 成功率：**高**
+
+**方案 2：重寫為原生 DOM (徹底但耗時)**
+- 完全移除 Stencil.js 依賴
+- 使用原生 DOM API 重寫所有 UI components
+- ✅ 優點：完全相容、無依賴
+- ⏱️ 實作時間：1-2 週
+- 🎯 成功率：**極高**
+
+**方案 3：使用 iframe 隔離 (折衷)**
+- 將 Vocably UI 放在 extension 管理的 iframe 中
+- iframe 使用 extension page context (非 content script)
+- ⏱️ 實作時間：4-6 小時
+- 🎯 成功率：**高**
+
+**方案 4：放棄 Firefox support (最省力)**
+- 專注 Chrome/Edge extension
+- Firefox 列為 "未來 roadmap"
+- ⏱️ 實作時間：0 小時
+- 🎯 成功率：N/A
+
+---
+
+## 💭 建議與總結 (2025-12-16 21:20)
+
+### 現況評估
+經過深入診斷，**Stencil.js custom elements 與 Firefox content script 存在根本性架構衝突**。已投入大量時間修復 CSP、XrayWrapper、compartment 等問題，但核心的 DeadObject 問題無法通過 workaround 解決。
+
+### 我的建議
+基於工作量與效益比：
+
+**短期**：選擇 **方案 4** (放棄 Firefox support)
+- 專注讓 Chrome extension 功能完善
+- 節省數週開發時間
+- Firefox 用戶基數相對較小
+
+**中期**（若必須支援 Firefox）：選擇 **方案 1** (注入到頁面 context)
+- 最快可行的 Firefox 支援方案
+- 1-2 小時即可驗證可行性
+- 需要重新設計 extension ↔ page 通訊
+
+**長期**：若 Firefox 成為重要市場，考慮 **方案 2** (重寫原生 DOM)
+- 徹底解決相容性問題
+- 提升效能和維護性
+- 需要顯著的開發投入
+
+### 你的決定？
+請告訴我你希望：
+1. **暫停** Firefox extension 開發，專注 Chrome
+2. **繼續嘗試** 方案 1 (頁面注入)
+3. **規劃** 長期重構 (原生 DOM)
+4. 其他想法
+
+### 討論
+1. 頁面注入，所謂的`失去 extension API 訪問權限`會造成什麼不良影響？
+2. 原生 DOM，1～2 週是每天幾小時？XD
+3. 方案 3 iframe 隔離你沒什麼討論，有什麼進一步資訊嗎？
+
+---
+
+## 📋 方案詳細分析 (2025-12-16 21:25)
+
+### 方案 1：頁面注入 - 詳細影響分析
+
+#### 失去的 Extension API 訪問權限及影響
+
+**無法直接使用的 API**：
+1. `browser.storage` - 無法讀寫 extension storage
+2. `browser.runtime.sendMessage` - 無法與 service worker 通訊
+3. `browser.tabs` - 無法操作或查詢 tabs
+
+**對 Vocably 的具體影響**：
+1. **❌ 無法儲存翻譯卡片**
+   - 目前使用 `browser.storage` 儲存用戶的翻譯記錄
+   - 需要改用 `window.postMessage` 傳回 content script，再由 content script 儲存
+
+2. **❌ 無法訪問用戶設定**
+   - 語言設定、API keys 等存在 extension storage
+   - 需要 content script 作為中介讀取並傳入
+
+3. **❌ 無法直接呼叫 API**
+   - 如果 API 需要 CORS 豁免，只能在 service worker/content script 中呼叫
+   - 翻譯 API 請求需要透過 content script 轉發
+
+4. **✅ 仍可使用的功能**
+   - Stencil.js UI 渲染（這是主要目的）
+   - 用戶互動、選取文字、顯示彈窗
+   - 本地 DOM 操作
+
+**解決方案**：雙向通訊架構
+```
+Page Context (Stencil.js)
+    ↕ window.postMessage
+Content Script (橋接層)
+    ↕ browser.runtime.sendMessage
+Service Worker (API & Storage)
+```
+
+**額外工作量**：
+- 建立完整的 message protocol
+- Content script 需要實作所有 API proxy
+- ⏱️ 估計額外 2-3 小時
+
+---
+
+### 方案 2：原生 DOM 重寫 - 工作量估計
+
+#### 詳細工作量分析
+
+假設**每天 4-6 小時**的有效開發時間：
+
+**第 1-2 天：UI Components 重寫 (8-12 小時)**
+- `vocably-button`: 翻譯按鈕 → 原生 button + CSS
+- `vocably-popup`: 彈窗容器 → 原生 div + positioning logic
+- `vocably-translation`: 翻譯結果卡片 → HTML template
+
+**第 3-4 天：複雜 Components (8-12 小時)**
+- `vocably-search-form`: 搜尋表單
+- `vocably-language`: 語言選擇器
+- `vocably-tags-menu`: 標籤管理
+
+**第 5-6 天：樣式和動畫 (8-12 小時)**
+- CSS transitions/animations（Stencil.js 有內建）
+- Responsive layout
+- Dark mode support（如果有的話）
+
+**第 7 天：整合測試 (4-6 小時)**
+- 跨瀏覽器測試
+- 邊界情況處理
+- Bug fixes
+
+**總工時**：28-42 小時
+- 如果每天 4 小時 → 7-10 天
+- 如果每天 6 小時 → 5-7 天
+- **保守估計：1-2 週**（含 buffer）
+
+**優點**：
+- ✅ 一勞永逸，完全相容
+- ✅ 更小的 bundle size（移除 Stencil.js runtime）
+- ✅ 更好的控制和 debuggability
+
+---
+
+### 方案 3：iframe 隔離 - 詳細技術方案
+
+#### 架構設計
+
+**基本概念**：
+```
+網頁 DOM
+  └─ Content Script 注入
+      └─ <iframe src="chrome-extension://[id]/popup.html">
+            └─ Extension Context（非 content script）
+                └─ Stencil.js Components ✅ 正常運作
+```
+
+#### 為什麼 iframe 可以解決問題？
+
+1. **iframe 的 src 指向 extension 內部頁面**
+   - 不是 content script context
+   - 不是頁面 context
+   - 是**獨立的 extension page context**
+
+2. **Extension page context 的特性**：
+   - ✅ 可以使用所有 extension APIs
+   - ✅ 沒有 compartment isolation 問題
+   - ✅ Stencil.js custom elements 正常運作
+   - ✅ 完整的 `browser.*` API 訪問權限
+
+#### 實作細節
+
+**1. 創建 popup HTML 頁面**
+```html
+<!-- extension/src/popup-iframe.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="module" src="./popup-iframe.js"></script>
+</head>
+<body>
+  <vocably-translation id="translation"></vocably-translation>
+</body>
+</html>
+```
+
+**2. Content Script 動態創建 iframe**
+```typescript
+// content-script.ts
+const iframe = document.createElement('iframe');
+iframe.src = browser.runtime.getURL('popup-iframe.html');
+iframe.style.border = 'none';
+iframe.style.position = 'absolute';
+// 設定位置和大小...
+document.body.appendChild(iframe);
+```
+
+**3. Content Script ↔ iframe 通訊**
+```typescript
+// Content Script → iframe
+iframe.contentWindow.postMessage({
+  type: 'SHOW_TRANSLATION',
+  text: selectedText,
+  language: detectedLanguage
+}, '*');
+
+// iframe → Content Script
+window.addEventListener('message', (event) => {
+  if (event.data.type === 'SAVE_CARD') {
+    // 儲存到 storage...
+  }
+});
+```
+
+#### 優缺點分析
+
+**優點**：
+- ✅ Stencil.js components 完全正常運作
+- ✅ 保留所有 extension API 訪問權限
+- ✅ 相對較少的程式碼改動
+- ✅ 清晰的關注點分離
+
+**缺點**：
+- ⚠️ iframe 的樣式隔離：
+  - 無法繼承頁面 CSS
+  - 需要在 iframe 內完整定義所有樣式
+  
+- ⚠️ Positioning 複雜度：
+  - iframe 本身的定位
+  - 需要考慮頁面滾動、縮放
+  - 可能需要 `position: fixed` + 動態計算
+
+- ⚠️ 效能考量：
+  - 額外的 iframe context
+  - `postMessage` 通訊開銷（但很小）
+
+- ⚠️ 用戶體驗：
+  - iframe 可能被某些網站的 CSP 阻擋（少見）
+  - 需要處理 iframe focus 管理
+
+#### 工作量估計
+- **第 1-2 小時**：創建 popup-iframe.html 和基本架構
+- **第 3-4 小時**：實作 content script ↔ iframe 通訊
+- **第 5-6 小時**：處理 positioning 和樣式
+- **第 7-8 小時**：測試和 edge cases
+
+**總計**：6-8 小時（比方案 1 稍多，但更穩定）
+
+---
+
+### 🎯 三方案比較總結
+
+| 項目 | 方案 1: 頁面注入 | 方案 2: 原生 DOM | 方案 3: iframe |
+|------|----------------|-----------------|---------------|
+| **工作量** | 3-4 小時 | 28-42 小時 | 6-8 小時 |
+| **Extension API** | ❌ 需橋接 | ✅ 完整 | ✅ 完整 |
+| **Stencil.js** | ✅ 保留 | ❌ 移除 | ✅ 保留 |
+| **維護性** | ⚠️ 複雜通訊 | ✅ 簡單直接 | ✅ 清晰分離 |
+| **效能** | ✅ 最佳 | ✅ 優秀 | ⚠️ 稍差 |
+| **風險** | ⚠️ CSP 問題 | ✅ 零風險 | ⚠️ 小風險 |
+| **建議** | 快速驗證 | 長期最佳 | **推薦平衡** |
+
+### 我的最終建議
+
+**優先順序調整**：
+1. 🥇 **方案 3 (iframe)** - 平衡工作量和穩定性
+2. 🥈 方案 1 (頁面注入) - 最快但有風險
+3. 🥉 方案 2 (原生 DOM) - 最穩但耗時
+
+**理由**：iframe 方案在保留 Stencil.js 的同時，避免了 compartment 問題，且工作量適中。這是工程上的"sweet spot"。
+
+你希望我繼續哪個方案？
+
+---
+
+## 📦 方案 3 實作：iframe 隔離 (2025-12-16 21:30-21:45)
+
+### 實作摘要
+完成 iframe 隔離方案的核心實作，這是最平衡的解決方案。
+
+### 新增檔案
+
+#### 1. `packages/extension/src/popup-frame/popup-frame.html`
+Extension page HTML 容器，讓 Stencil.js 在 extension context 運行
+
+#### 2. `packages/extension/src/popup-frame/popup-frame.ts`
+- 初始化 Stencil.js custom elements
+- 監聽來自 content script 的訊息
+- 處理 SHOW_TRANSLATION 和 HIDE 訊息
+
+#### 3. `packages/extension-content-script/src/message-types.ts`
+完整的型別定義：
+- `ContentScriptToFrameMessage` - content script → iframe
+- `FrameToContentScriptMessage` - iframe → content script
+
+#### 4. `packages/extension-content-script/src/iframe-manager.ts`
+完整的 iframe 生命週期管理：
+- 創建和銷毀 iframe
+- 雙向通訊協議
+- iframe 定位邏輯
+- 訊息佇列處理 (處理 frame 未就緒狀態)
+
+### 修改檔案
+
+#### 1. `packages/extension-content-script/src/button.ts`
+**關鍵修改**：雙路徑架構
+```typescript
+if (isFirefox) {
+  // Firefox: 使用 iframe manager
+  await iframeManager.createFrame();
+  iframeManager.showTranslation({ ... });
+} else {
+  // Chrome: 保留原本的 custom elements
+  const button = document.createElement('vocably-button');
+  // ...
+}
+```
+
+#### 2. `packages/extension/webpack.config.js`
+- 加入 `popup-frame` entry point 到 `firefoxEntries`
+- 加入 `popup-frame.html` 到 CopyPlugin patterns
+
+#### 3. `packages/extension/src/manifest.firefox.json.txt`
+- 加入 `web_accessible_resources` 讓 iframe 可以載入 popup-frame.html
+
+### Build 結果
+```
+✅ popup-frame.js - 成功生成 (src/popup-frame/popup-frame.ts)
+✅ popup-frame.html - 成功復制
+✅ manifest.json - 包含 web_accessible_resources
+✅ content-script.js - 包含 iframe-manager
+```
+
+### 架構優勢
+1. **Firefox**: iframe (extension page context) → 無 compartment 問題
+2. **Chrome**: 直接 custom elements → 保持原有性能
+3. **清晰分離**: 各瀏覽器邏輯獨立
+
+
+
+4. **易於維護**: message protocol 明確定義
+
+### 測試指南
+**測試步驟**：
+1. 重新載入 Firefox extension
+2. 到任意網頁
+3. 選取文字
+4. 檢查 console：
+   - `[IframeManager] Creating iframe...`
+   - `[IframeManager] Frame created and injected`
+   - `[Vocably Frame] Initializing popup frame...`
+   - `[Vocably Frame] Custom elements defined successfully`
+   - `[Vocably Frame] Ready and listening for messages`
+   - `[Button] Using iframe approach for Firefox`
+   - `[IframeManager] Translation shown`
+
+**預期結果**：
+- ✅ 無 "nuked compartment" 或 DeadObject 錯誤
+- ✅ 看到 iframe 出現 (可能是空白，因為還需要實作 popup 邏輯)
+- ✅ Console 顯示成功的訊息流
+
+**已知限制**：
+- ⚠️ Button 樣式可能需要調整
+- ⚠️ 還未實作完整的 popup (translation result)
+- ⚠️ Click 事件處理待完善
+
+---
+
+## 🧪 測試結果 (2025-12-16 22:10)
+
+### ✅ 成功：iframe 架構正常運作
+
+**Console 輸出**（正常流程）：
+```
+[Firefox Polyfill] Starting...
+[Firefox Polyfill] Complete
+[Vocably Content] Script starting...
+[Vocably Content] Content script registered successfully!
+[Button] Using iframe approach for Firefox
+[IframeManager] Creating iframe...
+[IframeManager] Frame created and injected
+[Vocably Frame] Initializing popup frame...
+[Vocably Frame] Custom elements defined successfully
+[Vocably Frame] Ready and listening for messages
+[IframeManager] Sending message to frame: SHOW_TRANSLATION
+[Vocably Frame] Received message: SHOW_TRANSLATION
+[Vocably Frame] Button created: vocably-button
+```
+
+**關鍵成就**：
+- ✅ **無 "nuked compartment" 錯誤**
+- ✅ **無 DeadObject 錯誤**
+- ✅ iframe 成功創建並注入到頁面
+- ✅ postMessage 雙向通訊正常
+- ✅ Stencil.js custom elements 在 iframe (extension page context) 中正常運作
+- ✅ 選取文字後 popup iframe 出現
+
+### ⚠️ 已知問題
+
+#### 1. Popup 顯示空白（預期）
+**狀態**：預期行為  
+**原因**：尚未實作翻譯結果的顯示邏輯  
+**影響**：iframe 存在但內容為空  
+**待修復**：需要實作完整的 translation popup UI
+
+#### 2. Welcome Page browserEnv 錯誤
+**錯誤**：`Uncaught (in promise): browserEnv environment is not defined`  
+**位置**：Welcome page (Angular app)  
+**原因**：來自 Angular instrument.js，可能是環境配置或 Sentry 相關  
+**影響**：未知，可能無實際功能影響  
+**狀態**：**已決定忽略** (2025-12-16 22:18) - 無法定位具體來源，且不影響主要功能
+
+#### 3. Blur 不會自動關閉 popup
+**狀態**：功能未實作  
+**影響**：用戶體驗，popup 需要手動關閉  
+**待修復**：加入 blur/clickOutside event handler
+
+#### 4. onMessage listener 警告
+**錯誤**：`Promised response from onMessage listener went out of scope`  
+**性質**：可忽略的警告  
+**影響**：無實際功能影響
+
+---
+
+## 🎉 重大里程碑
+
+**iframe 隔離方案證實可行！**
+
+經過：
+1. ✅ Stencil.js adoptedStyleSheets polyfill
+2. ✅ CSP Function() 阻擋修復
+3. ✅ wrappedJSObject 嘗試（失敗）
+4. ✅ iframe 隔離方案（成功）
+
+我們成功繞過了 Firefox content script 的 **compartment isolation** 限制，為 Vocably Firefox extension 找到了可行的技術路徑。
+
+---
+
+## 📝 下一步工作 (2025-12-16 22:18)
+
+### 當前狀態
+- ✅ iframe 架構成功驗證
+- ✅ 核心技術問題已解決
+- ⚠️ browserEnv 錯誤已決定忽略
+- 🎯 **準備完善 UI 功能**
+
+### 選項
+
+**A. 完善 iframe popup UI（2-3 小時）**
+- 實作翻譯結果顯示
+- 實作 blur 自動關閉
+- 完善樣式和定位
+- Click 事件處理
+
+**B. 記錄並暫停**
+- PoC 已成功
+- 文檔已完整
+- 未來可繼續開發
+
+**C. 持續時間考量**
+- 現在時間：22:18
+- 完整實作需要 2-3 小時
+- 建議明天繼續
+
+---
+
+## 💭 總結 (2025-12-16 22:18)
+
+今天的重大成就：
+1. ✅ 診斷出 Stencil.js 與 Firefox content script 的根本不相容性（DeadObject）
+2. ✅ 設計並實作 iframe 隔離方案
+3. ✅ 成功驗證 iframe 方案可行性
+4. ✅ 為 Firefox extension 找到可行的技術路徑
+
+---
+
+## 🎉 成功實作 Popup UI (2025-12-16 22:28)
+
+### ✅ 完成功能
+1. **按鈕點擊處理** - 成功
+2. **Popup 顯示** - 成功（使用 vocably-popup 和 vocably-overlay）
+3. **ESC/Space 關閉** - 成功
+4. **無錯誤** - 完全運作
+
+### Console 輸出範例
+```
+[Button] Using iframe approach for Firefox
+[IframeManager] Creating iframe...
+[Vocably Frame] Button created: vocably-button
+[Vocably Frame] Button clicked
+[Vocably Frame] Creating popup for: femení
+[Vocably Frame] Popup created and shown
+[Vocably Frame] Popup closed  ← ESC 後
+```
+
+### ⚠️ 小問題（已修復）
+- ~~按鈕偶爾定位不準確~~ → 改進了 iframe 定位邏輯
+  - 現在會自動居中並確保在視窗內
+  - 考慮視窗邊界避免超出
+
+### 🎯 當前狀態（22:30）
+
+**核心功能**：✅ 完全運作
+- iframe 架構
+- 按鈕顯示
+- Popup創建
+- 關閉處理
+
+**待完善（可選）**：
+1. Blur 自動關閉（用戶體驗優化）
+2. 翻譯內容顯示（需要整合 API）
+3. 儲存卡片功能
+4. 更細緻的樣式調整
+
+---
+
+## 💡 總結與建議 (2025-12-16 22:30)
+
+### 今天的成就
+1. ✅ 診斷並解決 Stencil.js DeadObject 問題
+2. ✅ 設計並實作 iframe 隔離方案
+3. ✅ 完整的按鈕和 popup 流程
+4. ✅ **Firefox extension 基本功能已可用**
+
+### 時間線
+- 開始：約 20:30
+- iframe PoC 完成：21:45
+- 完整 UI 實作：22:30
+- **總計**：約 2 小時
+
+### 下一步選項
+
+**A. 結束今天的工作**（推薦）
+- ✅ 核心技術問題已解決
+- ✅ 基本功能已驗證
+- ✅ 文檔完整記錄
+- 📝 未來可繼續完善細節
+
+**B. 繼續完善（額外 1-2 小時）**
+- 實作完整翻譯內容顯示
+- 加入 blur 自動關閉
+- API 整合
+- Chrome 兼容性測試
+
+**C. 其他想法？**
+
+你希望繼續還是今天到此為止？😊
+
+---
+
+## 🐛 Bug 修復記錄 (22:30 之後)
+
+### Bug #1: dataset 只讀屬性錯誤 (22:25)
+**錯誤**：`TypeError: setting getter-only property "dataset"`  
+**位置**：`popup-frame.ts:50`  
+**原因**：嘗試直接賦值 `dataset` 物件  
+**修復**：改用 `setAttribute('data-text', params.text)`  
+**檔案**：`popup-frame.ts`
+
+### Bug #2: Webpack publicPath 錯誤 (22:33)
+**錯誤**：`Error: Automatic publicPath is not supported in this browser`  
+**位置**：`content-script.js:1852`  
+**原因**：Webpack 嘗試自動偵測 publicPath，在 Firefox extension 中不支持  
+**修復**：在 `webpack.config.js` output 中明確設置 `publicPath: '/'`  
+**檔案**：`webpack.config.js`
+
+### Bug #3: 按鈕定位偏左 (22:35)
+**問題**：按鈕出現位置偏離選取文字太遠（向左）  
+**原因**：iframe 定位邏輯使用 `left - maxWidth / 2` 強制置中  
+**修復**：改為保持原位置，只在會超出視窗時調整  
+**檔案**：`iframe-manager.ts` - `showTranslation()`
+
+### Bug #4: 按鈕不隨頁面滾動 (06:27)
+**問題**：按鈕使用 `position: fixed`，固定在視窗不隨頁面滾動  
+**原因**：iframe 樣式使用固定定位  
+**修復**：改為 `position: absolute` 使其隨頁面滾動  
+**檔案**：`iframe-manager.ts` - `createFrame()`
+
+### Bug #5: 定位不規則 + Blur 不會 hide (06:37)
+**問題 5a**：按鈕定位很不規則，有時太左、太上、太下  
+**原因**：iframe 大小設為 400x300px，但按鈕實際只需 50x50px  
+**修復**：將 iframe 初始大小改為 50x50px（button 大小）  
+**檔案**：`iframe-manager.ts` - `showTranslation()`
+
+**問題 5b**：點擊外面有時不會關閉 popup  
+**原因**：`CLOSE_FRAME` 訊息沒有正確觸發 `hide()`  
+**修復**：在 `handleFrameMessage` 的 `CLOSE_FRAME` case 中確保調用 `this.hide()`  
+**檔案**：`iframe-manager.ts` - `handleFrameMessage()`
+
+### Bug #6: Popup 不會擴大 (06:45) - **未修復**
+**問題**：點擊按鈕後 popup 出現，但 iframe 仍保持 50x50px 的按鈕大小  
+**原因**：iframe 在顯示按鈕時設為 50x50px，點擊後創建 popup 但沒有調整 iframe 大小  
+**需要修復**：在 `popup-frame.ts` 中，創建 popup 時需要通知 content script 調整 iframe 大小  
+**狀態**：已識別但未修復
+
+---
+
+## 📝 待修復問題清單
+
+1. **Popup 不會擴大** (優先級：高)
+   - 需要在按鈕點擊後動態調整 iframe 大小
+   - 可能需要新增 message type: `RESIZE_FRAME`
+
+2. **翻譯內容顯示** (優先級：中)
+   - 整合 `setContents` API (367行程式碼)
+   - 顯示實際翻譯結果
+
+3. **Chrome 兼容性測試** (優先級：中)
+   - 驗證原有功能不受影響
+
+---
+
+## 💭 技術債與建議
+
+### 當前狀態 (06:45)
+- ✅ iframe 架構運作正常
+- ✅ 按鈕定位基本準確
+- ✅ Blur 關閉功能運作
+- ⚠️ Popup 大小調整待修復
+
+### 建議
+如果覺得修 bug 效率不佳，可以考慮：
+1. 換用其他 AI 模型繼續
+2. 開新對話重新聚焦
+3. 或暫停，明天繼續
+
+核心技術突破已完成，剩下的主要是 UI/UX 細節調整。

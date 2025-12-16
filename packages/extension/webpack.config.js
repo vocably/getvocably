@@ -32,6 +32,7 @@ const firefoxEntries = {
   ...baseEntries,
   'external-bridge': './src/external-bridge.ts',
   'firefox-polyfill': './src/firefox-polyfill.ts',
+  'popup-frame': './src/popup-frame/popup-frame.ts',
 };
 
 const prodConfig = {
@@ -86,10 +87,17 @@ const prodConfig = {
       : {},
   },
   output: {
+    path: path.join(__dirname, outputDir),
     filename: '[name].js',
-    path: path.resolve(__dirname, outputDir),
-    // Firefox CSP fix: Provide globalObject directly to avoid Function('return this')() in runtime
-    ...(isFirefox ? { globalObject: 'globalThis' } : {}),
+    clean: true,
+    // Firefox CSP fix: use globalThis instead of Function('return this')()
+    ...(isFirefox
+      ? {
+          globalObject: 'globalThis',
+          // Fix: Explicit publicPath for Firefox extension
+          publicPath: '/',
+        }
+      : {}),
   },
   plugins: [
     new webpack.BannerPlugin(
@@ -126,6 +134,16 @@ const prodConfig = {
           },
         },
         { from: 'play-audio.html', to: 'play-audio.html', context: 'src' },
+        // Firefox iframe isolation: copy popup-frame.html
+        ...(isFirefox
+          ? [
+              {
+                from: 'popup-frame/popup-frame.html',
+                to: 'popup-frame.html',
+                context: 'src',
+              },
+            ]
+          : []),
       ],
       options: {},
     }),
