@@ -526,3 +526,629 @@ Auth.currentSession()
   .then(session => console.log('✅ Logged in:', session))
   .catch(err => console.error('❌ Not logged in:', err));
 ```
+
+**✅ 已實作方案 A** <sup>20251216 8:26</sup>
+
+修改檔案：
+- `packages/extension/src/service-worker.ts` (Line 5, 51)
+  - 將 `registerExtensionStorage('sync')` 改為 `registerExtensionStorage('local')`
+  - 更新 `clearStorage()` debug 函數使用 `storage.local.clear()`
+
+建置指令：
+```bash
+npm run build --workspace=@vocably/extension-service-worker
+cd packages/extension && npm run build:firefox
+```
+
+建置輸出：`packages/extension/dist-firefox/` (2.04 MB service-worker.js)
+
+**測試步驟**：
+
+1. **移除舊的暫時附加元件**：
+   - 開啟 `about:debugging#/runtime/this-firefox`
+   - 移除舊版 Vocably extension
+
+2. **載入新版本**：
+   - 點擊「Load Temporary Add-on...」
+   - 選擇 `packages/extension/dist-firefox/manifest.json`
+
+3. **測試登入流程**：
+   - 點擊工具列的 Vocably 按鈕
+   - 執行登入
+   - 登入成功後，**不要關閉 Firefox**
+   - 檢查工具列按鈕是否顯示已登入狀態
+
+4. **測試持久化**：
+   - 關閉所有 Firefox 視窗
+   - 重新開啟 Firefox
+   - 點擊工具列按鈕，應該**仍保持登入狀態**
+
+5. **Debug 驗證**：
+   - 開啟 `about:debugging#/runtime/this-firefox`
+   - 點擊 Vocably → 「Inspect」
+   - 在 console 執行：
+     ```javascript
+     // 檢查 storage
+     browser.storage.local.get().then(console.log);
+     
+     // 檢查登入狀態
+     Auth.currentSession()
+       .then(session => console.log('✅ Logged in:', session))
+       .catch(err => console.error('❌ Not logged in:', err));
+     ```
+
+- ✅ 登入後工具列按鈕立即更新狀態
+- ✅ 重啟 Firefox 後登入狀態保持
+- ✅ Storage 中可見 AWS Cognito tokens (以 `CognitoIdentityServiceProvider` 開頭的 keys)
+
+---
+
+**❌ 方案 A 測試結果：無效** <sup>20251216 12:38</sup>
+
+用戶回報重新載入和移除重裝都無法解決問題。
+
+**根本原因調查**：
+
+檢查 `@vocably/pontis` (v1.0.1) 的實作發現：
+
+```javascript
+// node_modules/@vocably/pontis/dist/esm/register-extension-storage.js:13
+export const registerExtensionStorage = (storageType) => {
+    const extensionStorage = chrome.storage[storageType];  // ← 問題在這裡！
+    // ...
+}
+```
+
+**真正的問題**：
+1. `@vocably/pontis` 是外部 npm 套件，使用 `chrome.storage` 而非 `browserEnv`
+2. 即使我們改 `service-worker.ts` 的 source code，編譯後仍使用 node_modules 中的舊程式碼
+3. Firefox 中 `chrome.storage` 可能未正確初始化或與 `browser.storage` 行為不同
+
+**✅ 方案 A 修正版：加入 Storage API Patch** <sup>20251216 12:40</sup>
+
+新增檔案：
+- `packages/extension/src/browserEnvPatch.ts`
+  - 在 Firefox 中將 `chrome.storage` alias 到 `browser.storage`
+  - 確保 `@vocably/pontis` 可以正確存取 storage API
+
+修改檔案：
+- `packages/extension/src/service-worker.ts`
+  - 在最頂端加入 `import './browserEnvPatch';`
+  - 必須在 `registerExtensionStorage` 之前載入
+
+```typescript
+// browserEnvPatch.ts
+import { browserEnv } from './browserEnv';
+
+if (typeof browser !== 'undefined' && typeof chrome !== 'undefined') {
+  // Firefox has both 'browser' and 'chrome' namespaces
+  // Ensure chrome.storage points to browser.storage
+  if (!chrome.storage || !chrome.storage.local) {
+    // @ts-ignore
+    chrome.storage = browser.storage;
+  }
+}
+
+export { browserEnv };
+```
+
+建置指令：
+```bash
+cd packages/extension && npm run build:firefox
+```
+
+**新的測試步驟**：
+
+1. **開啟 service-worker console 檢查**：
+   - `about:debugging#/runtime/this-firefox`
+   - 找到 Vocably 擴充元件卡片
+   - 點擊「Inspect」按鈕（會開啟 DevTools）
+   - 在 console 執行：
+     ```javascript
+     // 檢查 chrome.storage 是否存在
+     console.log('chrome.storage:', chrome.storage);
+     console.log('browser.storage:', browser.storage);
+     
+     // 測試寫入
+     await browser.storage.local.set({ test: 'hello' });
+     const result = await browser.storage.local.get('test');
+     console.log('Storage test:', result);
+     ```
+
+2. **重新載入擴充元件**：
+   - 在 `about:debugging` 點擊「Reload」
+
+3. **測試登入並檢查 storage**：
+   - 執行登入
+   - 在 service-worker console 執行：
+     ```javascript
+     // 查看所有 storage keys
+     browser.storage.local.get().then(data => {
+       console.log('All storage keys:', Object.keys(data));
+       console.log('Auth keys:', Object.keys(data).filter(k => k.includes('Auth')));
+     });
+     ```
+
+4. **驗證登入狀態**：
+   ```javascript
+   Auth.currentSession()
+     .then(session => console.log('✅ Session:', session))
+     .catch(err => console.error('❌ Error:', err));
+   ```
+
+- `chrome.storage` 和 `browser.storage` 應該指向同一個物件
+- Storage 測試應成功寫入和讀取
+- 登入後應看到多個 `@Auth_CognitoIdentityServiceProvider.` 開頭的 keys
+- `Auth.currentSession()` 應成功回傳 session 物件
+
+---
+
+**✅ 真正的修正：加入 storage.sync() 初始化** <sup>20251216 15:45</sup>
+
+**根本原因分析**：
+
+用戶回報登入成功（Welcome 頁面有 tokens），但 extension storage 完全沒有 tokens！
+
+檢查發現：
+1. ✅ Tokens 存在 web page 的 localStorage
+2. ❌ Extension storage 完全是空的
+3. 原因：`ExtensionAuthStorage` 使用 in-memory cache (`dataMemory`)
+4. `getItem()` 只從記憶體讀取，**不查 browser.storage**
+5. 沒有呼叫 `sync()` → `dataMemory` 是空的 `{}`
+6. AWS Amplify Auth 讀不到 tokens → fallback 到 localStorage
+
+```javascript
+// ExtensionAuthStorage 的問題
+getItem(key) {
+    return Object.prototype.hasOwnProperty.call(dataMemory, key)
+        ? dataMemory[key]
+        : undefined;  // ← 如果 dataMemory 是空的，永遠返回 undefined
+}
+```
+
+**解決方案**：
+
+在 `Auth.configure()` **之前**呼叫 `storage.sync()` 載入已存在的 tokens。
+
+修改檔案：
+- `packages/extension/src/service-worker.ts`
+  - 將整個初始化包在 async IIFE 中
+  - 在 `registerServiceWorker()` 之前呼叫 `await storage.sync()`
+
+```typescript
+// Initialize storage and sync before configuring Auth
+(async () => {
+  const storage = registerExtensionStorage('local');
+  
+  // CRITICAL: Sync storage before Auth.configure()
+  // This loads existing tokens from browser.storage into memory
+  // Without this, Auth falls back to localStorage
+  await storage.sync();
+
+  registerServiceWorker({
+    auth: {
+      // ... 配置
+      storage,
+    },
+    // ...
+  });
+})();
+```
+
+建置指令：
+```bash
+cd packages/extension && npm run build:firefox
+```
+
+**測試步驟**：
+
+1. **重新載入擴充元件**：
+   - `about:debugging` → 點擊「Reload」
+
+2. **執行登入**：
+   - 點擊工具列按鈕 → 登入
+
+3. **檢查 extension storage**：
+   - 開啟 service-worker console (Inspect)
+   - 執行：
+     ```javascript
+     browser.storage.local.get().then(data => {
+       const authKeys = Object.keys(data).filter(k => k.includes('Auth'));
+       console.log('Auth keys in extension storage:', authKeys);
+       console.log('Auth keys count:', authKeys.length);
+     });
+     ```
+
+4. **觀察工具列按鈕**：
+   - 應該在登入後立即變成已登入狀態
+   - 重啟 Firefox 後應保持登入狀態
+
+- ✅ Extension storage 中有多個 `@Auth_CognitoIdentityServiceProvider.` keys
+- ✅ 工具列按鈕正確顯示登入狀態
+- ✅ 重啟 Firefox 後登入狀態保持（因為 tokens 現在存在 extension storage）
+
+---
+
+**❌ 新錯誤：setting getter-only property "window"** <sup>20251216 15:59</sup>
+
+用戶回報登入後仍然 Auth keys = 0，console 顯示錯誤：
+```
+Uncaught TypeError: setting getter-only property "window"
+    fixAuth.js:4
+```
+
+**原因**：
+`fixAuth.ts` 試圖設定 `self.window` 為 AWS Amplify Auth 提供 `crypto` 物件，但 Firefox 的 `self.window` 是 getter-only property，無法被覆寫。
+
+**✅ 修正：Firefox 相容性檢查** <sup>20251216 16:05</sup>
+
+修改檔案：
+- `packages/extension-service-worker/src/fixAuth.ts`
+  - 加入條件判斷：只在 `self.window` 是 undefined 時才設定
+  - Firefox 中 `self.window` 已存在，跳過設定
+
+```typescript
+// Before (Chrome only)
+self.window = {
+  crypto: crypto,
+};
+
+// After (Chrome + Firefox compatible)
+if (typeof self.window === 'undefined') {
+  try {
+    self.window = {
+      crypto: crypto,
+    };
+  } catch (e) {
+    console.log('Cannot set self.window (Firefox):', (e as Error).message);
+  }
+}
+```
+
+建置指令：
+```bash
+npm run build --workspace=@vocably/extension-service-worker
+cd packages/extension && npm run build:firefox
+```
+
+**測試步驟**：
+
+1. **重新載入擴充元件** (Reload)
+
+2. **檢查 console**：
+   - 應該**不會**再有 "setting getter-only property" 錯誤
+
+3. **執行登入**
+
+4. **檢查 Auth keys**：
+   ```javascript
+   browser.storage.local.get().then(data => {
+     const authKeys = Object.keys(data).filter(k => k.includes('Auth'));
+     console.log('Auth keys:', authKeys.length);
+     if (authKeys.length > 0) {
+       console.log('✅ SUCCESS! Tokens stored in extension storage');
+     } else {
+       console.log('❌ FAILED: Still no tokens');
+     }
+   });
+   ```
+
+**預期結果**：
+- ❌ 沒有 fixAuth 錯誤
+- ✅ Auth keys > 0
+- ✅ 工具列按鈕顯示已登入
+
+### 結果
+還是不行
+
+```
+Promise { <state>: "pending" }
+
+Auth keys: 0
+```
+
+---
+
+### 🔴 根本原因分析 (Claude Opus 4.5) <sup>20251216 21:00</sup>
+
+經過深入調查，這是一個**架構層級的問題**，不是簡單的 API 差異。
+
+#### 問題的本質
+
+**Chrome 的登入流程**：
+```
+1. Popup → 開啟 app.vocably.pro/page/welcome
+2. 用戶在網頁上完成 OAuth 登入
+3. 網頁透過 chrome.runtime.sendMessage(extensionId, ...) 把 tokens 傳給 extension
+4. Extension 的 onMessageExternal listener 接收 tokens 並存入 chrome.storage
+5. Auth.currentSession() 從 extension storage 讀取 tokens → 登入成功
+```
+
+**Firefox 的問題**：
+```
+1. Popup → 開啟 app.vocably.pro/page/welcome
+2. 用戶在網頁上完成 OAuth 登入
+3. 網頁嘗試呼叫 chrome.runtime.sendMessage(extensionId, ...) → ❌ 失敗！
+   - Firefox 不支援 externally_connectable
+   - Firefox 不支援 onMessageExternal
+4. Tokens 只存在網頁的 localStorage，永遠無法傳到 extension storage
+5. Auth.currentSession() 找不到 tokens → 登入失敗
+```
+
+#### 技術細節
+
+1. **`@vocably/pontis` 的 `AppAuthStorage`** (用於網頁端)：
+   ```javascript
+   // packages/app 使用這個 storage
+   setItem(key, value) {
+     this.localStorage.setItem(key, value);
+     // 這行在 Firefox 永遠失敗（靜默失敗）：
+     setItem(this.extensionId, { key, value }).catch(() => { });
+   }
+   ```
+
+2. **`@vocably/hermes` 的 `createExternalMessage`**：
+   ```javascript
+   // 使用 onMessageExternal - Firefox 不支援！
+   browserEnv.runtime.onMessageExternal.addListener(...)
+   ```
+
+3. **Chrome manifest 中的 `externally_connectable`**：
+   ```json
+   "externally_connectable": {
+     "matches": ["https://app.vocably.pro/*"]
+   }
+   ```
+   Firefox 會忽略此設定。
+
+#### 結論
+
+**這不是 bug，而是 Firefox 缺少 Chrome 的 `externally_connectable` 功能。**
+
+要在 Firefox 實現相同的登入流程，必須實作 **Phase 2: Content Script Bridge**。
+
+---
+
+## Phase 2: Content Script Bridge 實作方案
+
+### 方案概述
+
+由於 Firefox 不支援 `externally_connectable`，需要透過 Content Script 作為網頁與 Extension 之間的橋樑：
+
+```
+網頁 (app.vocably.pro)
+    ↓ window.postMessage
+Content Script (注入到 app.vocably.pro)
+    ↓ browser.runtime.sendMessage
+Service Worker
+    ↓ 儲存 tokens
+browser.storage.local
+```
+
+### 實作步驟
+
+#### Step 2.1: 建立 Content Script Bridge
+
+新增檔案 `packages/extension/src/external-bridge.ts`：
+
+```typescript
+/**
+ * Content Script Bridge for Firefox
+ *
+ * Bridges communication between app.vocably.pro and the extension
+ * since Firefox doesn't support externally_connectable.
+ */
+
+import { browserEnv } from './browserEnv';
+
+const ALLOWED_ORIGINS = [
+  'https://app.vocably.pro',
+  'https://app.dev.env.vocably.pro' // for development
+];
+
+// Listen for messages from the web page
+window.addEventListener('message', async (event) => {
+  // Security: Only accept messages from allowed origins
+  if (!ALLOWED_ORIGINS.includes(event.origin)) {
+    return;
+  }
+
+  // Check if this is a message for the extension
+  const data = event.data;
+  if (!data || data.target !== 'vocably-extension') {
+    return;
+  }
+
+  try {
+    // Forward the message to the service worker
+    const response = await browserEnv.runtime.sendMessage({
+      identifier: data.identifier,
+      data: data.payload
+    });
+
+    // Send the response back to the web page
+    window.postMessage({
+      target: 'vocably-extension-response',
+      requestId: data.requestId,
+      response
+    }, event.origin);
+  } catch (error) {
+    window.postMessage({
+      target: 'vocably-extension-response',
+      requestId: data.requestId,
+      error: error.message
+    }, event.origin);
+  }
+});
+
+// Notify the page that the extension bridge is ready
+window.postMessage({
+  target: 'vocably-extension-ready'
+}, window.location.origin);
+```
+
+#### Step 2.2: 更新 Firefox Manifest
+
+修改 `packages/extension/src/manifest.firefox.json.txt`：
+
+```json
+"content_scripts": [
+  {
+    "matches": ["*://*/*"],
+    "js": ["content-script.js", "play-audio.js"],
+    "all_frames": true
+  },
+  {
+    "matches": [
+      "https://app.vocably.pro/*",
+      "https://app.dev.env.vocably.pro/*"
+    ],
+    "js": ["external-bridge.js"],
+    "run_at": "document_start"
+  }
+]
+```
+
+#### Step 2.3: 更新 Webpack 設定
+
+在 `packages/extension/webpack.config.js` 新增 entry point：
+
+```javascript
+entry: {
+  'content-script': './src/content-script.ts',
+  'service-worker': './src/service-worker.ts',
+  'play-audio': './src/play-audio.ts',
+  'external-bridge': './src/external-bridge.ts', // 新增
+},
+```
+
+#### Step 2.4: 修改 `@vocably/pontis` 或建立 Wrapper
+
+有兩個選項：
+
+**選項 A: Fork `@vocably/pontis`**
+修改 `AppAuthStorage` 和 `@vocably/hermes` 支援 `postMessage` 方式。
+
+**選項 B: 建立 Firefox-specific wrapper**（推薦）
+在 `packages/app` 建立 Firefox 相容的 storage wrapper：
+
+```typescript
+// packages/app/src/firefox-auth-storage.ts
+export class FirefoxAppAuthStorage {
+  private localStorage = window.localStorage;
+
+  private sendToExtension(identifier: string, data: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const requestId = Math.random().toString(36);
+
+      const handler = (event: MessageEvent) => {
+        if (event.data?.target !== 'vocably-extension-response') return;
+        if (event.data?.requestId !== requestId) return;
+
+        window.removeEventListener('message', handler);
+
+        if (event.data.error) {
+          reject(new Error(event.data.error));
+        } else {
+          resolve(event.data.response);
+        }
+      };
+
+      window.addEventListener('message', handler);
+
+      window.postMessage({
+        target: 'vocably-extension',
+        identifier,
+        payload: data,
+        requestId
+      }, window.location.origin);
+
+      // Timeout after 5 seconds
+      setTimeout(() => {
+        window.removeEventListener('message', handler);
+        reject(new Error('Extension communication timeout'));
+      }, 5000);
+    });
+  }
+
+  setItem(key: string, value: string) {
+    this.localStorage.setItem(key, value);
+    this.sendToExtension('authStorage.setItem', { key, value }).catch(() => {});
+  }
+
+  getItem(key: string) {
+    return this.localStorage.getItem(key);
+  }
+
+  removeItem(key: string) {
+    this.localStorage.removeItem(key);
+    this.sendToExtension('authStorage.removeItem', key).catch(() => {});
+  }
+
+  clear() {
+    this.localStorage.clear();
+    this.sendToExtension('authStorage.clear', undefined).catch(() => {});
+  }
+
+  sync() {
+    return this.sendToExtension('authStorage.getAll', undefined)
+      .then((data: Record<string, string>) => {
+        Object.entries(data).forEach(([key, value]) => {
+          this.localStorage.setItem(key, value);
+        });
+      })
+      .catch(() => {});
+  }
+}
+```
+
+#### Step 2.5: 在 app 偵測 Firefox 並使用正確的 Storage
+
+修改 `packages/app/src/auth-config.ts`：
+
+```typescript
+import { AppAuthStorage } from '@vocably/pontis';
+import { FirefoxAppAuthStorage } from './firefox-auth-storage';
+
+const isFirefox = navigator.userAgent.includes('Firefox');
+
+const storage = isFirefox
+  ? new FirefoxAppAuthStorage()
+  : new AppAuthStorage(extensionId);
+
+export const authConfig = {
+  storage,
+  // ...
+};
+```
+
+### 預估工作量
+
+| 任務 | 複雜度 | 說明 |
+|------|--------|------|
+| 建立 external-bridge.ts | 低 | 約 50 行程式碼 |
+| 更新 Firefox manifest | 低 | 新增 content_scripts entry |
+| 更新 Webpack | 低 | 新增 entry point |
+| 建立 FirefoxAppAuthStorage | 中 | 約 80 行程式碼 |
+| 修改 app auth-config | 低 | 條件判斷 |
+| 測試與 debug | 中 | 需要完整測試登入流程 |
+
+### 替代方案
+
+#### 方案 B: Firefox Identity API
+
+使用 `browser.identity.launchWebAuthFlow()` 讓 extension 直接處理 OAuth 流程，不需要透過網頁。
+
+優點：
+- 不需要 content script bridge
+- 登入流程完全在 extension 內部
+
+缺點：
+- 需要大幅修改登入 UI
+- 需要處理 OAuth redirect URI 設定
+
+#### 方案 C: 暫時不支援 Firefox 登入持久化
+
+用戶每次開啟 Firefox 都需要重新登入，但核心翻譯功能可用。
+
+這是**不推薦**的方案，因為使用體驗太差。
