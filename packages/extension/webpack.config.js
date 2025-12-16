@@ -15,7 +15,9 @@ const environmentVariables = getEnvironmentVariables();
 // Support for building Firefox extension via TARGET_BROWSER env variable
 const targetBrowser = process.env.TARGET_BROWSER || 'chrome';
 const isFirefox = targetBrowser === 'firefox';
-const manifestFile = isFirefox ? 'manifest.firefox.json.txt' : 'manifest.json.txt';
+const manifestFile = isFirefox
+  ? 'manifest.firefox.json.txt'
+  : 'manifest.json.txt';
 const outputDir = isFirefox ? 'dist-firefox' : 'dist';
 
 // Firefox needs external-bridge for web page ↔ extension communication
@@ -29,6 +31,7 @@ const baseEntries = {
 const firefoxEntries = {
   ...baseEntries,
   'external-bridge': './src/external-bridge.ts',
+  'firefox-polyfill': './src/firefox-polyfill.ts',
 };
 
 const prodConfig = {
@@ -45,14 +48,48 @@ const prodConfig = {
         test: /\.html?$/,
         loader: 'html-loader',
       },
+      // Firefox CSP fix: Replace Function('return this')() with globalThis
+      // This is used by lodash-es and webpack runtime to get global object
+      ...(isFirefox
+        ? [
+            {
+              test: /\.(m?js|ts)$/,
+              loader: 'string-replace-loader',
+              options: {
+                search: "Function('return this')()",
+                replace: 'globalThis',
+              },
+            },
+            {
+              test: /\.(m?js|ts)$/,
+              loader: 'string-replace-loader',
+              options: {
+                search: "new Function('return this')()",
+                replace: 'globalThis',
+              },
+            },
+          ]
+        : []),
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.mjs'],
+    // Firefox CSP fix: Replace lodash-es _root.js which uses Function('return this')()
+    // with a CSP-safe version that uses globalThis
+    alias: isFirefox
+      ? {
+          'lodash-es/_root.js': path.resolve(
+            __dirname,
+            'src/lodash-root-fix.ts'
+          ),
+        }
+      : {},
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, outputDir),
+    // Firefox CSP fix: Provide globalObject directly to avoid Function('return this')() in runtime
+    ...(isFirefox ? { globalObject: 'globalThis' } : {}),
   },
   plugins: [
     new webpack.BannerPlugin(
@@ -93,6 +130,15 @@ const prodConfig = {
       options: {},
     }),
     new webpack.DefinePlugin(environmentVariables.stringified),
+    // Firefox CSP fix: Replace lodash-es _root.js which uses Function('return this')()
+    ...(isFirefox
+      ? [
+          new webpack.NormalModuleReplacementPlugin(
+            /lodash-es\/_root\.js$/,
+            path.resolve(__dirname, 'src/lodash-root-fix.ts')
+          ),
+        ]
+      : []),
   ],
   performance: {
     hints: false,

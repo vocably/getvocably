@@ -4,10 +4,101 @@ import { registerExtensionStorage } from '@vocably/pontis';
 import './browserEnvPatch'; // Must import first to patch chrome.storage in Firefox
 import { browserEnv } from './browserEnv';
 
-// Initialize storage and sync before configuring Auth
+// Create storage at module level so it can be accessed by onMessage handler
+const storage = registerExtensionStorage('local');
+
+// Firefox: Handle messages from content script bridge (external-bridge.ts)
+// This is needed because Firefox doesn't support externally_connectable
+// IMPORTANT: Keys are stored with @Auth_ prefix to match @vocably/pontis format
+const AUTH_KEY_PREFIX = '@Auth_';
+
+// Track if we need to re-sync after external writes
+let needsResync = false;
+
+browserEnv.runtime.onMessage.addListener(
+  (
+    message: any,
+    _sender: any,
+    sendResponse: (response: any) => void
+  ): boolean | void => {
+    if (!message || typeof message.identifier !== 'string') {
+      return false;
+    }
+    
+    const { identifier, data } = message as { identifier: string; data: unknown };
+
+    // Handle authStorage messages
+    if (identifier === 'authStorage.setItem') {
+      const { key, value } = data as { key: string; value: string };
+      const storageKey = `${AUTH_KEY_PREFIX}${key}`;
+      browserEnv.storage.local.set({ [storageKey]: value }).then(async () => {
+        console.log('[ServiceWorker] authStorage.setItem:', storageKey);
+        // Re-sync to update dataMemory so Auth.currentSession() can find tokens
+        needsResync = true;
+        // Force re-sync by clearing the syncPromise and calling sync again
+        // @ts-ignore
+        storage.syncPromise = null;
+        await storage.sync();
+        console.log('[ServiceWorker] Storage re-synced after setItem');
+        sendResponse({ success: true });
+      });
+      return true; // Keep the message channel open for async response
+    }
+
+    if (identifier === 'authStorage.removeItem') {
+      const key = data as string;
+      const storageKey = `${AUTH_KEY_PREFIX}${key}`;
+      browserEnv.storage.local.remove(storageKey).then(async () => {
+        console.log('[ServiceWorker] authStorage.removeItem:', storageKey);
+        // @ts-ignore
+        storage.syncPromise = null;
+        await storage.sync();
+        sendResponse({ success: true });
+      });
+      return true;
+    }
+
+    if (identifier === 'authStorage.clear') {
+      // Only clear keys with @Auth_ prefix
+      (browserEnv.storage.local.get() as Promise<{ [key: string]: any }>).then(async (items) => {
+        const authKeys = Object.keys(items).filter(k => k.startsWith(AUTH_KEY_PREFIX));
+        await browserEnv.storage.local.remove(authKeys);
+        console.log('[ServiceWorker] authStorage.clear:', authKeys.length, 'keys');
+        // @ts-ignore
+        storage.syncPromise = null;
+        await storage.sync();
+        sendResponse({ success: true });
+      });
+      return true;
+    }
+
+    if (identifier === 'authStorage.getAll') {
+      (browserEnv.storage.local.get() as Promise<{ [key: string]: any }>).then((items) => {
+        // Return keys without the @Auth_ prefix
+        const authItems: { [key: string]: any } = {};
+        Object.entries(items).forEach(([key, value]) => {
+          if (key.startsWith(AUTH_KEY_PREFIX)) {
+            authItems[key.replace(AUTH_KEY_PREFIX, '')] = value;
+          }
+        });
+        console.log('[ServiceWorker] authStorage.getAll:', Object.keys(authItems).length, 'keys');
+        sendResponse(authItems);
+      });
+      return true;
+    }
+
+    if (identifier === 'ping') {
+      sendResponse('pong');
+      return false;
+    }
+
+    // Let other handlers process the message
+    return false;
+  }
+);
+
+// Initialize storage and sync, then register service worker
 (async () => {
-  const storage = registerExtensionStorage('local');
-  
   // CRITICAL: Sync storage before Auth.configure()
   // This loads existing tokens from browser.storage into memory
   // Without this, Auth falls back to localStorage
@@ -41,8 +132,17 @@ browserEnv.contextMenus.create({
 });
 
 browserEnv.contextMenus.onClicked.addListener((info, tab) => {
+  console.log('[ServiceWorker] Context menu clicked, tab:', tab?.id);
+  if (!tab?.id) {
+    console.error('[ServiceWorker] No tab ID available');
+    return;
+  }
   browserEnv.tabs.sendMessage(tab.id, {
     action: 'contextMenuTranslateClicked',
+  }).then(() => {
+    console.log('[ServiceWorker] Message sent to tab');
+  }).catch((err: Error) => {
+    console.error('[ServiceWorker] Failed to send message to tab:', err.message);
   });
 });
 
@@ -61,57 +161,49 @@ window.clearStorage = () => {
   browserEnv.storage.local.clear();
 };
 
-// Firefox: Handle messages from content script bridge (external-bridge.ts)
-// This is needed because Firefox doesn't support externally_connectable
-browserEnv.runtime.onMessage.addListener(
-  (
-    message: { identifier: string; data: unknown },
-    _sender: chrome.runtime.MessageSender,
-    sendResponse: (response: unknown) => void
-  ) => {
-    const { identifier, data } = message;
-
-    // Handle authStorage messages
-    if (identifier === 'authStorage.setItem') {
-      const { key, value } = data as { key: string; value: string };
-      browserEnv.storage.local.set({ [key]: value }).then(() => {
-        console.log('[ServiceWorker] authStorage.setItem:', key);
-        sendResponse({ success: true });
-      });
-      return true; // Keep the message channel open for async response
-    }
-
-    if (identifier === 'authStorage.removeItem') {
-      const key = data as string;
-      browserEnv.storage.local.remove(key).then(() => {
-        console.log('[ServiceWorker] authStorage.removeItem:', key);
-        sendResponse({ success: true });
-      });
-      return true;
-    }
-
-    if (identifier === 'authStorage.clear') {
-      browserEnv.storage.local.clear().then(() => {
-        console.log('[ServiceWorker] authStorage.clear');
-        sendResponse({ success: true });
-      });
-      return true;
-    }
-
-    if (identifier === 'authStorage.getAll') {
-      browserEnv.storage.local.get(null).then((items) => {
-        console.log('[ServiceWorker] authStorage.getAll:', Object.keys(items));
-        sendResponse(items);
-      });
-      return true;
-    }
-
-    if (identifier === 'ping') {
-      sendResponse('pong');
-      return false;
-    }
-
-    // Let other handlers process the message
+// @ts-ignore - Debug function to test Auth.currentSession()
+window.testAuth = async () => {
+  console.log('=== Testing Auth.currentSession() ===');
+  try {
+    const session = await Auth.currentSession();
+    console.log('✅ Session found!');
+    console.log('- Access Token:', session.getAccessToken().getJwtToken().substring(0, 50) + '...');
+    console.log('- ID Token:', session.getIdToken().getJwtToken().substring(0, 50) + '...');
+    return true;
+  } catch (err) {
+    console.log('❌ No session:', (err as Error).message);
     return false;
   }
-);
+};
+
+// @ts-ignore - Debug function to test storage.getItem()
+window.testStorage = async () => {
+  console.log('=== Testing Storage ===');
+  // @ts-ignore
+  const allKeys = await storage.getAll();
+  console.log('storage.getAll() keys:', Object.keys(allKeys).length);
+  Object.keys(allKeys).forEach(k => console.log(' -', k));
+  
+  // Test getItem for a specific key
+  const lastAuthUserKey = Object.keys(allKeys).find(k => k.includes('LastAuthUser'));
+  if (lastAuthUserKey) {
+    // @ts-ignore
+    const value = storage.getItem(lastAuthUserKey);
+    console.log('storage.getItem("' + lastAuthUserKey + '"):', value);
+  } else {
+    console.log('No LastAuthUser key found');
+  }
+  
+  return allKeys;
+};
+
+// @ts-ignore - Force re-sync and test
+window.forceSync = async () => {
+  console.log('=== Force Re-sync ===');
+  // @ts-ignore
+  storage.syncPromise = null;
+  await storage.sync();
+  console.log('Sync completed');
+  // @ts-ignore
+  return window.testStorage();
+};

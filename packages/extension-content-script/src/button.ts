@@ -74,9 +74,17 @@ export const createButton = async (
   event: MouseEvent | null = null
 ) => {
   const isTouchscreen = event === null;
-  const button = document.createElement(
+  
+  // Firefox workaround: Use wrappedJSObject to bypass XrayWrapper
+  // This allows creating Stencil.js custom elements in content script context
+  // @ts-ignore - Firefox-specific API
+  const targetDocument = typeof window.wrappedJSObject !== 'undefined' 
+    ? window.wrappedJSObject.document 
+    : document;
+  
+  const button = targetDocument.createElement(
     isTouchscreen ? 'vocably-mobile-button' : 'vocably-button'
-  );
+  ) as HTMLElement;
   button.id = buttonId;
   hide(button);
   document.body.appendChild(button);

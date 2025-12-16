@@ -1160,3 +1160,512 @@ export const authConfig = {
 用戶每次開啟 Firefox 都需要重新登入，但核心翻譯功能可用。
 
 這是**不推薦**的方案，因為使用體驗太差。
+
+---
+
+## 🔧 17:41 Opus 接力 (Gemini Sonnet → Opus)
+
+### 問題
+Claude Code Opus 4.5 在修改 `service-worker.ts` 加入 `authStorage.*` 訊息處理器後，因用量限制未完成建置。
+
+### 修正
+TypeScript 編譯錯誤：`_sender` 型別不相容（Chrome vs Firefox）
+
+**解決方案**：將 `onMessage` handler 參數改為 `any` 型別並加強型別檢查：
+
+```typescript
+browserEnv.runtime.onMessage.addListener(
+  (
+    message: any,
+    _sender: any,
+    sendResponse: (response: any) => void
+  ): boolean | void => {
+    if (!message || typeof message.identifier !== 'string') {
+      return false;
+    }
+    // ...
+  }
+);
+```
+
+### 建置狀態
+✅ `npm run build:firefox` 成功
+✅ App 正在 localhost:8030 運行
+
+### 測試步驟
+1. 在 Firefox `about:debugging` 重新載入 extension
+2. 重新整理 `http://localhost:8030/`
+3. 執行登入
+4. 檢查 service-worker console 有沒有 `[ServiceWorker] authStorage.setItem` 訊息
+5. 檢查工具列按鈕是否變成已登入狀態
+
+---
+
+### 17:58 setItem 成功但未登入
+
+**問題**：`[ServiceWorker] authStorage.setItem` 訊息有出現，但工具列按鈕仍未登入。
+
+**根本原因**：`@vocably/pontis` 使用 `@Auth_` 前綴存儲 keys：
+```javascript
+const keyPrefix = '@Auth_';
+const createStorageKey = (key) => `${keyPrefix}${key}`;
+```
+
+但 service-worker 的 authStorage handler **沒有加前綴**！
+
+**修正**：在 `service-worker.ts` 的 authStorage handler 加入 `@Auth_` 前綴：
+- `setItem`: key → `@Auth_${key}`
+- `removeItem`: key → `@Auth_${key}`  
+- `clear`: 只清除 `@Auth_` 開頭的 keys
+- `getAll`: 返回時移除 `@Auth_` 前綴
+
+### 測試步驟 (18:00)
+1. 重新載入 extension (`about:debugging` → Reload)
+2. 先清除 extension storage（在 service-worker console）：
+   ```javascript
+   await browser.storage.local.clear();
+   ```
+3. 重新整理 `http://localhost:8030/`
+4. 登入
+5. 檢查 console 訊息應顯示：`[ServiceWorker] authStorage.setItem: @Auth_...`
+6. 檢查 storage：
+   ```javascript
+   browser.storage.local.get().then(d => console.log(Object.keys(d).filter(k => k.startsWith('@Auth_'))));
+   ```
+
+---
+
+### 19:04 8 keys 存入但仍未登入
+
+**問題**：8 個 `@Auth_` keys 成功存入 extension storage，但工具列按鈕仍未登入。
+
+**根本原因**：`ExtensionAuthStorage` 使用模組級別 `dataMemory` 快取 tokens。`sync()` 只在初始化時呼叫一次，當外部（Firefox 網頁）透過 content script 存入新 tokens 時，`dataMemory` 不會自動更新。
+
+```javascript
+// @vocably/pontis: extension-auth-storage.js
+let dataMemory = {};  // 模組級別變數，只在 sync() 時更新
+
+getItem(key) {
+  // 直接從 dataMemory 讀取，不查 browser.storage
+  return dataMemory[key];
+}
+```
+
+**修正**：
+
+1. 將 `storage` 變數提出為模組級別（從 async IIFE 搬出來）
+2. 在 `authStorage.setItem` handler 中：
+   - 清除 `storage.syncPromise = null`
+   - 呼叫 `await storage.sync()` 重新載入 dataMemory
+
+```typescript
+// service-worker.ts
+browserEnv.storage.local.set({ [storageKey]: value }).then(async () => {
+  // Force re-sync to update dataMemory
+  storage.syncPromise = null;
+  await storage.sync();
+  console.log('[ServiceWorker] Storage re-synced after setItem');
+  sendResponse({ success: true });
+});
+```
+
+### 測試步驟 (19:15)
+1. 重新載入 extension
+2. 清除 storage：`await browser.storage.local.clear();`
+3. 重新整理 localhost:8030
+4. 登入
+5. 檢查 console：
+   - `[ServiceWorker] authStorage.setItem: @Auth_...`
+   - `[ServiceWorker] Storage re-synced after setItem`
+6. 等待 2 秒（isLoggedIn$ 輪詢間隔）
+7. 點擊工具列按鈕 → 應該顯示已登入狀態
+
+
+### 結果
+並沒有出現 `Storage re-synced after setItem`，工具列仍是未登入狀態。
+
+1. 有重新載入 extension
+2. 登入後有 `[ServiceWorker] Storage re-synced after setItem`，也有 setItem 們
+
+但工具列按鈕還是未登入啊啊啊
+
+### 測試
+```
+// 嘗試直接從 AWS Amplify 獲取 session
+// 這應該在 service worker 中可用
+import('@aws-amplify/auth').then(({Auth}) => {
+  Auth.currentSession()
+    .then(session => console.log('✅ Session found:', session))…
+Promise { <state>: "rejected", <reason>: TypeError }
+
+Uncaught (in promise) TypeError: Specifier「@aws-amplify/auth」是 bare specifier，但未被重新對應。相對模組指定器必須以「./」、「../」或「/」開頭。 (unknown)
+// 測試 isLoggedIn$ 的結果
+// 這會告訴我們 Auth.currentSession() 的結果
+console.log('Manual check - wait 2s for next poll...');
+Manual check - wait 2s for next poll... debugger eval code:3:9
+undefined 
+```
+
+### 再測試
+19:25
+```
+// 1. 測試 storage.getAll() 和 getItem()
+await testStorage();
+=== Testing Storage === service-worker.ts:154:1
+storage.getAll() keys: 8 service-worker.ts:157:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.accessToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.clockDrift service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.idToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.refreshToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.userData service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.LastAuthUser service-worker.ts:158:1
+ - amplify-redirected-from-hosted-ui service-worker.ts:158:1
+ - amplify-signin-with-hostedUI service-worker.ts:158:1
+storage.getItem("CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.LastAuthUser"): Google_111733882173284885000 service-worker.ts:164:1
+Object { "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.accessToken": "eyJraWQiOiJva1ZHVmJUWFVKbTRxZXVSaVU3cWNXR25wNU1hYys1WU9FUmRyVE9WU1BnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIzMTBkODkyNC0yNmU3LTRiNTktOGFjZC1kY2U5NzE2YzBjNGIiLCJjb2duaXRvOmdyb3VwcyI6WyJldS1jZW50cmFsLTFfVHBuM2dVUVlnX0dvb2dsZSJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtY2VudHJhbC0xLmFtYXpvbmF3cy5jb21cL2V1LWNlbnRyYWwtMV9UcG4zZ1VRWWciLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiI0ajJncXJxM25lMzJqcWVlNGRkdTE1cDFnNCIsIm9yaWdpbl9qdGkiOiJkNzNkODA0Yy0xZGM5LTRjYzMtOGVkNS1iNDVhZTQ1YTE4ZTAiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIG9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNzY1ODgzNjk2LCJleHAiOjE3NjU4ODcyOTYsImlhdCI6MTc2NTg4MzY5NiwianRpIjoiNjI3N2U5YTYtZmRjZS00Mzk5LTkyYmEtOTU0MjEwM2ExMDQ4IiwidXNlcm5hbWUiOiJHb29nbGVfMTExNzMzODgyMTczMjg0ODg1MDAwIn0.Wly_VGJaMWmt8X2KakJi-SL2GHUABlMD-ZIyawZGnPyNQYDBVGky18OTFNWKLp192mr90QyM10WGu2s9ro8SLwj8TCnIjldz0_VNnShRjeI6Bi9CXut9KLlGNm_DZTvBD9iSmbaP4u2cKhul5WM52o9rajwcxBKp7wpZ60GnfEYgK57e0KpIL_NRJO78Q5Lg4KTKPxymyGlamBmPkSb02dBl9ls6EkHZ5zRT3aTXWS19UmGaZvm9ho36fBFUXdqNKpbh8302xYM7_WxtC78yJEYeJiQKXvzOO7mgrPh9iJp3bPD1ZJGEwVngj6ky7ONDbTBMjWEQXsUkPMVHoXwYMQ", "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.clockDrift": "-4", "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.idToken": "eyJraWQiOiI4NTZMRFdockFqUWZkT1gxWnQzdmszaGZ2ckgwaHpXc251NkdCOFFRVTFrPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiSVhIVDRET2hjOW01OGw4ZXFSc1QyUSIsInN1YiI6IjMxMGQ4OTI0LTI2ZTctNGI1OS04YWNkLWRjZTk3MTZjMGM0YiIsImNvZ25pdG86Z3JvdXBzIjpbImV1LWNlbnRyYWwtMV9UcG4zZ1VRWWdfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LWNlbnRyYWwtMS5hbWF6b25hd3MuY29tXC9ldS1jZW50cmFsLTFfVHBuM2dVUVlnIiwiY29nbml0bzp1c2VybmFtZSI6Ikdvb2dsZV8xMTE3MzM4ODIxNzMyODQ4ODUwMDAiLCJub25jZSI6IllyS3lsRWNsdjZnMUJ3LTV1ZHZwTHp0Rm9jYlBZR2lQVzJMUTBRMzhpZmJVSmM3dEtaYTA0azREMDRkMG1RNy1OQ0pmS0pDd1dIUzhHRTZZa0N3M0VOZkxjWUlMakc4QjR5RjdKckJEMXh0NmVFZE5NMUFHaDd4eFNWblEzMVJPS0s1ajZwbG9HczBpRzlhd2c3cGxMczd2aWZDYWVSeUNrMGxNczNGZEtQRSIsIm9yaWdpbl9qdGkiOiJkNzNkODA0Yy0xZGM5LTRjYzMtOGVkNS1iNDVhZTQ1YTE4ZTAiLCJhdWQiOiI0ajJncXJxM25lMzJqcWVlNGRkdTE1cDFnNCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6IjExMTczMzg4MjE3MzI4NDg4NTAwMCIsInByb3ZpZGVyTmFtZSI6Ikdvb2dsZSIsInByb3ZpZGVyVHlwZSI6Ikdvb2dsZSIsImlzc3VlciI6bnVsbCwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE3NjU4NDMyNjYxMzkifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzY1ODgzNjk2LCJleHAiOjE3NjU4ODcyOTYsImlhdCI6MTc2NTg4MzY5NiwianRpIjoiNjRjOTM1ZjEtMWZiOS00YjFhLTg4MjktYzA2ZDZjYmQ3M2EwIiwiZW1haWwiOiJyb2JlcnR1czA2MTdAZ21haWwuY29tIn0.jLIX0haSP1JbopMw3q3IDeYPvvrEDY2K5TtWCi6r84D4ilLvODp_WBZ7kvkV8kmEpYKvkAvk9s5b94RATgqc4E_w2zFn-YEXDnL-l6J9XHoz-EdGsinZNfMKBczCKMAiiseNPl3BHNJ2v05cCSnnn5ym836ISgaLC5Qyg4B-NGlQc7TlJa5rZJUcZ9waWw5QsCUiuCTISa312Go4HIB8sc7AreS8Cboo_nlrk_rciD_iBbXm3ZDVVb1-6mMPKUDjY7P4m7zmlXlEDhtkvucx-kBkuAGr4XN1w2gznLT2stEU-hMTXB987fsocz2kj7AHKV9elVpN-zLBExN5DnqHuw", "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.refreshToken": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.jKWgnY9CWe1Z2NyCoPrQX5qrn98Rdnu_vc2C1BzergL1a0yn-Kl8lEE3QZj_iIz7zl0YBKmuu_pf7cl8PbXAM-pwpFy0qsAnymKR1nWy38hXxlIl_Nz8BGMZJRCOAwrq8s2oMd3XG3rTkjFlUSWViMFPplId0eencpxKWtstGsxCzaUd1bwsNEQZXlJnQn5-EqiCtagbxQsK_M6wkdpr9PU55euXw42ipaxCi8UfKkquCu_33cGfUFnp_c0_echlPmDSrihYksb-s6xjqFp1CzBT1rBbT3IxqM8qJ_v6pyJfhS5pnYlS9O4DbosJaXs7DOHs2DH0EFmA936WY0GETQ.nO1pI59LvehEMlcG.4N_C9nsubvhnFLa-OOBKx7ZRKXXSrWXdfG3oRVebUuH65QHoJURrBhxd5MeuP71mo2maHroFZwoRTIeAIsbL3_8y6zppP9_I9XnRvMaQfA8fySlw_U4rMg75Q5i_cz03vuSIR-2sdJdg2k5_JDIIvvTaWJGnrFHAuyXIqj4ap_bEKuvg-275wUn9AksUBlKABTN6b6tAmtWIaf06IGcHL4FLUq3YYSYZoJOmW2JFNmKez2u0MCJnUSZQ1_rW6hPZQxyCI2QsJnwYz1lwBcef9cUW2Ksc7k9O-1iupvTSlitSiD7RiMF-f5Fk_EmrMUT31Tq2dmwt-N2oAmn2vt6r-WvBSe9vCVYhwzsc7S331WszA6cLr91RkoRw_ufUxKIC7zRw6o-saECEyg7ta66udSsTuLrBQg22jqOOLMbQFW16QrPhyLIyk8vhx61izuD8Tdo0uoE5PRneWlRSQbA0BRM3iQQzLci5oitD2oCCtc9Dkzq0l_PPxUM5ikpX8RQND8fvtySK8PRwbU-I8Hlshg5dZQDje2RHkkpxo_nzoyPVNyC2iBpdB9TEpp48JhbQgqLoACexDAXC0u2nMTkH5ynZt8Ww0fSO3hRz3uW3Of6IOwnlGDZHUuADlNDz_-EyTa4lfuL7xm0rBLS2ZzzWpOzE8Ix6paZHdR68uSWVt7he7_xGNyh_bkeExbxQxruvW7RpswSFekelx7Ra3H0JtSNLwcy6CZIxgSpXtjWM5yXl5FxR1sfhXxokQAHqAectHCPTM6g1oaabNACXyVVHFAlWWG41K9OC8r_dwg9ULQ0bzVegShmXsMt7rEJ4I7HAZ1RaOgkmRrdPcAuKYx1xeBA7E2h_tgi0aFCoBDQnNp8eK4At18Oa73Womx0ptpb23dBN6rqNs6zcMmIVecbFMbMglFSHqrBQq_pvWTBGRg_zBoUx2GGEaSz3rF-riP98FcSWpYPC1Dm1EakR_DkYbYL21ZTh-cCQRzOJ6VSEs8Y9IL_9pgnlivxBd9BPyUXDHuEBRnKWm5pzuvnVHxdYgfHyYFd1kFk64yzb2eXTtSy2QSmHfCH6GcG0RSWGh-WQnNccZ9iuHz1TDJlhomAzDXhOI3ScrEsYfwb4F4G4fISezgtQ6NnXtvFdscP-w65NLomGLPOrhjtn5MeEtGt4fR60F1jA4TKuh2k62cPh7G6iuk63Agsa_9-263rJrgKW145YDpmes4vc07_Tg5o-BPqSmzPgpIh0XhwNaNAwbGrqN8KgU4QaULleuLI8iVIEPBL3-7KLpFG3xwkWuIy9rkjn.YRKCZxq7thKS68-fLEDsrA", "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.userData": '{"UserAttributes":[{"Name":"sub","Value":"310d8924-26e7-4b59-8acd-dce9716c0c4b"},{"Name":"identities","Value":"[{\\"userId\\":\\"111733882173284885000\\",\\"providerName\\":\\"Google\\",\\"providerType\\":\\"Google\\",\\"issuer\\":null,\\"primary\\":true,\\"dateCreated\\":1765843266139}]"},{"Name":"email_verified","Value":"false"},{"Name":"email","Value":"robertus0617@gmail.com"}],"Username":"Google_111733882173284885000"}', "CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.LastAuthUser": "Google_111733882173284885000", "amplify-redirected-from-hosted-ui": "true", "amplify-signin-with-hostedUI": "true" }
+
+Background event page was not terminated on idle because a DevTools toolbox is attached to the extension. _generated_background_page.html
+// 2. 測試 Auth.currentSession()
+await testAuth();
+=== Testing Auth.currentSession() === service-worker.ts:139:1
+❌ No session: undefined service-worker.ts:148:1
+false
+// 3. 如果 testAuth 失敗，試試強制 re-sync
+await forceSync();
+await testAuth();
+=== Force Re-sync === service-worker.ts:173:1
+Sync completed service-worker.ts:177:1
+=== Testing Storage === service-worker.ts:154:1
+storage.getAll() keys: 8 service-worker.ts:157:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.accessToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.clockDrift service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.idToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.refreshToken service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_111733882173284885000.userData service-worker.ts:158:1
+ - CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.LastAuthUser service-worker.ts:158:1
+ - amplify-redirected-from-hosted-ui service-worker.ts:158:1
+ - amplify-signin-with-hostedUI service-worker.ts:158:1
+storage.getItem("CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.LastAuthUser"): Google_111733882173284885000 service-worker.ts:164:1
+=== Testing Auth.currentSession() === service-worker.ts:139:1
+❌ No session: undefined service-worker.ts:148:1
+false
+```
+
+---
+
+## 🎯 根本原因：Client ID 不匹配！
+
+### 問題發現 (19:25)
+
+- **Storage keys**: `CognitoIdentityServiceProvider.4j2gqrq3ne32jqee4ddu15p1g4.Google_...`
+- **Extension .env**: `AUTH_USER_POOL_WEB_CLIENT_ID="l0ng8n755dine5q5t0hcip768"`
+
+AWS Amplify Auth 根據 client ID 尋找 tokens。Extension 的 client ID 和 storage 中的不同，所以找不到！
+
+### 根本原因
+
+| 環境 | User Pool ID | Client ID |
+|------|-------------|-----------|
+| Extension (prod) | `eu-central-1_7fL0W5Axi` | `l0ng8n755dine5q5t0hcip768` |
+| localhost app (dev) | `eu-central-1_Tpn3gUQYg` | `4j2gqrq3ne32jqee4ddu15p1g4` |
+
+這是完全不同的 Cognito User Pools！
+
+### 解決方案
+
+建立 `.env.dev` 使用 dev 環境配置：
+```bash
+cd packages/extension
+cp .env .env.prod  # 備份 production 設定
+cp .env.dev .env   # 使用 dev 設定
+npm run build:firefox
+```
+
+**新增檔案**：
+- `packages/extension/.env.dev` - Dev 環境設定
+
+### 測試步驟 (19:30)
+
+1. 清除 storage：
+   ```javascript
+   await browser.storage.local.clear();
+   ```
+2. 重新載入 extension (Reload)
+3. 重新整理 localhost:8030
+4. 執行登入
+5. 測試：
+   ```javascript
+   await testAuth();
+   ```
+   應該看到 `✅ Session found!`
+
+### 結果
+`✅ Session found!` 🎊
+
+工具列按鈕變成有 `Setup` 了！！！
+
+只是點下去 → https://app.vocably.pro/welcome
+來到空空的歡迎頁面，完全空，連 Welcome to Vocably 都沒有
+
+## 2025-12-16 19:35 修改 popup URL
+
+### 修正過程
+（補寫）
+
+### 結果
+選語言後 `Loading example text...` loading forever
+
+網址為 http://localhost:8030/welcome/ca/undefined
+（Catalan 為例）
+
+## 2025-12-16 19:54 設定頁面各問題
+1. 點選各字詞並不會出現 Vocably 的招牌 popup 按鈕
+2. 沒有像 Chrome 版那樣的使用說明短片
+3. 沒有 `You study Catalan and your mother tongue is Chinese (Traditional). Change.` callout
+
+---
+
+## ✅ Firefox Extension Migration 進度總結
+
+### 已完成 ✅
+1. **登入流程**：Tokens 成功存入 extension storage
+2. **Auth.currentSession()**：成功讀取 tokens
+3. **工具列按鈕**：顯示 "Setup"（正確的已登入狀態）
+4. **Popup URL**：正確導向 localhost:8030
+
+### 未完成 ❌（都與 `externally_connectable` 有關）
+| 功能 | 原因 | 解決方案 |
+|------|------|----------|
+| getProxyLanguage | Chrome-only API | ✅ 已加 try-catch fallback |
+| setProxyLanguage | Chrome-only API | 需透過 content script bridge |
+| setSourceLanguage | Chrome-only API | 需透過 content script bridge |
+| Content script popup | ? | 需調查 |
+| 語言 callout | 需要語言設定 | 需透過 bridge 取得 |
+
+### 核心問題
+Firefox 不支援 Chrome 的 `externally_connectable` API，在 Chrome 中：
+- Web app 可直接透過 `chrome.runtime.sendMessage(extensionId, ...)` 與 extension 通訊
+- 這用在：登入 token 同步、語言設定、翻譯功能
+
+**完整解決方案**需要擴展 content script bridge 來支援所有這些訊息類型。
+
+### 測試核心翻譯功能
+不過！最重要的**翻譯功能**應該已經可以測試了。請：
+1. 到任何網頁（非 localhost）
+2. 選取一個單字
+3. 看 popup 按鈕是否出現
+
+## 2025-12-16 20:00 核心翻譯功能也還不行
+同上述，設定頁範例文字就已經不顯示 popup 按鈕了，各網頁也一樣沒出現哦
+
+---
+
+## 🔧 修復歷程摘要（2025-12-16 20:00 起）
+
+### 1️⃣ Welcome Page `undefined` 語言參數問題
+**問題**：`/welcome/ca/undefined` URL 導致無限 loading  
+**根因**：`getProxyLanguage(extensionId)` 使用 Chrome 的 `externally_connectable`，Firefox 不支援  
+**修復**：
+- 📝 `packages/app/src/app/welcome/pages/index-page/index-page.component.ts`
+  - 加入 try-catch 處理 `getProxyLanguage` 失敗
+  - Fallback 到 `detectTargetLanguage()`
+
+### 2️⃣ Stencil.js `adoptedStyleSheets` TypeError
+**問題**：`TypeError: can't access property "writable", Object.getOwnPropertyDescriptor(...) is undefined`  
+**根因**：Stencil.js runtime 在 Firefox content script 中訪問 `document.adoptedStyleSheets` 時，`getOwnPropertyDescriptor` 返回 `undefined`  
+**修復**：
+- 📝 `packages/extension/src/firefox-polyfill.ts` (新增)
+  - 檢查並替換有問題的 `adoptedStyleSheets`
+  - 提供 debug logging
+- 📝 `packages/extension/webpack.config.js`
+  - 加入 `firefox-polyfill` entry point
+- 📝 `packages/extension/src/manifest.firefox.json.txt`
+  - Content scripts 中**最先載入** `firefox-polyfill.js`
+
+### 3️⃣ CSP 阻擋 `Function('return this')()` 錯誤
+**問題**：`EvalError: call to Function() blocked by CSP`  
+**根因**：
+1. `lodash-es/_root.js` 使用 `Function('return this')()`
+2. Webpack runtime 使用 `new Function('return this')()`  
+
+**修復**：
+- 📝 `packages/extension/src/lodash-root-fix.ts` (新增)
+  - CSP-safe 的 `_root` 替代，使用 `globalThis`
+- 📝 `packages/extension/webpack.config.js`
+  - 加入 `string-replace-loader` 規則替換 `Function('return this')()` → `globalThis`
+  - 加入 `NormalModuleReplacementPlugin` 替換 lodash-es/_root.js
+  - 設定 `output.globalObject: 'globalThis'`
+- 📝 `packages/extension/package.json`
+  - `build:firefox` script 加入 post-build sed 命令
+  - 替換殘留的 `new Function('return this')()` → `globalThis`
+
+### 4️⃣ Service Worker Debug Logs
+**修改**：
+- 📝 `packages/extension/src/service-worker.ts`
+  - `contextMenus.onClicked` 加入 debug logging
+  - 追蹤 tab ID 和 message 發送狀態
+
+### 5️⃣ Content Script Debug Logs
+**修改**：
+- 📝 `packages/extension/src/content-script.ts`
+  - 加入啟動、註冊、成功/失敗 logging
+  - 加入 try-catch error handling
+
+### 6️⃣ Custom Elements 時序問題 (測試中)
+**問題**：`NotSupportedError: Cannot execute callback from a nuked compartment`  
+**假設**：`defineCustomElements()` 是 async 但沒有 await  
+**修復**：
+- 📝 `packages/extension-content-script/src/index.ts`
+  - `registerContentScript` 中加入 `await defineCustomElements()`
+
+---
+
+## ⚠️ 當前狀態（2025-12-16 20:52）
+- ✅ Login 功能正常
+- ✅ CSP 問題完全解決（0 個 `Function('return this')` 殘留）
+- ✅ Content script 成功註冊
+- ❌ **翻譯按鈕仍未出現**
+- ❌ **選取單字時仍有 "nuked compartment" 錯誤**
+
+### 🔍 根本原因診斷
+**錯誤位置**：`document.createElement('vocably-button')` (content-script.js:14572)  
+**問題**：Stencil.js custom elements 與 Firefox content script 的 **compartment isolation** 機制不相容
+
+**技術細節**：
+- Firefox content scripts 運行在獨立的 "compartment" (安全沙箱)
+- 當創建 custom element 時，Stencil.js 嘗試執行跨 compartment 的回調
+- 這些回調在 "nuked" (已失效) 的 compartment 中無法執行
+- 錯誤：`NotSupportedError: Cannot execute callback from a nuked compartment`
+
+### 下一步調查方向
+1. ✅ 已診斷：問題在 Stencil.js + Firefox compartment isolation
+2. 🔍 **進行中**：研究是否有 Stencil.js 的 Firefox content script workaround
+3. 待評估：其他解決方案（iframe isolation、原生 DOM rewrite）
+
+---
+
+---
+
+## 🔬 研究：Stencil.js + Firefox Content Script 相容性 (2025-12-16 20:52)
+
+### 研究結果總結
+
+#### 1️⃣ XrayWrapper 和 Compartment Isolation
+**問題核心**：
+- Firefox content scripts 在 "isolated world" 運行
+- XrayWrapper 限制訪問頁面定義的 JavaScript 物件
+- Custom elements 註冊在頁面的 `window` 物件，content script 看不到
+
+**技術細節**：
+- Content script 訪問 DOM 物件時，看到的是 "wrapped" 版本
+- Stencil.js custom elements 的內部方法和屬性被 XrayWrapper 隱藏
+- 創建 custom element 時觸發跨 compartment 的回調失敗
+
+#### 2️⃣ 已知解決方案
+
+**方案 A：使用 `wrappedJSObject` (高風險)**
+```javascript
+// 訪問未包裝的 window 對象
+const unwrappedWindow = window.wrappedJSObject;
+// 在未包裝的上下文中創建元素
+const element = unwrappedWindow.document.createElement('vocably-button');
+```
+⚠️ **安全風險**：繞過 XrayWrapper 會暴露 content script 給潛在惡意網頁程式碼
+
+**方案 B：Firefox 專屬 API `Element.openOrClosedShadowRoot`**
+```javascript
+// Firefox 63+ 可以訪問任何 Shadow Root
+const shadowRoot = element.openOrClosedShadowRoot;
+```
+✅ **優點**：安全且符合 Firefox WebExtension API
+
+**方案 C：使用 `exportFunction()` 和 `cloneInto()`**
+```javascript
+// 安全地在 compartment 之間分享功能
+const sharedFunc = exportFunction(myFunction, window.wrappedJSObject);
+const sharedObj = cloneInto(myObject, window.wrappedJSObject);
+```
+✅ **優點**：安全的跨 compartment 通訊
+
+**方案 D：Iframe 隔離**
+- 將 Vocably UI 放在獨立的 iframe 中
+- 避開 compartment 問題
+- ⚠️ 缺點：需要重構現有架構
+
+#### 3️⃣ Stencil.js 在 Firefox Extension 的特殊配置
+根據研究，Stencil.js 可以在 Firefox extension 中使用，但需要：
+1. 使用 `dist-custom-elements` output target
+2. 每個 component 作為獨立 class 輸出
+3. Extension 自己處理 custom elements 註冊
+
+### 下一步實作計畫
+
+**優先順序 1：測試 `wrappedJSObject` workaround (快速驗證)**
+- 修改 `createButton` 使用 `window.wrappedJSObject.document.createElement`
+- 驗證是否解決 "nuked compartment" 錯誤
+- 評估安全風險
+
+**優先順序 2：使用 Firefox 專屬 API**
+- 整合 `openOrClosedShadowRoot` 用於 Shadow DOM 訪問
+- 使用 `exportFunction/cloneInto` 替代直接訪問
+
+**優先順序 3：重構為 `dist-custom-elements` (長期方案)**
+- 修改 Stencil 配置
+- 改用獨立 component classes
+- 手動註冊 custom elements
+
+---
+
+## 💡 實作嘗試：wrappedJSObject Workaround (2025-12-16 21:00)
+
+### 修改內容
+**檔案**：`packages/extension-content-script/src/button.ts`
+
+**變更**：
+```typescript
+// Before
+const button = document.createElement(
+  isTouchscreen ? 'vocably-mobile-button' : 'vocably-button'
+);
+
+// After
+// Firefox workaround: Use wrappedJSObject to bypass XrayWrapper
+const targetDocument = typeof window.wrappedJSObject !== 'undefined' 
+  ? window.wrappedJSObject.document 
+  : document;
+
+const button = targetDocument.createElement(
+  isTouchscreen ? 'vocably-mobile-button' : 'vocably-button'
+) as HTMLElement;
+```
+
+**原理**：
+- 檢測 `window.wrappedJSObject` 是否存在（Firefox 特性）
+- 如果存在，使用 unwrapped document 創建元素
+- 這繞過 XrayWrapper，允許訪問頁面註冊的 custom elements
+- Chrome 和其他瀏覽器會 fallback 到標準 `document`
+
+⚠️ **安全提醒**：這個 workaround 繞過 Firefox 的安全機制。在生產環境中，應該考慮更安全的替代方案。
+
+### 測試步驟
+1. 重新載入 extension
+2. 到任意網頁
+3. 選取單字
+4. 檢查：
+   - ❌ 是否沒有 "nuked compartment" 錯誤
+   - ✅ 是否出現翻譯按鈕
+
+### ❌ 測試結果（2025-12-16 21:15）
+**狀態**：失敗  
+**現象**：與之前完全一樣，翻譯按鈕仍未出現
+
+**分析**：
+`wrappedJSObject` workaround 無效，表示問題可能不僅僅是 XrayWrapper 阻擋訪問。可能的原因：
+1. Stencil.js custom elements 根本沒有在 Firefox content script context 中註冊
+2. `defineCustomElements()` 可能在錯誤的 context 中執行
+3. 需要在 unwrapped window context 中調用 `defineCustomElements()`
+
+### 下一步診斷方向
+1. 檢查 custom elements 是否成功註冊（`customElements.get('vocably-button')`）
+2. 嘗試在 wrappedJSObject context 中註冊 custom elements
+3. 考慮徹底重構為不使用 custom elements 的方案
