@@ -35,7 +35,7 @@ for (const userCardCollection of userCardCollections) {
   const cardCollection = JSON.parse(
     (
       await execute(
-        `aws s3 cp s3://vocably-prod-cards/${userCardCollection.Key} -`,
+        `aws s3 cp s3://${process.env.DECKS_BUCKET}/${userCardCollection.Key} -`,
         { maxBuffer: 10 * 1024 * 1024 }
       )
     ).stdout || '""'
@@ -73,4 +73,18 @@ try {
   );
 } catch (error) {
   console.log("Can't read user static metadata.", error.toString());
+}
+
+try {
+  const studyStreak = JSON.parse(
+    (
+      await execute(
+        `aws s3 cp s3://${process.env.USER_FILES_BUCKET}/${sub}/files/study-streak.json -`
+      )
+    ).stdout || '""'
+  );
+
+  console.log('Study streak', inspect(studyStreak, { depth: null }));
+} catch (error) {
+  console.log('Study streak', error.toString());
 }
