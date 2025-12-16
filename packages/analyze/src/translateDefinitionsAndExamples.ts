@@ -56,13 +56,13 @@ export const translateDefinitionsAndExamples = async ({
   };
 
   for (let i = 0; i < definitions.length; i++) {
-    const translation = translations[i] ? ` (${translations[i]})` : '';
+    const translation = translations[i] ? ` [${translations[i]}]` : '';
     result.definitions.push(`${definitions[i]}${translation}`);
   }
 
   for (let i = 0; i < examples.length; i++) {
     const translation = translations[i + definitions.length]
-      ? ` (${translations[i + definitions.length]})`
+      ? ` [${translations[i + definitions.length]}]`
       : '';
     result.examples.push(`${examples[i]}${translation}`);
   }

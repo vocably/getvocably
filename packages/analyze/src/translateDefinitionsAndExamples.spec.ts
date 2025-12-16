@@ -26,12 +26,12 @@ describe('translateDefinitionsAndExmaples', () => {
 
     expect(
       result.value.definitions.every((definition) =>
-        /^.+\(.+\)$/.test(definition)
+        /^.+\[.+\]$/.test(definition)
       )
     ).toEqual(true);
 
     expect(
-      result.value.examples.every((definition) => /^.+\(.+\)$/.test(definition))
+      result.value.examples.every((definition) => /^.+\[.+\]$/.test(definition))
     ).toEqual(true);
   });
 
@@ -70,7 +70,7 @@ describe('translateDefinitionsAndExmaples', () => {
     expect(result.value.definitions).toEqual([]);
 
     expect(
-      result.value.examples.every((definition) => /^.+\(.+\)$/.test(definition))
+      result.value.examples.every((definition) => /^.+\[.+\]$/.test(definition))
     ).toEqual(true);
   });
 
@@ -90,7 +90,7 @@ describe('translateDefinitionsAndExmaples', () => {
 
     expect(
       result.value.definitions.every((definition) =>
-        /^.+\(.+\)$/.test(definition)
+        /^.+\[.+\]$/.test(definition)
       )
     ).toEqual(true);
 
