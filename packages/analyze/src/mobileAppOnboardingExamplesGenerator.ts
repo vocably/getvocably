@@ -374,14 +374,12 @@ export const generateAppOnboardingExamples = async (
     }
 
     const contextTranslationResult = await buildDirectResult({
-      payload: {
-        // @ts-ignore
-        source: languages[sourceLanguage].contextTranslationExample.word,
-        // @ts-ignore
-        context: languages[sourceLanguage].contextTranslationExample.text,
-        sourceLanguage,
-        targetLanguage,
-      },
+      // @ts-ignore
+      source: languages[sourceLanguage].contextTranslationExample.word,
+      // @ts-ignore
+      context: languages[sourceLanguage].contextTranslationExample.text,
+      sourceLanguage,
+      targetLanguage,
     });
 
     if (contextTranslationResult.success === false) {
