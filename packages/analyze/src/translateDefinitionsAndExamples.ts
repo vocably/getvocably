@@ -20,7 +20,7 @@ export const translateDefinitionsAndExamples = async ({
   examples,
 }: Payload): Promise<Result<TranslatedDefinitionsAndExamples>> => {
   const googleTranslateSourcePayload = [...definitions, ...examples]
-    .map((sentence) => `{${sentence}}`)
+    .map((sentence, index) => `${index + 1}. ${sentence.replace(/\n/g, ' ')}`)
     .join('\n');
 
   if (googleTranslateSourcePayload.length === 0) {
@@ -43,12 +43,18 @@ export const translateDefinitionsAndExamples = async ({
     return translationResult;
   }
 
-  const regex = /\{([\s\S]*?)\}/g;
+  const translations = translationResult.value.target
+    .split('\n')
+    .filter((t) => t.trim().length > 0)
+    .map((t) => t.replace(/^\d+. /g, '').trim());
 
-  // @ts-ignore
-  const translations = [...translationResult.value.target.matchAll(regex)].map(
-    (match) => match[1]
-  );
+  if (translations.length !== definitions.length + examples.length) {
+    return {
+      success: false,
+      errorCode: 'TRANSLATION_RESULT_MISMATCH',
+      reason: `The number of translations doesn't match the number of sentences.`,
+    };
+  }
 
   let result: TranslatedDefinitionsAndExamples = {
     definitions: [],

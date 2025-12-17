@@ -24,6 +24,8 @@ describe('translateDefinitionsAndExmaples', () => {
       return;
     }
 
+    console.log(result.value);
+
     expect(
       result.value.definitions.every((definition) =>
         /^.+\[.+\]$/.test(definition)
@@ -49,6 +51,8 @@ describe('translateDefinitionsAndExmaples', () => {
       return;
     }
 
+    console.log(result.value);
+
     expect(result.value.definitions).toEqual([]);
     expect(result.value.examples).toEqual([]);
   });
@@ -67,6 +71,8 @@ describe('translateDefinitionsAndExmaples', () => {
       return;
     }
 
+    console.log(result.value);
+
     expect(result.value.definitions).toEqual([]);
 
     expect(
@@ -75,10 +81,14 @@ describe('translateDefinitionsAndExmaples', () => {
   });
 
   it('works with empty examples', async () => {
+    const definitions = [
+      'Frucht des Apfelbaums',
+      'rundes Obst mit glatter Schale',
+    ];
     const result = await translateDefinitionsAndExamples({
       sourceLanguage: 'de',
       targetLanguage: 'en',
-      definitions: ['Frucht des Apfelbaums', 'rundes Obst mit glatter Schale'],
+      definitions,
       examples: [],
     });
 
@@ -88,12 +98,51 @@ describe('translateDefinitionsAndExmaples', () => {
       return;
     }
 
+    console.log(result.value);
+
     expect(
-      result.value.definitions.every((definition) =>
-        /^.+\[.+\]$/.test(definition)
+      result.value.definitions.every(
+        (definition, index) =>
+          definition.startsWith(definitions[index]) &&
+          /^.+\[.+\]$/.test(definition)
       )
     ).toEqual(true);
 
     expect(result.value.examples).toEqual([]);
+  });
+
+  it('translates small units of speech', async () => {
+    const definitions = ['zonder kleding', 'niet bedekt', 'kwetsbaar'];
+    const examples = ['bloot voeten', 'bloot zijn', 'bloot hoofd'];
+    const result = await translateDefinitionsAndExamples({
+      sourceLanguage: 'nl',
+      targetLanguage: 'ru',
+      definitions,
+      examples,
+    });
+
+    expect(result.success).toEqual(true);
+
+    if (result.success === false) {
+      return;
+    }
+
+    console.log(result.value);
+
+    expect(
+      definitions.every(
+        (definition, index) =>
+          result.value.definitions[index].startsWith(definition) &&
+          /^.+\[.+\]$/.test(result.value.definitions[index])
+      )
+    ).toEqual(true);
+
+    expect(
+      examples.every(
+        (example, index) =>
+          result.value.examples[index].startsWith(example) &&
+          /^.+\[.+\]$/.test(result.value.examples[index])
+      )
+    ).toEqual(true);
   });
 });
