@@ -17,9 +17,9 @@ import { Button, Surface, Text, useTheme } from 'react-native-paper';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import { CardSkeletonLoader } from './CardSkeletonLoader';
 import { exitSharedScreen } from './exitSharedScreen';
 import { useLanguageDeck } from './languageDeck/useLanguageDeck';
-import { InlineLoader } from './loaders/InlineLoader';
 import { Loader } from './loaders/Loader';
 import { AnalyzeResult } from './LookUpScreen/AnalyzeResult';
 import { TranslationPresetForm } from './LookUpScreen/TranslationPresetForm';
@@ -332,11 +332,11 @@ export const LookUpScreen: FC<Props> = ({
               entering={FadeIn}
               exiting={FadeOut.duration(50)}
               style={{
-                padding: padding,
+                padding: padding + 8,
                 paddingTop: mainPadding + 4,
               }}
             >
-              <InlineLoader>{getLoadingText(isAnalyzingPreset)}</InlineLoader>
+              <CardSkeletonLoader />
             </Animated.View>
           )}
           {!isAnalyzingPreset && lookUpResult && lookUpResult.success && (
