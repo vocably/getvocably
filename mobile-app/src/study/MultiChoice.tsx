@@ -1,5 +1,6 @@
-import { CardItem } from '@vocably/model';
+import { CardItem, GoogleLanguage } from '@vocably/model';
 import { SrsScore } from '@vocably/srs';
+import { sanitizeTranscript } from '@vocably/sulna';
 import { shuffle } from 'lodash-es';
 import React, { FC, useMemo, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -20,6 +21,17 @@ type Props = {
 };
 
 const buttonBorderRadius = 16;
+
+const transcriptionLanguages: GoogleLanguage[] = [
+  'zh',
+  'zh-TW',
+  'ja',
+  'hi',
+  'hy',
+  'hyw',
+  'ga',
+  'ka',
+];
 
 export const MultiChoice: FC<Props> = ({
   card,
@@ -197,6 +209,27 @@ export const MultiChoice: FC<Props> = ({
                         ? answerCard.data.source
                         : answerCard.data.translation ||
                           answerCard.data.definition}
+
+                      {direction === 'back' &&
+                        answerCard.data.ipa &&
+                        transcriptionLanguages.includes(
+                          answerCard.data.language as GoogleLanguage
+                        ) && (
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              verticalAlign: 'middle',
+                              color: wrong.includes(answerCard.id)
+                                ? theme.colors.onError
+                                : correct === answerCard.id
+                                ? theme.colors.onPrimary
+                                : theme.colors.primary,
+                            }}
+                          >
+                            {' '}
+                            /{sanitizeTranscript(answerCard.data.ipa)}/
+                          </Text>
+                        )}
                     </Text>
                     {card.id === answerCard.id && direction === 'back' && (
                       <PlaySound
