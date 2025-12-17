@@ -2339,3 +2339,90 @@ if (isFirefox) {
 3. 或暫停，明天繼續
 
 核心技術突破已完成，剩下的主要是 UI/UX 細節調整。
+
+> ![tip] 12/17 8:39 換用 Antigravity Claude Opus 4.5
+
+### 12/17 上午 Session 成就 (8:39 - 13:14)
+
+#### ✅ 已完成功能
+
+1. **翻譯 API 整合**
+   - `TRANSLATE`, `TRANSLATION_RESULT`, `TRANSLATION_ERROR` message types
+   - `iframe-manager.ts` 調用 `api.analyze()` 並返回結果
+   - `popup-frame.ts` 接收並顯示翻譯結果
+
+2. **語言設定功能**
+   - `CHANGE_LANGUAGE` message type
+   - 調用 `api.setInternalSourceLanguage/ProxyLanguage` 保存設定
+   - 自動重新翻譯
+
+3. **卡片操作**
+   - `ADD_CARD`, `REMOVE_CARD` 事件處理
+   - `+ Learn` 按鈕正常工作
+   - 卡片編輯/刪除功能
+
+4. **Tag 操作**
+   - Request/Response 機制（含 `requestId`）
+   - `attachTag`, `detachTag`, `deleteTag`, `updateTag`, `updateCard` proxy methods
+   - Tag 新增/移除正常工作
+
+5. **AI 解釋**
+   - `EXPLANATION_RESULT` message type
+   - 調用 `api.explain()` 獲取 AI 詳細解釋
+   - 正確顯示在 popup 中
+
+6. **UI 修復**
+   - 點擊外部關閉 popup（`clickOutsideHandler`）
+   - Popup 大小修正（`--max-height: 480px`）
+   - 語言顯示修正（從 result 提取 `sourceLanguage/targetLanguage`）
+
+---
+
+### 🔧 尚需實作 / 待驗證
+
+#### Production 環境測試
+- [ ] 使用 `.env.prod` 建構 production 版本
+- [ ] 驗證與 production API 連接
+- [ ] 確認卡片同步到手機 app
+
+#### Chrome 相容性
+- [ ] 確認 Chrome 版本未被破壞
+- [ ] 在 Chrome 上測試所有功能
+
+#### 邊緣情況
+- [ ] 測試長文翻譯
+- [ ] 測試多語言切換
+- [ ] 測試網頁內 iframe 中的選取
+- [ ] CSP 嚴格網站測試
+
+#### 代碼品質
+- [ ] 移除 `console.log` 調試訊息（或改用條件式日誌）
+- [ ] TypeScript 類型優化（減少 `any` 使用）
+- [ ] 錯誤處理完善
+
+---
+
+### 📋 PR 準備清單
+
+1. **測試 Production 環境** - 最重要，確認與官方 API 完全兼容
+2. **Chrome 回歸測試** - 確保沒有破壞現有功能
+3. **代碼清理** - 移除調試日誌、優化類型
+4. **文檔更新** - 說明 Firefox 特殊處理（iframe 架構）
+5. **建構指令** - 確認 `npm run build:firefox:prod` 可用
+
+#### 建議的 PR 策略
+```
+1. 先在自己的 fork 上完成測試
+2. 建立 feature branch: `feature/firefox-support`
+3. 撰寫清楚的 PR 描述，說明 iframe 架構的必要性
+4. 請求原作者 review
+```
+
+---
+
+### ⚠️ 已知限制
+
+1. **Dev vs Production** - 目前使用 `api.dev.env.vocably.pro`，卡片不會同步到 production 手機 app
+2. **Popup 大小** - 使用固定 px 值而非響應式設計
+3. **iframe 架構開銷** - 比 Chrome 原生方案稍重
+

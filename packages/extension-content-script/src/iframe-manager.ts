@@ -1,4 +1,5 @@
-import type { ContentScriptToFrameMessage, FrameToContentScriptMessage } from './message-types';
+import type { ContentScriptToFrameMessage, FrameToContentScriptMessage, ContentScriptToFrameResponse } from './message-types';
+import { api } from './api';
 
 // Use browser API directly to avoid package dependency issues
 declare const browser: any;
@@ -11,6 +12,7 @@ class IframeManager {
   private iframe: HTMLIFrameElement | null = null;
   private frameReady = false;
   private messageQueue: ContentScriptToFrameMessage[] = [];
+  private clickOutsideHandler: ((e: MouseEvent) => void) | null = null;
 
   constructor() {
     // Listen for messages from iframe
@@ -133,7 +135,48 @@ class IframeManager {
       ...params,
     });
 
+    // Setup click outside handler to close when clicking on page
+    this.setupClickOutsideHandler();
+
     console.log('[IframeManager] Translation shown at', { left, top }, 'size:', { buttonWidth, buttonHeight });
+  }
+
+  /**
+   * Setup handler to detect clicks outside iframe and hide it
+   */
+  private setupClickOutsideHandler(): void {
+    // Remove existing handler if any
+    this.removeClickOutsideHandler();
+    
+    this.clickOutsideHandler = (e: MouseEvent) => {
+      // If click is on the iframe itself, ignore
+      if (e.target === this.iframe) {
+        return;
+      }
+      
+      // Hide the frame when clicking outside
+      console.log('[IframeManager] Click outside detected, hiding frame');
+      this.hide();
+      this.removeClickOutsideHandler();
+    };
+    
+    // Use mousedown for faster response, with capture to get it before other handlers
+    // Add with a small delay to avoid catching the selection click
+    setTimeout(() => {
+      if (this.clickOutsideHandler) {
+        document.addEventListener('mousedown', this.clickOutsideHandler, true);
+      }
+    }, 100);
+  }
+
+  /**
+   * Remove click outside handler
+   */
+  private removeClickOutsideHandler(): void {
+    if (this.clickOutsideHandler) {
+      document.removeEventListener('mousedown', this.clickOutsideHandler, true);
+      this.clickOutsideHandler = null;
+    }
   }
 
   /**
@@ -192,11 +235,275 @@ class IframeManager {
         console.log('[IframeManager] Frame closed by user action');
         break;
 
+      case 'RESIZE_FRAME':
+        // Resize iframe for popup display
+        if (this.iframe) {
+          this.iframe.style.width = `${message.width}px`;
+          this.iframe.style.height = `${message.height}px`;
+          console.log('[IframeManager] Frame resized to:', message.width, 'x', message.height);
+        }
+        break;
+
       case 'SAVE_CARD':
         // TODO: Handle save card
         console.log('[IframeManager] Save card:', message.card);
         break;
+
+      case 'TRANSLATE':
+        // Handle translation request from iframe
+        this.handleTranslateRequest(message);
+        break;
+
+      case 'CHANGE_LANGUAGE':
+        // Handle language change request from iframe
+        this.handleLanguageChange(message);
+        break;
+
+      case 'ADD_CARD':
+        // Handle add card request from iframe
+        this.handleAddCard(message.payload);
+        break;
+
+      case 'REMOVE_CARD':
+        // Handle remove card request from iframe
+        this.handleRemoveCard(message.payload);
+        break;
+
+      case 'ATTACH_TAG':
+        this.handleTagOperation('attachTag', message.payload, message.requestId);
+        break;
+
+      case 'DETACH_TAG':
+        this.handleTagOperation('detachTag', message.payload, message.requestId);
+        break;
+
+      case 'DELETE_TAG':
+        this.handleTagOperation('deleteTag', message.payload, message.requestId);
+        break;
+
+      case 'UPDATE_TAG':
+        this.handleTagOperation('updateTag', message.payload, message.requestId);
+        break;
+
+      case 'UPDATE_CARD':
+        this.handleTagOperation('updateCard', message.payload, message.requestId);
+        break;
     }
+  }
+
+  /**
+   * Handle generic tag/card operation that returns a Result<TranslationCards>
+   */
+  private async handleTagOperation(
+    operation: 'attachTag' | 'detachTag' | 'deleteTag' | 'updateTag' | 'updateCard', 
+    payload: any, 
+    requestId: string
+  ): Promise<void> {
+    console.log(`[IframeManager] ${operation} requested:`, payload);
+    
+    try {
+      // Call the corresponding API method
+      // @ts-ignore - Dynamic access to api methods
+      const result = await api[operation](payload);
+      console.log(`[IframeManager] ${operation} success, result:`, result);
+      
+      // Send updated result back to iframe with requestId
+      this.sendResponseToFrame({
+        type: 'CARD_RESULT',
+        result,
+        requestId,
+      });
+    } catch (error) {
+      console.error(`[IframeManager] ${operation} error:`, error);
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_ERROR',
+        error: error instanceof Error ? error.message : `${operation} failed`,
+        requestId,
+      });
+    }
+  }
+
+  /**
+   * Handle add card request from iframe
+   */
+  private async handleAddCard(payload: any): Promise<void> {
+    console.log('[IframeManager] Add card requested:', payload);
+    
+    try {
+      const result = await api.addCard(payload);
+      console.log('[IframeManager] Card added, result:', result);
+      
+      // Send updated result back to iframe
+      this.sendResponseToFrame({
+        type: 'CARD_RESULT',
+        result,
+      });
+      
+      // Also mark user knows how to add
+      await api.setUserKnowsHowToAdd(true);
+    } catch (error) {
+      console.error('[IframeManager] Add card error:', error);
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_ERROR',
+        error: error instanceof Error ? error.message : 'Add card failed',
+      });
+    }
+  }
+
+  /**
+   * Handle remove card request from iframe
+   */
+  private async handleRemoveCard(payload: any): Promise<void> {
+    console.log('[IframeManager] Remove card requested:', payload);
+    
+    try {
+      const result = await api.removeCard(payload);
+      console.log('[IframeManager] Card removed, result:', result);
+      
+      // Send updated result back to iframe
+      this.sendResponseToFrame({
+        type: 'CARD_RESULT',
+        result,
+      });
+      
+      await api.setUserKnowsHowToAdd(true);
+    } catch (error) {
+      console.error('[IframeManager] Remove card error:', error);
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_ERROR',
+        error: error instanceof Error ? error.message : 'Remove card failed',
+      });
+    }
+  }
+
+  /**
+   * Handle language change request from iframe
+   */
+  private async handleLanguageChange(message: { text: string; sourceLanguage?: string; targetLanguage?: string }): Promise<void> {
+    console.log('[IframeManager] Language change requested:', message);
+    
+    try {
+      // Save the language settings
+      if (message.sourceLanguage) {
+        await api.setInternalSourceLanguage(message.sourceLanguage as any);
+        console.log('[IframeManager] Source language saved:', message.sourceLanguage);
+      }
+      if (message.targetLanguage) {
+        await api.setInternalProxyLanguage(message.targetLanguage as any);
+        console.log('[IframeManager] Target language saved:', message.targetLanguage);
+      }
+      
+      // Re-translate with new language settings
+      await this.handleTranslateRequest({
+        text: message.text,
+        detectedLanguage: message.sourceLanguage,
+      });
+    } catch (error) {
+      console.error('[IframeManager] Language change error:', error);
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_ERROR',
+        error: error instanceof Error ? error.message : 'Language change failed',
+      });
+    }
+  }
+
+  /**
+   * Handle translation request from iframe
+   */
+  private async handleTranslateRequest(message: { text: string; detectedLanguage?: string; context?: string }): Promise<void> {
+    console.log('[IframeManager] Translation requested for:', message.text);
+    
+    try {
+      // Get user's language settings
+      const targetLanguage = await api.getInternalProxyLanguage();
+      const sourceLanguage = message.detectedLanguage || await api.getInternalSourceLanguage();
+      
+      // Call the analyze API
+      const result = await api.analyze({
+        source: message.text,
+        sourceLanguage: (sourceLanguage || undefined) as any,
+        targetLanguage: (targetLanguage || undefined) as any,
+        initiator: 'firefox-popup',
+      });
+      
+      console.log('[IframeManager] Translation result:', result);
+      
+      // Send result back to iframe
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_RESULT',
+        result,
+      });
+      
+      // If translation succeeded, fetch AI explanation
+      if (result.success === true && result.value) {
+        // Send loading state first
+        this.sendResponseToFrame({
+          type: 'EXPLANATION_RESULT',
+          explanation: { state: 'loading' },
+        });
+        
+        // Determine source for explanation
+        const explainSource = result.value.cards.length === 1
+          ? result.value.cards[0].data.source
+          : result.value.source;
+        
+        // Fetch explanation
+        api.explain({
+          sourceLanguage: result.value.sourceLanguage,
+          targetLanguage: result.value.targetLanguage,
+          source: explainSource,
+        }).then((explainResult) => {
+          if (explainResult.success === true && explainResult.value.explanation) {
+            this.sendResponseToFrame({
+              type: 'EXPLANATION_RESULT',
+              explanation: { 
+                state: 'loaded', 
+                value: explainResult.value.explanation 
+              },
+            });
+          } else if (explainResult.success === true && !explainResult.value.explanation) {
+            this.sendResponseToFrame({
+              type: 'EXPLANATION_RESULT',
+              explanation: { state: 'none' },
+            });
+          } else {
+            this.sendResponseToFrame({
+              type: 'EXPLANATION_RESULT',
+              explanation: { 
+                state: 'error', 
+                error: 'Unable to load AI explanation.' 
+              },
+            });
+          }
+        }).catch((err) => {
+          console.error('[IframeManager] Explain error:', err);
+          this.sendResponseToFrame({
+            type: 'EXPLANATION_RESULT',
+            explanation: { state: 'error', error: 'Failed to load explanation' },
+          });
+        });
+      }
+    } catch (error) {
+      console.error('[IframeManager] Translation error:', error);
+      
+      // Send error back to iframe
+      this.sendResponseToFrame({
+        type: 'TRANSLATION_ERROR',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  }
+
+  /**
+   * Send response message to iframe
+   */
+  private sendResponseToFrame(message: ContentScriptToFrameResponse): void {
+    if (!this.iframe?.contentWindow) {
+      console.warn('[IframeManager] Cannot send response, iframe not ready');
+      return;
+    }
+    console.log('[IframeManager] Sending response to frame:', message.type);
+    this.iframe.contentWindow.postMessage(message, '*');
   }
 }
 
