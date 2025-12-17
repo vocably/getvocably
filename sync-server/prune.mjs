@@ -1,8 +1,9 @@
 import { validateSource } from '@vocably/analyze';
 import { config } from 'dotenv-flow';
-import { readdir, stat, unlink } from 'node:fs/promises';
+import { unlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import 'zx/globals';
+import { listFiles } from './utils.js';
 
 config();
 
@@ -38,30 +39,5 @@ for (const file of unitsOfSpeechFiles) {
     })
   ) {
     await unlink(join(unitsOfSpeechDir, file));
-  }
-}
-
-async function listFiles(dir) {
-  try {
-    // Read recursively. Items are file names relative to 'dir'.
-    const entries = await readdir(dir, { recursive: true });
-    const filePaths = [];
-
-    // Check each entry to ensure it's a file
-    for (const entry of entries) {
-      const fullPath = join(dir, entry);
-
-      // Use stat() to get file type information
-      const stats = await stat(fullPath);
-
-      if (stats.isFile()) {
-        filePaths.push(entry); // Push the path relative to the start folder
-      }
-    }
-
-    return filePaths;
-  } catch (err) {
-    console.error(`Error reading directory: ${err}`);
-    return [];
   }
 }

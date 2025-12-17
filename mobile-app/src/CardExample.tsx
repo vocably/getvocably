@@ -1,8 +1,10 @@
-import { explode } from '@vocably/sulna';
-import React, { FC } from 'react';
-import { StyleProp } from 'react-native';
-import { Text } from 'react-native-paper';
+import { explode, extractTranslation } from '@vocably/sulna';
+import React, { FC, useContext } from 'react';
+import { Pressable, StyleProp } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { maskTheWord } from './maskTheWord';
+import { TranslationModalContext } from './TranslationModalContainer';
 
 type Props = {
   example: string;
@@ -14,22 +16,45 @@ type Props = {
 };
 
 export const CardExample: FC<Props> = ({ example, textStyle, mask }) => {
-  let examples = explode(example);
+  const theme = useTheme();
+  const { showTranslation } = useContext(TranslationModalContext);
+  let examples = explode(example).map(extractTranslation);
 
   if (mask) {
-    examples = examples.map(
-      (example) => maskTheWord(mask.text, mask.language)(example).value
-    );
+    examples = examples.map(([example, translation]) => [
+      maskTheWord(mask.text, mask.language)(example).value,
+      translation,
+    ]);
   }
 
-  if (examples.length === 1) {
-    return <Text style={textStyle}>{examples[0]}</Text>;
-  }
+  const bul = examples.length === 1 ? '' : '\u2022 ';
 
   return (
     <>
-      {examples.map((example, index) => (
-        <Text key={index} style={textStyle}>{`\u2022 ${example}`}</Text>
+      {examples.map(([example, translation], index) => (
+        <Text key={index} style={textStyle}>
+          {`${bul}${example}`}
+          {translation && (
+            <>
+              {' '}
+              <Pressable
+                hitSlop={4}
+                onPress={() => showTranslation(example, translation)}
+                style={{
+                  transform: [{ translateY: 2 }],
+                }}
+              >
+                <Icon
+                  name="translate"
+                  color={theme.colors.tertiary}
+                  style={{
+                    fontSize: 14,
+                  }}
+                />
+              </Pressable>
+            </>
+          )}
+        </Text>
       ))}
     </>
   );

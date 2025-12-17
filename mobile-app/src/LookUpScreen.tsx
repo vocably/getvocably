@@ -149,6 +149,9 @@ export const LookUpScreen: FC<Props> = ({
         .sourceLanguage as GoogleLanguage,
       targetLanguage: translationPresetState.preset
         .translationLanguage as GoogleLanguage,
+      settings: {
+        translateDefinitionsAndExamples: true,
+      },
     };
 
     abortControllerRef.current = new AbortController();
