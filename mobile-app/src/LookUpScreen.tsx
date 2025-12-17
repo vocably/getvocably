@@ -7,20 +7,16 @@ import { FC, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Keyboard,
+  KeyboardAvoidingView,
+  Linking,
+  Platform,
   ScrollView,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {
-  Button,
-  Surface,
-  Text,
-  TouchableRipple,
-  useTheme,
-} from 'react-native-paper';
+import { Button, Surface, Text, useTheme } from 'react-native-paper';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { exitSharedScreen } from './exitSharedScreen';
 import { useLanguageDeck } from './languageDeck/useLanguageDeck';
 import { InlineLoader } from './loaders/InlineLoader';
@@ -42,26 +38,11 @@ const getLoadingText = (translationPreset: Preset) => {
     ? translationPreset.translationLanguage
     : translationPreset.sourceLanguage;
 
-  const toLanguage = translationPreset.isReverse
-    ? translationPreset.sourceLanguage
-    : translationPreset.translationLanguage;
-
   const fromLanguageLabel = trimLanguage(
     languageList[fromLanguage as GoogleLanguage]
   );
-  const toLanguageLabel = trimLanguage(
-    languageList[toLanguage as GoogleLanguage]
-  );
 
-  if (!fromLanguageLabel || !toLanguageLabel) {
-    return 'Looking up...!';
-  }
-
-  if (fromLanguageLabel !== toLanguageLabel) {
-    return `Translating from ${fromLanguageLabel} to ${toLanguageLabel}...`;
-  }
-
-  return `Looking up...`;
+  return `Creating ${fromLanguageLabel} cards...`;
 };
 
 type Props = {
@@ -201,26 +182,9 @@ export const LookUpScreen: FC<Props> = ({
     deck,
   });
 
-  const setTranslationDirection = (isReverse: boolean) => {
-    if (translationPresetState.status === 'unknown') {
-      return;
-    }
-
-    translationPresetState.setPreset({
-      ...translationPresetState.preset,
-      isReverse,
-    });
-  };
-
   if (translationPresetState.status === 'unknown') {
     return <Loader>Loading translation preset...</Loader>;
   }
-
-  const canTranslate =
-    translationPresetState.preset.sourceLanguage &&
-    translationPresetState.preset.translationLanguage &&
-    translationPresetState.preset.sourceLanguage !==
-      translationPresetState.preset.translationLanguage;
 
   return (
     <ScreenLayout
@@ -277,14 +241,7 @@ export const LookUpScreen: FC<Props> = ({
               ref={searchInputRef}
               value={lookUpText}
               multiline={false}
-              placeholder={trimLanguage(
-                languageList[
-                  (translationPresetState.preset.isReverse
-                    ? translationPresetState.preset.translationLanguage
-                    : translationPresetState.preset
-                        .sourceLanguage) as GoogleLanguage
-                ]
-              )}
+              placeholder={'Type any word in any language'}
               onChange={setLookUpText}
               onSubmit={lookUp}
               pasteFromClipboard={true}
@@ -300,126 +257,63 @@ export const LookUpScreen: FC<Props> = ({
         <ScrollView
           contentContainerStyle={{
             paddingBottom: insets.bottom + padding - 2,
+            minHeight: '100%',
           }}
         >
           {!isAnalyzingPreset && !lookUpResult && (
-            <TouchableWithoutFeedback
-              onPress={Keyboard.dismiss}
-              accessible={false}
+            <KeyboardAvoidingView
+              behavior="position"
+              keyboardVerticalOffset={Platform.OS === 'ios' ? 84 : 0}
+              style={{
+                width: '100%',
+                paddingTop: 12,
+                paddingHorizontal: 16,
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               <View
                 style={{
-                  flex: 1,
-                  width: '100%',
-                  gap: 8,
-                  paddingTop: mainPadding,
+                  gap: 12,
+                  alignItems: 'stretch',
+                  justifyContent: 'center',
                 }}
               >
-                {!isSharedLookUp && (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingHorizontal: padding,
-                    }}
-                  >
-                    {canTranslate && !translationPresetState.preset.isReverse && (
-                      <Animated.View entering={FadeIn} exiting={FadeOut}>
-                        <Text style={{ fontSize: 16 }}>
-                          Use{' '}
-                          <TouchableRipple
-                            style={{
-                              backgroundColor: theme.colors.elevation.level5,
-                              borderRadius: 12,
-                              padding: 4,
-                              transform: [
-                                {
-                                  translateY: 7,
-                                },
-                              ],
-                            }}
-                            onPress={() => setTranslationDirection(true)}
-                            borderless={true}
-                          >
-                            <Icon
-                              size={16}
-                              color={theme.colors.primary}
-                              name="swap-horizontal"
-                            ></Icon>
-                          </TouchableRipple>{' '}
-                          to translate from{' '}
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {trimLanguage(
-                              languageList[
-                                translationPresetState.preset
-                                  .translationLanguage as GoogleLanguage
-                              ]
-                            )}
-                          </Text>{' '}
-                          to{' '}
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {trimLanguage(
-                              languageList[
-                                translationPresetState.preset
-                                  .sourceLanguage as GoogleLanguage
-                              ]
-                            )}
-                          </Text>
-                          .
-                        </Text>
-                      </Animated.View>
-                    )}
+                <Text style={{ textAlign: 'center' }}>
+                  Questions or suggestions?
+                </Text>
+                <Button
+                  icon={({ size, color }) => (
+                    <Icon name="telegram" size={size} color={color} />
+                  )}
+                  mode={'outlined'}
+                  onPress={() => Linking.openURL('https://t.me/vocably')}
+                >
+                  Connect on Telegram
+                </Button>
 
-                    {canTranslate && translationPresetState.preset.isReverse && (
-                      <Animated.View entering={FadeIn} exiting={FadeOut}>
-                        <Text style={{ fontSize: 16 }}>
-                          Use{' '}
-                          <TouchableRipple
-                            style={{
-                              backgroundColor: theme.colors.elevation.level5,
-                              borderRadius: 12,
-                              padding: 4,
-                              transform: [
-                                {
-                                  translateY: 7,
-                                },
-                              ],
-                            }}
-                            onPress={() => setTranslationDirection(false)}
-                            borderless={true}
-                          >
-                            <Icon
-                              size={16}
-                              color={theme.colors.primary}
-                              name="swap-horizontal"
-                            ></Icon>
-                          </TouchableRipple>{' '}
-                          to translate from{' '}
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {trimLanguage(
-                              languageList[
-                                translationPresetState.preset
-                                  .sourceLanguage as GoogleLanguage
-                              ]
-                            )}
-                          </Text>{' '}
-                          to{' '}
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {trimLanguage(
-                              languageList[
-                                translationPresetState.preset
-                                  .translationLanguage as GoogleLanguage
-                              ]
-                            )}
-                          </Text>
-                          .
-                        </Text>
-                      </Animated.View>
-                    )}
-                  </View>
-                )}
+                <Button
+                  icon={({ size, color }) => (
+                    <Icon name="discord" size={size} color={color} />
+                  )}
+                  mode={'outlined'}
+                  onPress={() =>
+                    Linking.openURL('https://discord.com/invite/AF9CrP8n')
+                  }
+                >
+                  Join Discord
+                </Button>
+
+                <Button
+                  icon={'message-text-outline'}
+                  mode={'outlined'}
+                  onPress={() => navigation.navigate('Feedback')}
+                >
+                  Send a message
+                </Button>
               </View>
-            </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
           )}
           {isAnalyzingPreset && (
             <Animated.View

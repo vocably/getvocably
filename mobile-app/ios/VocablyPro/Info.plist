@@ -48,6 +48,7 @@
 	<array>
 		<string>MaterialIcons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
+		<string>FontAwesome6_Brands.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
