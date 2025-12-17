@@ -1,6 +1,7 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useNavigation } from '@react-navigation/native';
 import { Card, isGoogleTTSLanguage, TagItem } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 import React, { FC, useState } from 'react';
 import {
   PixelRatio,
@@ -152,7 +153,9 @@ export const CardListItem: FC<Props> = ({
               <>
                 {' '}
                 <View style={{ transform: textTransform }}>
-                  <Text style={{ lineHeight }}>[{card.ipa}]</Text>
+                  <Text style={{ lineHeight }}>
+                    /{sanitizeTranscript(card.ipa)}/
+                  </Text>
                 </View>
               </>
             )}

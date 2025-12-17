@@ -1,4 +1,5 @@
 import { CardItem, isGoogleTTSLanguage } from '@vocably/model';
+import { sanitizeTranscript } from '@vocably/sulna';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { PixelRatio, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
@@ -91,7 +92,9 @@ export const CardFront: FC<Props> = ({ card, autoPlay }) => {
           }}
         >
           {card.data.ipa && (
-            <Text style={{ marginRight: 8 }}>[{card.data.ipa}]</Text>
+            <Text style={{ marginRight: 8 }}>
+              /{sanitizeTranscript(card.data.ipa)}/
+            </Text>
           )}
           {card.data.g && (
             <Text style={{ marginRight: 8 }}>({card.data.g})</Text>
