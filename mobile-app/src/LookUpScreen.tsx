@@ -284,6 +284,10 @@ export const LookUpScreen: FC<Props> = ({
                   Questions or suggestions?
                 </Text>
                 <Button
+                  textColor={theme.colors.onBackground}
+                  style={{
+                    borderColor: theme.colors.onBackground,
+                  }}
                   icon={({ size, color }) => (
                     <Icon name="telegram" size={size} color={color} />
                   )}
@@ -294,6 +298,10 @@ export const LookUpScreen: FC<Props> = ({
                 </Button>
 
                 <Button
+                  textColor={theme.colors.onBackground}
+                  style={{
+                    borderColor: theme.colors.onBackground,
+                  }}
                   icon={({ size, color }) => (
                     <Icon name="discord" size={size} color={color} />
                   )}
@@ -306,6 +314,10 @@ export const LookUpScreen: FC<Props> = ({
                 </Button>
 
                 <Button
+                  textColor={theme.colors.onBackground}
+                  style={{
+                    borderColor: theme.colors.onBackground,
+                  }}
                   icon={'message-text-outline'}
                   mode={'outlined'}
                   onPress={() => navigation.navigate('Feedback')}
