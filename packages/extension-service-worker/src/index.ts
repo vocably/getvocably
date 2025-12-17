@@ -232,7 +232,12 @@ export const registerServiceWorker = (
   ): Promise<[Result<Analysis>, Result<LanguageDeck>]> => {
     if (analyzePayload.sourceLanguage) {
       return Promise.all([
-        analyze(analyzePayload),
+        analyze({
+          ...analyzePayload,
+          settings: {
+            translateDefinitionsAndExamples: true,
+          },
+        }),
         loadLanguageDeck(analyzePayload.sourceLanguage),
       ]);
     }
