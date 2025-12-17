@@ -2426,3 +2426,95 @@ if (isFirefox) {
 2. **Popup 大小** - 使用固定 px 值而非響應式設計
 3. **iframe 架構開銷** - 比 Chrome 原生方案稍重
 
+
+### 12/17 下午 Session (13:14 - 20:12)
+
+#### Production Build 調試
+
+嘗試建構 production 版本以測試與官方 API 的整合。
+
+**遇到的問題：**
+
+1. **環境變數配置**
+   - `dotenv-flow` 先載入 `.env`，再用 `.env.{NODE_ENV}` 覆蓋
+   - 需要 `NODE_ENV=prod`（不是 `production`）才能載入 `.env.prod`
+   
+2. **Popup Bundle 配置**
+   - `extension-popup` 使用 Angular 環境文件
+   - `environmentLocal.ts` 需要手動替換為 `environmentLocal.prod.ts`
+   
+3. **Manifest 未更新**
+   - `manifest.json` 在某些情況下不會重新生成
+   - 需要手動刪除後重建
+
+**Production Build 指令：**
+```bash
+# 1. 準備環境
+cp packages/extension/.env.prod packages/extension/.env
+cp packages/extension-popup/src/environments/environmentLocal.prod.ts \
+   packages/extension-popup/src/environments/environmentLocal.ts
+
+# 2. 建構 popup
+cd packages/extension-popup && NODE_ENV=prod npm run build
+
+# 3. 建構 extension
+cd packages/extension
+rm dist-firefox/manifest.json
+NODE_ENV=prod TARGET_BROWSER=firefox npm run build:firefox
+```
+
+#### 🚧 Production 認證問題（Blocker）
+
+**問題描述：**
+- Extension 建構正確（驗證 User Pool ID 和 API URL）
+- 用戶在 popup 登入後，extension 仍顯示未登入
+- 翻譯時出現錯誤：`"No current user"`
+
+**根本原因：**
+
+Firefox 認證需要**雙向配合**：
+
+1. ✅ **Extension 端** - 已實作
+   - `external-bridge.ts` - 監聽網頁訊息
+   - `service-worker.ts` - 處理 `authStorage.setItem/removeItem/clear`
+   
+2. ❌ **網頁端** - Production 可能未部署
+   - `packages/app/src/firefox-auth-storage.ts` - 發送 auth tokens
+   - `packages/app/src/auth-config.ts` - Firefox 檢測邏輯
+
+**驗證方法：**
+
+在 app.vocably.pro 登入後，Console 應該顯示：
+```
+[FirefoxAuthStorage] Bridge ready
+[Vocably Bridge] Received message: authStorage.setItem
+```
+
+如果沒有這些訊息，表示 production 網站未使用 `FirefoxAppAuthStorage`。
+
+**結論：**
+
+Dev 環境（localhost:8030）認證正常，但 production 環境（app.vocably.pro）可能尚未部署 Firefox 支援代碼。這需要 Vocably 官方團隊協助部署網頁端的 Firefox 認證邏輯。
+
+---
+
+## 🎯 PR 準備狀態
+
+### ✅ 已完成
+- [x] 完整的翻譯流程（dev 環境驗證）
+- [x] 所有 UI 功能（語言、卡片、Tag、AI 解釋）
+- [x] Production build 流程文件化
+- [x] 已知問題記錄
+- [x] 創建 FIREFOX_PR_GUIDE.md（英文，給上游）
+- [x] 創建 PR_INSTRUCTIONS.md（中文，給開發者）
+
+### ⏳ 待上游團隊協助
+- [ ] 部署網頁端 Firefox 認證支援（app.vocably.pro）
+- [ ] Production 環境完整測試
+- [ ] Chrome 回歸測試
+
+### �� PR 文件
+- `FIREFOX_PR_GUIDE.md` - 給上游團隊的完整指南（English）
+- `PR_INSTRUCTIONS.md` - PR 操作指示（繁體中文）
+- `docs/firefox-extension-migration.md` - 詳細實作記錄
+
