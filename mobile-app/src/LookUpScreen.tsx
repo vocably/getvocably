@@ -4,7 +4,14 @@ import { AnalyzePayload, GoogleLanguage, languageList } from '@vocably/model';
 import { trimLanguage } from '@vocably/sulna';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useEffect, useRef, useState } from 'react';
-import { Alert, Keyboard, Linking, ScrollView, View } from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  Linking,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { Button, Surface, Text, useTheme } from 'react-native-paper';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -250,68 +257,74 @@ export const LookUpScreen: FC<Props> = ({
           }}
         >
           {!isAnalyzingPreset && !lookUpResult && (
-            <View
-              style={{
-                width: '100%',
-                paddingTop: 24,
-                paddingHorizontal: 16,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+            <TouchableWithoutFeedback
+              onPress={Keyboard.dismiss}
+              accessible={false}
             >
               <View
                 style={{
-                  gap: 12,
-                  alignItems: 'stretch',
-                  justifyContent: 'center',
+                  width: '100%',
+                  paddingTop: 24,
+                  paddingHorizontal: 16,
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  flex: 1,
                 }}
               >
-                <Text style={{ textAlign: 'center' }}>
-                  Questions or suggestions?
-                </Text>
-                <Button
-                  textColor={theme.colors.onBackground}
+                <View
                   style={{
-                    borderColor: theme.colors.onBackground,
+                    gap: 12,
+                    alignItems: 'stretch',
+                    justifyContent: 'center',
                   }}
-                  icon={({ size, color }) => (
-                    <Icon name="telegram" size={size} color={color} />
-                  )}
-                  mode={'outlined'}
-                  onPress={() => Linking.openURL('https://t.me/vocably')}
                 >
-                  Connect on Telegram
-                </Button>
+                  <Text style={{ textAlign: 'center' }}>
+                    Questions or suggestions?
+                  </Text>
+                  <Button
+                    textColor={theme.colors.onBackground}
+                    style={{
+                      borderColor: theme.colors.onBackground,
+                    }}
+                    icon={({ size, color }) => (
+                      <Icon name="telegram" size={size} color={color} />
+                    )}
+                    mode={'outlined'}
+                    onPress={() => Linking.openURL('https://t.me/vocably')}
+                  >
+                    Connect on Telegram
+                  </Button>
 
-                <Button
-                  textColor={theme.colors.onBackground}
-                  style={{
-                    borderColor: theme.colors.onBackground,
-                  }}
-                  icon={({ size, color }) => (
-                    <Icon name="discord" size={size} color={color} />
-                  )}
-                  mode={'outlined'}
-                  onPress={() =>
-                    Linking.openURL('https://discord.com/invite/AF9CrP8n')
-                  }
-                >
-                  Join Discord
-                </Button>
+                  <Button
+                    textColor={theme.colors.onBackground}
+                    style={{
+                      borderColor: theme.colors.onBackground,
+                    }}
+                    icon={({ size, color }) => (
+                      <Icon name="discord" size={size} color={color} />
+                    )}
+                    mode={'outlined'}
+                    onPress={() =>
+                      Linking.openURL('https://discord.com/invite/AF9CrP8n')
+                    }
+                  >
+                    Join Discord
+                  </Button>
 
-                <Button
-                  textColor={theme.colors.onBackground}
-                  style={{
-                    borderColor: theme.colors.onBackground,
-                  }}
-                  icon={'message-text-outline'}
-                  mode={'outlined'}
-                  onPress={() => navigation.navigate('Feedback')}
-                >
-                  Send a message
-                </Button>
+                  <Button
+                    textColor={theme.colors.onBackground}
+                    style={{
+                      borderColor: theme.colors.onBackground,
+                    }}
+                    icon={'message-text-outline'}
+                    mode={'outlined'}
+                    onPress={() => navigation.navigate('Feedback')}
+                  >
+                    Send a message
+                  </Button>
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )}
           {isAnalyzingPreset && (
             <Animated.View
