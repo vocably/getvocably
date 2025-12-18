@@ -12,8 +12,7 @@ import {
   Result,
   resultify,
 } from '@vocably/model';
-import { tokenize } from '@vocably/sulna';
-import { isArray, uniq } from 'lodash-es';
+import { isArray, isObject, uniq } from 'lodash-es';
 import { config } from './config';
 import { fallback, FallbackResult } from './fallback';
 import { validateSource } from './validateSource';
@@ -24,6 +23,28 @@ type Payload = {
   partOfSpeech: string;
   source: string;
   definitions?: string[];
+};
+
+type AiTranslation =
+  | {
+      translation: string;
+    }
+  | string;
+
+const isAiTranslation = (translation: any): translation is AiTranslation => {
+  return typeof translation === 'string' || 'translation' in translation;
+};
+
+/**
+ * Gemini is expected to return translations as an array of strings,
+ * but sometimes it returns an array of objects with a single `translation` field.
+ */
+const mapGeminiTranslation = (translation: AiTranslation): string => {
+  if (isObject(translation) && 'translation' in translation) {
+    return translation.translation;
+  }
+
+  return translation;
 };
 
 export const translateUnitOfSpeechGemini = async ({
@@ -81,10 +102,13 @@ export const translateUnitOfSpeechGemini = async ({
     return parseResult;
   }
 
-  if (!isArray(parseResult.value)) {
+  if (
+    !isArray(parseResult.value) ||
+    !parseResult.value.every(isAiTranslation)
+  ) {
     return {
       success: false,
-      reason: `The provided result is not an array`,
+      reason: `The provided result is not an array of valid AI translations.`,
       extra: {
         result: result.value.text,
       },
@@ -92,7 +116,10 @@ export const translateUnitOfSpeechGemini = async ({
   }
 
   const translations = uniq(
-    parseResult.value.map((r) => r.toString().trim()).filter((r) => !!r)
+    parseResult.value
+      .map(mapGeminiTranslation)
+      .map((r) => r.toString().trim())
+      .filter((r) => !!r)
   ) as string[];
 
   if (translations.length === 0) {
@@ -118,17 +145,8 @@ export const translateUnitOfSpeechChatGpt = async ({
   partOfSpeech,
   definitions = [],
 }: Payload): Promise<Result<string[]>> => {
-  const safeSource = tokenize(source).join(' ');
   const safeSourceLanguage = languageList[sourceLanguage];
   const safeTargetLanguage = languageList[targetLanguage];
-
-  const prompt = [
-    `Give minimum translations of the ${safeSourceLanguage} ${partOfSpeech} "${safeSource}" into ${safeTargetLanguage}`,
-    `Only respond in text format with each translation on a separate line`,
-    partOfSpeech.includes('verb') ? `Consider tense of the provided word` : '',
-    `Omit explanations`,
-    `Sort results by commonality`,
-  ].join('\n');
 
   const result = await chatGptRequest({
     messages: [
