@@ -436,6 +436,14 @@ export const aiAnalyse = async (
     return analyseResult;
   }
 
+  if (!analyseResult.value.exists) {
+    return {
+      success: false,
+      reason: 'The requested word does not exist in the language',
+      errorCode: 'WORD_NOT_EXIST',
+    };
+  }
+
   const sanitizedAiAnalyzeResult = sanitizeAiAnalyseResult(
     payload.sourceLanguage,
     payload.partOfSpeech,
