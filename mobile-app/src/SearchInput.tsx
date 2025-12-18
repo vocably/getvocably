@@ -102,7 +102,7 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
             color: theme.colors.secondary,
             fontSize: 18,
             minHeight: 24,
-            paddingTop: Platform.OS === 'android' ? 11 : 14,
+            paddingTop: Platform.OS === 'android' ? 11 : 12,
             paddingBottom: 10,
           }}
           multiline={multiline}
