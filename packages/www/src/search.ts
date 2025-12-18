@@ -146,9 +146,6 @@ const loadSearchValues = async (searchValues: SearchValues) => {
 
   const analyzeResult = await analyze({
     ...searchValuesToAnalyzePayload(searchValues),
-    settings: {
-      translateDefinitionsAndExamples: true,
-    },
   });
 
   const translation = document.createElement(

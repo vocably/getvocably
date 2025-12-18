@@ -17,34 +17,17 @@ export type AiTranslation = Translation &
     Pick<Translation, 'partOfSpeech' | 'lemma' | 'lemmaPos' | 'transcript'>
   >;
 
-export const isAiTranslation = (
-  translation: Translation
-): translation is AiTranslation => {
-  return (
-    translation.partOfSpeech !== undefined &&
-    translation.lemma !== undefined &&
-    translation.lemmaPos !== undefined &&
-    translation.transcript !== undefined
-  );
-};
-
-type TranslationSettings = {
-  translateDefinitionsAndExamples?: boolean;
-};
-
 export type DirectAnalyzePayload = {
   source: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
   context?: string;
-  settings?: TranslationSettings;
 };
 
 export type ReverseAnalyzePayload = {
   target: string;
   sourceLanguage: GoogleLanguage;
   targetLanguage: GoogleLanguage;
-  settings?: TranslationSettings;
 };
 
 export type AnalyzePayload = DirectAnalyzePayload | ReverseAnalyzePayload;

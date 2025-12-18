@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { explode } from '@vocably/sulna';
 
 @Component({
@@ -13,15 +13,11 @@ export class VocablyCardExamples {
 
     return (
       <div>
-        {examples.length === 1 && (
-          <vocably-translated-line line={examples[0]}></vocably-translated-line>
-        )}
+        {examples.length === 1 && <Fragment>{examples[0]}</Fragment>}
         {examples.length > 1 && (
           <ul class="vocably-list">
             {examples.map((item) => (
-              <li>
-                <vocably-translated-line line={item}></vocably-translated-line>
-              </li>
+              <li>{item}</li>
             ))}
           </ul>
         )}

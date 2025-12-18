@@ -1,10 +1,8 @@
-import { explode, extractTranslation } from '@vocably/sulna';
-import React, { FC, useContext } from 'react';
-import { Pressable, StyleProp } from 'react-native';
+import { explode } from '@vocably/sulna';
+import React, { FC } from 'react';
+import { StyleProp } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { maskTheWord } from './maskTheWord';
-import { TranslationModalContext } from './TranslationModalContainer';
 
 type Props = {
   example: string;
@@ -17,43 +15,21 @@ type Props = {
 
 export const CardExample: FC<Props> = ({ example, textStyle, mask }) => {
   const theme = useTheme();
-  const { showTranslation } = useContext(TranslationModalContext);
-  let examples = explode(example).map(extractTranslation);
+  let examples = explode(example);
 
   if (mask) {
-    examples = examples.map(([example, translation]) => [
-      maskTheWord(mask.text, mask.language)(example).value,
-      translation,
-    ]);
+    examples = examples.map(
+      (text) => maskTheWord(mask.text, mask.language)(text).value
+    );
   }
 
   const bul = examples.length === 1 ? '' : '\u2022 ';
 
   return (
     <>
-      {examples.map(([example, translation], index) => (
+      {examples.map((text, index) => (
         <Text key={index} style={textStyle}>
-          {`${bul}${example}`}
-          {translation && (
-            <>
-              {' '}
-              <Pressable
-                hitSlop={4}
-                onPress={() => showTranslation(example, translation)}
-                style={{
-                  transform: [{ translateY: 2 }],
-                }}
-              >
-                <Icon
-                  name="translate"
-                  color={theme.colors.tertiary}
-                  style={{
-                    fontSize: 14,
-                  }}
-                />
-              </Pressable>
-            </>
-          )}
+          {`${bul}${text}`}
         </Text>
       ))}
     </>

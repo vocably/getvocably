@@ -7,7 +7,6 @@ import {
 import { sanitizeTranscript } from '@vocably/sulna';
 import { addArticle } from './addArticle';
 import { aiAnalyse } from './aiUnitOfSpeechAnalyse';
-import { translateDefinitionsAndExamples } from './translateDefinitionsAndExamples';
 import { translateUnitOfSpeech } from './translateUnitOfSpeech';
 
 export type AnalyseAndTranslatePayload = {
@@ -41,33 +40,19 @@ export const analyseAndTranslate = async (
   let examples = aiAnalyseResult.value.examples;
 
   if (payload.sourceLanguage !== payload.targetLanguage) {
-    const [translationResult, definitionsAndExamplesTranslationResult] =
-      await Promise.all([
-        translateUnitOfSpeech({
-          source: payload.source,
-          sourceLanguage: payload.sourceLanguage,
-          targetLanguage: payload.targetLanguage,
-          partOfSpeech: payload.partOfSpeech,
-          definitions: aiAnalyseResult.value.definitions,
-        }),
-        translateDefinitionsAndExamples({
-          definitions,
-          examples,
-          sourceLanguage: payload.sourceLanguage,
-          targetLanguage: payload.targetLanguage,
-        }),
-      ]);
+    const translationResult = await translateUnitOfSpeech({
+      source: payload.source,
+      sourceLanguage: payload.sourceLanguage,
+      targetLanguage: payload.targetLanguage,
+      partOfSpeech: payload.partOfSpeech,
+      definitions: aiAnalyseResult.value.definitions,
+    });
 
     if (translationResult.success === false) {
       return translationResult;
     }
 
     translation = translationResult.value.join(', ');
-
-    if (definitionsAndExamplesTranslationResult.success === true) {
-      definitions = definitionsAndExamplesTranslationResult.value.definitions;
-      examples = definitionsAndExamplesTranslationResult.value.examples;
-    }
   }
 
   return {

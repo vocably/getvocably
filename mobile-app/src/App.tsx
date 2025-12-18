@@ -12,7 +12,6 @@ import { NotificationsContainer } from './NotificationsContainer';
 import { PostHogProvider } from './PostHogProvider';
 import { RootModalStack } from './RootModalStack';
 import { ThemeProvider } from './ThemeProvider';
-import { TranslationModalContainer } from './TranslationModalContainer';
 import { TranslationPresetContainer } from './TranslationPreset/TranslationPresetContainer';
 import { UserMetadataContainer } from './UserMetadataContainer';
 
@@ -30,29 +29,27 @@ const App = () => {
   configurePurchases();
   return (
     <ThemeProvider>
-      <TranslationModalContainer>
-        <NavigationContainer>
-          <PostHogProvider>
-            <AuthContainer>
-              <Login>
-                <CustomerInfoContainer>
-                  <NotificationsContainer>
-                    <UserMetadataContainer>
-                      <LanguagesContainer refreshLanguagesOnActive={true}>
-                        <TranslationPresetContainer>
-                          <SafeAreaProvider>
-                            <RootModalStack />
-                          </SafeAreaProvider>
-                        </TranslationPresetContainer>
-                      </LanguagesContainer>
-                    </UserMetadataContainer>
-                  </NotificationsContainer>
-                </CustomerInfoContainer>
-              </Login>
-            </AuthContainer>
-          </PostHogProvider>
-        </NavigationContainer>
-      </TranslationModalContainer>
+      <NavigationContainer>
+        <PostHogProvider>
+          <AuthContainer>
+            <Login>
+              <CustomerInfoContainer>
+                <NotificationsContainer>
+                  <UserMetadataContainer>
+                    <LanguagesContainer refreshLanguagesOnActive={true}>
+                      <TranslationPresetContainer>
+                        <SafeAreaProvider>
+                          <RootModalStack />
+                        </SafeAreaProvider>
+                      </TranslationPresetContainer>
+                    </LanguagesContainer>
+                  </UserMetadataContainer>
+                </NotificationsContainer>
+              </CustomerInfoContainer>
+            </Login>
+          </AuthContainer>
+        </PostHogProvider>
+      </NavigationContainer>
     </ThemeProvider>
   );
 };

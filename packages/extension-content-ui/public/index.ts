@@ -50,9 +50,8 @@ const simpletonTranslationResult: Result<TranslationCards> = {
           ipa: "xə'mak",
           translation: 'created, done',
           definition:
-            '* (iets dat nog niet bestond) laten ontstaan [to bring into existence something that did not yet exist]\n* (iets dat kapot is) zorgen dat het weer heel is [(something that is broken) to make it whole again]',
-          example:
-            "Bij een gemaakte glimlach lachen onze ogen niet mee. [When we fake a smile, our eyes don't smile along with us.]",
+            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
+          example: 'Bij een gemaakte glimlach lachen onze ogen niet mee.',
           partOfSpeech: 'verb',
           g: 'n',
           tags: [],
@@ -108,10 +107,9 @@ const successfulTranslationResult: Result<TranslationCards> = {
           language: 'nl',
           source: 'maken',
           ipa: "'makə(n)",
-          example:
-            '* winst maken [make a profit]\n* De klok is weer gemaakt. [The clock has been repaired again.]',
+          example: '* winst maken [make a profit]\n* De klok is weer gemaakt.',
           definition:
-            '* (iets dat nog niet bestond) laten ontstaan [to bring into existence something that did not yet exist]\n* (iets dat kapot is) zorgen dat het weer heel is [(something that is broken) to make it whole again]',
+            '* (iets dat nog niet bestond) laten ontstaan\n* (iets dat kapot is) zorgen dat het weer heel is',
           translation: 'to make',
           partOfSpeech: 'verb',
           tags: [

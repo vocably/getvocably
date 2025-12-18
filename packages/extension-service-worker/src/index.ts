@@ -234,9 +234,6 @@ export const registerServiceWorker = (
       return Promise.all([
         analyze({
           ...analyzePayload,
-          settings: {
-            translateDefinitionsAndExamples: true,
-          },
         }),
         loadLanguageDeck(analyzePayload.sourceLanguage),
       ]);

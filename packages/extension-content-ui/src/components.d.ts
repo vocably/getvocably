@@ -240,9 +240,6 @@ export namespace Components {
          */
         "selectedItems": string[];
     }
-    interface VocablyTranslatedLine {
-        "line": string;
-    }
     interface VocablyTranslation {
         /**
           * @default false
@@ -793,12 +790,6 @@ declare global {
         prototype: HTMLVocablyTagsMenuElement;
         new (): HTMLVocablyTagsMenuElement;
     };
-    interface HTMLVocablyTranslatedLineElement extends Components.VocablyTranslatedLine, HTMLStencilElement {
-    }
-    var HTMLVocablyTranslatedLineElement: {
-        prototype: HTMLVocablyTranslatedLineElement;
-        new (): HTMLVocablyTranslatedLineElement;
-    };
     interface HTMLVocablyTranslationElementEventMap {
         "ratingInteraction": RateInteractionPayload;
         "changeSourceLanguage": string;
@@ -868,7 +859,6 @@ declare global {
         "vocably-subscribe": HTMLVocablySubscribeElement;
         "vocably-tag-form": HTMLVocablyTagFormElement;
         "vocably-tags-menu": HTMLVocablyTagsMenuElement;
-        "vocably-translated-line": HTMLVocablyTranslatedLineElement;
         "vocably-translation": HTMLVocablyTranslationElement;
     }
 }
@@ -1115,9 +1105,6 @@ declare namespace LocalJSX {
          */
         "selectedItems"?: string[];
     }
-    interface VocablyTranslatedLine {
-        "line"?: string;
-    }
     interface VocablyTranslation {
         /**
           * @default false
@@ -1274,7 +1261,6 @@ declare namespace LocalJSX {
         "vocably-subscribe": VocablySubscribe;
         "vocably-tag-form": VocablyTagForm;
         "vocably-tags-menu": VocablyTagsMenu;
-        "vocably-translated-line": VocablyTranslatedLine;
         "vocably-translation": VocablyTranslation;
     }
 }
@@ -1327,7 +1313,6 @@ declare module "@stencil/core" {
             "vocably-subscribe": LocalJSX.VocablySubscribe & JSXBase.HTMLAttributes<HTMLVocablySubscribeElement>;
             "vocably-tag-form": LocalJSX.VocablyTagForm & JSXBase.HTMLAttributes<HTMLVocablyTagFormElement>;
             "vocably-tags-menu": LocalJSX.VocablyTagsMenu & JSXBase.HTMLAttributes<HTMLVocablyTagsMenuElement>;
-            "vocably-translated-line": LocalJSX.VocablyTranslatedLine & JSXBase.HTMLAttributes<HTMLVocablyTranslatedLineElement>;
             "vocably-translation": LocalJSX.VocablyTranslation & JSXBase.HTMLAttributes<HTMLVocablyTranslationElement>;
         }
     }
