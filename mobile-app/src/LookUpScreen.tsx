@@ -4,15 +4,7 @@ import { AnalyzePayload, GoogleLanguage, languageList } from '@vocably/model';
 import { trimLanguage } from '@vocably/sulna';
 import { usePostHog } from 'posthog-react-native';
 import { FC, useEffect, useRef, useState } from 'react';
-import {
-  Alert,
-  Keyboard,
-  KeyboardAvoidingView,
-  Linking,
-  Platform,
-  ScrollView,
-  View,
-} from 'react-native';
+import { Alert, Keyboard, Linking, ScrollView, View } from 'react-native';
 import { Button, Surface, Text, useTheme } from 'react-native-paper';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -261,14 +253,11 @@ export const LookUpScreen: FC<Props> = ({
           }}
         >
           {!isAnalyzingPreset && !lookUpResult && (
-            <KeyboardAvoidingView
-              behavior="position"
-              keyboardVerticalOffset={Platform.OS === 'ios' ? 84 : 0}
+            <View
               style={{
                 width: '100%',
-                paddingTop: 12,
+                paddingTop: 24,
                 paddingHorizontal: 16,
-                flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -325,7 +314,7 @@ export const LookUpScreen: FC<Props> = ({
                   Send a message
                 </Button>
               </View>
-            </KeyboardAvoidingView>
+            </View>
           )}
           {isAnalyzingPreset && (
             <Animated.View
