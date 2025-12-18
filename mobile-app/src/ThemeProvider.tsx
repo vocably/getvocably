@@ -4,23 +4,38 @@ import {
   MD3LightTheme,
   MD3Theme,
   Provider,
+  useTheme,
 } from 'react-native-paper';
 import { useColorScheme } from './useColorScheme';
 
 type ThemeProvider = FC<PropsWithChildren<{}>>;
 
-export const lightTheme: MD3Theme = {
+type AppTheme = MD3Theme & {
+  colors: MD3Theme['colors'] & {
+    backgroundRgb: string;
+    inputBg: string;
+    inputBgFocused: string;
+    inputIconColor: string;
+    transparentSurface: string;
+    primaryVariant: string;
+    aboveElevation: string;
+  };
+};
+
+export const lightTheme: AppTheme = {
   ...MD3LightTheme,
   roundness: 3,
   colors: {
     ...MD3LightTheme.colors,
     background: 'rgb(255, 255, 255)',
-    // @ts-ignore
     backgroundRgb: '255, 255, 255',
     onBackground: 'rgb(106, 106, 106)',
     surface: 'rgb(255, 255, 255)',
     transparentSurface: 'rgba(255, 255, 255, 0)',
     onSurface: 'rgb(106, 106, 106)',
+    inputBg: 'rgba(106, 106, 106, 0.05)',
+    inputBgFocused: 'rgba(106, 106, 106, 0.14)',
+    inputIconColor: 'rgba(106, 106, 106, 0.6)',
     primary: 'rgb(0, 80, 255)',
     primaryVariant: 'rgb(66, 24, 178)',
     onPrimary: 'rgb(255, 255, 255)',
@@ -48,17 +63,19 @@ export const lightTheme: MD3Theme = {
   },
 };
 
-const darkTheme: MD3Theme = {
+const darkTheme: AppTheme = {
   ...MD3DarkTheme,
   roundness: 3,
   colors: {
     ...MD3DarkTheme.colors,
     background: 'rgb(37, 37, 37)',
-    // @ts-ignore
     backgroundRgb: '37, 37, 37',
     surface: 'rgb(37, 37, 37)',
     transparentSurface: 'rgba(37, 37, 37, 0)',
     onSurface: 'rgb(186, 186, 186)',
+    inputBg: 'rgba(186, 186, 186, 0.1)',
+    inputBgFocused: 'rgba(186, 186, 186, 0.2)',
+    inputIconColor: 'rgba(255, 255, 255, 0.5)',
     primary: 'rgb(40, 165, 255)',
     primaryVariant: 'rgb(1,95,165)',
     onPrimary: 'rgb(255, 255, 255)',
@@ -94,3 +111,5 @@ export const ThemeProvider: ThemeProvider = ({ children }) => {
     </Provider>
   );
 };
+
+export const useAppTheme = () => useTheme() as AppTheme;

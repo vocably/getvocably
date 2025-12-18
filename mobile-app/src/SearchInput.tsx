@@ -5,8 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Platform, TextInput, View } from 'react-native';
-import { IconButton, useTheme } from 'react-native-paper';
+import { Animated, Platform, TextInput } from 'react-native';
+import { IconButton } from 'react-native-paper';
+import { useAppTheme } from './ThemeProvider';
 
 type Props = {
   value: string;
@@ -37,8 +38,31 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [clipboardHasText, setClipboardHasText] = useState(false);
-    const theme = useTheme();
+    const theme = useAppTheme();
     const inputRef = useRef<TextInput>(null);
+
+    const focusAnimation = useRef(new Animated.Value(0)).current;
+
+    const handleFocus = () => {
+      Animated.timing(focusAnimation, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    };
+
+    const handleBlur = () => {
+      Animated.timing(focusAnimation, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    };
+
+    const backgroundColor = focusAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [theme.colors.inputBg, theme.colors.inputBgFocused],
+    });
 
     useImperativeHandle(ref, () => ({
       focus: () => {
@@ -59,20 +83,15 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
 
     const isSearchDisabled = value === '';
     return (
-      <View
+      <Animated.View
         style={{
           width: '100%',
           flexDirection: 'row',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           justifyContent: 'center',
-          borderStyle: 'solid',
-          borderWidth: 1,
-          borderColor: isFocused
-            ? theme.colors.onSurface
-            : theme.colors.tertiary,
           borderRadius: 12,
           opacity: disabled ? 0.5 : 1,
-          backgroundColor: 'transparent',
+          backgroundColor: backgroundColor,
           paddingLeft: 12,
         }}
       >
@@ -83,13 +102,20 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
             color: theme.colors.secondary,
             fontSize: 18,
             minHeight: 24,
-            paddingTop: Platform.OS === 'android' ? 11 : 16,
+            paddingTop: Platform.OS === 'android' ? 11 : 14,
             paddingBottom: 10,
           }}
           multiline={multiline}
+          numberOfLines={1}
           editable={!disabled}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={() => {
+            setIsFocused(true);
+            handleFocus();
+          }}
+          onBlur={() => {
+            setIsFocused(false);
+            handleBlur();
+          }}
           value={value}
           autoCapitalize={'none'}
           onChangeText={onChange}
@@ -101,32 +127,37 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
         {pasteFromClipboard && !value && clipboardHasText && (
           <IconButton
             icon={'content-paste'}
-            iconColor={theme.colors.outlineVariant}
+            mode="contained"
+            iconColor={theme.colors.inputIconColor}
             onPress={setTextFromClipboard}
             style={{ backgroundColor: 'transparent' }}
+            size={20}
           />
         )}
         {value && (
           <IconButton
             icon={'close-circle'}
-            iconColor={theme.colors.outlineVariant}
+            mode="contained"
+            iconColor={theme.colors.inputIconColor}
             onPress={() => onChange('')}
             style={{ backgroundColor: 'transparent' }}
+            size={18}
           />
         )}
         <IconButton
           icon={'magnify'}
           mode="contained"
-          iconColor={theme.colors.onPrimary}
+          iconColor={theme.colors.inputIconColor}
           style={{
-            backgroundColor: isSearchDisabled
-              ? 'transparent'
-              : theme.colors.primary,
+            backgroundColor: 'transparent',
           }}
-          onPress={() => onSubmit(value)}
-          disabled={isSearchDisabled}
+          onPress={() => {
+            if (!isSearchDisabled) {
+              onSubmit(value);
+            }
+          }}
         />
-      </View>
+      </Animated.View>
     );
   }
 );
