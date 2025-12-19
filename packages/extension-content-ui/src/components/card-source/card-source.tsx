@@ -53,7 +53,7 @@ export class VocablyCardSource {
             </span>
           </Fragment>
         )}
-        {this.card.data.isInfinitive && this.card.data.pastTenses && (
+        {this.card.data.tense !== 'past' && this.card.data.pastTenses && (
           <span class="vocably-muted vocably-small vocably-translation-margin-left">
             (in past: {this.card.data.pastTenses})
           </span>

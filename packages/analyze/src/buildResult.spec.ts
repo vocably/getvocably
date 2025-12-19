@@ -933,7 +933,7 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items.length).toEqual(1);
-    expect(result.value.items[0].isInfinitive).toEqual(true);
+    expect(result.value.items[0].tense).toEqual('present');
     expect(result.value.items[0].pastTenses).toEqual(
       'utvärderade, har utvärderat'
     );

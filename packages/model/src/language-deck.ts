@@ -59,8 +59,8 @@ export type Card = {
   ipa?: string;
   g?: string;
   number?: 'plural' | 'singular';
+  tense?: string;
   pastTenses?: string;
-  isInfinitive?: boolean;
   pluralForm?: string;
   example?: string;
   definition: string;

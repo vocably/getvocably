@@ -29,7 +29,7 @@ describe('unit of speech analyze', () => {
         return;
       }
 
-      expect(result.value.isInfinitive).toEqual(false);
+      expect(result.value.tense).toEqual('present');
 
       result = await gptAnalyse({
         source: 'verbeteren',
@@ -42,7 +42,7 @@ describe('unit of speech analyze', () => {
         return;
       }
 
-      expect(result.value.isInfinitive).toEqual(true);
+      expect(result.value.tense).toEqual('present');
     }, 10_000_000);
 
     it('past tense regular verb', async () => {
@@ -374,7 +374,7 @@ describe('unit of speech analyze', () => {
         return;
       }
 
-      expect(result.value.isInfinitive).toEqual(false);
+      expect(result.value.tense).toEqual('present');
 
       result = await geminiAnalyse({
         source: 'verbeteren',
@@ -387,7 +387,7 @@ describe('unit of speech analyze', () => {
         return;
       }
 
-      expect(result.value.isInfinitive).toEqual(true);
+      expect(result.value.tense).toEqual('present');
     }, 10_000_000);
 
     it('past tense regular verb', async () => {

@@ -8,9 +8,11 @@ import {
 } from '@vocably/lambda-shared';
 import {
   GoogleLanguage,
+  isTense,
   languageList,
   Result,
   resultify,
+  Tense,
 } from '@vocably/model';
 import { isSafeObject, sanitizeTranscript } from '@vocably/sulna';
 import { isArray, omit } from 'lodash-es';
@@ -106,9 +108,9 @@ export type AiAnalysis = {
   transcript: string;
   number: string;
   gender?: string;
+  tense?: Tense;
   exists?: boolean;
   pastTenses?: string;
-  isInfinitive?: boolean;
   pluralForm?: string;
 };
 
@@ -209,7 +211,7 @@ const pluralsWithArticles: GoogleLanguage[] = [
   'hy',
 ];
 
-type InflectionKey = 'pastTenses' | 'isInfinitive' | 'pluralForm';
+type InflectionKey = 'pastTenses' | 'tense' | 'pluralForm';
 
 const tensesPrompts: Partial<Record<GoogleLanguage, string>> = {
   'pt-PT': 'past simple and past perfect tense with necessary auxiliary verbs',
@@ -233,7 +235,7 @@ export const getInfectionsPrompt = ({
   const infections: Partial<Record<InflectionKey, string>> = {};
   if (partOfSpeech.includes('verb') && tensesPrompts[sourceLanguage]) {
     infections.pastTenses = `comma separated list of ${tensesPrompts[sourceLanguage]} of the provided ${partOfSpeech}`;
-    infections.isInfinitive = 'true of false';
+    infections.tense = 'present, past, or future. English only';
   }
 
   if (
@@ -276,8 +278,8 @@ export const sanitizeAiAnalyseResult = (
     output.gender = result.gender;
   }
 
-  if ('isInfinitive' in result) {
-    output.isInfinitive = result.isInfinitive;
+  if (isTense(result.tense)) {
+    output.tense = result.tense;
   }
 
   if (result.pastTenses) {

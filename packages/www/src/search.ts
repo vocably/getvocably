@@ -125,7 +125,7 @@ const createTranslationCards = (
           g: item.g,
           tags: [],
           language: analyzeResult.value.sourceLanguage,
-          isInfinitive: item.isInfinitive,
+          tense: item.tense,
           pastTenses: item.pastTenses,
           number: item.number,
           pluralForm: item.pluralForm,

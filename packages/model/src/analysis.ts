@@ -42,8 +42,14 @@ export const isReverseAnalyzePayload = (o: any): o is DirectAnalyzePayload => {
 
 export type AnalysisNumber = 'plural' | 'singular';
 
+export type Tense = 'present' | 'past' | 'future';
+
 export const isAnalysisNumber = (o: any): o is AnalysisNumber => {
   return ['plural', 'singular'].includes(o);
+};
+
+export const isTense = (o: any): o is Tense => {
+  return ['present', 'past', 'future'].includes(o);
 };
 
 export type AnalysisItem = {
@@ -55,8 +61,8 @@ export type AnalysisItem = {
   partOfSpeech?: string;
   g?: string; // gender
   number?: AnalysisNumber;
+  tense?: Tense;
   pastTenses?: string;
-  isInfinitive?: boolean;
   pluralForm?: string;
 };
 

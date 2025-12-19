@@ -2,6 +2,7 @@ import {
   AnalysisItem,
   GoogleLanguage,
   isAnalysisNumber,
+  isTense,
   languageList,
   Result,
 } from '@vocably/model';
@@ -86,8 +87,8 @@ export const analyseAndTranslate = async (
     analysisItem.pastTenses = aiAnalyseResult.value.pastTenses;
   }
 
-  if ('isInfinitive' in aiAnalyseResult.value) {
-    analysisItem.isInfinitive = aiAnalyseResult.value.isInfinitive;
+  if (isTense(aiAnalyseResult.value.tense)) {
+    analysisItem.tense = aiAnalyseResult.value.tense;
   }
 
   return {

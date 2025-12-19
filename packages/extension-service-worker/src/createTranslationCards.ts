@@ -87,7 +87,7 @@ export const createTranslationCards = (
           partOfSpeech: analysisItem.partOfSpeech ?? '',
           number: analysisItem.number,
           pastTenses: analysisItem.pastTenses,
-          isInfinitive: analysisItem.isInfinitive,
+          tense: analysisItem.tense,
           pluralForm: analysisItem.pluralForm,
           tags: [],
           ...pick(analysisItem, ['g']),
