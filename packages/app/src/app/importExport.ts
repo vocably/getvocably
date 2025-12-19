@@ -1,6 +1,9 @@
 import { Card } from '@vocably/model';
 
-export type Column = Exclude<keyof Card, 'language'>;
+export type Column = Exclude<
+  keyof Card,
+  'language' | 'isInfinitive' | 'number' | 'pastTenses' | 'pluralForm'
+>;
 
 export const columnLabels: Record<Column, string> = {
   source: 'Word/Phrase',
