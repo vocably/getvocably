@@ -86,6 +86,10 @@ export const analyseAndTranslate = async (
     analysisItem.pastTenses = aiAnalyseResult.value.pastTenses;
   }
 
+  if ('isInfinitive' in aiAnalyseResult.value) {
+    analysisItem.isInfinitive = aiAnalyseResult.value.isInfinitive;
+  }
+
   return {
     success: true,
     value: analysisItem,

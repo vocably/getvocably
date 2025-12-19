@@ -920,4 +920,22 @@ describe('integration check for translate lambda', () => {
     expect(result.value.items.length).toEqual(1);
     expect(result.value.items[0].source).toEqual('employee');
   });
+
+  it('is infinitive and past tense', async () => {
+    const result = await buildResult({
+      sourceLanguage: 'sv',
+      targetLanguage: 'en',
+      source: 'utvärdera',
+    });
+
+    if (result.success === false) {
+      throw 'Unexpected result';
+    }
+
+    expect(result.value.items.length).toEqual(1);
+    expect(result.value.items[0].isInfinitive).toEqual(true);
+    expect(result.value.items[0].pastTenses).toEqual(
+      'utvärderade, har utvärderat'
+    );
+  });
 });

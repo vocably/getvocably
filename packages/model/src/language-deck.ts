@@ -58,6 +58,10 @@ export type Card = {
   source: string;
   ipa?: string;
   g?: string;
+  number?: 'plural' | 'singular';
+  pastTenses?: string;
+  isInfinitive?: boolean;
+  pluralForm?: string;
   example?: string;
   definition: string;
   translation: string;

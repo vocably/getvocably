@@ -257,7 +257,7 @@ export const sanitizeAiAnalyseResult = (
 ): AiAnalysis => {
   const genders = genderLanguages[language] ?? [];
 
-  return {
+  const output: AiAnalysis = {
     source: transformSource({
       source: result.source,
       sourceLanguage: language,
@@ -270,12 +270,29 @@ export const sanitizeAiAnalyseResult = (
     examples: result.examples,
     synonyms: result.synonyms,
     transcript: sanitizeTranscript(result.transcript ?? ''),
-    ...(genders.includes(result.gender ?? '')
-      ? {
-          gender: result.gender,
-        }
-      : {}),
   };
+
+  if (genders.includes(result.gender ?? '')) {
+    output.gender = result.gender;
+  }
+
+  if ('isInfinitive' in result) {
+    output.isInfinitive = result.isInfinitive;
+  }
+
+  if (result.pastTenses) {
+    output.pastTenses = result.pastTenses;
+  }
+
+  if (result.pluralForm) {
+    output.pluralForm = result.pluralForm;
+  }
+
+  if (result.pluralForm) {
+    output.pluralForm = result.pluralForm;
+  }
+
+  return output;
 };
 
 // ChatGPT
