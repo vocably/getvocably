@@ -847,8 +847,8 @@
         </swiper-container>
 
         <div class="d-flex justify-content-end gap-2 mt-4 me-5">
-          <button id="swiper-prev" class="navigation-button"><i class="bi bi-arrow-left"></i></button>
-          <button id="swiper-next"  class="navigation-button"><i class="bi bi-arrow-right"></i></button>
+          <button id="swiper-prev" class="navigation-button" data-umami-event="Slider Previous Click"><i class="bi bi-arrow-left"></i></button>
+          <button id="swiper-next"  class="navigation-button" data-umami-event="Slider Next Click"><i class="bi bi-arrow-right"></i></button>
         </div>
 
         <script>
@@ -865,7 +865,12 @@
             navigation: {
               nextEl: document.getElementById('swiper-next'),
               prevEl: document.getElementById('swiper-prev'),
-            }
+            },
+            on: {
+              slideChange: () => {
+                window.trackEvent && window.trackEvent('Slider Changed');
+              }
+            },
           };
 
           // now we need to assign all parameters to Swiper element

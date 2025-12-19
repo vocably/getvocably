@@ -2,6 +2,7 @@ import '@sneas/telephone/iphone-16-max';
 import '@sneas/telephone/pixel-9-pro';
 import { isGoogleLanguage } from '@vocably/model';
 import * as Bowser from 'bowser';
+import { track } from './analytics';
 import './bootstrap.scss';
 import './styles.scss';
 
@@ -10,6 +11,9 @@ const isAndroid = browser.is('android');
 const isIos = browser.is('ios');
 const isChrome = browser.is('chrome') && !isAndroid && !isIos;
 const isSafari = browser.is('safari') && !isAndroid && !isIos;
+
+//@ts-ignore
+window.trackEvent = track;
 
 document.querySelectorAll('.show-other').forEach((el) => {
   if (isChrome || isSafari || isAndroid || isIos) {
