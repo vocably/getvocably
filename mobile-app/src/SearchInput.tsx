@@ -36,7 +36,6 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
     },
     ref
   ) => {
-    const [isFocused, setIsFocused] = useState(false);
     const [clipboardHasText, setClipboardHasText] = useState(false);
     const theme = useAppTheme();
     const inputRef = useRef<TextInput>(null);
@@ -89,7 +88,7 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: 12,
+          borderRadius: 16,
           opacity: disabled ? 0.5 : 1,
           backgroundColor: backgroundColor,
           paddingLeft: 12,
@@ -109,11 +108,9 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
           numberOfLines={1}
           editable={!disabled}
           onFocus={() => {
-            setIsFocused(true);
             handleFocus();
           }}
           onBlur={() => {
-            setIsFocused(false);
             handleBlur();
           }}
           value={value}
@@ -154,6 +151,8 @@ export const SearchInput = forwardRef<SearchInputRef, Props>(
           onPress={() => {
             if (!isSearchDisabled) {
               onSubmit(value);
+            } else {
+              inputRef.current?.focus();
             }
           }}
         />

@@ -114,7 +114,7 @@ export const TranslationPresetForm: FC<Props> = ({
             icon={'swap-horizontal'}
             onPress={clickReverse}
             mode="contained"
-            style={{ backgroundColor: theme.colors.elevation.level5 }}
+            style={{ backgroundColor: 'transparent' }}
           ></IconButton>
         </Animated.View>
         <Animated.View

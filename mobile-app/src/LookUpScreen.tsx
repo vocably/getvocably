@@ -219,6 +219,7 @@ export const LookUpScreen: FC<Props> = ({
             style={{
               padding: padding,
               width: '100%',
+              paddingBottom: 12,
             }}
           >
             <TranslationPresetForm
