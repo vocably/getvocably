@@ -1,6 +1,7 @@
 import {
   AnalysisItem,
   GoogleLanguage,
+  isAnalysisNumber,
   languageList,
   Result,
 } from '@vocably/model';
@@ -55,21 +56,38 @@ export const analyseAndTranslate = async (
     translation = translationResult.value.join(', ');
   }
 
+  const analysisItem: AnalysisItem = {
+    source: addArticle(
+      payload.sourceLanguage as GoogleLanguage,
+      aiAnalyseResult.value.source,
+      payload.partOfSpeech,
+      aiAnalyseResult.value
+    ),
+    translation: translation,
+    definitions: definitions,
+    examples: examples,
+    partOfSpeech: payload.partOfSpeech,
+    ipa: sanitizeTranscript(aiAnalyseResult.value.transcript),
+  };
+
+  if (aiAnalyseResult.value.gender) {
+    analysisItem.g = aiAnalyseResult.value.gender;
+  }
+
+  if (isAnalysisNumber(aiAnalyseResult.value.number)) {
+    analysisItem.number = aiAnalyseResult.value.number;
+  }
+
+  if (aiAnalyseResult.value.pluralForm) {
+    analysisItem.pluralForm = aiAnalyseResult.value.pluralForm;
+  }
+
+  if (aiAnalyseResult.value.pastTenses) {
+    analysisItem.pastTenses = aiAnalyseResult.value.pastTenses;
+  }
+
   return {
     success: true,
-    value: {
-      source: addArticle(
-        payload.sourceLanguage as GoogleLanguage,
-        aiAnalyseResult.value.source,
-        payload.partOfSpeech,
-        aiAnalyseResult.value
-      ),
-      translation: translation,
-      definitions: definitions,
-      examples: examples,
-      partOfSpeech: payload.partOfSpeech,
-      ipa: sanitizeTranscript(aiAnalyseResult.value.transcript),
-      g: aiAnalyseResult.value.gender,
-    },
+    value: analysisItem,
   };
 };

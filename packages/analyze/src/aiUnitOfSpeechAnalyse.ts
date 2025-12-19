@@ -107,6 +107,9 @@ export type AiAnalysis = {
   number: string;
   gender?: string;
   exists?: boolean;
+  pastTenses?: string;
+  isInfinitive?: boolean;
+  pluralForm?: string;
 };
 
 const isAiAnalysis = (result: any): result is AiAnalysis => {
@@ -164,6 +167,89 @@ type AiAnalysePayload = {
   sourceLanguage: GoogleLanguage;
 };
 
+const numberlessLanguages: GoogleLanguage[] = [
+  'zh',
+  'zh-TW',
+  'ja',
+  'ko',
+  'vi',
+  'th',
+  'id',
+  'ms',
+  'km',
+  'lo',
+  'my',
+];
+
+const pluralsWithArticles: GoogleLanguage[] = [
+  'es',
+  'fr',
+  'it',
+  'pt',
+  'ca',
+  'ro',
+  'gl',
+  'de',
+  'sv',
+  'da',
+  'no',
+  'is',
+  'fy',
+  'yi',
+  'af',
+  'ar',
+  'he',
+  'mt',
+  'el',
+  'bg',
+  'mk',
+  'sq',
+  'eu',
+  'hu',
+  'hy',
+];
+
+type InflectionKey = 'pastTenses' | 'isInfinitive' | 'pluralForm';
+
+const tensesPrompts: Partial<Record<GoogleLanguage, string>> = {
+  'pt-PT': 'past simple and past perfect tense with necessary auxiliary verbs',
+  pt: 'past simple and past perfect tense with necessary auxiliary verbs',
+  nl: 'past simple and past perfect tense with necessary auxiliary verbs',
+  da: 'past simple and past perfect tense with necessary auxiliary verbs',
+  no: 'past simple and past perfect tense with necessary auxiliary verbs',
+  it: 'past simple and past perfect tense with necessary auxiliary verbs',
+  fr: 'past simple and past perfect tense with necessary auxiliary verbs',
+  es: 'past simple and past perfect tense with necessary auxiliary verbs',
+  de: 'past simple and past perfect tense with necessary auxiliary verbs',
+  sv: 'past simple and past perfect tense with necessary auxiliary verbs',
+  en: 'past tenses',
+  'en-GB': 'past tenses',
+};
+
+export const getInfectionsPrompt = ({
+  partOfSpeech,
+  sourceLanguage,
+}: AiAnalysePayload): Partial<Record<InflectionKey, string>> => {
+  const infections: Partial<Record<InflectionKey, string>> = {};
+  if (partOfSpeech.includes('verb') && tensesPrompts[sourceLanguage]) {
+    infections.pastTenses = `comma separated list of ${tensesPrompts[sourceLanguage]} of the provided ${partOfSpeech}`;
+    infections.isInfinitive = 'true of false';
+  }
+
+  if (
+    partOfSpeech.includes('noun') &&
+    !numberlessLanguages.includes(sourceLanguage)
+  ) {
+    infections.pluralForm = `plural form${
+      pluralsWithArticles.includes(sourceLanguage)
+        ? ' with the appropriate article'
+        : ''
+    }`;
+  }
+
+  return infections;
+};
+
 export const sanitizeAiAnalyseResult = (
   language: GoogleLanguage,
   partOfSpeech: string,
@@ -210,6 +296,12 @@ export const getGptAnalyseChatGptBody = ({
 
   const transcriptionType = getTranscriptionName(sourceLanguage);
 
+  const inflections = getInfectionsPrompt({
+    source,
+    partOfSpeech,
+    sourceLanguage,
+  });
+
   const prompt = [
     `You are a smart language dictionary.`,
     `User provides a word in ${languageName} and its part of speech.`,
@@ -226,6 +318,7 @@ export const getGptAnalyseChatGptBody = ({
     `lemmaPos - part of speech of the lemma in English`,
     `synonyms - list of synonyms`,
     `number - plural or singular English only`,
+    ...Object.entries(inflections).map(([key, value]) => `${key} - ${value}`),
     genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
   ]
     .filter((s) => !!s)
@@ -309,6 +402,12 @@ export const geminiAnalyse = async ({
 
   const isCaseSensitive = !caseInsensitiveLanguages.includes(sourceLanguage);
 
+  const inflections = getInfectionsPrompt({
+    source,
+    partOfSpeech,
+    sourceLanguage,
+  });
+
   const result = await resultify(
     genAI.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -344,8 +443,11 @@ export const geminiAnalyse = async ({
           `lemmaPos - part of speech of the lemma in English`,
           `synonyms - short list of synonyms`,
           `number - plural or singular English only`,
+          ...Object.entries(inflections).map(
+            ([key, value]) => `${key} - ${value}`
+          ),
           genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
-        ],
+        ].filter((s) => s.length > 0),
         thinkingConfig: {
           thinkingBudget: 0, // Disables thinking
         },

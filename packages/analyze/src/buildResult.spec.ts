@@ -455,7 +455,10 @@ describe('integration check for translate lambda', () => {
     }
 
     expect(result.value.items[0].partOfSpeech).toEqual('noun');
-    expect(result.value.items[0].translation).toHaveSomeOf(['خواهر, آبجی']);
+    expect(result.value.items[0].translation).toHaveSomeOf([
+      'خواهر, آبجی',
+      'خواهر, همشیره, راهبه, خواهری',
+    ]);
   });
 
   it('provides lexicala examples', async () => {

@@ -40,6 +40,12 @@ export const isReverseAnalyzePayload = (o: any): o is DirectAnalyzePayload => {
   return !(!o || !o.target || !o.sourceLanguage || !o.targetLanguage);
 };
 
+export type AnalysisNumber = 'plural' | 'singular';
+
+export const isAnalysisNumber = (o: any): o is AnalysisNumber => {
+  return ['plural', 'singular'].includes(o);
+};
+
 export type AnalysisItem = {
   source: string;
   ipa?: string;
@@ -48,6 +54,10 @@ export type AnalysisItem = {
   translation: string;
   partOfSpeech?: string;
   g?: string; // gender
+  number?: AnalysisNumber;
+  pastTenses?: string;
+  isInfinitive?: boolean;
+  pluralForm?: string;
 };
 
 export type ValidAnalysisItems = [AnalysisItem, ...AnalysisItem[]];

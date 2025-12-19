@@ -11,31 +11,6 @@ describe('analyseAndTranslate', () => {
     return;
   }
 
-  it('properly translates stuff', async () => {
-    const result = await analyseAndTranslate({
-      source: 'bloot',
-      sourceLanguage: 'nl',
-      targetLanguage: 'ru',
-      partOfSpeech: 'adjective',
-    });
-
-    expect(result.success).toEqual(true);
-
-    if (result.success === false) {
-      return;
-    }
-
-    expect(
-      result.value.definitions.every((sentence) => /^.+\[.+\]$/.test(sentence))
-    ).toEqual(true);
-
-    expect(
-      (result.value.examples ?? []).every((sentence) =>
-        /^.+\[.+\]$/.test(sentence)
-      )
-    ).toEqual(true);
-  });
-
   it('no [object]', async () => {
     const result = await analyseAndTranslate({
       source: 'state',

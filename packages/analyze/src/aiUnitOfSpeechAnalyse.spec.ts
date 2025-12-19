@@ -17,6 +17,79 @@ describe('unit of speech analyze', () => {
   }
 
   describe('chatgpt', () => {
+    it('checks for infinitive', async () => {
+      let result = await gptAnalyse({
+        source: 'verbert',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isInfinitive).toEqual(false);
+
+      result = await gptAnalyse({
+        source: 'verbeteren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isInfinitive).toEqual(true);
+    }, 10_000_000);
+
+    it('past tense regular verb', async () => {
+      const result = await gptAnalyse({
+        source: 'validieren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'de',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('validierte, hat validiert');
+    }, 10_000_000);
+
+    it('past tense regular irregular verb', async () => {
+      const result = await gptAnalyse({
+        source: 'fahren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'de',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('fuhr, ist gefahren');
+    }, 10_000_000);
+
+    it('plural form', async () => {
+      const result = await gptAnalyse({
+        source: 'auto',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pluralForm).toEqual("auto's");
+    }, 10_000_000);
+
     it('lowercase when possible', async () => {
       const result = await gptAnalyse({
         source: 'Backwash',
@@ -287,6 +360,94 @@ describe('unit of speech analyze', () => {
       }
       expect(result.value.lemma).toHaveSomeOf('perambulate');
       expect(result.value.lemmaPos).toHaveSomeOf('verb');
+    }, 10_000_000);
+
+    it('checks for infinitive', async () => {
+      let result = await geminiAnalyse({
+        source: 'verbert',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isInfinitive).toEqual(false);
+
+      result = await geminiAnalyse({
+        source: 'verbeteren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isInfinitive).toEqual(true);
+    }, 10_000_000);
+
+    it('past tense regular verb', async () => {
+      const result = await geminiAnalyse({
+        source: 'validieren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'de',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('validierte, hat validiert');
+    }, 10_000_000);
+
+    it('past tense regular irregular verb', async () => {
+      const result = await geminiAnalyse({
+        source: 'fahren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'de',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('fuhr, ist gefahren');
+    }, 10_000_000);
+
+    it('plural form', async () => {
+      const result = await geminiAnalyse({
+        source: 'auto',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pluralForm).toEqual("auto's");
+    }, 10_000_000);
+
+    it('plural form german', async () => {
+      const result = await geminiAnalyse({
+        source: 'mann',
+        partOfSpeech: 'noun',
+        sourceLanguage: 'de',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pluralForm).toEqual('die Männer');
     }, 10_000_000);
 
     it('source capitalized', async () => {
