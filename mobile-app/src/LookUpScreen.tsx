@@ -306,7 +306,7 @@ export const LookUpScreen: FC<Props> = ({
                     )}
                     mode={'outlined'}
                     onPress={() =>
-                      Linking.openURL('https://discord.com/invite/AF9CrP8n')
+                      Linking.openURL('https://discord.gg/9aRwbJ3qeh')
                     }
                   >
                     Join Discord
