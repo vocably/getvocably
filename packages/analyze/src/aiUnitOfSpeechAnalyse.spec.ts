@@ -60,6 +60,38 @@ describe('unit of speech analyze', () => {
       expect(result.value.pastTenses).toEqual('validierte, hat validiert');
     }, 10_000_000);
 
+    it('respects identical tense of irregular verb', async () => {
+      const result = await gptAnalyse({
+        source: 'bring',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('brought, brought');
+      expect(result.value.isIrregular).toEqual(true);
+    }, 10_000_000);
+
+    it('skips identical tense of regular verb', async () => {
+      const result = await gptAnalyse({
+        source: 'visit',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.pastTenses).toEqual('visited');
+      expect(result.value.isIrregular).toEqual(false);
+    }, 10_000_000);
+
     it('past tense regular irregular verb', async () => {
       const result = await gptAnalyse({
         source: 'fahren',
@@ -204,6 +236,38 @@ describe('unit of speech analyze', () => {
   });
 
   describe('gemini', () => {
+    it('respects identical tense of irregular verb', async () => {
+      const result = await geminiAnalyse({
+        source: 'bring',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isIrregular).toEqual(true);
+      expect(result.value.pastTenses).toEqual('brought, brought');
+    }, 10_000_000);
+
+    it('skips identical tense of regular verb', async () => {
+      const result = await geminiAnalyse({
+        source: 'visit',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'en',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+
+      expect(result.value.isIrregular).toEqual(false);
+      expect(result.value.pastTenses).toEqual('visited');
+    }, 10_000_000);
+
     it('lowercase when possible', async () => {
       const result = await geminiAnalyse({
         source: 'Backwash',

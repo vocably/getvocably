@@ -21,82 +21,17 @@ import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
+import {
+  caseInsensitiveLanguages,
+  genderLanguages,
+  numberlessLanguages,
+  pluralsWithArticles,
+} from './languageSettings';
+import { removeAuxiliaryWords } from './removeAuxiliaryWords';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { secureSource } from './secureSource';
 import { transformSource } from './transformSource';
 import { validateSource } from './validateSource';
-
-const genderLanguages: Partial<Record<GoogleLanguage, string[]>> = {
-  ar: ['masculine', 'feminine'], // Arabic
-  fr: ['masculine', 'feminine'], // French
-  es: ['masculine', 'feminine'], // Spanish
-  it: ['masculine', 'feminine'], // Italian
-  pt: ['masculine', 'feminine'], // Portuguese
-  'pt-PT': ['masculine', 'feminine'], // Portuguese
-  ro: ['masculine', 'feminine', 'neuter'], // Romanian
-  de: ['masculine', 'feminine', 'neuter'], // German
-  nl: ['common', 'neuter'], // Dutch
-  sv: ['common', 'neuter'], // Swedish
-  da: ['common', 'neuter'], // Danish
-  no: ['masculine', 'feminine', 'neuter'], // Norwegian
-  is: ['masculine', 'feminine', 'neuter'], // Icelandic
-  ru: ['masculine', 'feminine', 'neuter'], // Russian
-  uk: ['masculine', 'feminine', 'neuter'], // Ukrainian
-  pl: [
-    'masculine-personal',
-    'masculine-animate',
-    'masculine-inanimate',
-    'feminine',
-    'neuter',
-  ], // Polish
-  cs: ['masculine-animate', 'masculine-inanimate', 'feminine', 'neuter'], // Czech
-  sk: ['masculine-animate', 'masculine-inanimate', 'feminine', 'neuter'], // Slovak
-  sr: ['masculine', 'feminine', 'neuter'], // Serbian
-  hr: ['masculine', 'feminine', 'neuter'], // Croatian
-  bs: ['masculine', 'feminine', 'neuter'], // Bosnian
-  el: ['masculine', 'feminine', 'neuter'], // Greek
-  hi: ['masculine', 'feminine'], // Hindi
-  ta: ['masculine', 'feminine', 'neuter'], // Tamil
-  ga: ['masculine', 'feminine'], // Irish
-  gd: ['masculine', 'feminine'], // Scottish Gaelic
-  cy: ['masculine', 'feminine'], // Welsh
-  he: ['masculine', 'feminine'], // Hebrew
-  am: ['masculine', 'feminine'], // Amharic
-  sw: ['noun-class'], // Swahili (nominal classes instead of gender)
-};
-
-const caseInsensitiveLanguages: GoogleLanguage[] = [
-  'am',
-  'ar',
-  'bn',
-  'fa',
-  'gu',
-  'he',
-  'hi',
-  'ja',
-  'ka',
-  'km',
-  'kn',
-  'ko',
-  'lo',
-  'ml',
-  'mr',
-  'my',
-  'ne',
-  'or',
-  'pa',
-  'ps',
-  'sd',
-  'si',
-  'ta',
-  'te',
-  'th',
-  'ug',
-  'ur',
-  'yi',
-  'zh',
-  'zh-TW',
-];
 
 export type AiAnalysis = {
   source: string;
@@ -111,6 +46,7 @@ export type AiAnalysis = {
   tense?: Tense;
   exists?: boolean;
   pastTenses?: string;
+  isIrregular?: boolean;
   pluralForm?: string;
 };
 
@@ -169,49 +105,7 @@ type AiAnalysePayload = {
   sourceLanguage: GoogleLanguage;
 };
 
-const numberlessLanguages: GoogleLanguage[] = [
-  'zh',
-  'zh-TW',
-  'ja',
-  'ko',
-  'vi',
-  'th',
-  'id',
-  'ms',
-  'km',
-  'lo',
-  'my',
-];
-
-const pluralsWithArticles: GoogleLanguage[] = [
-  'es',
-  'fr',
-  'it',
-  'pt',
-  'ca',
-  'ro',
-  'gl',
-  'de',
-  'sv',
-  'da',
-  'no',
-  'is',
-  'fy',
-  'yi',
-  'af',
-  'ar',
-  'he',
-  'mt',
-  'el',
-  'bg',
-  'mk',
-  'sq',
-  'eu',
-  'hu',
-  'hy',
-];
-
-type InflectionKey = 'pastTenses' | 'tense' | 'pluralForm';
+type InflectionKey = 'pastTenses' | 'tense' | 'pluralForm' | 'isIrregular';
 
 const tensesPrompts: Partial<Record<GoogleLanguage, string>> = {
   'pt-PT': 'past simple and past perfect tense with necessary auxiliary verbs',
@@ -224,11 +118,41 @@ const tensesPrompts: Partial<Record<GoogleLanguage, string>> = {
   es: 'past simple and past perfect tense with necessary auxiliary verbs',
   de: 'past simple and past perfect tense with necessary auxiliary verbs',
   sv: 'past simple and past perfect tense with necessary auxiliary verbs',
-  en: 'past tenses',
-  'en-GB': 'past tenses',
+  en: 'past simple and perfect tenses',
+  'en-GB': 'past simple and perfect tenses',
 };
 
-export const getInfectionsPrompt = ({
+export const sanitizeEnglishPastTenses = (
+  pastTenses: string,
+  isIrregular: boolean
+): string => {
+  const pastTensesArray = pastTenses
+    .split(',')
+    .map((s) => removeAuxiliaryWords(s.trim(), 'en'));
+  if (pastTensesArray.length === 0) {
+    return '';
+  }
+
+  if (pastTensesArray.length === 1 && isIrregular) {
+    return `${pastTensesArray[0]}, ${pastTensesArray[0]}`;
+  }
+
+  if (pastTensesArray.length === 1) {
+    return pastTensesArray[0];
+  }
+
+  if (
+    pastTensesArray.length === 2 &&
+    pastTensesArray[0] === pastTensesArray[1] &&
+    !isIrregular
+  ) {
+    return pastTensesArray[0];
+  }
+
+  return pastTensesArray.join(', ');
+};
+
+export const getInflectionsPrompt = ({
   partOfSpeech,
   sourceLanguage,
 }: AiAnalysePayload): Partial<Record<InflectionKey, string>> => {
@@ -236,6 +160,13 @@ export const getInfectionsPrompt = ({
   if (partOfSpeech.includes('verb') && tensesPrompts[sourceLanguage]) {
     infections.pastTenses = `comma separated list of ${tensesPrompts[sourceLanguage]} of the provided ${partOfSpeech}`;
     infections.tense = 'present, past, or future. English only';
+  }
+
+  if (
+    partOfSpeech.includes('verb') &&
+    ['en', 'en-GB'].includes(sourceLanguage)
+  ) {
+    infections.isIrregular = 'true or false';
   }
 
   if (
@@ -260,38 +191,31 @@ export const sanitizeAiAnalyseResult = (
   const genders = genderLanguages[language] ?? [];
 
   const output: AiAnalysis = {
+    ...result,
     source: transformSource({
       source: result.source,
       sourceLanguage: language,
       partOfSpeech,
     }),
-    number: result.number,
-    lemma: result.lemma,
     lemmaPos: sanitizePartOfSpeech(result.lemmaPos ?? ''),
-    definitions: result.definitions,
-    examples: result.examples,
-    synonyms: result.synonyms,
     transcript: sanitizeTranscript(result.transcript ?? ''),
   };
 
   if (genders.includes(result.gender ?? '')) {
     output.gender = result.gender;
+  } else {
+    delete output.gender;
   }
 
   if (isTense(result.tense)) {
     output.tense = result.tense;
   }
 
-  if (result.pastTenses) {
-    output.pastTenses = result.pastTenses;
-  }
-
-  if (result.pluralForm) {
-    output.pluralForm = result.pluralForm;
-  }
-
-  if (result.pluralForm) {
-    output.pluralForm = result.pluralForm;
+  if (result.pastTenses && ['en', 'en-GB'].includes(language)) {
+    output.pastTenses = sanitizeEnglishPastTenses(
+      result.pastTenses,
+      !!result.isIrregular
+    );
   }
 
   return output;
@@ -315,7 +239,7 @@ export const getGptAnalyseChatGptBody = ({
 
   const transcriptionType = getTranscriptionName(sourceLanguage);
 
-  const inflections = getInfectionsPrompt({
+  const inflections = getInflectionsPrompt({
     source,
     partOfSpeech,
     sourceLanguage,
@@ -360,6 +284,8 @@ type GptAnalyseResultPayload = {
 };
 
 export const getGptAnalyseResult = ({
+  sourceLanguage,
+  partOfSpeech,
   response,
 }: GptAnalyseResultPayload): Result<AiAnalysis> => {
   if (!isInternalAiAnalysis(response)) {
@@ -372,7 +298,11 @@ export const getGptAnalyseResult = ({
 
   return {
     success: true,
-    value: convertInternalToExternal(response),
+    value: sanitizeAiAnalyseResult(
+      sourceLanguage,
+      partOfSpeech,
+      convertInternalToExternal(response)
+    ),
   };
 };
 
@@ -421,7 +351,7 @@ export const geminiAnalyse = async ({
 
   const isCaseSensitive = !caseInsensitiveLanguages.includes(sourceLanguage);
 
-  const inflections = getInfectionsPrompt({
+  const inflections = getInflectionsPrompt({
     source,
     partOfSpeech,
     sourceLanguage,
@@ -498,7 +428,11 @@ export const geminiAnalyse = async ({
 
   return {
     success: true,
-    value: convertInternalToExternal(parseResult.value),
+    value: sanitizeAiAnalyseResult(
+      sourceLanguage,
+      partOfSpeech,
+      convertInternalToExternal(parseResult.value)
+    ),
   };
 };
 
