@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx ts-node --esm
 
-import { getGeminiBatchItem, isVerb } from '@vocably/analyze';
+import { getGeminiBatchItem } from '@vocably/analyze';
 import { config } from 'dotenv-flow';
 import { writeFileSync } from 'fs';
 import 'zx/globals';
@@ -24,7 +24,7 @@ for (const file of unitsOfSpeechFiles) {
   const [source, partOfSpeechWithExtension] = file.split('/').slice(-2);
   const partOfSpeech = partOfSpeechWithExtension.replace('.json', '');
 
-  if (!isVerb(partOfSpeech)) {
+  if (!partOfSpeech.includes('verb')) {
     continue;
   }
 

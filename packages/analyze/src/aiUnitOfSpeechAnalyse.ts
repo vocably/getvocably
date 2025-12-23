@@ -115,14 +115,15 @@ type InflectionKey = 'pastTenses' | 'tense' | 'pluralForm' | 'isIrregular';
 const tensesPrompts: Partial<Record<GoogleLanguage, string>> = {
   'pt-PT': 'past simple and past perfect tense with necessary auxiliary verbs',
   pt: 'past simple and past perfect tense with necessary auxiliary verbs',
-  nl: 'past simple and past perfect tense with necessary auxiliary verbs',
-  da: 'past simple and past perfect tense with necessary auxiliary verbs',
-  no: 'past simple and past perfect tense with necessary auxiliary verbs',
-  it: 'past simple and past perfect tense with necessary auxiliary verbs',
-  fr: 'past simple and past perfect tense with necessary auxiliary verbs',
-  es: 'past simple and past perfect tense with necessary auxiliary verbs',
-  de: 'past simple and past perfect tense with necessary auxiliary verbs',
-  sv: 'past simple and past perfect tense with necessary auxiliary verbs',
+  af: 'past simple and present perfect tense with necessary auxiliary verbs',
+  nl: 'past simple and present perfect tense with necessary auxiliary verbs',
+  da: 'past simple and present perfect tense with necessary auxiliary verbs',
+  no: 'past simple and present perfect tense with necessary auxiliary verbs',
+  it: 'past simple and present perfect tense with necessary auxiliary verbs',
+  fr: 'past simple and present perfect tense with necessary auxiliary verbs',
+  es: 'past simple and present perfect tense with necessary auxiliary verbs',
+  de: 'past simple and present perfect tense with necessary auxiliary verbs',
+  sv: 'past simple and present perfect tense with necessary auxiliary verbs',
   en: 'past simple and perfect tenses',
   'en-GB': 'past simple and perfect tenses',
 };
@@ -167,7 +168,7 @@ export const getInflectionsPrompt = ({
     infections.tense = 'present, past, or future. English only';
   }
 
-  if (isVerb(partOfSpeech) && ['en', 'en-GB'].includes(sourceLanguage)) {
+  if (isVerb(partOfSpeech) && ['en', 'en-GB', 'nl'].includes(sourceLanguage)) {
     infections.isIrregular = 'true or false';
   }
 

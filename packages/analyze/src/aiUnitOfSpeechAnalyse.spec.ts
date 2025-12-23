@@ -541,6 +541,20 @@ describe('unit of speech analyze', () => {
       }
       expect(result.value.source).toEqual('laufen');
     }, 10_000_000);
+
+    it('past nl', async () => {
+      const result = await geminiAnalyse({
+        source: 'zweren',
+        partOfSpeech: 'verb',
+        sourceLanguage: 'nl',
+      });
+      expect(result.success).toBeTruthy();
+
+      if (!result.success) {
+        return;
+      }
+      expect(result.value.pastTenses).toEqual('zwoer, heeft gezworen');
+    }, 10_000_000);
   });
 
   describe('aiAnalyse', () => {
