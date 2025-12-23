@@ -1,4 +1,8 @@
-import { createUserContent, GoogleGenAI } from '@google/genai';
+import {
+  createUserContent,
+  GenerateContentParameters,
+  GoogleGenAI,
+} from '@google/genai';
 import { parseJson } from '@vocably/api';
 import {
   chatGptRequest,
@@ -21,6 +25,7 @@ import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { config } from './config';
 import { fallback } from './fallback';
 import { getTranscriptionName } from './getTranscriptionName';
+import { isVerb } from './isVerb';
 import {
   caseInsensitiveLanguages,
   genderLanguages,
@@ -157,15 +162,12 @@ export const getInflectionsPrompt = ({
   sourceLanguage,
 }: AiAnalysePayload): Partial<Record<InflectionKey, string>> => {
   const infections: Partial<Record<InflectionKey, string>> = {};
-  if (partOfSpeech.includes('verb') && tensesPrompts[sourceLanguage]) {
+  if (isVerb(partOfSpeech) && tensesPrompts[sourceLanguage]) {
     infections.pastTenses = `comma separated list of ${tensesPrompts[sourceLanguage]} of the provided ${partOfSpeech}`;
     infections.tense = 'present, past, or future. English only';
   }
 
-  if (
-    partOfSpeech.includes('verb') &&
-    ['en', 'en-GB'].includes(sourceLanguage)
-  ) {
+  if (isVerb(partOfSpeech) && ['en', 'en-GB'].includes(sourceLanguage)) {
     infections.isIrregular = 'true or false';
   }
 
@@ -252,14 +254,12 @@ export const getGptAnalyseChatGptBody = ({
     isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
     `headword - word provided by user. Capitalize only when appropriate.`,
     `definitions - list of definitions in ${languageName}.${
-      partOfSpeech.includes('verb')
-        ? ` Consider tense of the provided word.`
-        : ''
+      isVerb(partOfSpeech) ? ` Consider tense of the provided word.` : ''
     }`,
     `examples - list of extremely concise examples in ${languageName} with the headword used as a ${partOfSpeech}.`,
     `lemma - lemma or infinitive`,
     `lemmaPos - part of speech of the lemma in English`,
-    `synonyms - list of synonyms`,
+    `synonyms - short list of ${partOfSpeech} synonyms`,
     `number - plural or singular English only`,
     ...Object.entries(inflections).map(([key, value]) => `${key} - ${value}`),
     genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
@@ -331,15 +331,11 @@ export const gptAnalyse = async ({
 
 // Gemini
 
-export const geminiAnalyse = async ({
+const getGeminiGenerateContentParameters = ({
   source,
   partOfSpeech,
   sourceLanguage,
-}: AiAnalysePayload): Promise<Result<AiAnalysis>> => {
-  const genAI = new GoogleGenAI({
-    apiKey: config.geminiApiKey,
-  });
-
+}: AiAnalysePayload): GenerateContentParameters => {
   const isTranscriptionNeeded = source.length <= 20;
   const languageName = languageList[sourceLanguage];
 
@@ -357,63 +353,90 @@ export const geminiAnalyse = async ({
     sourceLanguage,
   });
 
-  const result = await resultify(
-    genAI.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: createUserContent([source]),
-      config: {
-        systemInstruction: [
-          `You are a language dictionary.`,
-          `User provides a ${partOfSpeech} in ${languageName}.${
-            isCaseSensitive
-              ? ' The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).'
-              : ''
-          }`,
-          `Take the fact that the provided word is ${partOfSpeech} very seriously`,
-          `Only respond in JSON format with an object containing the following properties:`,
-          isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
-          `headword - ${partOfSpeech} provided by user.${
-            isCaseSensitive
-              ? ' Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.'
-              : ''
-          }`,
-          `exists - does the ${partOfSpeech} "${securedSource}" exist in ${languageName}? true or false`,
-          `definitions - list of concise definitions of the ${partOfSpeech} "${securedSource}". Should be in ${languageName}.${
-            partOfSpeech.includes('verb')
-              ? ` Consider tense of the provided ${partOfSpeech}.`
-              : ''
-          }`,
-          `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}. Omit translations.${
-            isCaseSensitive && partOfSpeech.includes('noun')
-              ? ' Uppercase when appropriate.'
-              : ''
-          }`,
-          `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
-          `lemmaPos - part of speech of the lemma in English`,
-          `synonyms - short list of synonyms`,
-          `number - plural or singular English only`,
-          ...Object.entries(inflections).map(
-            ([key, value]) => `${key} - ${value}`
-          ),
-          genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
-        ].filter((s) => s.length > 0),
-        thinkingConfig: {
-          thinkingBudget: 0, // Disables thinking
-        },
-        temperature: 0,
-        responseMimeType: 'application/json',
+  return {
+    model: 'gemini-2.5-flash',
+    contents: createUserContent([source]),
+    config: {
+      systemInstruction: [
+        `You are a language dictionary.`,
+        `User provides a ${partOfSpeech} in ${languageName}.${
+          isCaseSensitive
+            ? ' The provided word can be in any case (e.g., uppercase, lowercase, or mixed case).'
+            : ''
+        }`,
+        `Take the fact that the provided word is ${partOfSpeech} very seriously`,
+        `Only respond in JSON format with an object containing the following properties:`,
+        isTranscriptionNeeded ? `transcript - ${transcriptionType}` : ``,
+        `headword - ${partOfSpeech} provided by user.${
+          isCaseSensitive
+            ? ' Convert to lowercase, unless it is a word that strictly requires capitalization, then capitalize it.'
+            : ''
+        }`,
+        `exists - does the ${partOfSpeech} "${securedSource}" exist in ${languageName}? true or false`,
+        `definitions - list of concise definitions of the ${partOfSpeech} "${securedSource}". Should be in ${languageName}.${
+          isVerb(partOfSpeech)
+            ? ` Consider tense of the provided ${partOfSpeech}.`
+            : ''
+        }`,
+        `examples - list of extremely concise examples with "${securedSource}" used as ${partOfSpeech}. Omit translations.${
+          isCaseSensitive && partOfSpeech.includes('noun')
+            ? ' Uppercase when appropriate.'
+            : ''
+        }`,
+        `lemma - lemma or infinitive of the provided ${partOfSpeech}`,
+        `lemmaPos - part of speech of the lemma in English`,
+        `synonyms - short list of ${partOfSpeech}s`,
+        `number - plural or singular English only`,
+        ...Object.entries(inflections).map(
+          ([key, value]) => `${key} - ${value}`
+        ),
+        genders.length > 0 ? `gender - ${genders.join(', ')}, or other` : ``,
+      ].filter((s) => s.length > 0),
+      thinkingConfig: {
+        thinkingBudget: 0, // Disables thinking
       },
-    }),
-    {
-      reason: 'Unable to perform Gemini analyse.',
-    }
-  );
+      temperature: 0,
+      responseMimeType: 'application/json',
+    },
+  };
+};
 
-  if (result.success === false) {
-    return result;
+export const getGeminiBatchItem = (payload: AiAnalysePayload) => {
+  const params = getGeminiGenerateContentParameters(payload);
+
+  if (!isArray(params?.config?.systemInstruction)) {
+    throw new Error('Gemini system instruction is empty');
   }
 
-  const parseResult = parseJson(result.value.text ?? '');
+  const systemInstructionText =
+    params?.config?.systemInstruction.join('\n') ?? '';
+
+  delete params?.config?.systemInstruction;
+
+  return {
+    key: JSON.stringify(payload),
+    request: {
+      model: `models/${params.model}`,
+      contents: params.contents,
+      generation_config: {
+        ...params.config,
+      },
+      system_instruction: {
+        parts: [
+          {
+            text: systemInstructionText,
+          },
+        ],
+      },
+    },
+  };
+};
+
+export const handleGeminiResponse = (
+  text: string,
+  { sourceLanguage, partOfSpeech }: AiAnalysePayload
+): Result<AiAnalysis> => {
+  const parseResult = parseJson(text);
   if (parseResult.success === false) {
     return parseResult;
   }
@@ -436,13 +459,34 @@ export const geminiAnalyse = async ({
   };
 };
 
+export const geminiAnalyse = async (
+  payload: AiAnalysePayload
+): Promise<Result<AiAnalysis>> => {
+  const genAI = new GoogleGenAI({
+    apiKey: config.geminiApiKey,
+  });
+
+  const result = await resultify(
+    genAI.models.generateContent(getGeminiGenerateContentParameters(payload)),
+    {
+      reason: 'Unable to perform Gemini analyse.',
+    }
+  );
+
+  if (result.success === false) {
+    return result;
+  }
+
+  return handleGeminiResponse(result.value.text ?? '', payload);
+};
+
 // End of Gemini
 
-export const getAnalyseCacheFileName = (
-  sourceLanguage: GoogleLanguage,
-  source: string,
-  partOfSpeech: string
-): string => {
+export const getAnalyseCacheFileName = ({
+  sourceLanguage,
+  source,
+  partOfSpeech,
+}: AiAnalysePayload): string => {
   return `${sourceLanguage.toLowerCase()}/units-of-speech/${source
     .toLowerCase()
     .replace(/\//g, '-')}/${partOfSpeech
@@ -457,11 +501,7 @@ export const aiAnalyse = async (
     source: payload.source,
     partOfSpeech: payload.partOfSpeech,
   });
-  const fileName = getAnalyseCacheFileName(
-    payload.sourceLanguage,
-    payload.source,
-    payload.partOfSpeech
-  );
+  const fileName = getAnalyseCacheFileName(payload);
 
   const s3FetchResult = await nodeFetchS3File(
     config.unitsOfSpeechBucket,

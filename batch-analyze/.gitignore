@@ -1,0 +1,13 @@
+.env.local
+.env.development
+deck.json
+deck*.json
+metadata*.json
+user-file*.json
+result.csv
+temp-metadata.json
+original-metadata.json
+allowed-sandbox-emails.json
+words-*.*
+*.jsonl
+

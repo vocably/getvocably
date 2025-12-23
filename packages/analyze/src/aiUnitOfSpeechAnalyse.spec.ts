@@ -561,18 +561,22 @@ describe('unit of speech analyze', () => {
 
   describe('filename', () => {
     it('removes slashes', () => {
-      const result = getAnalyseCacheFileName(
-        'en',
-        'some/file/name',
-        'noun/verb'
-      );
+      const result = getAnalyseCacheFileName({
+        sourceLanguage: 'en',
+        source: 'some/file/name',
+        partOfSpeech: 'noun/verb',
+      });
       expect(result).toEqual(
         'en/units-of-speech/some-file-name/noun-verb.json'
       );
     });
 
     it('woks okay', () => {
-      const result = getAnalyseCacheFileName('hy', 'խնձոր', 'noun');
+      const result = getAnalyseCacheFileName({
+        sourceLanguage: 'hy',
+        source: 'խնձոր',
+        partOfSpeech: 'noun',
+      });
       expect(result).toEqual('hy/units-of-speech/խնձոր/noun.json');
     });
   });
