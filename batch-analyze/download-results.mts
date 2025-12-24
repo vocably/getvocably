@@ -44,7 +44,7 @@ const ai = new GoogleGenAI({
 });
 
 while (true) {
-  const jobs = readJobs().filter((j) => !isCompletedJob(j));
+  const jobs = readJobs().filter((j: BatchJob) => !isCompletedJob(j));
 
   if (jobs.length === 0) {
     console.log('All jobs are completed.');
