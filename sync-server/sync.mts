@@ -5,7 +5,9 @@ import { exec } from 'child_process';
 import { config } from 'dotenv-flow';
 import { readFileSync } from 'fs';
 import { existsSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
+import { dirname, normalize } from 'path';
 import 'zx/globals';
 
 config();
@@ -17,8 +19,15 @@ if (!isGoogleLanguage(language)) {
   throw new Error(`Invalid language ${language}`);
 }
 
-const repoPath = `../../vocably-languages/${language}`;
-const statsFilePath = `./stats/${language}.json`;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const repoPath = normalize(`${__dirname}/../../vocably-languages/${language}`);
+
+if (!existsSync(repoPath)) {
+  throw new Error(`Repo path ${repoPath} does not exist`);
+}
+const statsFilePath = `${__dirname}/stats/${language}.json`;
 const s3BucketPath = `vocably-prod-units-of-speech/${language.toLowerCase()}`;
 const s3Path = `s3://${s3BucketPath}/`;
 
