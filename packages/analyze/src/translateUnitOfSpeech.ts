@@ -15,6 +15,7 @@ import {
 import { isArray, isObject, uniq } from 'lodash-es';
 import { config } from './config';
 import { fallback, FallbackResult } from './fallback';
+import { timeout } from './timeout';
 import { validateSource } from './validateSource';
 
 type Payload = {
@@ -61,33 +62,41 @@ export const translateUnitOfSpeechGemini = async ({
   const safeSourceLanguage = languageList[sourceLanguage];
   const safeTargetLanguage = languageList[targetLanguage];
 
+  const abortController = new AbortController();
+  const abortSignal = abortController.signal;
+
   const result = await resultify(
-    genAI.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: createUserContent([source, ...definitions]),
-      config: {
-        systemInstruction: [
-          `You are ${safeSourceLanguage}-${safeTargetLanguage} dictionary`,
-          `User provides ${safeSourceLanguage} ${partOfSpeech}${
-            definitions?.length > 0 ? ' and its definitions' : ''
-          }.`,
-          `Give several relevant translations into ${safeTargetLanguage}${
-            definitions?.length > 0 ? ' in the context of definitions' : ''
-          }.`,
-          `Respond in JSON array with each translation on a separate line`,
-          partOfSpeech.includes('verb')
-            ? `Consider tense of the provided ${partOfSpeech}`
-            : '',
-          `Omit explanations`,
-          `Sort results by commonality`,
-        ],
-        thinkingConfig: {
-          thinkingBudget: 0, // Disables thinking
+    timeout(
+      genAI.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: createUserContent([source, ...definitions]),
+        config: {
+          systemInstruction: [
+            `You are ${safeSourceLanguage}-${safeTargetLanguage} dictionary`,
+            `User provides ${safeSourceLanguage} ${partOfSpeech}${
+              definitions?.length > 0 ? ' and its definitions' : ''
+            }.`,
+            `Give several relevant translations into ${safeTargetLanguage}${
+              definitions?.length > 0 ? ' in the context of definitions' : ''
+            }.`,
+            `Respond in JSON array with each translation on a separate line`,
+            partOfSpeech.includes('verb')
+              ? `Consider tense of the provided ${partOfSpeech}`
+              : '',
+            `Omit explanations`,
+            `Sort results by commonality`,
+          ],
+          thinkingConfig: {
+            thinkingBudget: 0, // Disables thinking
+          },
+          temperature: 0,
+          responseMimeType: 'application/json',
+          abortSignal,
         },
-        temperature: 0,
-        responseMimeType: 'application/json',
-      },
-    }),
+      }),
+      abortController,
+      4000
+    ),
     {
       reason: 'Unable to perform Gemini translation.',
     }

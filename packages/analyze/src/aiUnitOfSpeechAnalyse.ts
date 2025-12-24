@@ -35,6 +35,7 @@ import {
 import { removeAuxiliaryWords } from './removeAuxiliaryWords';
 import { sanitizePartOfSpeech } from './sanitizePartOfSpeech';
 import { secureSource } from './secureSource';
+import { timeout } from './timeout';
 import { transformSource } from './transformSource';
 import { validateSource } from './validateSource';
 
@@ -467,8 +468,16 @@ export const geminiAnalyse = async (
     apiKey: config.geminiApiKey,
   });
 
+  const abortController = new AbortController();
+  const abortSignal = abortController.signal;
+  const params = getGeminiGenerateContentParameters(payload);
+  params.config = {
+    ...params.config,
+    abortSignal,
+  };
+
   const result = await resultify(
-    genAI.models.generateContent(getGeminiGenerateContentParameters(payload)),
+    timeout(genAI.models.generateContent(params), abortController, 4000),
     {
       reason: 'Unable to perform Gemini analyse.',
     }
