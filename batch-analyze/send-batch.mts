@@ -3,6 +3,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { config } from 'dotenv-flow';
 import { renameSync } from 'node:fs';
+// @ts-ignore
 import { addJob, listFiles } from './utils.ts';
 
 config();

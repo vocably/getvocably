@@ -3,6 +3,7 @@
 import { GoogleGenAI, type BatchJob } from '@google/genai';
 import { config } from 'dotenv-flow';
 import { last } from 'lodash-es';
+// @ts-ignore
 import { readJobs, updateJob } from './utils.ts';
 
 config();

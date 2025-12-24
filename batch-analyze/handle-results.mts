@@ -8,6 +8,7 @@ import { parseJson } from '@vocably/api';
 import { config } from 'dotenv-flow';
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { renameSync } from 'node:fs';
+// @ts-ignore
 import { listFiles } from './utils.ts';
 
 config();

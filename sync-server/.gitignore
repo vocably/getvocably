@@ -9,3 +9,5 @@ temp-metadata.json
 original-metadata.json
 allowed-sandbox-emails.json
 words-*.*
+*.jsonl
+

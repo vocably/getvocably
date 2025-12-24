@@ -4,11 +4,12 @@ import { getGeminiBatchItem } from '@vocably/analyze';
 import { config } from 'dotenv-flow';
 import { writeFileSync } from 'fs';
 import 'zx/globals';
+// @ts-ignore
 import { listFiles } from './utils.ts';
 
 config();
 
-const language = 'nl';
+const language = 'en';
 
 const langDir = `../../vocably-languages/${language}`;
 
@@ -24,13 +25,13 @@ for (const file of unitsOfSpeechFiles) {
   const [source, partOfSpeechWithExtension] = file.split('/').slice(-2);
   const partOfSpeech = partOfSpeechWithExtension.replace('.json', '');
 
-  if (!partOfSpeech.includes('verb')) {
-    continue;
-  }
-
   filesCount++;
 
   console.log(`Processed ${filesCount} files`);
+
+  if (!partOfSpeech.includes('verb')) {
+    continue;
+  }
 
   rows.push(
     getGeminiBatchItem({
@@ -39,10 +40,6 @@ for (const file of unitsOfSpeechFiles) {
       sourceLanguage: language,
     })
   );
-
-  if (filesCount === 10) {
-    break;
-  }
 }
 
 writeFileSync(
