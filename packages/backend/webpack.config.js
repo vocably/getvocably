@@ -11,6 +11,7 @@ module.exports = {
   },
   entry: getModules('./src/lambdas'),
   externals: {
+    'aws-sdk': 'aws-sdk',
     '@aws-sdk/client-s3': '@aws-sdk/client-s3',
     '@aws-sdk/client-cognito-identity-provider':
       '@aws-sdk/client-cognito-identity-provider',
