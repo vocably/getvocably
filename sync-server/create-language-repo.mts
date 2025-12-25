@@ -43,8 +43,8 @@ writeFileSync(
   readme.replace(/\{LANGUAGE\}/gm, languageName)
 );
 
-await createGhRepo();
 await initRepo();
+await createGhRepo();
 await pushRepo();
 
 async function listFiles(dir: string): Promise<string[]> {

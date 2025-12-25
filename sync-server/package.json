@@ -5,9 +5,12 @@
   "type": "module",
   "repository": "gi t@github.com:vocably/getvocably.git",
   "author": "Dmytro Snisarenko <dmytro@sneas.io>",
-  "scripts": {},
+  "scripts": {
+    "sync": "vite-node ./sync.mts"
+  },
   "devDependencies": {
     "@types/dotenv-flow": "^3.3.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite-node": "^5.2.0"
   }
 }
