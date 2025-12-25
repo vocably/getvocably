@@ -1,10 +1,9 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import { GoogleGenAI, type BatchJob } from '@google/genai';
 import { config } from 'dotenv-flow';
 import { last } from 'lodash-es';
-// @ts-ignore
-import { readJobs, updateJob } from './utils.ts';
+import { readJobs, updateJob } from './utils.js';
 
 config();
 

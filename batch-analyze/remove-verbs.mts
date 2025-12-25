@@ -1,10 +1,9 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import { isGoogleLanguage } from '@vocably/model';
 import { config } from 'dotenv-flow';
-import { unlinkSync } from 'fs';
 import 'zx/globals';
-import { listFiles } from './utils.ts';
+import { listFiles } from './utils.js';
 
 config();
 
@@ -26,5 +25,5 @@ for (const file of unitsOfSpeechFiles) {
     continue;
   }
 
-  unlinkSync(file);
+  // unlinkSync(file);
 }

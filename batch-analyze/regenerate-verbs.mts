@@ -1,11 +1,10 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import { getGeminiBatchItem } from '@vocably/analyze';
 import { config } from 'dotenv-flow';
 import { writeFileSync } from 'fs';
 import 'zx/globals';
-// @ts-ignore
-import { listFiles } from './utils.ts';
+import { listFiles } from './utils.js';
 
 config();
 

@@ -1,10 +1,9 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import { GoogleGenAI } from '@google/genai';
 import { config } from 'dotenv-flow';
 import { renameSync } from 'node:fs';
-// @ts-ignore
-import { addJob, listFiles } from './utils.ts';
+import { addJob, listFiles } from './utils.js';
 
 config();
 

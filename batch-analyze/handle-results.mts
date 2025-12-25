@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import {
   getAnalyseCacheFileName,
@@ -8,8 +8,7 @@ import { parseJson } from '@vocably/api';
 import { config } from 'dotenv-flow';
 import { readFileSync, unlinkSync, writeFileSync } from 'fs';
 import { renameSync } from 'node:fs';
-// @ts-ignore
-import { listFiles } from './utils.ts';
+import { listFiles } from './utils.js';
 
 config();
 

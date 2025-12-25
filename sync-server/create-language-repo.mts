@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node --esm
+#!/usr/bin/env -S npx vite-node
 
 import { isGoogleLanguage, languageList } from '@vocably/model';
 import { exec } from 'child_process';
