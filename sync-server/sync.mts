@@ -1,17 +1,12 @@
 #!/usr/bin/env -S npx vite-node
 
 import { isGoogleLanguage } from '@vocably/model';
-import { exec } from 'child_process';
-import { config } from 'dotenv-flow';
 import { readFileSync } from 'fs';
 import { existsSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { promisify } from 'node:util';
 import { dirname, normalize } from 'path';
 import 'zx/globals';
-
-config();
-const execute = promisify(exec);
+import { execute } from './utils.js';
 
 const language = process.argv.at(-1) ?? '';
 
@@ -45,16 +40,14 @@ await gitPull();
 const newHash = await getHash();
 
 const deleteFiles = await getDeletedFiles(stats.lastSyncedHash, newHash);
-const modifiedFiles = await getModifiedFile(stats.lastSyncedHash, newHash);
+const modifiedFiles = await getModifiedFiles(stats.lastSyncedHash, newHash);
 
 if (deleteFiles.length > 0) {
   console.log(`Deleting ${deleteFiles.length} files`);
 }
 
 for (const file of deleteFiles) {
-  console.log(
-    (await execute(`aws s3 rm ${quotePath(s3Path + file)}`)).stdout.trim()
-  );
+  await execute(`aws s3 rm ${quotePath(s3Path + file)}`);
 }
 
 if (modifiedFiles.length > 0) {
@@ -62,37 +55,26 @@ if (modifiedFiles.length > 0) {
 }
 
 for (const file of modifiedFiles) {
-  console.log(
-    (
-      await execute(
-        `aws s3 cp ${quotePath(file)} ${quotePath(s3Path + file)}`,
-        {
-          cwd: repoPath,
-        }
-      )
-    ).stdout.trim()
-  );
+  await execute(`aws s3 cp ${quotePath(file)} ${quotePath(s3Path + file)}`, {
+    cwd: repoPath,
+  });
 }
 
 console.log('Downloading data from S3');
 
-console.log(
-  (
-    await execute(
-      `rclone copy prod:${s3BucketPath} . --size-only --fast-list --progress --ignore-existing`,
-      {
-        cwd: repoPath,
-      }
-    )
-  ).stdout.trim()
+await execute(
+  `rclone copy prod:${s3BucketPath} . --size-only --fast-list --progress --ignore-existing`,
+  {
+    cwd: repoPath,
+  }
 );
 
 const status = await gitStatus();
 if (status.length > 0) {
   console.log('New objects received from S3. Committing changes.');
-  console.log(await gitAdd());
-  console.log(await gitCommit('Automated S3 synchronization of data files'));
-  console.log(await gitPush());
+  await gitAdd();
+  await gitCommit('Automated S3 synchronization of data files');
+  await gitPush();
 }
 
 stats.lastSynced = new Date();
@@ -132,15 +114,13 @@ async function getHash(): Promise<string> {
     await execute(`git rev-parse HEAD`, {
       cwd: repoPath,
     })
-  ).stdout.trim();
+  ).trim();
 }
 
 async function gitPull() {
-  return (
-    await execute(`git pull`, {
-      cwd: repoPath,
-    })
-  ).stdout.trim();
+  await execute(`git pull`, {
+    cwd: repoPath,
+  });
 }
 
 async function getDeletedFiles(
@@ -154,7 +134,7 @@ async function getDeletedFiles(
         cwd: repoPath,
       }
     )
-  ).stdout
+  )
     .trim()
     .split('\n')
     .filter(Boolean)
@@ -164,7 +144,7 @@ async function getDeletedFiles(
     );
 }
 
-async function getModifiedFile(
+async function getModifiedFiles(
   oldHash: string,
   newHash: string
 ): Promise<string[]> {
@@ -175,7 +155,7 @@ async function getModifiedFile(
         cwd: repoPath,
       }
     )
-  ).stdout
+  )
     .trim()
     .split('\n')
     .filter(Boolean);
@@ -192,41 +172,26 @@ async function gitStatus(): Promise<string[]> {
     await execute(`git status --porcelain`, {
       cwd: repoPath,
     })
-  ).stdout
+  )
     .trim()
     .split('\n')
     .filter(Boolean);
 }
 
 async function gitAdd() {
-  return (
-    await execute(`git add .`, {
-      cwd: repoPath,
-    })
-  ).stdout
-    .trim()
-    .split('\n')
-    .filter(Boolean);
+  await execute(`git add .`, {
+    cwd: repoPath,
+  });
 }
 
 async function gitCommit(message: string) {
-  return (
-    await execute(`git commit -m "${message}"`, {
-      cwd: repoPath,
-    })
-  ).stdout
-    .trim()
-    .split('\n')
-    .filter(Boolean);
+  await execute(`git commit -m "${message}"`, {
+    cwd: repoPath,
+  });
 }
 
 async function gitPush() {
-  return (
-    await execute(`git push`, {
-      cwd: repoPath,
-    })
-  ).stdout
-    .trim()
-    .split('\n')
-    .filter(Boolean);
+  await execute(`git push`, {
+    cwd: repoPath,
+  });
 }
