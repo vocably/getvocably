@@ -157,7 +157,11 @@ async function getDeletedFiles(
   ).stdout
     .trim()
     .split('\n')
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter(
+      (file) =>
+        file.startsWith('units-of-speech/') || file.startsWith('translations/')
+    );
 }
 
 async function getModifiedFile(
